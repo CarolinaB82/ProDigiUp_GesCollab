@@ -30,7 +30,17 @@ public abstract class Dao<T extends Identifiable> {
     
        protected abstract T createObject (ResultSet rs) throws SQLException;
 
-
+       protected abstract void create(T obj)throws SQLException;
+       
+       protected abstract void update(T obj);
+       
+       public void save (T obj) throws SQLException{
+           if (obj.getId() == null) {
+           create(obj);
+       }else{
+               update(obj);
+               }
+       }
    public T read (Integer id){
        T obj = null;
        String sql = "SELECT * FROM " + table + "WHERE id_" + table + "=?";
