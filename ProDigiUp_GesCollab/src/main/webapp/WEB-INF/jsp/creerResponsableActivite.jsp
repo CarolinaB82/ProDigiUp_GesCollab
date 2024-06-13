@@ -4,8 +4,8 @@
     Author     : asolanas
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +13,7 @@
         <title>Créer RA</title>
     </head>
     <body>
-        <form action="<c:url value="/ProDigiUp_GesCollab/creer_ra" />" method="post">
+        <form action="<c:url value="/creer_ra" />" method="post">
             <div>${requestScope.message}</div>
             <div>${requestScope.errMsg}</div>
             <fieldset>
@@ -35,13 +35,13 @@
                 </div>
                 <div>
                     <label for="date_de_naissance">Date de Naissance</label>
-                    <input type="date" id="date_de_naissance" name="date_de_naissance"
+                    <input type="text" id="date_de_naissance" name="date_de_naissance"
                     <div class="error">${requestScope.errors.date_de_naissance}</div>
                 </div>
                 <div>
                     <label for="num_voie">Numéro de voie</label>
                     <input type="text" id="num_voie" name="num_voie"
-                    <div class="error">${requestScope.errors.num_voie}</div>
+                    <div class="error">${requestScope.errors.numero_voie}</div>
                 </div>
                 <div>
                     <label for="adresse">Adresse</label>
@@ -61,12 +61,12 @@
                 <div>
                     <label for="tel_pro">Téléphone Professionnel</label>
                     <input type="text" id="tel_pro" name="tel_pro"
-                    <div class="error">${requestScope.errors.tel_pro}</div>
+                    <div class="error">${requestScope.errors.telephone_professionnel}</div>
                 </div>
                 <div>
                     <label for="tel_perso">Téléphone Personnel</label>
                     <input type="text" id="tel_perso" name="tel_perso"
-                    <div class="error">${requestScope.errors.tel_perso}</div>
+                    <div class="error">${requestScope.errors.telephone_personnel}</div>
                 </div>
             </fieldset>
                 <div>
