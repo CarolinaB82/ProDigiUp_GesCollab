@@ -9,6 +9,16 @@ package dao;
  * @author cberge
  */
 public class DaoFactory {
-
+ private static CollaborateurDao collaborateurDao;
+    
+    private DaoFactory(){
+}
+    
+        public static CollaborateurDao getCollaborateurDao(){
+            if (collaborateurDao == null) {
+                collaborateurDao = new CollaborateurDao();
+            }
+            return collaborateurDao;
+        }
     
 }
