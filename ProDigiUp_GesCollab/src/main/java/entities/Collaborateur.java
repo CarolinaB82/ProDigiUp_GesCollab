@@ -17,11 +17,6 @@ public class Collaborateur implements Identifiable, Serializable {
     private Integer matricule;
     private String nom;
     private String prenom;
-    private LocalDate date_de_naissance;
-    private String numero_voie;
-    private String adresse;
-    private Integer code_postal;
-    private String ville;
     private String telephone_personnel;
     private String statut;
     private String categorie;
@@ -37,11 +32,6 @@ public class Collaborateur implements Identifiable, Serializable {
         sb.append(", matricule=").append(matricule);
         sb.append(", nom=").append(nom);
         sb.append(", prenom=").append(prenom);
-        sb.append(", date_de_naissance=").append(date_de_naissance);
-        sb.append(", numero_voie=").append(numero_voie);
-        sb.append(", adresse=").append(adresse);
-        sb.append(", code_postal=").append(code_postal);
-        sb.append(", ville=").append(ville);
         sb.append(", telephone_personnel=").append(telephone_personnel);
         sb.append(", statut=").append(statut);
         sb.append(", categorie=").append(categorie);
@@ -59,11 +49,6 @@ public class Collaborateur implements Identifiable, Serializable {
         hash = 89 * hash + Objects.hashCode(this.matricule);
         hash = 89 * hash + Objects.hashCode(this.nom);
         hash = 89 * hash + Objects.hashCode(this.prenom);
-        hash = 89 * hash + Objects.hashCode(this.date_de_naissance);
-        hash = 89 * hash + Objects.hashCode(this.numero_voie);
-        hash = 89 * hash + Objects.hashCode(this.adresse);
-        hash = 89 * hash + Objects.hashCode(this.code_postal);
-        hash = 89 * hash + Objects.hashCode(this.ville);
         hash = 89 * hash + Objects.hashCode(this.telephone_personnel);
         hash = 89 * hash + Objects.hashCode(this.statut);
         hash = 89 * hash + Objects.hashCode(this.categorie);
@@ -93,12 +78,6 @@ public class Collaborateur implements Identifiable, Serializable {
         if (!Objects.equals(this.prenom, other.prenom)) {
             return false;
         }
-        if (!Objects.equals(this.adresse, other.adresse)) {
-            return false;
-        }
-        if (!Objects.equals(this.ville, other.ville)) {
-            return false;
-        }
         if (!Objects.equals(this.statut, other.statut)) {
             return false;
         }
@@ -118,15 +97,6 @@ public class Collaborateur implements Identifiable, Serializable {
             return false;
         }
         if (!Objects.equals(this.matricule, other.matricule)) {
-            return false;
-        }
-        if (!Objects.equals(this.date_de_naissance, other.date_de_naissance)) {
-            return false;
-        }
-        if (!Objects.equals(this.numero_voie, other.numero_voie)) {
-            return false;
-        }
-        if (!Objects.equals(this.code_postal, other.code_postal)) {
             return false;
         }
         return Objects.equals(this.telephone_personnel, other.telephone_personnel);
@@ -168,46 +138,7 @@ public class Collaborateur implements Identifiable, Serializable {
         this.prenom = prenom;
     }
 
-    public LocalDate getDate_de_naissance() {
-        return date_de_naissance;
-    }
-
-    public void setDate_de_naissance(LocalDate date_de_naissance) {
-        this.date_de_naissance = date_de_naissance;
-    }
-
-    public String getNumero_voie() {
-        return numero_voie;
-    }
-
-    public void setNumero_voie(String numero_voie) {
-        this.numero_voie = numero_voie;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public Integer getCode_postal() {
-        return code_postal;
-    }
-
-    public void setCode_postal(Integer code_postal) {
-        this.code_postal = code_postal;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
-    }
-
+   
     public String getTelephone_personnel() {
         return telephone_personnel;
     }

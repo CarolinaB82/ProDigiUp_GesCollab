@@ -13,6 +13,7 @@
         <title>Créer RA</title>
     </head>
     <body>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
         <form action="<c:url value="/creer_ra" />" method="post">
             <div>${requestScope.message}</div>
             <div>${requestScope.errMsg}</div>
@@ -20,7 +21,7 @@
                 <legend>Créer un responsable d'activité</legend>
                 <div>
                     <label for="matricule">Matricule</label>
-                    <input type="number" id="matricule" name="matricule"
+                    <input type="text" id="matricule" name="matricule"
                     <div class="error">${requestScope.errors.matricule}</div>
                 </div>
                 <div>
@@ -34,38 +35,13 @@
                     <div class="error">${requestScope.errors.prenom}</div>
                 </div>
                 <div>
-                    <label for="date_de_naissance">Date de Naissance</label>
-                    <input type="text" id="date_de_naissance" name="date_de_naissance"
-                    <div class="error">${requestScope.errors.date_de_naissance}</div>
-                </div>
-                <div>
-                    <label for="num_voie">Numéro de voie</label>
-                    <input type="text" id="num_voie" name="num_voie"
-                    <div class="error">${requestScope.errors.numero_voie}</div>
-                </div>
-                <div>
-                    <label for="adresse">Adresse</label>
-                    <input type="text" id="adresse" name="adresse"
-                    <div class="error">${requestScope.errors.adresse}</div>
-                </div>
-                <div>
-                    <label for="code_postal">Code Postal</label>
-                    <input type="number" id="code_postal" name="code_postal"
-                    <div class="error">${requestScope.errors.code_postal}</div>
-                </div>
-                <div>
-                    <label for="ville">Ville</label>
-                    <input type="text" id="ville" name="ville"
-                    <div class="error">${requestScope.errors.ville}</div>
-                </div>
-                <div>
                     <label for="tel_pro">Téléphone Professionnel</label>
-                    <input type="text" id="tel_pro" name="tel_pro"
+                    <input type="text" id="telephone_professionnel" name="telephone_professionnel"pattern="\d{1,10}" maxlength="10" required>
                     <div class="error">${requestScope.errors.telephone_professionnel}</div>
                 </div>
                 <div>
                     <label for="tel_perso">Téléphone Personnel</label>
-                    <input type="text" id="tel_perso" name="tel_perso"
+                    <input type="text" id="telephone_personnel" name="telephone_personnel"pattern="\d{1,10}" maxlength="10" required>
                     <div class="error">${requestScope.errors.telephone_personnel}</div>
                 </div>
             </fieldset>
@@ -76,4 +52,5 @@
 
         </form>
     </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </html>

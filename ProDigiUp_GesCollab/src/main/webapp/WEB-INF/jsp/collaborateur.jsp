@@ -17,6 +17,7 @@
         
     </head>
     <body>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
             <legend>Fiche Collaborateur</legend>
@@ -26,11 +27,6 @@
             <p><strong>Genre: </strong><c:out value="${collaborateur.genre}"/></p>
             <p><strong>Nom: </strong><c:out value="${collaborateur.nom}"/></p>
             <p><strong>Prénom: </strong><c:out value="${collaborateur.prenom}"/></p>
-            <p><strong>Date de naissance: </strong><c:out value="${collaborateur.date_de_naissance}"/></p>
-            <p><strong>Numéro de voie: </strong><c:out value="${collaborateur.numero_voie}"/></p>
-            <p><strong>Adresse: </strong><c:out value="${collaborateur.adresse}"/></p>
-            <p><strong>Code postal: </strong><c:out value="${collaborateur.code_postal}"/></p>
-            <p><strong>Ville: </strong><c:out value="${collaborateur.ville}"/></p>
             <p><strong>Téléphone personnel: </strong><c:out value="${collaborateur.telephone_personnel}"/></p>
             <p><strong>Statut: </strong><c:out value="${collaborateur.statut}"/></p>
             <p><strong>Catégorie: </strong><c:out value="${collaborateur.categorie}"/></p>
@@ -40,6 +36,7 @@
             </fieldset>       
         </main>
     </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </html>
 
         

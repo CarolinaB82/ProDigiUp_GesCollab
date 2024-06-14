@@ -13,16 +13,21 @@
         <title>Accueil</title>
     </head>
     <body>
-        <img src="<c:url value="/assets/img/logoproDigiUp.png" />" width="200px" height="100px"  alt="logoProDigiUp">
-        <h1>Bienvenue sur l'application ProDigiUp</h1>
-        <h1>pour gérer vos collaborateurs</h1>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
+        <h1>Bienvenue </h1>
+        
 
         <nav>
             <ul>
                 <li><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></li>
+                <li><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></li>
                 <li><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></li>
+                <li><a href="<c:url value="/collaborateur"/>">Voir un collaborateur</a></li>
             </ul>
 
         </nav>
+            
+             
     </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </html>

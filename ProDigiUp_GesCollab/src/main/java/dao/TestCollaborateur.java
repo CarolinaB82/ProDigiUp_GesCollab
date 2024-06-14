@@ -22,8 +22,8 @@ public class TestCollaborateur {
         
 CollaborateurDao collDao = new CollaborateurDao();
 Collaborateur collab = collDao.read(1);
-        System.out.println("collab : " + collab.getId() + " " + collab.getMatricule() + " " + collab.getNom() + " " + collab.getPrenom() + " " + collab.getDate_de_naissance() + " " + collab.getNumero_voie() + " "
-        + collab.getAdresse() + " " + collab.getCode_postal() + " " + collab.getVille() + " " + collab.getTelephone_personnel() + " " + collab.getStatut() + " " + collab.getCategorie() + " " + collab.getGenre() + " "
+        System.out.println("collab : " + collab.getId() + " " + collab.getMatricule() + " " + collab.getNom() + " " + collab.getPrenom() + " " +
+         " " + collab.getTelephone_personnel() + " " + collab.getStatut() + " " + collab.getCategorie() + " " + collab.getGenre() + " "
         + collab.getRqth() + " " + collab.getMetier());
         
         
