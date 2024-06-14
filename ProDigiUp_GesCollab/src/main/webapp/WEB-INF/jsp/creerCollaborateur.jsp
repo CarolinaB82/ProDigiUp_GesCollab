@@ -55,7 +55,7 @@
                     </div>
                     <div>
                         <label for="code_postal">Code Postal</label>
-                        <input type="text" id="code_postal" name="code_postal">
+                        <input type="text" id="code_postal" name="code_postal"pattern="\d{1,10}" maxlength="5" required>
                         <div class="error">${requestScope.errors.code_postal}</div>
                     </div>
                     <div>
@@ -65,7 +65,7 @@
                     </div>
                     <div>
                         <label for="telephone_personnel">Téléphone personnel</label>
-                        <input type="text" id="telephone_personnel" name="telephone_personnel">
+                        <input type="text" id="telephone_personnel" name="telephone_personnel"pattern="\d{1,10}" maxlength="10" required>
                         <div class="error">${requestScope.errors.telephone_personnel}</div>
                     </div>
                     <div>

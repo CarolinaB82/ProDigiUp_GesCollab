@@ -43,6 +43,60 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
             System.err.println("Erreur de conversion pour le champ matricule : " + e.getMessage());
         }
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Validation du code postal
+        if (codePostalStr == null || codePostalStr.isEmpty()) {
+            setError("code_postal", "Le code postal est trop long, 5 chiffres svp.");
+        } else if (!codePostalStr.matches("\\d{1,5}")) {
+            setError("code_postal", "Le code postal doit contenir 5 chiffres.");
+        } else {
+            try {
+                Integer code_postal = Integer.parseInt(codePostalStr);
+                obj.setCode_postal(code_postal);
+            } catch (NumberFormatException e) {
+                setError("code_postal", "Erreur de conversion pour le champ code_postal : " + e.getMessage());
+            }
+        }
+
+        // Validation du numéro de téléphone personnel
+        if (telephone_personnel == null || telephone_personnel.isEmpty()) {
+            setError("telephone_personnel", "Le numéro de téléphone personnel est trop long, 10 chiffres svp.");
+        } else if (!telephone_personnel.matches("\\d{1,10}")) {
+            setError("telephone_personnel", "Le numéro de téléphone personnel doit contenir entre 1 et 10 chiffres.");
+        } else {
+            obj.setTelephone_personnel(telephone_personnel);
+        }
+
+        // Validation de la date de naissance
+        LocalDate date_de_naissance = null;
+        if (dateDeNaissanceStr != null && !dateDeNaissanceStr.isEmpty()) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                date_de_naissance = LocalDate.parse(dateDeNaissanceStr, formatter);
+                obj.setDate_de_naissance(date_de_naissance);
+            } catch (DateTimeParseException e) {
+                setError("date_de_naissance", "Erreur de conversion pour le champ date_de_naissance : " + e.getMessage());
+            }
+        } else {
+            setError("date_de_naissance", "Le champ date_de_naissance est vide ou non valide.");
+        }
+       /* 1ere Version    // Validation du code postal
+        if (codePostalStr == null || codePostalStr.isEmpty()) {
+            setError("code_postal", "Le code postal est requis.");
+        } else if (!codePostalStr.matches("\\d{1,10}")) {
+            setError("code_postal", "Le code postal doit contenir entre 1 et 10 chiffres.");
+        } else {
         try {
             Integer code_postal = Integer.parseInt(codePostalStr);
             obj.setCode_postal(code_postal);
@@ -50,20 +104,7 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
             System.err.println("Erreur de conversion pour le champ code_postal : " + e.getMessage());
         }
 
-        /* Convertir les champs Date
-        String dateDeNaissanceStr = getParameter("date_de_naissance");
-        Date date_de_naissance = null;
-        if (dateDeNaissanceStr != null && !dateDeNaissanceStr.isEmpty()) {
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                date_de_naissance = formatter.parse(dateDeNaissanceStr);
-                obj.setDate_de_naissance(date_de_naissance);
-            } catch (ParseException e) {
-                System.err.println("Erreur de conversion pour le champ date_de_naissance : " + e.getMessage());
-            }
-        } else {
-            System.err.println("Le champ date_de_naissance est vide ou non valide.");
-        }*/
+        /* 
  // Convertir les champs Date
         LocalDate date_de_naissance = null;
         if (dateDeNaissanceStr != null && !dateDeNaissanceStr.isEmpty()) {
@@ -78,13 +119,27 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
             setError("date_de_naissance", "Le champ date_de_naissance est vide ou non valide.");
         }
 
-        // Traiter les autres champs String
+        
+        
+        
+        
+        
+        
+        
+          if (telephone_personnel == null || telephone_personnel.isEmpty()) {
+            setError("telephone_personnel", "Le numéro de téléphone personnel est requis.");
+        } else if (!telephone_personnel.matches("\\d{1,10}")) {
+            setError("telephone_personnel", "Le numéro de téléphone personnel doit contenir entre 1 et 10 chiffres.");
+        } else {
+        obj.setTelephone_personnel(telephone_personnel);
+        }*/
+          
+           // Traiter les autres champs String
         obj.setNom(nom);
         obj.setPrenom(prenom);
         obj.setNumero_voie(numero_voie);
         obj.setAdresse(adresse);
         obj.setVille(ville);
-        obj.setTelephone_personnel(telephone_personnel);
         obj.setStatut(statut);
         obj.setCategorie(categorie);
         obj.setGenre(genre);
@@ -97,4 +152,4 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
         request.setAttribute("bean", obj);
         return obj;
     }
-}
+    }

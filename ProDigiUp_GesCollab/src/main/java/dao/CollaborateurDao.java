@@ -154,4 +154,20 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
                 }
+    
+    
+    
+    // rajout test
+    public boolean exists(int matricule) {
+        String sql = "SELECT 1 FROM collaborateur WHERE matricule=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, matricule);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return false;
+    }
 }

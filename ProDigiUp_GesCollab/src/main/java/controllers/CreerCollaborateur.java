@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  * @author cberge
  */
 
+/*                                                      Version sans la verification du matricule deja existant
 @WebServlet("/creer_collaborateur")
 @SuppressWarnings("serial")
 public class CreerCollaborateur extends HttpServlet{
@@ -59,6 +60,76 @@ public class CreerCollaborateur extends HttpServlet{
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
                     req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp/").forward(req, resp);
                 }
+            }else{
+                req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+                req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
+            }
+    
+}
+    
+    
+    
+}*/
+
+@WebServlet("/creer_collaborateur")
+@SuppressWarnings("serial")
+public class CreerCollaborateur extends HttpServlet{
+    
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher ("/WEB-INF/jsp/creerCollaborateur.jsp"). forward(req, resp);
+    
+    }
+
+    
+   @Override 
+    protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        CreerCollaborateurFormChecker nv = new CreerCollaborateurFormChecker(req);
+       Collaborateur collaborateur = nv.checkForm();
+       
+        
+            if (nv.getErrors().isEmpty()){
+                CollaborateurDao collaborateurDao = new CollaborateurDao();
+                // Appel de la méthode create du DOA
+                // Si une erreur dans l'insert alors une SQLException est levé
+                // On l'intercepte dans le catch et on affiche un msg d'erreur à l'utilisateur
+                
+                    
+                     try {
+        if (collaborateurDao.exists(collaborateur.getMatricule())) {
+            nv.addError("matricule", "Le matricule existe déjà.");
+            req.setAttribute("errors", nv.getErrors());
+            req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+            req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
+            return;
+        }
+
+        
+        
+                    collaborateurDao.create(collaborateur);
+                    Collaborateur collab = collaborateurDao.read(collaborateur.getId());
+                    req.setAttribute("collaborateur", collab);
+                    req.setAttribute("message", "Votre collaborateur est bien enregistré");
+                    req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
+                   
+                /*} catch (SQLException ex) {
+                    Logger.getLogger(CreerCollaborateur.class.getName()).log(Level.SEVERE, null, ex);
+                    req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+                    req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp/").forward(req, resp);
+                }*/
+                } catch (SQLException ex) {
+            if (ex.getMessage().contains("Le matricule existe déjà")) {
+                nv.addError("matricule", "Le matricule existe déjà.");
+                req.setAttribute("errors", nv.getErrors());
+                req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+                req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
+            } else {
+                Logger.getLogger(CreerCollaborateur.class.getName()).log(Level.SEVERE, null, ex);
+                req.setAttribute("errorMsg", "Erreur lors de la création du collaborateur");
+                req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
+            }
+        }
             }else{
                 req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
                 req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);

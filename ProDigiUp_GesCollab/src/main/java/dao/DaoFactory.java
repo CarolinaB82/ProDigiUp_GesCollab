@@ -10,6 +10,7 @@ package dao;
  */
 public class DaoFactory {
  private static CollaborateurDao collaborateurDao;
+ private static ResponsableActiviteDao responsableActiviteDao;
     
     private DaoFactory(){
 }
@@ -21,4 +22,11 @@ public class DaoFactory {
             return collaborateurDao;
         }
     
+    public static ResponsableActiviteDao ResponsableActiviteDao(){
+        if(responsableActiviteDao == null){
+            responsableActiviteDao = new ResponsableActiviteDao();
+        }
+        return responsableActiviteDao;
+    }
+
 }
