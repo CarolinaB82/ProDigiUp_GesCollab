@@ -1,0 +1,29 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 14 juin 2024, 16:36:53
+    Author     : asolanas
+*/
+
+:root {
+    background: linear-gradient(100deg, buttonface, paleturquoise);
+}
+body {
+    background-color: var(--primary-color);
+}
+
+.accueil{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+
+}
+
+.listeAccueil {
+     list-style-type: none;
+    justify-content: space-between;
+    margin: 1em;
+    display:flex;
+}
