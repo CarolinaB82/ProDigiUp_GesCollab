@@ -37,5 +37,8 @@ public abstract class FormChecker <T>{
         return request.getParameter(key)
                 == null ? "" : request.getParameter(key);
     }
+public void addError(String key, String value) {
+        this.errors.put(key, value);
+    }
 
 }
