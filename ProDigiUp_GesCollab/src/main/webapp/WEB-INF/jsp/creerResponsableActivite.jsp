@@ -22,8 +22,15 @@
                 <legend>Créer un responsable d'activité</legend>
                 <div>
                     <label for="matricule">Matricule</label>
-                    <input type="text" id="matricule" name="matricule"
-                           <div class="error">${requestScope.errors.matricule}</div>
+
+                    <input type="text" id="matricule" name="matricule" 
+                           pattern="[0-9]*"
+                           required
+                           title="Veuillez saisir uniquement des chiffres (0-9)" 
+                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.matricule : ''}" 
+                           class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
+                           >
+                    <div class="error-details-message">${requestScope.errors.matricule}</div>
                 </div>
                 <div>
                     <label for="nom">Nom</label>
@@ -51,28 +58,28 @@
                     <label for="tel_pro">Téléphone Professionnel</label>
                     <input type="text" id="telephone_professionnel" name="telephone_professionnel"
                            pattern="\d{10}" 
-                               maxlength="10" 
-                               required  
-                               title="Veuillez saisir exactement 10 chiffres"
- 
-                               value="${requestScope.ra != null ? requestScope.ra.telephone_professionnel : ''}"
-                               class="${not empty requestScope.errors.telephone_professionnel ? 'error-input' : ''}"
- 
-                               >
+                           maxlength="10" 
+                           required  
+                           title="Veuillez saisir exactement 10 chiffres"
+
+                           value="${requestScope.ra != null ? requestScope.ra.telephone_professionnel : ''}"
+                           class="${not empty requestScope.errors.telephone_professionnel ? 'error-input' : ''}"
+
+                           >
                     <div class="error">${requestScope.errors.telephone_professionnel}</div>
                 </div>
                 <div>
                     <label for="tel_perso">Téléphone Personnel</label>
                     <input type="text" id="telephone_personnel" name="telephone_personnel"
                            pattern="\d{10}" 
-                               maxlength="10" 
-                               required  
-                               title="Veuillez saisir exactement 10 chiffres"
- 
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
-                               class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
- 
-                               >
+                           maxlength="10" 
+                           required  
+                           title="Veuillez saisir exactement 10 chiffres"
+
+                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
+                           class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
+
+                           >
                     <div class="error">${requestScope.errors.telephone_personnel}</div>
                 </div>
             </fieldset>
