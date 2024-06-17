@@ -15,4 +15,9 @@
             <taglib-location>/WEB-INF/tld/c.tld</taglib-location>
         </taglib>
     </jsp-config>-->
+    
+     <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/assets/*</url-pattern>
+    </servlet-mapping>
 </web-app>

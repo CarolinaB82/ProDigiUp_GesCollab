@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +14,8 @@
         <title>Créer RA</title>
     </head>
     <body>
+                <%@include file="/WEB-INF/jspf/header.jsp" %>
+
         <form action="<c:url value="/creer_ra" />" method="post">
             <div>${requestScope.message}</div>
             <div>${requestScope.errMsg}</div>
@@ -34,7 +37,7 @@
                     <div class="error">${requestScope.errors.prenom}</div>
                 </div>
                 <div>
-                    <label for="date_de_naissance">Date de Naissance</label>
+                    <label for="date_de_naissance">Date de Naissance (Format: yyyy-MM-dd):</label>
                     <input type="text" id="date_de_naissance" name="date_de_naissance"
                     <div class="error">${requestScope.errors.date_de_naissance}</div>
                 </div>
