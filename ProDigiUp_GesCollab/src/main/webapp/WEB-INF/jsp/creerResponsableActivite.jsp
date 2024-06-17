@@ -23,7 +23,7 @@
                 <div>
                     <label for="matricule">Matricule</label>
                     <input type="text" id="matricule" name="matricule"
-                           <div class="error">${requestScope.errors.matricule}</div>
+                           <div>${requestScope.errors.matricule}</div>
                 </div>
                 <div>
                     <label for="nom">Nom</label>
