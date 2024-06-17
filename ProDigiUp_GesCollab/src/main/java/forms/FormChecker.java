@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
 package forms;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 /**
  *
@@ -27,11 +25,6 @@ public abstract class FormChecker <T>{
     public Map<String, String> getErrors() {
         return errors;
     }
-    
-    public void addError(String key, String value) {
-        this.errors.put(key, value);
-    }
-    
     public boolean hasErrors() {
         return !errors.isEmpty();
     }

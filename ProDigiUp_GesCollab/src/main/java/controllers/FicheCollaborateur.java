@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
 package controllers;
 import dao.CollaborateurDao;
 import entities.Collaborateur;
@@ -23,7 +19,7 @@ public class FicheCollaborateur extends HttpServlet {
 protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     //req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
     // Récupérer l'identifiant du collaborateur depuis la requête
-        int collaborateurId = 3;
+        int collaborateurId = 0;
         
         CollaborateurDao collaborateurDao = new CollaborateurDao ();
         // Lire les informations du collaborateur depuis la base de données

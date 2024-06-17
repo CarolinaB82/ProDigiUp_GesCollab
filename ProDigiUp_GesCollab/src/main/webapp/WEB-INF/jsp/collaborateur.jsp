@@ -15,13 +15,10 @@
         <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
     </head>
-
-</head>
-<body>
-    <%@include file="/WEB-INF/jspf/header.jsp" %>
-
-    <main>
-        <fieldset>
+    <body>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
+        <main>
+            <fieldset>
             <legend>Fiche Collaborateur</legend>
 
             <p><strong>ID: </strong><c:out value="${collaborateur.id}"/></p>
@@ -35,9 +32,10 @@
             <p><strong>RQTH: </strong><c:out value="${collaborateur.rqth}"/></p>
             <p><strong>Date de renouvellement: </strong><c:out value="${collaborateur.date_de_renouvellement}"/></p>
             <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
-
-        </fieldset>       
-    </main>
-</body>
+        
+            </fieldset>       
+        </main>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </html>
 

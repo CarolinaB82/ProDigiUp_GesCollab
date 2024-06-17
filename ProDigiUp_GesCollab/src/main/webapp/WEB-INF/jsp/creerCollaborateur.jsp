@@ -182,4 +182,5 @@
             </form>
         </main>
     </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </html>
