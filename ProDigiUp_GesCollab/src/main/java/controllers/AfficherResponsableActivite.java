@@ -1,4 +1,3 @@
-
 package controllers;
 
 import dao.ResponsableActiviteDao;
@@ -16,12 +15,13 @@ import java.util.List;
  * @author asolanas
  */
 @WebServlet("/afficher_ra")
+@SuppressWarnings("serial")
 public class AfficherResponsableActivite extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
-        int raId = 0;
+        int raId = 1;
         
         ResponsableActiviteDao raDao = new ResponsableActiviteDao();
        

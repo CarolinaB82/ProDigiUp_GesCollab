@@ -1,11 +1,14 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
-/* 
-    Created on : 14 juin 2024, 16:36:53
-    Author     : asolanas
-*/
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+.error-details-message{
+    color: red;
+    font-style: italic;
+}
+.error-input {
+    border: 1px solid red; /* Bordure rouge */
+}
 
 :root {
     background: linear-gradient(100deg, buttonface, paleturquoise);
@@ -13,17 +16,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 body {
     background-color: var(--primary-color);
 }
-
+ 
 .accueil{
     display: flex;
     justify-content: space-between;
     text-align: center;
+}
+/*
 
+form fieldset div {
+    margin-bottom: 10px;
 }
 
-.listeAccueil {
-     list-style-type: none;
-    justify-content: space-between;
-    margin: 1em;
-    display:flex;
+form fieldset div label {
+    display: inline-block;
+    width: 150px; 
+    margin-right: 10px;
+    vertical-align: top; 
 }
+
+form fieldset div input[type="text"],
+form fieldset div select {
+    width: 200px; 
+    vertical-align: top;
+    padding: 5px;
+    box-sizing: border-box; 
+}
+
+form fieldset div.error-details-message {
+    margin-top: 5px; 
+    color: red; 
+}
+
+form fieldset div.error-message {
+    margin-top: 10px;
+    color: red; 
+    font-weight: bold; 
+}
+*/

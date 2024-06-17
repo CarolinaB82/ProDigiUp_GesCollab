@@ -22,6 +22,7 @@ public class Collaborateur implements Identifiable, Serializable {
     private String categorie;
     private String genre;
     private String rqth;
+    private LocalDate date_de_renouvellement;
     private String metier;
 
     @Override
@@ -37,6 +38,7 @@ public class Collaborateur implements Identifiable, Serializable {
         sb.append(", categorie=").append(categorie);
         sb.append(", genre=").append(genre);
         sb.append(", rqth=").append(rqth);
+        sb.append(", date_de_renouvellement=").append(date_de_renouvellement);
         sb.append(", metier=").append(metier);
         sb.append('}');
         return sb.toString();
@@ -54,11 +56,11 @@ public class Collaborateur implements Identifiable, Serializable {
         hash = 89 * hash + Objects.hashCode(this.categorie);
         hash = 89 * hash + Objects.hashCode(this.genre);
         hash = 89 * hash + Objects.hashCode(this.rqth);
+                hash = 89 * hash + Objects.hashCode(this.date_de_renouvellement);
+
         hash = 89 * hash + Objects.hashCode(this.metier);
         return hash;
     }
-
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -76,6 +78,9 @@ public class Collaborateur implements Identifiable, Serializable {
             return false;
         }
         if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.telephone_personnel, other.telephone_personnel)) {
             return false;
         }
         if (!Objects.equals(this.statut, other.statut)) {
@@ -99,8 +104,12 @@ public class Collaborateur implements Identifiable, Serializable {
         if (!Objects.equals(this.matricule, other.matricule)) {
             return false;
         }
-        return Objects.equals(this.telephone_personnel, other.telephone_personnel);
+        return Objects.equals(this.date_de_renouvellement, other.date_de_renouvellement);
     }
+
+    
+
+    
 
    
 
@@ -138,7 +147,6 @@ public class Collaborateur implements Identifiable, Serializable {
         this.prenom = prenom;
     }
 
-   
     public String getTelephone_personnel() {
         return telephone_personnel;
     }
@@ -179,6 +187,14 @@ public class Collaborateur implements Identifiable, Serializable {
 
     public void setRqth(String rqth) {
         this.rqth = rqth;
+    }
+      
+        
+    public LocalDate getDate_de_renouvellement (){
+        return date_de_renouvellement;
+    }
+      public void setDate_de_renouvellement(LocalDate date_de_renouvellement) {
+        this.date_de_renouvellement = date_de_renouvellement;
     }
 
     public String getMetier() {

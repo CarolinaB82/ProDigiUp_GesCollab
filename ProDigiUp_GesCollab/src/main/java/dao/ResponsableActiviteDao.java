@@ -79,6 +79,20 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return ra;
     }
+    
+     // rajout test
+    public boolean exists(int matricule) {
+        String sql = "SELECT 1 FROM ra WHERE matricule=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, matricule);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return false;
+    }
 
     @Override
     protected void update(ResponsableActivite obj) {
