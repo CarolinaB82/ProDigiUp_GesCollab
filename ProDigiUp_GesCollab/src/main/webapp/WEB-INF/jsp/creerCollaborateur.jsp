@@ -106,49 +106,7 @@
                         <div class="error-details-message">${requestScope.errors.genre}</div>
                     </div>
                     <div>
-                        <!--<label for="rqth">RQTH</label>
-                        <select id="rqth" name="rqth" onchange="toggleDateField()">
-                            <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
-                            <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
-                        </select>
-                        <div class="error-details-message">${requestScope.errors.rqth}</div>
-                    </div>
-
-                        <c:if test="${isOuiSelected}">
-                            <div id="date-renouvellement">
-                                <label for="date_de_renouvellement">Date de renouvellement</label>
-                                <input type="date" id="date_de_renouvellement" name="date_de_renouvellement"placeholder="jj-mm-aaaa">
-                                <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
-                            </div>
-                        </c:if>
-                        <c:if test="${!isOuiSelected}">
-                            <div id="date-renouvellement" style="display:none;">
-                                <label for="date_de_renouvellement">Date de renouvellement</label>
-                                <input type="date" id="date_de_renouvellement" name="date_de_renouvellement">
-                                <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
-                            </div>
-                        </c:if>
-    
-                        <script>
-                            function toggleDateField() {
-                                var rqthSelect = document.getElementById('rqth');
-                                var dateField = document.getElementById('date-renouvellement');
-                                var dateInput = document.getElementById('date_de_renouvellement');
-    
-                                if (rqthSelect.value === 'oui') {
-                                    dateField.style.display = 'block';
-                                    dateInput.disabled = false;
-                                } else {
-                                    dateField.style.display = 'non';
-                                    dateInput.disabled = true;
-                                    dateInput.value = ''; // Clear the value to avoid submission
-                                }
-                            }
-    
-                            document.addEventListener("DOMContentLoaded", function () {
-                                toggleDateField(); // Ensure the initial state is correct based on the current selection
-                            });
-                        -->
+                        
 
                         <div>
                             <label for="rqth">RQTH</label>
