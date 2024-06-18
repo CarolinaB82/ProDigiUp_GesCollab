@@ -5,10 +5,15 @@
 package dao;
 
 import entities.Collaborateur;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -159,4 +164,27 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         }
         return false;
     }
+     @Override
+    public Collection<Collaborateur>list(){
+        ArrayList<Collaborateur> list = new ArrayList<>();
+        String sql = "SELECT * FROM collaborateur";
+        try(PreparedStatement pstmt = connexion.prepareStatement(sql)){
+            
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                Collaborateur c = new Collaborateur();
+            c.setId(rs.getInt("id_collaborateur"));
+            c.setMatricule(rs.getInt("matricule"));
+            c.setNom(rs.getString("nom"));
+            c.setPrenom(rs.getString("prenom"));
+            c.setStatut(rs.getString("statut"));
+            
+            list.add(c);
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors du listage : " + ex.getMessage());      
+        }
+    return list;
+}
 }

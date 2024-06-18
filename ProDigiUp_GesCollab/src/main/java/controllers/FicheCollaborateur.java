@@ -19,7 +19,7 @@ public class FicheCollaborateur extends HttpServlet {
 protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     //req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
     // Récupérer l'identifiant du collaborateur depuis la requête
-        int collaborateurId = 0;
+        int collaborateurId = 1;
         
         CollaborateurDao collaborateurDao = new CollaborateurDao ();
         // Lire les informations du collaborateur depuis la base de données

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +54,26 @@ public abstract class Dao<T extends Identifiable> {
             Logger.getLogger(Dao.class.getName()).log(Level.SEVERE, null, ex.getMessage());
         }
        return obj;
-   }}
+   }
+
+public Collection<T> list(){
+        ArrayList<T> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + table;
+        try 
+            (PreparedStatement pstmt = connexion.prepareStatement(sql))
+                
+        {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                T obj = createObject(rs);
+                list.add(obj);
+            }
+        }catch (SQLException ex){
+                Logger.getLogger(Dao.class.getName()).log(Level.SEVERE, "Erreur lors du listage : " + ex.getMessage());
+                
+            }
+        return list;
+    }  }
        
    
    
