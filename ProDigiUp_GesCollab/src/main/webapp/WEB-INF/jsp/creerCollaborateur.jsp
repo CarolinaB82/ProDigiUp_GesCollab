@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,7 +17,7 @@
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <main>
             <form action="/ProDigiUp_GesCollab/creer_collaborateur" method="post">                  
                 <div>${requestScope.message}</div>

@@ -1,3 +1,54 @@
+@font-face{
+    font-family: plume;
+    src: url(Wonderful_Feather.ttf)
+}
+@font-face{
+    font-family: magazine;
+    src: url(Magazine.ttf)
+}
+@font-face{
+    font-family: rabilone;
+    src: url(Rabilone.otf)
+}
+
+:root {
+    background: linear-gradient(100deg, buttonface, paleturquoise);
+}
+body {
+    background-color: var(--primary-color);
+}
+ 
+header{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    font-family: magazine;
+    
+    
+}
+footer{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.listeAccueil{
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    font-family: rabilone;
+    color: black;
+}
+
+.bienvenue{
+    text-align: center;
+    font-family: magazine;
+    font-size: 50px;
+}
 .error-message {
     color: red;
     font-weight: bold;
@@ -9,48 +60,7 @@
 .error-input {
     border: 1px solid red; /* Bordure rouge */
 }
-
-:root {
-    background: linear-gradient(100deg, buttonface, paleturquoise);
+a{
+    text-decoration: none;
+    
 }
-body {
-    background-color: var(--primary-color);
-}
- 
-.accueil{
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-}
-/*
-
-form fieldset div {
-    margin-bottom: 10px;
-}
-
-form fieldset div label {
-    display: inline-block;
-    width: 150px; 
-    margin-right: 10px;
-    vertical-align: top; 
-}
-
-form fieldset div input[type="text"],
-form fieldset div select {
-    width: 200px; 
-    vertical-align: top;
-    padding: 5px;
-    box-sizing: border-box; 
-}
-
-form fieldset div.error-details-message {
-    margin-top: 5px; 
-    color: red; 
-}
-
-form fieldset div.error-message {
-    margin-top: 10px;
-    color: red; 
-    font-weight: bold; 
-}
-*/
