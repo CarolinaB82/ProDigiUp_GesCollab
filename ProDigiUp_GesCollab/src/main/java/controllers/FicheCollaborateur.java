@@ -1,4 +1,5 @@
 package controllers;
+
 import dao.CollaborateurDao;
 import entities.Collaborateur;
 import jakarta.servlet.ServletException;
@@ -8,6 +9,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author cberge
@@ -36,9 +40,9 @@ protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws S
 
         // Transmettre les informations du collaborateur à la page JSP
         req.setAttribute("collaborateur", collaborateur);
-    req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
-    
-}
- 
-   
+        req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
+
+        
+    }
+
 }
