@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -40,11 +42,11 @@ public class CollaborateurDao extends Dao<Collaborateur> {
                 obj.setStatut(rs.getString("statut"));
                 obj.setCategorie(rs.getString("categorie"));
                 obj.setGenre(rs.getString("genre"));
-               
+
                 obj.setRqth(rs.getString("rqth"));
-                if(rs.getDate("date_de_renouvellement") != null){
+                if (rs.getDate("date_de_renouvellement") != null) {
                     obj.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
-                }                 
+                }
                 obj.setMetier(rs.getString("metier"));
             }
         } catch (SQLException ex) {
@@ -64,15 +66,14 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         obj.setStatut(rs.getString("statut"));
         obj.setCategorie(rs.getString("categorie"));
         obj.setGenre(rs.getString("genre"));
-       
         obj.setRqth(rs.getString("rqth"));
-         obj.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
+        obj.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
         obj.setMetier(rs.getString("metier"));
 
         return obj;
     }
 
-    @Override
+     @Override
     public void create(Collaborateur obj) throws SQLException{
         String sql = "INSERT INTO  collaborateur (matricule, nom, prenom, telephone_personnel, statut, categorie, genre, rqth, date_de_renouvellement, metier)"
                 + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -111,16 +112,16 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             
         }
     }
-    
+
     @Override
-    public void update (Collaborateur obj){
+    public void update(Collaborateur obj) {
         String sql = "UPDATE collaborateur SET matricule=?, nom=?, prenom=?, telephone_personnel=?, statut=?, categorie=?, genre=?, rqth=?, date_de_renouvellement=?, metier=?"
-    + "WHERE id_collaborateur=?";
-        
-        try{
+                + "WHERE id_collaborateur=?";
+
+        try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getMatricule());
-             pstmt.setString(2, obj.getNom());
+            pstmt.setString(2, obj.getNom());
             pstmt.setString(3, obj.getPrenom());
             pstmt.setString(4, obj.getTelephone_personnel());
             pstmt.setString(5, obj.getStatut());
@@ -135,17 +136,14 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             }
 
             pstmt.setString(10, obj.getMetier());
-            
+
             pstmt.executeUpdate();
-            
-            
-        }catch (SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
-                }
-    
-    
-    
+    }
+
     // rajout test
     public boolean exists(int matricule) {
         String sql = "SELECT 1 FROM collaborateur WHERE matricule=?";
@@ -159,4 +157,60 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         }
         return false;
     }
+
+    @Override
+    public Collection<Collaborateur> list() {
+        ArrayList<Collaborateur> list = new ArrayList<>();
+        String sql = "SELECT * FROM collaborateur";
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Collaborateur c = new Collaborateur();
+                c.setId(rs.getInt("id_collaborateur"));
+                c.setMatricule(rs.getInt("matricule"));
+                c.setNom(rs.getString("nom"));
+                c.setPrenom(rs.getString("prenom"));
+                c.setStatut(rs.getString("statut"));
+
+                list.add(c);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors du listage : " + ex.getMessage());
+        }
+        return list;
+    }
+
+     public List<Collaborateur> rechercher(String recherche) throws SQLException {
+        List<Collaborateur> collaborateurs = new ArrayList<>();
+        String sql = "SELECT * FROM collaborateur WHERE matricule LIKE ? OR nom LIKE ? OR prenom LIKE ?";
+
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            String query = "%" + recherche + "%";
+            pstmt.setString(1, query);
+            pstmt.setString(2, query);
+            pstmt.setString(3, query);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Collaborateur collaborateur = new Collaborateur();
+                    
+                    collaborateur.setMatricule(rs.getInt("matricule"));
+                    collaborateur.setNom(rs.getString("nom"));
+                    collaborateur.setPrenom(rs.getString("prenom"));
+//                    collaborateur.setTelephone_personnel(rs.getString("telephone_personnel"));
+                    collaborateur.setStatut(rs.getString("statut"));
+//                    collaborateur.setCategorie(rs.getString("categorie"));
+//                    collaborateur.setGenre(rs.getString("genre"));
+//                    collaborateur.setRqth(rs.getString("rqth"));
+//                    collaborateur.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
+                    collaborateur.setMetier(rs.getString("metier"));
+                    collaborateurs.add(collaborateur);
+                }
+            }
+        }
+        return collaborateurs;
+    }
+
 }
