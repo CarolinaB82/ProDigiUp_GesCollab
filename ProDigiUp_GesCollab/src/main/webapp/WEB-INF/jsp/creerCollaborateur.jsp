@@ -41,7 +41,7 @@
                     <div>
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom"
-                               pattern="[a-zA-Z]*"
+                               pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
 
@@ -54,7 +54,7 @@
                     <div>
                         <label for="prenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom"
-                               pattern="[a-zA-Z]*"
+                               pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.prenom : ''}"
@@ -163,7 +163,7 @@
                         <div>
                             <label for="metier">Métier</label>
                             <input type="text" id="metier" name="metier"
-                                   pattern="[a-zA-Z]*"
+                                   pattern="[a-zA-ZÀ-ÿ' ]*"
                                    required
                                    title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                    value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"

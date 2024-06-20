@@ -64,3 +64,32 @@ a{
     text-decoration: none;
     
 }
+
+ .thick-border {
+    border-bottom: 3px solid purple; /* Bordure inférieure épaisse de couleur violette */
+}
+
+
+.custom-table {
+    border: 3px solid purple;
+    border-collapse: collapse;
+    width : 100%;
+}
+
+.custom-table th  {
+    border: 3px solid purple; /* Ajustez la taille de la bordure intérieure si nécessaire */
+    padding: 10px; /* Augmente le remplissage pour agrandir les cellules */
+    width: auto; /* Permet à chaque cellule de s'ajuster automatiquement à son contenu */
+    text-align: center; /* Centre le contenu horizontalement */
+    vertical-align: middle; /* Centre le contenu verticalement */
+}
+.custom-table td{
+        border: 1px solid purple; /* Ajustez la taille de la bordure intérieure si nécessaire */
+ min-width: 100px; /* Définit une largeur minimum pour les cellules */
+ text-align: center; /* Centre le contenu horizontalement */
+    vertical-align: middle; /* Centre le contenu verticalement */
+}
+
+.custom-table .collaborator-end-row {
+    border-bottom: 3px solid purple;
+}

@@ -8,6 +8,7 @@ package dao;
 public class DaoFactory {
  private static CollaborateurDao collaborateurDao;
  private static ResponsableActiviteDao responsableActiviteDao;
+ private static PartenaireDao partenaireDao;
     
     private DaoFactory(){
 }
@@ -26,5 +27,12 @@ public class DaoFactory {
         }
         return responsableActiviteDao;
     }
+    
+    public static PartenaireDao getPartenaireDao(){
+            if (partenaireDao == null) {
+                partenaireDao = new PartenaireDao();
+            }
+            return partenaireDao;
+        }
 
 }

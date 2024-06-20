@@ -5,6 +5,8 @@
 package dao;
 
 import entities.Collaborateur;
+import entities.CollaborateurRaPartenaire;
+import entities.ResponsableActivite;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import dao.DaoFactory;
+import entities.Partenaire;
+import entities.ResponsableActivitePartenaire;
 
 
 /**
@@ -149,7 +154,85 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         }
                 }
     
+    public Collection<CollaborateurRaPartenaire>listCollaborateurRaPartenaire(){
+        Collection<Collaborateur> listeCollaborateur = list();
+        // 1. je recupere la liste des collaborateurs
+        ArrayList<CollaborateurRaPartenaire> listCollaborateurRaPartenaire = new ArrayList<>();
+        // 2. j'instancie ma liste CollaborateurRaPartenaire à vide
+        for(Collaborateur collab : listeCollaborateur){
+            // 3. je boucle sur chaque collaborateur dans ma liste des collaborateurs 
+            CollaborateurRaPartenaire collabRaPart = new  CollaborateurRaPartenaire();
+            // 4. j'instancie un nouvel objet de type CollaborateurRaPartenaire pour chaque collaborateur que j'apelle collabRaPart (variable)
+            // mon but etant de remplir cet objet 
+            collabRaPart.setCollaborateur(collab);
+            // 5. pour le remplir on utilise le setCollaborateur (collab);
+            Collection<ResponsableActivite> listResponsableActivite = listResponsableActivite(collab.getId());
+            // 6. recuperation de la liste Responsable Activite associe au collaborateur courant (collab)
+            ArrayList<ResponsableActivitePartenaire> listRaPartenaire = new ArrayList<>();
+            // 7. j'instancie ma liste ResponsableActivitePartenaire à vide
+            for(ResponsableActivite responsable: listResponsableActivite){
+                // 8. je boucle sur chaque responsable activite dans ma liste des ra
+                ResponsableActivitePartenaire respPart = new  ResponsableActivitePartenaire();
+                // 9. j'instancie un nouvel objet de type ResponsableActivitePartenaire pour chaque responsable d'activite que j'apelle respPart (variable)
+                // mon but etant de remplir cet objet 
+                respPart.setRa(responsable);
+                // 10. pour le remplir on utilise le setRa (responsable)
+                Collection<Partenaire> listPartenaires = listPartenaire(responsable.getId());
+                // 11. recuperation de la  liste Partenaire associe au responsable d'activite courant(responsable)
+                respPart.setPartenaires(listPartenaires);
+                // 12. pour remplir l'objet respPart on utilise la liste des partenaires donc : setPartenaires(listPartenaires)
+                listRaPartenaire.add(respPart);
+                // 13. pour remplir ma listRaPartenaire qui etait instancier a vide au .7 
+                //j'y ajoute les infos du respPart 
+                // but que mon ra et mon partenaire soient liés
+            }
+            collabRaPart.setRaPartenaires(listRaPartenaire);
+            // 14. Remplissage de l'objet CollaborateurRaPartenaire avec la liste des ResponsableActivitePartenaire
+            // but : pour remplir l'objet collabRaPart on utilise le setRaPartenaires (listRaPartenaire) qui associe les ra aux partenaires
+            listCollaborateurRaPartenaire.add(collabRaPart);
+            // 15. Ajout de l'objet CollaborateurRaPartenaire à la liste des CollaborateurRaPartenaire
+            //pour remplir ma listCollaborateurRaPartenaire qui etait instancier a vide au .2 j'y ajoute mes infos
+                // du (collabRaPart) pour que mon collab , mon ra et mon partenaire soient liés
+        }
+        return listCollaborateurRaPartenaire;
+        // 16. je retourne cette liste
+    }
     
+    public Collection<ResponsableActivite> listResponsableActivite(int idCollaborateur){
+        String sql = "SELECT id_ra FROM posseder WHERE id_collaborateur=?";
+        ArrayList<ResponsableActivite> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idCollaborateur);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                int idRa = rs.getInt("id_ra");
+                ResponsableActivite responsableActive = DaoFactory.ResponsableActiviteDao().read(idRa);
+                list.add(responsableActive);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
+    
+    public Collection<Partenaire> listPartenaire(int idRa){
+        String sql = "SELECT id_partenaire FROM propose WHERE id_ra=?";
+        ArrayList<Partenaire> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idRa);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                int idPartenaire = rs.getInt("id_partenaire");
+                Partenaire partenaire = DaoFactory.getPartenaireDao().read(idPartenaire);
+                list.add(partenaire);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
     
     // rajout test
     public boolean exists(int matricule) {

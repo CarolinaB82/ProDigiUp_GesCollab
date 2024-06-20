@@ -18,8 +18,17 @@ public class FicheCollaborateur extends HttpServlet {
 @Override
 protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     //req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-    // Récupérer l'identifiant du collaborateur depuis la requête
-        int collaborateurId = 1;
+     // Récupérer l'identifiant du collaborateur depuis la requête
+        String collaborateurIdParam = req.getParameter("id");
+        int collaborateurId = 1; // Valeur par défaut ou celle que vous choisissez si aucun paramètre n'est fourni
+        
+        if (collaborateurIdParam != null && !collaborateurIdParam.isEmpty()) {
+            try {
+                collaborateurId = Integer.parseInt(collaborateurIdParam);
+            } catch (NumberFormatException e) {
+                // Gérer l'erreur de conversion si nécessaire
+            }
+        }
         
         CollaborateurDao collaborateurDao = new CollaborateurDao ();
         // Lire les informations du collaborateur depuis la base de données

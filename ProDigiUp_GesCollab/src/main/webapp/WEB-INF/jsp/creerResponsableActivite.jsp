@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <label for="nom">Nom</label>
-                    <input type="text" id="nom" name="nom" pattern="[a-zA-Z]*"
+                    <input type="text" id="nom" name="nom" pattern="[a-zA-ZÀ-ÿ' ]*"
                            required
                            title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                            value="${requestScope.ra != null ? requestScope.ra.prenom : ''}"
@@ -45,7 +45,7 @@
                 </div>
                 <div>
                     <label for="prenom">Prénom</label>
-                    <input type="text" id="prenom" name="prenom" pattern="[a-zA-Z]*"
+                    <input type="text" id="prenom" name="prenom" pattern="[a-zA-ZÀ-ÿ' ]*"
                            required
                            title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                            value="${requestScope.ra != null ? requestScope.ra.prenom : ''}"

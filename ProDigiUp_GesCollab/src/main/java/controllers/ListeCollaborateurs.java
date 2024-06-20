@@ -7,6 +7,7 @@ package controllers;
 import dao.CollaborateurDao;
 import dao.DaoFactory;
 import entities.Collaborateur;
+import entities.CollaborateurRaPartenaire;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,7 +32,8 @@ public class ListeCollaborateurs extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
-      Collection<Collaborateur> collaborateurs = DaoFactory.getCollaborateurDao().list();
+       //Collection<Collaborateur> collaborateurs = DaoFactory.getCollaborateurDao().list();
+       Collection<CollaborateurRaPartenaire> collaborateurs = DaoFactory.getCollaborateurDao().listCollaborateurRaPartenaire();
        
 
         req.setAttribute("collaborateurs", collaborateurs);

@@ -17,32 +17,68 @@
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <main>
-            <h2>Liste des collaborateurs</h2>
+       <main>
+    <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
 
-          <table border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Matricule</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Statut</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="collaborateur" items="${requestScope.collaborateurs}">
+    <!--<table border="1" style="border: 3px solid purple; border-collapse: collapse;">-->
+     <table border="1" class="custom-table">
+        
+        
+        <thead>
+        
             <tr>
-                <td><c:out value="${collaborateur.id}"/></td>
-                <td><a href="<c:url value='${collaborateur.matricule}'/>"><c:out value="${collaborateur.matricule}"/></a></td>
-                <td><a href="<c:url value='${collaborateur.nom}'/>"><c:out value="${collaborateur.nom}"/></a></td>
-                <td><c:out value="${collaborateur.prenom}"/></td>
-                <td><c:out value="${collaborateur.statut}"/></td>
-              
+                <th>ID</th>
+                <th>Matricule</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Statut</th>
+                <th>Nom Responsable Activité</th>
+                <th>Nom Partenaire</th>
             </tr>
-        </c:forEach>
-    </tbody>
-</table>
-
-   
+        
+        </thead>
+        <tbody>
+             
+            <c:forEach var="collaborateur" items="${requestScope.collaborateurs}">
+                <c:set var="raPartenairesSize" value="${collaborateur.raPartenaires.size()}" />
+                <c:forEach var="raPartenaire" items="${collaborateur.raPartenaires}" varStatus="status">
+                    <tr class="${status.index == 0 ? 'collaborateur-row' : ''} ${status.index == raPartenairesSize - 1 ? 'collaborator-end-row' : ''} '/>">
+                        <c:if test="${status.index == 0}">
+                            <td rowspan="${raPartenairesSize}">
+                                <c:out value="${collaborateur.collaborateur.id}"/>
+                            </td>
+                            <td rowspan="${raPartenairesSize}">
+                                
+                                    <c:out value="${collaborateur.collaborateur.matricule}"/>
+                                </a>
+                            </td>
+                            <td rowspan="${raPartenairesSize}">
+                               <!-- <a href="<c:url value='${collaborateur.collaborateur.nom}'/>">-->
+                                <a href="<c:url value='/collaborateur?id=${collaborateur.collaborateur.id}'/>">
+                                    <c:out value="${collaborateur.collaborateur.nom}"/>
+                                </a>
+                                    
+                            </td>
+                            <td rowspan="${raPartenairesSize}">
+                                <c:out value="${collaborateur.collaborateur.prenom}"/>
+                            </td>
+                            <td rowspan="${raPartenairesSize}">
+                                <c:out value="${collaborateur.collaborateur.statut}"/>
+                            </td>
+                        </c:if>
+                        <td>
+                            <c:out value="${raPartenaire.ra.nom}"/>
+                        </td>
+                        <td>
+                            <c:forEach var="partenaire" items="${raPartenaire.partenaires}">
+                                <c:out value="${partenaire.nom}"/><br/>
+                            </c:forEach>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:forEach>
+            
+        </tbody>
+    </table>
+</main>
 </html>
