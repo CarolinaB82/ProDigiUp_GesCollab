@@ -38,7 +38,7 @@ public class RechercherCollaborateur extends HttpServlet {
             e.printStackTrace();
         }
         req.setAttribute("collaborateurs", collaborateurs);
-        req.getRequestDispatcher("/WEB-INF/jsp/resultatRechercheCollaborateur.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
     }
 }
 
