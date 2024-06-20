@@ -25,7 +25,7 @@
                 <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>
                 <p><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></p>
                 <p><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></p>
-                <p><a href="<c:url value="/collaborateur"/>">Voir un collaborateur</a></p>
+                <p><a href="<c:url value="/collaborateur"/>">Rechercher un collaborateur</a></p>
                 <p><a href="<c:url value="/liste_collaborateurs"/>">Liste des collaborateurs</a></p>
                 <p><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></p>
             </ul>

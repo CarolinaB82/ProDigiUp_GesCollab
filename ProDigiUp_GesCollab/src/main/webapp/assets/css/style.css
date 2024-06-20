@@ -58,6 +58,14 @@ a{
     margin-bottom: 10px;
     justify-content: center;
 }
+
+.tableaux{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: center;
+}
 .error-message {
     color: red;
     font-weight: bold;

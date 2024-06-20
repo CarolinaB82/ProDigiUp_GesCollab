@@ -21,8 +21,8 @@
             <h2>Liste des collaborateurs</h2>
 
             <table border="1">
-                <thead>
-                    <tr>
+                <thead >
+                    <tr class="tableaux">
                         <th>ID</th>
                         <th>Matricule</th>
                         <th>Nom</th>
