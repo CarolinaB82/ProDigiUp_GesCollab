@@ -32,7 +32,7 @@
         <table border="1">
             <thead class="tableaux">
                 <tr >
-                    <th>ID</th>
+                   
                     <th>Matricule</th>
                     <th>Nom</th>
                     <th>Prénom</th>
@@ -43,7 +43,7 @@
             <tbody>
                 <c:forEach var="collaborateur" items="${collaborateurs}">
                     <tr>
-                        <td><c:out value="${collaborateur.id}" /></td>
+                       
                         <td><c:out value="${collaborateur.matricule}" /></td>
                         <td><c:out value="${collaborateur.nom}" /></td>
                         <td><c:out value="${collaborateur.prenom}" /></td>

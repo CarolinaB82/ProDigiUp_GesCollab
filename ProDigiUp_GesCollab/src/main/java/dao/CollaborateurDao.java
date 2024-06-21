@@ -216,7 +216,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
     }
     
     public Collection<Partenaire> listPartenaire(int idRa){
-        String sql = "SELECT id_partenaire FROM propose WHERE id_ra=?";
+        String sql = "SELECT id_partenaire FROM proposer WHERE id_ra=?";
         ArrayList<Partenaire> list = new ArrayList<>();
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);

@@ -135,7 +135,7 @@ public class CreerCollaborateur extends HttpServlet{
                     Collaborateur collab = collaborateurDao.read(collaborateur.getId());
                     req.setAttribute("collaborateur", collab);
                     req.setAttribute("message", "Votre collaborateur est bien enregistré");
-                    req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
                    
                
                 } catch (SQLException ex) {

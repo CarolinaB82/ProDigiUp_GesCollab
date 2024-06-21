@@ -14,8 +14,12 @@
         <jakartaee>10.0.0</jakartaee>
     </properties>
     
-    <dependencies>
-        <dependency>
+ 
+
+  <dependencies>
+        
+
+     <dependency>
         <groupId>org.mariadb.jdbc</groupId>
         <artifactId>mariadb-java-client</artifactId>
         <version>3.3.3</version>
@@ -45,6 +49,12 @@
     </dependencies>
     
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
