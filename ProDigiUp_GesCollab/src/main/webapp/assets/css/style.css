@@ -27,29 +27,36 @@ header{
 
 
 }
-footer{
+footer {
     display: flex;
-    justify-content: space-between;
-    text-align: center;
-    position: static;
+    justify-content: flex-end; /* Aligner le contenu à gauche */
+    align-items: center; /* Centrer verticalement si le footer a une hauteur fixe */
+    position: fixed;
     bottom: 0;
-    
     width: 100%;
-
+    
+    
 }
 
-a{
+a {
     text-decoration: none !important;
     display: flex;
     justify-content: space-between;
     font-family: rabilone;
     color: black;
+    text-align: center;
+
 }
 
 .bienvenue{
     text-align: center;
     font-family: magazine;
     font-size: 50px;
+}
+
+legend{
+    font-family: magazine;
+    font-size: 30px;
 }
 
 .accueil{
@@ -69,12 +76,8 @@ a{
 .error-input {
     border: 1px solid red; /* Bordure rouge */
 }
-a{
-    text-decoration: none;
-    
-}
 
- .thick-border {
+.thick-border {
     border-bottom: 3px solid purple; /* Bordure inférieure épaisse de couleur violette */
 }
 
@@ -93,9 +96,9 @@ a{
     vertical-align: middle; /* Centre le contenu verticalement */
 }
 .custom-table td{
-        border: 1px solid purple; /* Ajustez la taille de la bordure intérieure si nécessaire */
- min-width: 100px; /* Définit une largeur minimum pour les cellules */
- text-align: center; /* Centre le contenu horizontalement */
+    border: 1px solid purple; /* Ajustez la taille de la bordure intérieure si nécessaire */
+    min-width: 100px; /* Définit une largeur minimum pour les cellules */
+    text-align: center; /* Centre le contenu horizontalement */
     vertical-align: middle; /* Centre le contenu verticalement */
 }
 

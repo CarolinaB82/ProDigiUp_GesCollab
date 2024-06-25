@@ -24,22 +24,37 @@ import java.util.List;
 @WebServlet("/rechercher")
 public class RechercherCollaborateur extends HttpServlet {
 
-    private final CollaborateurDao collaborateurDao = new CollaborateurDao();
-
-        @Override
+   @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String recherche = req.getParameter("recherche");
-        System.out.println("Recherche: " + recherche); // Debug message
-        List<Collaborateur> collaborateurs = new ArrayList<>();
+        String nom = req.getParameter("nom");
+        String prenom = req.getParameter("prenom");
+        String matricule = req.getParameter("matricule");
+        List<Collaborateur> resultats = new ArrayList<>();
+        String erreur = null;
+
         try {
-            collaborateurs = collaborateurDao.rechercher(recherche);
-            System.out.println("Résultats trouvés: " + collaborateurs.size()); // Debug message
+            CollaborateurDao collaborateurDao = new CollaborateurDao();
+
+            if (nom != null && !nom.isEmpty()) {
+                resultats = collaborateurDao.rechercherParNom(nom);
+            } else if (prenom != null && !prenom.isEmpty()) {
+                resultats = collaborateurDao.rechercherParPrenom(prenom);
+            } else if (matricule != null && !matricule.isEmpty()) {
+                if (matricule.matches("\\d+")) {
+                    resultats = collaborateurDao.rechercherParMatricule(matricule);
+                } else {
+                    erreur = "Le matricule doit contenir uniquement des chiffres.";
+                }
+            } else {
+                erreur = "Veuillez entrer un nom, prénom ou matricule.";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            erreur = "Erreur lors de la recherche.";
         }
-        req.setAttribute("collaborateurs", collaborateurs);
+
+        req.setAttribute("resultats", resultats);
+        req.setAttribute("erreur", erreur);
         req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
     }
 }
-
-

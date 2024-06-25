@@ -23,13 +23,21 @@ public class AfficherPartenaire extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
+        String partenaireIdParam = req.getParameter("id");
         int partenaireId = 1;
-        
+
+        if (partenaireIdParam != null && !partenaireIdParam.isEmpty()) {
+            try {
+                partenaireId = Integer.parseInt(partenaireIdParam);
+            } catch (NumberFormatException e) {
+
+            }
+        }
         PartenaireDao partenaireDao = new PartenaireDao();
-       
+
         Partenaire partenaire = partenaireDao.read(partenaireId);
-        
+
         req.setAttribute("partenaire", partenaire);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);
     }

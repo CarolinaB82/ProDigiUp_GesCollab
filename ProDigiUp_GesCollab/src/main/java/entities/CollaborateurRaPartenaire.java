@@ -1,10 +1,6 @@
 
 package entities;
 
-import java.io.Serializable;
-
-import java.util.Objects;
-import java.time.LocalDate;
 import java.util.Collection;
 
 /**

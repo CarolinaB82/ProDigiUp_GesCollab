@@ -30,7 +30,7 @@
         <legend>Rechercher</legend>
         <form>
             <label for="nom">Nom du partenaire</label>
-            <input type="text" id="nom" name="nom" pattern="[a-zA-Z]*"
+            <input type="text" id="nom" name="nom" pattern="[a-zA-Z -]*"
                    required
                    title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                    >

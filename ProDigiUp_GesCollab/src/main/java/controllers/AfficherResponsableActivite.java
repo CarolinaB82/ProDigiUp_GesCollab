@@ -21,7 +21,15 @@ public class AfficherResponsableActivite extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
+        String raIdParam = req.getParameter("id");
         int raId = 1;
+        if(raIdParam != null && !raIdParam.isEmpty()){
+            try{
+                raId = Integer.parseInt(raIdParam);
+            }catch(NumberFormatException e){
+                
+            }
+        }
         
         ResponsableActiviteDao raDao = new ResponsableActiviteDao();
        

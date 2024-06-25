@@ -12,14 +12,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
-        <title>fiche collaborateur</title>
+        <title>Fiche collaborateur</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <fieldset>
             <legend>Fiche Collaborateur</legend>
 
-            <p><strong>ID: </strong><c:out value="${collaborateur.id}"/></p>
             <p><strong>Matricule: </strong><c:out value="${collaborateur.matricule}"/></p>
             <p><strong>Genre: </strong><c:out value="${collaborateur.genre}"/></p>
             <p><strong>Nom: </strong><c:out value="${collaborateur.nom}"/></p>

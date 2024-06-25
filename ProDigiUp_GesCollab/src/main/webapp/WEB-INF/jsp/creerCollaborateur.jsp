@@ -14,6 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <title>Créer Collaborateur</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -21,15 +22,16 @@
         <main>
             <form action="/ProDigiUp_GesCollab/creer_collaborateur" method="post">                  
                 <div>${requestScope.message}</div>
+                <div>${requestScope.errMsg}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
                     <legend>Nouveau Collaborateur</legend>
                     <div>
                         <label for="matricule">Matricule</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
-
-                        <input type="text" id="matricule" name="matricule"  
-                               pattern="[0-9]*"
+                        <input type="text" id="matricule" name="matricule" 
+                               pattern="\d{5}" 
+                               maxlength="5" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.matricule : ''}" 
@@ -41,7 +43,7 @@
                     <div>
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom"
-                               pattern="[a-zA-ZÀ-ÿ' ]*"
+                               pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
 
@@ -54,7 +56,7 @@
                     <div>
                         <label for="prenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom"
-                               pattern="[a-zA-ZÀ-ÿ' ]*"
+                               pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.prenom : ''}"
@@ -67,14 +69,12 @@
                     <div>
                         <label for="telephone_personnel">Téléphone personnel</label>
                         <input type="text" id="telephone_personnel" name="telephone_personnel"
-                               pattern="\d{10}" 
-                               maxlength="10" 
+                               pattern="\+?[0-9]{1,15}" 
+                               maxlength="16" 
                                required  
                                title="Veuillez saisir exactement 10 chiffres"
-
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
-
                                >
                         <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                     </div>
@@ -83,7 +83,7 @@
                         <select id="statut" name="statut">
                             <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
                             <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                            <option value="CDD_Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD_Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
+                            <option value="CDD_Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
                             <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
 
 
@@ -107,7 +107,7 @@
                         <div class="error-details-message">${requestScope.errors.genre}</div>
                     </div>
                     <div>
-                        
+
 
                         <div>
                             <label for="rqth">RQTH</label>
@@ -163,7 +163,7 @@
                         <div>
                             <label for="metier">Métier</label>
                             <input type="text" id="metier" name="metier"
-                                   pattern="[a-zA-ZÀ-ÿ' ]*"
+                                   pattern="[a-zA-ZÀ-ÿ' -]*"
                                    required
                                    title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                    value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"

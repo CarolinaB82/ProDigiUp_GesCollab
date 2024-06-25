@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author cberge
  */
-@WebServlet("/collaborateur")
+@WebServlet("/fiche_collaborateur")
 public class FicheCollaborateur extends HttpServlet {
     
 @Override
@@ -40,7 +40,7 @@ protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws S
 
         // Transmettre les informations du collaborateur à la page JSP
         req.setAttribute("collaborateur", collaborateur);
-        req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
 
         
     }

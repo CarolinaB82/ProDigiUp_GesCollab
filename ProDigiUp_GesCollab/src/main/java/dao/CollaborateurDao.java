@@ -51,7 +51,6 @@ public class CollaborateurDao extends Dao<Collaborateur> {
                 obj.setStatut(rs.getString("statut"));
                 obj.setCategorie(rs.getString("categorie"));
                 obj.setGenre(rs.getString("genre"));
-
                 obj.setRqth(rs.getString("rqth"));
                 if (rs.getDate("date_de_renouvellement") != null) {
                     obj.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
@@ -216,7 +215,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
     }
     
     public Collection<Partenaire> listPartenaire(int idRa){
-        String sql = "SELECT id_partenaire FROM propose WHERE id_ra=?";
+        String sql = "SELECT id_partenaire FROM proposer WHERE id_ra=?";
         ArrayList<Partenaire> list = new ArrayList<>();
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
@@ -271,35 +270,42 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         return list;
     }
 
-     public List<Collaborateur> rechercher(String recherche) throws SQLException {
-        List<Collaborateur> collaborateurs = new ArrayList<>();
-        String sql = "SELECT * FROM collaborateur WHERE matricule LIKE ? OR nom LIKE ? OR prenom LIKE ?";
+    public List<Collaborateur> rechercherParNom(String nom) throws SQLException {
+    return rechercher("SELECT * FROM collaborateur WHERE nom LIKE ?", nom);
+}
 
-        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
-            String query = "%" + recherche + "%";
-            pstmt.setString(1, query);
-            pstmt.setString(2, query);
-            pstmt.setString(3, query);
+public List<Collaborateur> rechercherParPrenom(String prenom) throws SQLException {
+    return rechercher("SELECT * FROM collaborateur WHERE prenom LIKE ?", prenom);
+}
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Collaborateur collaborateur = new Collaborateur();
-                    
-                    collaborateur.setMatricule(rs.getInt("matricule"));
-                    collaborateur.setNom(rs.getString("nom"));
-                    collaborateur.setPrenom(rs.getString("prenom"));
-//                    collaborateur.setTelephone_personnel(rs.getString("telephone_personnel"));
-                    collaborateur.setStatut(rs.getString("statut"));
-//                    collaborateur.setCategorie(rs.getString("categorie"));
-//                    collaborateur.setGenre(rs.getString("genre"));
-//                    collaborateur.setRqth(rs.getString("rqth"));
-//                    collaborateur.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
-                    collaborateur.setMetier(rs.getString("metier"));
-                    collaborateurs.add(collaborateur);
-                }
+public List<Collaborateur> rechercherParMatricule(String matricule) throws SQLException {
+    return rechercher("SELECT * FROM collaborateur WHERE matricule LIKE ?", matricule);
+}
+
+private List<Collaborateur> rechercher(String sql, String param) throws SQLException {
+    List<Collaborateur> collaborateurs = new ArrayList<>();
+    try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+        pstmt.setString(1, "%" + param + "%");
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Collaborateur collaborateur = new Collaborateur();
+                collaborateur.setId(rs.getInt("id_collaborateur"));
+                collaborateur.setMatricule(rs.getInt("matricule"));
+                collaborateur.setNom(rs.getString("nom"));
+                collaborateur.setPrenom(rs.getString("prenom"));
+//                collaborateur.setTelephone_personnel(rs.getString("telephone_personnel"));
+                collaborateur.setStatut(rs.getString("statut"));
+//                collaborateur.setCategorie(rs.getString("categorie"));
+//                collaborateur.setGenre(rs.getString("genre"));
+//                collaborateur.setRqth(rs.getString("rqth"));
+//                collaborateur.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
+                collaborateur.setMetier(rs.getString("metier"));
+                collaborateurs.add(collaborateur);
             }
         }
-        return collaborateurs;
     }
+    return collaborateurs;
+}
+
 
 }
