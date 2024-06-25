@@ -16,6 +16,15 @@ public class CollaborateurRaPartenaire {
     
     private Collaborateur collaborateur;
     private Collection<ResponsableActivitePartenaire> raPartenaires;
+    private boolean prestationActive;
+
+    public boolean isPrestationActive() {
+        return prestationActive;
+    }
+
+    public void setPrestationActive(boolean prestationActive) {
+        this.prestationActive = prestationActive;
+    }
 
     public Collaborateur getCollaborateur() {
         return collaborateur;

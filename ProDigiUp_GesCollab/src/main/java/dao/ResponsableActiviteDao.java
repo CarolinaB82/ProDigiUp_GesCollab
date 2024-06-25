@@ -1,10 +1,16 @@
 package dao;
 
 import entities.ResponsableActivite;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,7 +59,34 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
             throw ex;
         }
     }
+    
+    
 
+    /*public List<ResponsableActivite> getAllResponsablesActivite() {
+        List<ResponsableActivite> responsables = new ArrayList<>();
+        String query = "SELECT id, nom, prenom, telephone_professionnel,telephone_personnel FROM responsable_activite";
+
+        try (Connection connection = MariadbConnection.getInstance(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                ResponsableActivite responsable = new ResponsableActivite();
+                responsable.setId(resultSet.getInt("id"));
+                responsable.setNom(resultSet.getString("nom"));
+                responsable.setPrenom(resultSet.getString("prenom"));
+                responsable.setTelephone_professionnel(resultSet.getString("telephone_professionnel"));
+                responsable.setTelephone_personnel(resultSet.getString("telephone_personnel"));
+
+                responsables.add(responsable);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ResponsableActiviteDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return responsables;
+    }*/
+
+    
+    
+    
     @Override
     public ResponsableActivite read(Integer id) {
         ResponsableActivite ra = null;
@@ -79,8 +112,8 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return ra;
     }
-    
-     // rajout test
+
+    // rajout test
     public boolean exists(int matricule) {
         String sql = "SELECT 1 FROM ra WHERE matricule=?";
         try {

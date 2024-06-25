@@ -27,11 +27,11 @@
         <thead>
         
             <tr>
-                <th>ID</th>
                 <th>Matricule</th>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Statut</th>
+                <th>En activé</th>
                 <th>Nom Responsable Activité</th>
                 <th>Nom Partenaire</th>
             </tr>
@@ -40,43 +40,76 @@
         <tbody>
              
             <c:forEach var="collaborateur" items="${requestScope.collaborateurs}">
-                <c:set var="raPartenairesSize" value="${collaborateur.raPartenaires.size()}" />
-                <c:forEach var="raPartenaire" items="${collaborateur.raPartenaires}" varStatus="status">
-                    <tr class="${status.index == 0 ? 'collaborateur-row' : ''} ${status.index == raPartenairesSize - 1 ? 'collaborator-end-row' : ''} '/>">
-                        <c:if test="${status.index == 0}">
-                            <td rowspan="${raPartenairesSize}">
-                                <c:out value="${collaborateur.collaborateur.id}"/>
-                            </td>
-                            <td rowspan="${raPartenairesSize}">
-                                
-                                    <c:out value="${collaborateur.collaborateur.matricule}"/>
-                                </a>
-                            </td>
-                            <td rowspan="${raPartenairesSize}">
-                               <!-- <a href="<c:url value='${collaborateur.collaborateur.nom}'/>">-->
-                                <a href="<c:url value='/collaborateur?id=${collaborateur.collaborateur.id}'/>">
-                                    <c:out value="${collaborateur.collaborateur.nom}"/>
-                                </a>
-                                    
-                            </td>
-                            <td rowspan="${raPartenairesSize}">
-                                <c:out value="${collaborateur.collaborateur.prenom}"/>
-                            </td>
-                            <td rowspan="${raPartenairesSize}">
-                                <c:out value="${collaborateur.collaborateur.statut}"/>
-                            </td>
-                        </c:if>
-                        <td>
-                            <c:out value="${raPartenaire.ra.nom}"/>
-                        </td>
-                        <td>
-                            <c:forEach var="partenaire" items="${raPartenaire.partenaires}">
-                                <c:out value="${partenaire.nom}"/><br/>
-                            </c:forEach>
-                        </td>
-                    </tr>
+    <c:set var="raPartenairesSize" value="${collaborateur.raPartenaires != null ? collaborateur.raPartenaires.size() : 0}" />
+    <c:if test="${raPartenairesSize == 0}">
+        <tr class="collaborateur-row collaborator-end-row">
+            <td>
+                <c:out value="${collaborateur.collaborateur.matricule}"/>
+            </td>
+            <td>
+                <a href="<c:url value='/collaborateur?id=${collaborateur.collaborateur.id}'/>">
+                    <c:out value="${collaborateur.collaborateur.nom}"/>
+                </a>
+            </td>
+            <td>
+                <c:out value="${collaborateur.collaborateur.prenom}"/>
+            </td>
+            <td>
+                <c:out value="${collaborateur.collaborateur.statut}"/>
+            </td>
+            <td>
+                    <c:choose>
+                    <c:when test="${collaborateur.prestationActive}">
+                        Oui
+                    </c:when>
+                    <c:otherwise>
+                        Non
+                    </c:otherwise>
+                </c:choose>
+                </td>
+           
+        </tr>
+    </c:if>
+    <c:forEach var="raPartenaire" items="${collaborateur.raPartenaires}" varStatus="status">
+        <tr class="${status.index == 0 ? 'collaborateur-row' : ''} ${status.index == raPartenairesSize - 1 ? 'collaborator-end-row' : ''}">
+            <c:if test="${status.index == 0}">
+                <td rowspan="${raPartenairesSize}">
+                    <c:out value="${collaborateur.collaborateur.matricule}"/>
+                </td>
+               
+                <td rowspan="${raPartenairesSize}">
+                    <a href="<c:url value='/collaborateur?id=${collaborateur.collaborateur.id}'/>">
+                        <c:out value="${collaborateur.collaborateur.nom}"/>
+                    </a>
+                </td>
+                <td rowspan="${raPartenairesSize}">
+                    <c:out value="${collaborateur.collaborateur.prenom}"/>
+                </td>
+                <td rowspan="${raPartenairesSize}">
+                    <c:out value="${collaborateur.collaborateur.statut}"/>
+                </td>
+                <td rowspan="${raPartenairesSize}">
+                    <c:choose>
+                    <c:when test="${collaborateur.prestationActive}">
+                        Oui
+                    </c:when>
+                    <c:otherwise>
+                        Non
+                    </c:otherwise>
+                </c:choose>
+                </td>
+            </c:if>
+            <td>
+                <c:out value="${raPartenaire.ra.nom}"/>
+            </td>
+            <td>
+                <c:forEach var="partenaire" items="${raPartenaire.partenaires}">
+                    <c:out value="${partenaire.nom}"/><br/>
                 </c:forEach>
-            </c:forEach>
+            </td>
+        </tr>
+    </c:forEach>
+</c:forEach>
             
         </tbody>
     </table>

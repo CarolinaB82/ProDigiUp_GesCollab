@@ -5,7 +5,9 @@
 package controllers;
 
 import dao.CollaborateurDao;
+import dao.PrestationDao;
 import entities.Collaborateur;
+import entities.CollaborateurNomPrestation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -49,12 +51,24 @@ protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws S
             }
         }
         
-        CollaborateurDao collaborateurDao = new CollaborateurDao ();
-        // Lire les informations du collaborateur depuis la base de données
-        Collaborateur collaborateur = collaborateurDao.read(collaborateurId);
+         CollaborateurDao collaborateurDao = new CollaborateurDao();
+    
+    // Lire les informations du collaborateur depuis la base de données
+    //Collaborateur collaborateur = collaborateurDao.read(collaborateurId); // Supposons que vous avez une méthode read pour récupérer le collaborateur
+    
+    CollaborateurNomPrestation collaborateur = collaborateurDao.getCollaborateurNomPrestation(collaborateurId);
+    
+    
+    // Journaliser les informations récupérées
+    System.out.println("Collaborateur: " + collaborateur.getCollab());
+    System.out.println("Nom Prestation: " + collaborateur.getNomPrestation());
+    
+    
+    // Transmettre les informations à la page JSP
+    req.setAttribute("collaborateur", collaborateur);
+    
 
-        // Transmettre les informations du collaborateur à la page JSP
-        req.setAttribute("collaborateur", collaborateur);
+        
         req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
 
         

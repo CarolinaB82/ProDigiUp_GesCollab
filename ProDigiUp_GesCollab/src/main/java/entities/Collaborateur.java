@@ -24,6 +24,7 @@ public class Collaborateur implements Identifiable, Serializable {
     private String rqth;
     private LocalDate date_de_renouvellement;
     private String metier;
+    private Integer id_prestation;
 
     @Override
     public String toString() {
@@ -40,25 +41,26 @@ public class Collaborateur implements Identifiable, Serializable {
         sb.append(", rqth=").append(rqth);
         sb.append(", date_de_renouvellement=").append(date_de_renouvellement);
         sb.append(", metier=").append(metier);
+        sb.append(", id_prestation=").append(id_prestation);
         sb.append('}');
         return sb.toString();
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.matricule);
-        hash = 89 * hash + Objects.hashCode(this.nom);
-        hash = 89 * hash + Objects.hashCode(this.prenom);
-        hash = 89 * hash + Objects.hashCode(this.telephone_personnel);
-        hash = 89 * hash + Objects.hashCode(this.statut);
-        hash = 89 * hash + Objects.hashCode(this.categorie);
-        hash = 89 * hash + Objects.hashCode(this.genre);
-        hash = 89 * hash + Objects.hashCode(this.rqth);
-                hash = 89 * hash + Objects.hashCode(this.date_de_renouvellement);
-
-        hash = 89 * hash + Objects.hashCode(this.metier);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.matricule);
+        hash = 83 * hash + Objects.hashCode(this.nom);
+        hash = 83 * hash + Objects.hashCode(this.prenom);
+        hash = 83 * hash + Objects.hashCode(this.telephone_personnel);
+        hash = 83 * hash + Objects.hashCode(this.statut);
+        hash = 83 * hash + Objects.hashCode(this.categorie);
+        hash = 83 * hash + Objects.hashCode(this.genre);
+        hash = 83 * hash + Objects.hashCode(this.rqth);
+        hash = 83 * hash + Objects.hashCode(this.date_de_renouvellement);
+        hash = 83 * hash + Objects.hashCode(this.metier);
+        hash = 83 * hash + Objects.hashCode(this.id_prestation);
         return hash;
     }
 
@@ -104,14 +106,11 @@ public class Collaborateur implements Identifiable, Serializable {
         if (!Objects.equals(this.matricule, other.matricule)) {
             return false;
         }
-        return Objects.equals(this.date_de_renouvellement, other.date_de_renouvellement);
+        if (!Objects.equals(this.date_de_renouvellement, other.date_de_renouvellement)) {
+            return false;
+        }
+        return Objects.equals(this.id_prestation, other.id_prestation);
     }
-
-    
-
-    
-
-   
 
     @Override
     public Integer getId() {
@@ -155,8 +154,6 @@ public class Collaborateur implements Identifiable, Serializable {
         this.telephone_personnel = telephone_personnel;
     }
 
-    
-
     public String getStatut() {
         return statut;
     }
@@ -188,12 +185,12 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setRqth(String rqth) {
         this.rqth = rqth;
     }
-      
-        
-    public LocalDate getDate_de_renouvellement (){
+
+    public LocalDate getDate_de_renouvellement() {
         return date_de_renouvellement;
     }
-      public void setDate_de_renouvellement(LocalDate date_de_renouvellement) {
+
+    public void setDate_de_renouvellement(LocalDate date_de_renouvellement) {
         this.date_de_renouvellement = date_de_renouvellement;
     }
 
@@ -204,4 +201,34 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setMetier(String metier) {
         this.metier = metier;
     }
+
+    public Integer getId_prestation() {
+        return id_prestation;
+    }
+
+    public void setId_prestation(Integer id_prestation) {
+        this.id_prestation = id_prestation;
+    }
+
+     // Nouveau champ pour la prestation
+    private String nomPrestation;
+
+    // Getters et setters existants
+
+    public void setNomPrestation(String nomPrestation) {
+        this.nomPrestation = nomPrestation;
+    }
+
+    public String getNomPrestation() {
+        return nomPrestation;
+    }
 }
+
+   
+  
+
+    
+
+   
+
+   

@@ -9,6 +9,8 @@ public class DaoFactory {
  private static CollaborateurDao collaborateurDao;
  private static ResponsableActiviteDao responsableActiviteDao;
  private static PartenaireDao partenaireDao;
+  private static PrestationDao prestationDao;
+
     
     private DaoFactory(){
 }
@@ -34,5 +36,13 @@ public class DaoFactory {
             }
             return partenaireDao;
         }
+    
+      public static PrestationDao getPrestationDao(){
+            if (prestationDao == null) {
+                prestationDao = new PrestationDao();
+            }
+            return prestationDao;
+        }
 
+      
 }

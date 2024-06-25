@@ -17,8 +17,10 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import dao.DaoFactory;
+import entities.CollaborateurNomPrestation;
 import entities.Partenaire;
 import entities.ResponsableActivitePartenaire;
+import java.sql.Connection;
 import java.util.List;
 
 
@@ -57,6 +59,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
                     obj.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
                 }
                 obj.setMetier(rs.getString("metier"));
+                obj.setId_prestation(rs.getInt("id_prestation"));
             }
         } catch (SQLException ex) {
             System.err.println("Erreur lors de la lecture : " + ex.getMessage());
@@ -164,6 +167,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             // 4. j'instancie un nouvel objet de type CollaborateurRaPartenaire pour chaque collaborateur que j'apelle collabRaPart (variable)
             // mon but etant de remplir cet objet 
             collabRaPart.setCollaborateur(collab);
+            collabRaPart.setPrestationActive((collab.getId_prestation() != 0));
             // 5. pour le remplir on utilise le setCollaborateur (collab);
             Collection<ResponsableActivite> listResponsableActivite = listResponsableActivite(collab.getId());
             // 6. recuperation de la liste Responsable Activite associe au collaborateur courant (collab)
@@ -233,6 +237,8 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         return list;
     }
     
+    
+    
     // rajout test
     public boolean exists(int matricule) {
         String sql = "SELECT 1 FROM collaborateur WHERE matricule=?";
@@ -261,6 +267,8 @@ public class CollaborateurDao extends Dao<Collaborateur> {
                 c.setNom(rs.getString("nom"));
                 c.setPrenom(rs.getString("prenom"));
                 c.setStatut(rs.getString("statut"));
+                c.setId_prestation(rs.getInt("id_prestation"));
+                
 
                 list.add(c);
             }
@@ -302,4 +310,45 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         return collaborateurs;
     }
 
+     public CollaborateurNomPrestation getCollaborateurNomPrestation(int collaborateurId) {
+        String query = "SELECT p.nom_presta FROM collaborateur c " +
+                        "INNER JOIN prestation p ON c.id_prestation = p.id_prestation " +
+                       "WHERE c.id_collaborateur = ?";
+        Collaborateur collaborateur = read(collaborateurId);
+
+                           CollaborateurNomPrestation collab = new CollaborateurNomPrestation();
+                           
+                           collab.setCollab(collaborateur);
+
+
+        try (
+             PreparedStatement statement = connexion.prepareStatement(query)) {
+            statement.setInt(1, collaborateurId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    
+                    
+                    collab.setNomPrestation(resultSet.getString("nom_presta"));
+                    
+            }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(CollaborateurDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return collab;
+    }
+     
+     
+     public List<CollaborateurNomPrestation> getListCollaborateurNomPrestation(){
+     
+        Collection<Collaborateur> collabs = list();
+                ArrayList<CollaborateurNomPrestation> collabsNomPresta = new ArrayList<>();
+                
+                for ( Collaborateur collaborateur : collabs){
+                    collabsNomPresta.add(getCollaborateurNomPrestation(collaborateur.getId()));
+                }
+return collabsNomPresta;
+     }
 }
+
