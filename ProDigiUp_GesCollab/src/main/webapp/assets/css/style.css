@@ -31,10 +31,9 @@ header{
 }
 footer {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: center; 
     align-items: center; 
     height: 50px;
-   
     position: relative;
     }
 

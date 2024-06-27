@@ -18,25 +18,29 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class AfficherResponsableActivite extends HttpServlet {
 
-    @Override
+  @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+        //req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        // Récupérer l'identifiant du responsable activite depuis la requête
         String raIdParam = req.getParameter("id");
-        int raId = 1;
-        if(raIdParam != null && !raIdParam.isEmpty()){
-            try{
+        int raId = 1; // Valeur par défaut ou celle que vous choisissez si aucun paramètre n'est fourni
+
+        if (raIdParam != null && !raIdParam.isEmpty()) {
+            try {
                 raId = Integer.parseInt(raIdParam);
-            }catch(NumberFormatException e){
-                
+            } catch (NumberFormatException e) {
+                // Gérer l'erreur de conversion si nécessaire
             }
         }
-        
-        ResponsableActiviteDao raDao = new ResponsableActiviteDao();
-       
-        ResponsableActivite ra = raDao.read(raId);
-        
+
+        ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+        // Lire les informations du responsable activite depuis la base de données
+        ResponsableActivite ra = responsableActiviteDao.read(raId);
+
+        // Transmettre les informations du responsable activite à la page JSP
         req.setAttribute("ra", ra);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherResponsableActivite.jsp").forward(req, resp);
+
     }
 
 }

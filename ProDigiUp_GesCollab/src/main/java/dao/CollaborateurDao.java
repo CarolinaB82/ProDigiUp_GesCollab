@@ -299,7 +299,7 @@ private List<Collaborateur> rechercher(String sql, String param) throws SQLExcep
 //                collaborateur.setGenre(rs.getString("genre"));
 //                collaborateur.setRqth(rs.getString("rqth"));
 //                collaborateur.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
-                collaborateur.setMetier(rs.getString("metier"));
+//                collaborateur.setMetier(rs.getString("metier"));
                 collaborateurs.add(collaborateur);
             }
         }

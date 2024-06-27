@@ -4,18 +4,18 @@
  */
 package controllers;
 
-import dao.CollaborateurDao;
-import entities.Collaborateur;
+import dao.ResponsableActiviteDao;
+import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  *
@@ -24,37 +24,81 @@ import java.util.List;
 @WebServlet("/rechercher_ra")
 public class RechercherResponsableActivite extends HttpServlet {
 
-   @Override
+    private ResponsableActiviteDao responsableActiviteDao;
+
+    @Override
+    public void init() throws ServletException {
+        this.responsableActiviteDao = new ResponsableActiviteDao();
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String nom = req.getParameter("nom");
-        String prenom = req.getParameter("prenom");
-        String matricule = req.getParameter("matricule");
-        List<Collaborateur> resultats = new ArrayList<>();
-        String erreur = null;
 
-        try {
-            CollaborateurDao collaborateurDao = new CollaborateurDao();
+        String recherche = req.getParameter("recherche");
+        String type = req.getParameter("type");
+        
+         System.out.println("Recherche: " + recherche + ", Type: " + type);
 
-            if (nom != null && !nom.isEmpty()) {
-                resultats = collaborateurDao.rechercherParNom(nom);
-            } else if (prenom != null && !prenom.isEmpty()) {
-                resultats = collaborateurDao.rechercherParPrenom(prenom);
-            } else if (matricule != null && !matricule.isEmpty()) {
-                if (matricule.matches("\\d+")) {
-                    resultats = collaborateurDao.rechercherParMatricule(matricule);
-                } else {
-                    erreur = "Le matricule doit contenir uniquement des chiffres.";
+        if (recherche != null && type != null) {
+            try {
+                List<ResponsableActivite> suggestions;
+                switch (type) {
+                    case "matricule":
+                        suggestions = responsableActiviteDao.rechercherRaParMatricule(recherche);
+                        break;
+                    case "nom":
+                        suggestions = responsableActiviteDao.rechercherRaParNom(recherche);
+                        break;
+                    case "prenom":
+                        suggestions = responsableActiviteDao.rechercherRaParPrenom(recherche);
+                        break;
+                    
+                    default:
+                        suggestions = new ArrayList<>();
                 }
-            } else {
-                erreur = "Veuillez entrer un nom, prénom ou matricule.";
+                System.out.println("Suggestions: " + suggestions);
+                resp.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.println("<table class='custom-table'>");
+                out.println("<thead>");
+                out.println("<tr>");
+                out.println("<th>Matricule</th>");
+                out.println("<th>Nom</th>");
+                out.println("<th>Prénom</th>");
+                out.println("</tr>");
+                out.println("</thead>");
+                out.println("<tbody>");
+                for (ResponsableActivite ra : suggestions) {
+                    String url = req.getContextPath() + "/afficher_ra?id=" + ra.getId();
+                    System.out.println("URL générée : " + url);
+                    out.println("<tr>");
+                    out.println("<td><a href=\"" + url + "\">" + ra.getMatricule() + "</a></td>");
+                    out.println("<td><a href=\"" + url + "\">" + ra.getNom() + "</a></td>");
+                    out.println("<td>" + ra.getPrenom() + "</td>");
+                    out.println("</tr>");
+                }
+                out.println("</tbody>");
+                out.println("</table>");
+                out.close();
+                return;
+            } catch (SQLException e) {
+                throw new ServletException("Erreur lors de la recherche", e);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            erreur = "Erreur lors de la recherche.";
+        } else {
+            try {
+                List<ResponsableActivite> resultats = new ArrayList<>();
+                if (recherche != null && !recherche.isEmpty()) {
+                    resultats.addAll(responsableActiviteDao.rechercherRaParMatricule(recherche));
+                    resultats.addAll(responsableActiviteDao.rechercherRaParNom(recherche));
+                    resultats.addAll(responsableActiviteDao.rechercherRaParPrenom(recherche));
+                    
+                }
+                req.setAttribute("resultats", resultats);
+                req.getRequestDispatcher("/WEB-INF/jsp/responsableActivite.jsp").forward(req, resp);
+            } catch (SQLException e) {
+                System.out.println("Paramètres de recherche manquants ou invalides");
+                throw new ServletException("Erreur lors de la recherche", e);
+            }
         }
-
-        req.setAttribute("resultats", resultats);
-        req.setAttribute("erreur", erreur);
-        req.getRequestDispatcher("/WEB-INF/jsp/responsableActivite.jsp").forward(req, resp);
     }
 }

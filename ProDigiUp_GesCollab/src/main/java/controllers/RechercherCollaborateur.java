@@ -77,7 +77,7 @@ public class RechercherCollaborateur extends HttpServlet {
                     out.println("<td>" + collaborateur.getStatut() + "</td>");
                     out.println("</tr>");
                 }
-                out.println("</tbody>");
+            out.println("</tbody>");
                 out.println("</table>");
                 out.close();
                 return;
