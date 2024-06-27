@@ -73,8 +73,6 @@ public class ResponsableActivite implements Identifiable, Serializable {
         return Objects.equals(this.id, other.id);
     }
 
-       
-
     @Override
     public Integer getId() {
         return id;

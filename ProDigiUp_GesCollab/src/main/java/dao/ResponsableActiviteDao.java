@@ -1,13 +1,17 @@
 package dao;
 
 import entities.ResponsableActivite;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -82,8 +86,12 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return ra;
     }
-    
-     // rajout test
+
+    @Override
+    protected void update(ResponsableActivite obj) {
+    }
+
+    // rajout test
     public boolean exists(int matricule) {
         String sql = "SELECT 1 FROM ra WHERE matricule=?";
         try {
@@ -97,8 +105,22 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         return false;
     }
 
-    @Override
-    protected void update(ResponsableActivite obj) {
+    public Collection<ResponsableActivite> listResponsableActivite(int idCollaborateur) {
+        String sql = "SELECT id_ra FROM posseder WHERE id_collaborateur=?";
+        ArrayList<ResponsableActivite> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idCollaborateur);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idRa = rs.getInt("id_ra");
+                ResponsableActivite responsableActive = DaoFactory.ResponsableActiviteDao().read(idRa);
+                list.add(responsableActive);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
     }
 
     @Override

@@ -35,7 +35,6 @@ public class TestResponsableActivite {
 //        ra2.setTel_perso("0505050505");
 //
 //        radao.create(ra2);
-
 //        ResponsableActivite ra = radao.read(0);
 //        if (ra != null) {
 //            System.out.println("ra : " + ra.getId() + " " + ra.getMatricule() + " " + ra.getNom() + " " + ra.getPrenom()
@@ -44,7 +43,6 @@ public class TestResponsableActivite {
 //        } else {
 //            System.out.println("Aucun RA trouvé, continue de chercher bouffonne!!");
 //        }
-
- }
+    }
 
 }

@@ -22,6 +22,7 @@ import java.util.List;
  * @author asolanas
  */
 @WebServlet("/rechercher")
+@SuppressWarnings("serial")
 public class RechercherCollaborateur extends HttpServlet {
 
     private CollaborateurDao collaborateurDao;

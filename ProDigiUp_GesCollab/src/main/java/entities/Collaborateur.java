@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
  */
 @SuppressWarnings("serial")
 public class Collaborateur implements Identifiable, Serializable {
-    
+
     private Integer id;
     private Integer matricule;
     private String nom;
@@ -46,72 +45,20 @@ public class Collaborateur implements Identifiable, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.matricule);
-        hash = 89 * hash + Objects.hashCode(this.nom);
-        hash = 89 * hash + Objects.hashCode(this.prenom);
-        hash = 89 * hash + Objects.hashCode(this.telephone_personnel);
-        hash = 89 * hash + Objects.hashCode(this.statut);
-        hash = 89 * hash + Objects.hashCode(this.categorie);
-        hash = 89 * hash + Objects.hashCode(this.genre);
-        hash = 89 * hash + Objects.hashCode(this.rqth);
-                hash = 89 * hash + Objects.hashCode(this.date_de_renouvellement);
-
-        hash = 89 * hash + Objects.hashCode(this.metier);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.matricule);
+        hash = 83 * hash + Objects.hashCode(this.nom);
+        hash = 83 * hash + Objects.hashCode(this.prenom);
+        hash = 83 * hash + Objects.hashCode(this.telephone_personnel);
+        hash = 83 * hash + Objects.hashCode(this.statut);
+        hash = 83 * hash + Objects.hashCode(this.categorie);
+        hash = 83 * hash + Objects.hashCode(this.genre);
+        hash = 83 * hash + Objects.hashCode(this.rqth);
+        hash = 83 * hash + Objects.hashCode(this.date_de_renouvellement);
+        hash = 83 * hash + Objects.hashCode(this.metier);
         return hash;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Collaborateur other = (Collaborateur) obj;
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        if (!Objects.equals(this.prenom, other.prenom)) {
-            return false;
-        }
-        if (!Objects.equals(this.telephone_personnel, other.telephone_personnel)) {
-            return false;
-        }
-        if (!Objects.equals(this.statut, other.statut)) {
-            return false;
-        }
-        if (!Objects.equals(this.categorie, other.categorie)) {
-            return false;
-        }
-        if (!Objects.equals(this.genre, other.genre)) {
-            return false;
-        }
-        if (!Objects.equals(this.rqth, other.rqth)) {
-            return false;
-        }
-        if (!Objects.equals(this.metier, other.metier)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.matricule, other.matricule)) {
-            return false;
-        }
-        return Objects.equals(this.date_de_renouvellement, other.date_de_renouvellement);
-    }
-
-    
-
-    
-
-   
 
     @Override
     public Integer getId() {
@@ -155,8 +102,6 @@ public class Collaborateur implements Identifiable, Serializable {
         this.telephone_personnel = telephone_personnel;
     }
 
-    
-
     public String getStatut() {
         return statut;
     }
@@ -188,12 +133,12 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setRqth(String rqth) {
         this.rqth = rqth;
     }
-      
-        
-    public LocalDate getDate_de_renouvellement (){
+
+    public LocalDate getDate_de_renouvellement() {
         return date_de_renouvellement;
     }
-      public void setDate_de_renouvellement(LocalDate date_de_renouvellement) {
+
+    public void setDate_de_renouvellement(LocalDate date_de_renouvellement) {
         this.date_de_renouvellement = date_de_renouvellement;
     }
 
@@ -203,5 +148,17 @@ public class Collaborateur implements Identifiable, Serializable {
 
     public void setMetier(String metier) {
         this.metier = metier;
+    }
+
+    // Nouveau champ pour la prestation
+    private String nomPrestation;
+
+    // Getters et setters existants
+    public void setNomPrestation(String nomPrestation) {
+        this.nomPrestation = nomPrestation;
+    }
+
+    public String getNomPrestation() {
+        return nomPrestation;
     }
 }

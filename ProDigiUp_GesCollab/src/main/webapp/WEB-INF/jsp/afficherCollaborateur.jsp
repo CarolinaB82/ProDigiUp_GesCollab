@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : afficherCollaborateur
     Created on : 20 juin 2024, 10:02:28
@@ -27,8 +28,13 @@
             <p><strong>Statut: </strong><c:out value="${collaborateur.statut}"/></p>
             <p><strong>Catégorie: </strong><c:out value="${collaborateur.categorie}"/></p>
             <p><strong>RQTH: </strong><c:out value="${collaborateur.rqth}"/></p>
-            <p><strong>Date de renouvellement: </strong><c:out value="${collaborateur.date_de_renouvellement}"/></p>
+            <c:if test="${collaborateur.rqth == 'oui'}">
+                <p><strong>Date de renouvellement: </strong><c:out value="${collaborateur.date_de_renouvellement}"/></p>
+            </c:if>
             <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
+            
+            
+        
 
         </fieldset>  
         <%@include file="/WEB-INF/jspf/footer.jsp" %>

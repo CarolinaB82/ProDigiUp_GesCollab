@@ -15,7 +15,8 @@
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <fieldset>
-            <legend><strong>Rechercher un Responsable d'Activite</legend>
+            <legend><strong>Fiche Responsable d'Activité</legend>
+            
             <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
             <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
             <p><strong>Prénom: </strong><c:out value="${ra.prenom}"/></p>

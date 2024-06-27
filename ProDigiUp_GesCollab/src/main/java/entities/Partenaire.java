@@ -12,8 +12,8 @@ import java.util.Objects;
  * @author asolanas
  */
 @SuppressWarnings("serial")
-public class Partenaire implements Serializable, Identifiable{
-    
+public class Partenaire implements Serializable, Identifiable {
+
     private Integer id;
     private String nom;
     private int numero_voie;
@@ -21,7 +21,6 @@ public class Partenaire implements Serializable, Identifiable{
     private int code_postal;
     private String ville;
 
-    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

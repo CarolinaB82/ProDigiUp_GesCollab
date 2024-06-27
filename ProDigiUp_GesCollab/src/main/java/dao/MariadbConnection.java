@@ -26,6 +26,8 @@ public class MariadbConnection {
             String url = String.format("%s://%s:%s/%s", "jdbc:mariadb", "localhost", "3306", "bd_gescollab");
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
+                //Class.forName("com.mysql.cj.jdbc.Driver");
+
                 connection = DriverManager.getConnection(url, "root", "");
             } catch (SQLException ex) {
                 Logger.getLogger(MariadbConnection.class.getName()).log(Level.SEVERE, null, ex);

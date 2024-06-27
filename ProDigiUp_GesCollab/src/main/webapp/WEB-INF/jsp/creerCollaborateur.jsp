@@ -160,6 +160,7 @@
                                 toggleDateField(); // Ensure the initial state is correct based on the current selection
                             });
                         </script>
+                    </div>
                         <div>
                             <label for="metier">Métier</label>
                             <input type="text" id="metier" name="metier"
@@ -172,14 +173,17 @@
                                    >
                             <div class="error">${requestScope.errors.metier}</div>
                         </div>
-
-                    </div>
+                        
+                    
                     <p>Merci de remplir tous les champs</p>
                 </fieldset>
                 <div>
                     <input type="submit" value="Envoyer">
                     <input type="reset" value="Annuler">
                 </div>
+                    
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
             </form>
         </main>
     </body>

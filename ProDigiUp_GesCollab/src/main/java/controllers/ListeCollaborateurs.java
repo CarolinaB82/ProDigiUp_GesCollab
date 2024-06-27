@@ -7,7 +7,7 @@ package controllers;
 import dao.CollaborateurDao;
 import dao.DaoFactory;
 import entities.Collaborateur;
-import entities.CollaborateurRaPartenaire;
+import entities.CollaborateurPrestationPartenaireRa;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,30 +23,19 @@ import java.util.List;
  *
  * @author cberge
  */
-
-
-    @WebServlet("/liste_collaborateurs")
+@WebServlet("/liste_collaborateurs")
+@SuppressWarnings("serial")
 public class ListeCollaborateurs extends HttpServlet {
 
-   @Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
-       //Collection<Collaborateur> collaborateurs = DaoFactory.getCollaborateurDao().list();
-       Collection<CollaborateurRaPartenaire> collaborateurs = DaoFactory.getCollaborateurDao().listCollaborateurRaPartenaire();
-       
+        Collection<CollaborateurPrestationPartenaireRa> collaborateurs = DaoFactory.getCollaborateurDao().listCollaborateurPrestationPartenaireRa();
 
         req.setAttribute("collaborateurs", collaborateurs);
-      
-      /*req.setAttribute("collaborateurs", DaoFactory.getCollaborateurDao().list());
-        */
-        
-      
-        
-        req.getRequestDispatcher("/WEB-INF/jsp/liste_collaborateurs.jsp").forward(req, resp);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/listeCollaborateurs.jsp").forward(req, resp);
     }
 
 }
-
-
-    
