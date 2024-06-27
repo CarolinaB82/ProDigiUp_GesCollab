@@ -122,4 +122,52 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return list;
     }
+
+    @Override
+    public Collection<ResponsableActivite> list(){
+        ArrayList<ResponsableActivite> list = new ArrayList<>();
+        String sql = "SELECT * FROM ra";
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)){
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()){
+                ResponsableActivite ra = new ResponsableActivite();
+                ra.setId(rs.getInt("id_ra"));
+                ra.setMatricule(rs.getInt("matricule"));
+                ra.setNom(rs.getString("nom"));
+                ra.setPrenom(rs.getString("prenom"));
+                list.add(ra);
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors du listage : " + e.getMessage());
+        }
+        return list;
+    }
+    public List<ResponsableActivite> rechercherRaParMatricule(String matricule) throws SQLException{
+        return rechercherRa ("SELECT * FROM ra WHERE matricule LIKE ?", matricule);
+    }
+    public List<ResponsableActivite> rechercherRaParNom(String nom) throws SQLException{
+        return rechercherRa ("SELECT * FROM ra WHERE nom LIKE ?", nom);
+    }
+    public List<ResponsableActivite> rechercherRaParPrenom(String prenom) throws SQLException{
+        return rechercherRa ("SELECT * FROM ra WHERE prenom LIKE ?", prenom);
+    }
+    
+    
+    private List<ResponsableActivite> rechercherRa(String sql, String param) throws SQLException{
+        List<ResponsableActivite> responsablesActivites = new ArrayList<>();
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)){
+            pstmt.setString(1, "%" + param + "%");
+            try(ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+                    ResponsableActivite ra = new ResponsableActivite();
+                    ra.setId(rs.getInt("id_ra"));
+                    ra.setMatricule(rs.getInt("matricule"));
+                    ra.setNom(rs.getString("nom"));
+                    ra.setPrenom(rs.getString("prenom"));
+                    responsablesActivites.add(ra);
+                }
+            }
+        } 
+        return responsablesActivites;
+    }
 }

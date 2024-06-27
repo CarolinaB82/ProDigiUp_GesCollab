@@ -6,17 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 
 <footer>
+    <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
     <div>
-        <img src="<c:url value="/assets/img/logo.png" />" width="300px" height="100px" alt="logo">
-    </div>
-    <div style="min-height: 100%;
-         display: grid;
-         grid-template-rows: auto 1fr auto ">
-        <p> &#169ProDigiUp </p>
-        Réalisé avec &#9829; par  Caroline Bergé et Amélie Solanas Pruvost
+        <p> &#169ProDigiUp, tous droits réservés.
+            Réalisé avec &#9829; par  Caroline Bergé et Amélie Solanas Pruvost</p>
     </div>
     
 </footer>

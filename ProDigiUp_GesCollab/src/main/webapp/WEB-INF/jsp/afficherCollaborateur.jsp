@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
-        <title>fiche collaborateur</title>
+        <title>Fiche collaborateur</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>

@@ -25,7 +25,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class AfficherResponsableActivite extends HttpServlet {
 
-    @Override
+  @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         String responsableIdParam = req.getParameter("id");
@@ -47,5 +47,6 @@ public class AfficherResponsableActivite extends HttpServlet {
 
         // Rediriger vers la JSP appropriée pour l'affichage
         req.getRequestDispatcher("/WEB-INF/jsp/afficherResponsableActivite.jsp").forward(req, resp);
+
     }
 }
