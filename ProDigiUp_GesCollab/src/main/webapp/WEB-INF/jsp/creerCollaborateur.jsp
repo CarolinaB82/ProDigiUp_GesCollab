@@ -83,7 +83,7 @@
                         <select id="statut" name="statut">
                             <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
                             <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                            <option value="CDD_Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
+                            <option value="CDD_Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD_Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
                             <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
 
 

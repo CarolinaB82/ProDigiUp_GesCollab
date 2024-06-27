@@ -21,27 +21,16 @@
 
         <div class='accueil'>
 
-            <ul >
-                <li><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></li>
-                <!--<li><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></li>-->
-                <li><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></li>
-                <li><a href="<c:url value="/rechercher"/>">Rechercher un collaborateur</a></li>
-                <!--<li><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></li>-->
-                <li><a href="<c:url value="/liste_collaborateurs"/>">Liste collaborateurs</a></li>
-                <!-- <li><a href="<c:url value="/prestation"/>">Voir une prestation</a></li>-->
-
-
-            
             <ul>
                 <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>
                 <p><a href="<c:url value="/rechercher_ra"/>">Chercher un Responsable d'Activité</a></p>
+                <!--<li><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></li>-->
                 <p><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></p>
                 <p><a href="<c:url value="/rechercher"/>">Rechercher un collaborateur</a></p>
                 <p><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></p>
                 <p><a href="<c:url value="/liste_collaborateurs"/>">Liste collaborateurs</a></p>
+                 <!-- <li><a href="<c:url value="/prestation"/>">Voir une prestation</a></li>-->
 
-
-                
             </ul>
             <img src="<c:url value="/assets/img/surmulot.jpg" />" width="500px" height="500px" alt="mulot" style='margin-left: 20px'>
         </div>

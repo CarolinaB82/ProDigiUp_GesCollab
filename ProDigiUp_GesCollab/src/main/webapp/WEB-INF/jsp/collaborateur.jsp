@@ -109,8 +109,9 @@
                                     <th>Matricule</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
-                                    <th>Métier</th>
                                     <th>Statut</th>
+                                    <th>Métier</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,8 +120,9 @@
                                         <td><a href="${pageContext.request.contextPath}/afficherCollaborateur?id=${collaborateur.id}">${collaborateur.matricule}</a></td>
                                         <td><a href="${pageContext.request.contextPath}/afficherCollaborateur?id=${collaborateur.id}">${collaborateur.nom}</a></td>
                                         <td>${collaborateur.prenom}</td>
-                                        <td>${collaborateur.metier}</td>
                                         <td>${collaborateur.statut}</td>
+                                        <td>${collaborateur.metier}</td>
+                                        
                                     </tr>
                                 </c:forEach>
                             </tbody>

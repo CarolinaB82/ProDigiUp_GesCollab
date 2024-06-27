@@ -221,6 +221,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
                 c.setNom(rs.getString("nom"));
                 c.setPrenom(rs.getString("prenom"));
                 c.setStatut(rs.getString("statut"));
+                c.setMetier(rs.getString("metier"));
 
                 list.add(c);
             }
@@ -231,41 +232,40 @@ public class CollaborateurDao extends Dao<Collaborateur> {
     }
 
     public List<Collaborateur> rechercherParNom(String nom) throws SQLException {
-    return rechercher("SELECT * FROM collaborateur WHERE nom LIKE ?", nom);
-}
+        return rechercher("SELECT * FROM collaborateur WHERE nom LIKE ?", nom);
+    }
 
-public List<Collaborateur> rechercherParPrenom(String prenom) throws SQLException {
-    return rechercher("SELECT * FROM collaborateur WHERE prenom LIKE ?", prenom);
-}
+    public List<Collaborateur> rechercherParPrenom(String prenom) throws SQLException {
+        return rechercher("SELECT * FROM collaborateur WHERE prenom LIKE ?", prenom);
+    }
 
-public List<Collaborateur> rechercherParMatricule(String matricule) throws SQLException {
-    return rechercher("SELECT * FROM collaborateur WHERE matricule LIKE ?", matricule);
-}
+    public List<Collaborateur> rechercherParMatricule(String matricule) throws SQLException {
+        return rechercher("SELECT * FROM collaborateur WHERE matricule LIKE ?", matricule);
+    }
 
-private List<Collaborateur> rechercher(String sql, String param) throws SQLException {
-    List<Collaborateur> collaborateurs = new ArrayList<>();
-    try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
-        pstmt.setString(1, "%" + param + "%");
-        try (ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                Collaborateur collaborateur = new Collaborateur();
-                collaborateur.setId(rs.getInt("id_collaborateur"));
-                collaborateur.setMatricule(rs.getInt("matricule"));
-                collaborateur.setNom(rs.getString("nom"));
-                collaborateur.setPrenom(rs.getString("prenom"));
+    private List<Collaborateur> rechercher(String sql, String param) throws SQLException {
+        List<Collaborateur> collaborateurs = new ArrayList<>();
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + param + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Collaborateur collaborateur = new Collaborateur();
+                    collaborateur.setId(rs.getInt("id_collaborateur"));
+                    collaborateur.setMatricule(rs.getInt("matricule"));
+                    collaborateur.setNom(rs.getString("nom"));
+                    collaborateur.setPrenom(rs.getString("prenom"));
 //                collaborateur.setTelephone_personnel(rs.getString("telephone_personnel"));
-                collaborateur.setStatut(rs.getString("statut"));
+                    collaborateur.setStatut(rs.getString("statut"));
 //                collaborateur.setCategorie(rs.getString("categorie"));
 //                collaborateur.setGenre(rs.getString("genre"));
 //                collaborateur.setRqth(rs.getString("rqth"));
 //                collaborateur.setDate_de_renouvellement(rs.getDate("date_de_renouvellement").toLocalDate());
-//                collaborateur.setMetier(rs.getString("metier"));
-                collaborateurs.add(collaborateur);
+                    collaborateur.setMetier(rs.getString("metier"));
+                    collaborateurs.add(collaborateur);
+                }
             }
         }
+        return collaborateurs;
     }
-    return collaborateurs;
-}
-
 
 }
