@@ -82,13 +82,50 @@
                            >
                     <div class="error">${requestScope.errors.telephone_personnel}</div>
                 </div>
-            </fieldset>
-            <div>
-                <input type="submit" value='Valider'>
-                <input type="reset" value="Annuler">
-            </div>
+                <form action="/submit-form" method="POST">
+                    <div class="combobox-container">
+                        <div class="combobox">
 
-        </form>
-    </body>
-    <%@include file="/WEB-INF/jspf/footer.jsp" %>
-</html>
+                            <label for="multi-select-partenaire">Choisissez son partenaire :</label>
+                            <br>
+                            <select id="multi-select-partenaire" name="partenaireOptions" multiple>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                                <option value="option4">Option 4</option>
+                            </select>
+                            <br><br>
+                            <input type="submit" value="Soumettre Partenaire"> 
+                            </form>
+                        </div>
+
+                        <div class="combobox">
+                            <form action="/submit-form" method="POST">
+                                <label for="multi-select-collaborateur">Choisissez son collaborateur :</label>
+                                <br>
+                                <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                    <option value="option4">Option 4</option>
+                                </select>
+                                <br><br>
+                                <input type="submit" value="Soumettre Collaborateur"> 
+
+                                </div>
+
+                                </div>
+                                <p>Merci de remplir tous les champs</p>
+                                </fieldset>
+
+
+                                <div>
+                                    <input type="submit" value='Valider'>
+                                    <input type="reset" value="Annuler">
+                                </div>
+                        </div>
+
+                </form>
+                </body>
+                <%@include file="/WEB-INF/jspf/footer.jsp" %>
+                </html>

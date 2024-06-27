@@ -77,8 +77,10 @@ a{
 }
 
 
+
+
 .custom-table {
-    border: 3px solid purple;
+    border: 3px solid purple; /* tableaux */
     border-collapse: collapse;
     width : 100%;
 }
@@ -101,3 +103,29 @@ a{
     border-bottom: 3px solid purple;
 }
 
+
+
+
+.combobox-container {
+    display: flex;
+    align-items: center; /* Assure que les éléments sont alignés verticalement */
+    gap: 20px; /* Espace entre les combobox */
+}
+
+.combobox {
+    flex: 1;
+}
+
+.combobox label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.combobox select {
+    width: 100%;
+    height: 150px; /* Hauteur des combobox */
+}
+
+.combobox input[type="submit"] {
+    margin-top: 10px;
+}

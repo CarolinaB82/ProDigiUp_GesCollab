@@ -2,7 +2,8 @@ package controllers;
 
 import dao.ResponsableActiviteDao;
 import entities.ResponsableActivite;
-import forms.ResponsableActiviteFormChecker;
+import forms.CreerResponsableActiviteFormChecker;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,7 +32,7 @@ public class CreerResponsableActivite extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
-        ResponsableActiviteFormChecker rafc = new ResponsableActiviteFormChecker(req);
+        CreerResponsableActiviteFormChecker rafc = new CreerResponsableActiviteFormChecker(req);
         ResponsableActivite responsableActivite = rafc.checkForm();
 
         if (rafc.getErrors().isEmpty()) {

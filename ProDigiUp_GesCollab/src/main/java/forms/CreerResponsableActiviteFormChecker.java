@@ -11,9 +11,9 @@ import java.time.format.DateTimeParseException;
  *
  * @author asolanas
  */
-public class ResponsableActiviteFormChecker extends FormChecker<ResponsableActivite> {
+public class CreerResponsableActiviteFormChecker extends FormChecker<ResponsableActivite> {
 
-    public ResponsableActiviteFormChecker(HttpServletRequest request) {
+    public CreerResponsableActiviteFormChecker(HttpServletRequest request) {
         super(request);
     }
 
