@@ -16,17 +16,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author asolanas
  */
 @WebServlet("/rechercher")
+@SuppressWarnings("serial")
 public class RechercherCollaborateur extends HttpServlet {
 
     private final CollaborateurDao collaborateurDao = new CollaborateurDao();
 
-        @Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String recherche = req.getParameter("recherche");
         System.out.println("Recherche: " + recherche); // Debug message
@@ -41,5 +41,3 @@ public class RechercherCollaborateur extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
     }
 }
-
-

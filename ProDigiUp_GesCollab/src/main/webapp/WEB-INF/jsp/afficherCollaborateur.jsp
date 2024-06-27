@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : afficherCollaborateur
     Created on : 20 juin 2024, 10:02:28
@@ -19,24 +20,21 @@
         <fieldset>
             <legend>Fiche Collaborateur</legend>
 
-            <p><strong>Matricule: </strong><c:out value="${collaborateur.collab.matricule}"/></p>
-            <p><strong>Genre: </strong><c:out value="${collaborateur.collab.genre}"/></p>
-            <p><strong>Nom: </strong><c:out value="${collaborateur.collab.nom}"/></p>
-            <p><strong>Prénom: </strong><c:out value="${collaborateur.collab.prenom}"/></p>
-            <p><strong>Téléphone personnel: </strong><c:out value="${collaborateur.collab.telephone_personnel}"/></p>
-            <p><strong>Statut: </strong><c:out value="${collaborateur.collab.statut}"/></p>
-            <p><strong>Catégorie: </strong><c:out value="${collaborateur.collab.categorie}"/></p>
-            <p><strong>RQTH: </strong><c:out value="${collaborateur.collab.rqth}"/></p>
-            <c:if test="${collaborateur.collab.rqth == 'oui'}">
-                <p><strong>Date de renouvellement: </strong><c:out value="${collaborateur.collab.date_de_renouvellement}"/></p>
+            <p><strong>Matricule: </strong><c:out value="${collaborateur.matricule}"/></p>
+            <p><strong>Genre: </strong><c:out value="${collaborateur.genre}"/></p>
+            <p><strong>Nom: </strong><c:out value="${collaborateur.nom}"/></p>
+            <p><strong>Prénom: </strong><c:out value="${collaborateur.prenom}"/></p>
+            <p><strong>Téléphone personnel: </strong><c:out value="${collaborateur.telephone_personnel}"/></p>
+            <p><strong>Statut: </strong><c:out value="${collaborateur.statut}"/></p>
+            <p><strong>Catégorie: </strong><c:out value="${collaborateur.categorie}"/></p>
+            <p><strong>RQTH: </strong><c:out value="${collaborateur.rqth}"/></p>
+            <c:if test="${collaborateur.rqth == 'oui'}">
+                <p><strong>Date de renouvellement: </strong><c:out value="${collaborateur.date_de_renouvellement}"/></p>
             </c:if>
-            <p><strong>Métier: </strong><c:out value="${collaborateur.collab.metier}"/></p>
+            <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
             
-            <p><strong>Prestation: </strong>
-            <a href="<c:url value='/prestation?id=${collaborateur.collab.id_prestation}'/>">
-                <c:out value="${collaborateur.nomPrestation}"/>
-            </a>
-        </p>
+            
+        
 
         </fieldset>  
         <%@include file="/WEB-INF/jspf/footer.jsp" %>

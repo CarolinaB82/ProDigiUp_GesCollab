@@ -11,16 +11,17 @@ import java.util.Objects;
  *
  * @author cberge
  */
+@SuppressWarnings("serial")
+public class Prestation implements Serializable, Identifiable {
 
-
-   @SuppressWarnings("serial")
-public class Prestation implements Serializable, Identifiable{
-    
     private Integer id;
     private String siglum_presta;
     private String nom_presta;
     private String ref_fact_partenaire;
     private String ref_fact_airbus;
+    private Integer id_ra;
+    private Integer id_partenaire;
+    private Integer id_collaborateur;
 
     @Override
     public Integer getId() {
@@ -64,27 +65,46 @@ public class Prestation implements Serializable, Identifiable{
         this.ref_fact_airbus = ref_fact_airbus;
     }
 
+    public Integer getId_ra() {
+        return id_ra;
+    }
+
+    public void setId_ra(Integer id_ra) {
+        this.id_ra = id_ra;
+    }
+
+    public Integer getId_partenaire() {
+        return id_partenaire;
+    }
+
+    public void setId_partenaire(Integer id_partenaire) {
+        this.id_partenaire = id_partenaire;
+    }
+
+    public Integer getId_collaborateur() {
+        return id_collaborateur;
+    }
+
+    public void setId_collaborateur(Integer id_collaborateur) {
+        this.id_collaborateur = id_collaborateur;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Prestation{");
-        sb.append("id=").append(id);
-        sb.append(", siglum_presta=").append(siglum_presta);
-        sb.append(", nom_presta=").append(nom_presta);
-        sb.append(", ref_fact_partenaire=").append(ref_fact_partenaire);
-        sb.append(", ref_fact_airbus=").append(ref_fact_airbus);
-        sb.append('}');
-        return sb.toString();
+        return "Prestation{" + "id=" + id + ", siglum_presta=" + siglum_presta + ", nom_presta=" + nom_presta + ", ref_fact_partenaire=" + ref_fact_partenaire + ", ref_fact_airbus=" + ref_fact_airbus + ", id_ra=" + id_ra + ", id_partenaire=" + id_partenaire + ", id_collaborateur=" + id_collaborateur + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + Objects.hashCode(this.siglum_presta);
-        hash = 47 * hash + Objects.hashCode(this.nom_presta);
-        hash = 47 * hash + Objects.hashCode(this.ref_fact_partenaire);
-        hash = 47 * hash + Objects.hashCode(this.ref_fact_airbus);
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.siglum_presta);
+        hash = 31 * hash + Objects.hashCode(this.nom_presta);
+        hash = 31 * hash + Objects.hashCode(this.ref_fact_partenaire);
+        hash = 31 * hash + Objects.hashCode(this.ref_fact_airbus);
+        hash = 31 * hash + Objects.hashCode(this.id_ra);
+        hash = 31 * hash + Objects.hashCode(this.id_partenaire);
+        hash = 31 * hash + Objects.hashCode(this.id_collaborateur);
         return hash;
     }
 
@@ -112,10 +132,16 @@ public class Prestation implements Serializable, Identifiable{
         if (!Objects.equals(this.ref_fact_airbus, other.ref_fact_airbus)) {
             return false;
         }
-        return Objects.equals(this.id, other.id);
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_ra, other.id_ra)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_partenaire, other.id_partenaire)) {
+            return false;
+        }
+        return Objects.equals(this.id_collaborateur, other.id_collaborateur);
     }
-
-   
-   
 
 }

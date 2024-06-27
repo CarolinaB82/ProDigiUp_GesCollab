@@ -11,6 +11,6 @@ package entities;
 public interface Identifiable {
 
     Integer getId();
-    
-    void setId ( Integer id);
+
+    void setId(Integer id);
 }

@@ -39,9 +39,9 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
             obj.setMatricule(matricule);
         } catch (NumberFormatException e) {
             setError("matricule", "Le matricule ne peut pas contenir de caractères alphanumériques");
-            
+
         }
- // Convertir les champs Date
+        // Convertir les champs Date
         LocalDate date_de_renouvellement = null;
         if (dateDeRenouvellement != null && !dateDeRenouvellement.isEmpty()) {
             try {
@@ -51,11 +51,11 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
             } catch (DateTimeParseException e) {
                 setError("date_de_renouvellement", "Erreur de conversion pour le champ date_de_renouvellement : " + e.getMessage());
             }
-        } 
+        }
         /*else {
             setError("date_de_renouvellement", "Le champ date_de_renouvellement est vide ou non valide.");
         }*/
-        
+
         obj.setTelephone_personnel(telephone_personnel);
         if (telephone_personnel == null || telephone_personnel.isEmpty()) {
             setError("telephone_personnel", "Le numéro de téléphone personnel est requis.");
@@ -69,7 +69,7 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
         obj.setCategorie(categorie);
         obj.setGenre(genre);
         obj.setRqth(rqth);
-        
+
         obj.setMetier(metier);
 
         if (errors.isEmpty()) {

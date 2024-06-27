@@ -4,7 +4,9 @@
  */
 package controllers;
 
+import dao.DaoFactory;
 import dao.PrestationDao;
+import entities.CollaborateurPrestationPartenaireRa;
 import entities.Prestation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,31 +14,24 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 
 /**
  *
  * @author cberge
  */
-
-
-    @WebServlet("/prestation")
+@WebServlet("/prestation")
 @SuppressWarnings("serial")
 public class AfficherPrestation extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-     //   int prestationId = 5;
-        
-       // PrestationDao prestationDao = new PrestationDao();
-       
-       // Prestation prestation = prestationDao.read(prestationId);
-        
-        //req.setAttribute("prestation", prestation);
-        //req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
-         String prestationIdParam = req.getParameter("id");
-        int prestationId = 3; // Valeur par défaut ou celle que vous choisissez si aucun paramètre n'est fourni
-        
+        req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+
+        String prestationIdParam = req.getParameter("id");
+        int prestationId = 1; // Valeur par défaut ou celle que vous choisissez si aucun paramètre n'est fourni
+
         if (prestationIdParam != null && !prestationIdParam.isEmpty()) {
             try {
                 prestationId = Integer.parseInt(prestationIdParam);
@@ -44,19 +39,14 @@ public class AfficherPrestation extends HttpServlet {
                 // Gérer l'erreur de conversion si nécessaire
             }
         }
-        
-        PrestationDao prestationDao = new PrestationDao ();
+
+        PrestationDao prestationDao = new PrestationDao();
         // Lire les informations du collaborateur depuis la base de données
         Prestation prestation = prestationDao.read(prestationId);
 
-        // Transmettre les informations du collaborateur à la page JSP
         req.setAttribute("prestation", prestation);
+
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
 
-        
     }
-
-    }
-
-
-
+}

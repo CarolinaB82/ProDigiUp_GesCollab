@@ -6,8 +6,6 @@ package dao;
 
 import entities.Collaborateur;
 
-
-
 /**
  *
  * @author cberge
@@ -19,20 +17,13 @@ public class TestCollaborateur {
      */
     public static void main(String args[]) {
         // TODO code application logic here
-        
-CollaborateurDao collDao = new CollaborateurDao();
-Collaborateur collab = collDao.read(1);
-        System.out.println("collab : " + collab.getId() + " " + collab.getMatricule() + " " + collab.getNom() + " " + collab.getPrenom() + " " +
-         " " + collab.getTelephone_personnel() + " " + collab.getStatut() + " " + collab.getCategorie() + " " + collab.getGenre() + " "
-        + collab.getRqth() + " " + collab.getMetier());
-        
-        
-        
 
-        
-        
-      
+        CollaborateurDao collDao = new CollaborateurDao();
+        Collaborateur collab = collDao.read(1);
+        System.out.println("collab : " + collab.getId() + " " + collab.getMatricule() + " " + collab.getNom() + " " + collab.getPrenom() + " "
+                + " " + collab.getTelephone_personnel() + " " + collab.getStatut() + " " + collab.getCategorie() + " " + collab.getGenre() + " "
+                + collab.getRqth() + " " + collab.getMetier());
+
     }
-    
-    
+
 }

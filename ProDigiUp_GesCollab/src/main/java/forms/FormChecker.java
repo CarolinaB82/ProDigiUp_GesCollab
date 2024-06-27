@@ -4,15 +4,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 /**
  *
  * @author cberge
  */
-public abstract class FormChecker <T>{
+public abstract class FormChecker<T> {
 
-   protected Map<String, String> errors;
+    protected Map<String, String> errors;
     protected HttpServletRequest request;
 
     public FormChecker(HttpServletRequest request) {
@@ -25,6 +23,7 @@ public abstract class FormChecker <T>{
     public Map<String, String> getErrors() {
         return errors;
     }
+
     public boolean hasErrors() {
         return !errors.isEmpty();
     }
@@ -37,7 +36,8 @@ public abstract class FormChecker <T>{
         return request.getParameter(key)
                 == null ? "" : request.getParameter(key);
     }
-public void addError(String key, String value) {
+
+    public void addError(String key, String value) {
         this.errors.put(key, value);
     }
 

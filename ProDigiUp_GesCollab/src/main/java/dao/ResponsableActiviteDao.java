@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,34 +60,7 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
             throw ex;
         }
     }
-    
-    
 
-    /*public List<ResponsableActivite> getAllResponsablesActivite() {
-        List<ResponsableActivite> responsables = new ArrayList<>();
-        String query = "SELECT id, nom, prenom, telephone_professionnel,telephone_personnel FROM responsable_activite";
-
-        try (Connection connection = MariadbConnection.getInstance(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                ResponsableActivite responsable = new ResponsableActivite();
-                responsable.setId(resultSet.getInt("id"));
-                responsable.setNom(resultSet.getString("nom"));
-                responsable.setPrenom(resultSet.getString("prenom"));
-                responsable.setTelephone_professionnel(resultSet.getString("telephone_professionnel"));
-                responsable.setTelephone_personnel(resultSet.getString("telephone_personnel"));
-
-                responsables.add(responsable);
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ResponsableActiviteDao.class.getName()).log(Level.SEVERE, null, e);
-        }
-
-        return responsables;
-    }*/
-
-    
-    
-    
     @Override
     public ResponsableActivite read(Integer id) {
         ResponsableActivite ra = null;
@@ -113,6 +87,10 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         return ra;
     }
 
+    @Override
+    protected void update(ResponsableActivite obj) {
+    }
+
     // rajout test
     public boolean exists(int matricule) {
         String sql = "SELECT 1 FROM ra WHERE matricule=?";
@@ -127,8 +105,21 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         return false;
     }
 
-    @Override
-    protected void update(ResponsableActivite obj) {
+    public Collection<ResponsableActivite> listResponsableActivite(int idCollaborateur) {
+        String sql = "SELECT id_ra FROM posseder WHERE id_collaborateur=?";
+        ArrayList<ResponsableActivite> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idCollaborateur);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idRa = rs.getInt("id_ra");
+                ResponsableActivite responsableActive = DaoFactory.ResponsableActiviteDao().read(idRa);
+                list.add(responsableActive);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
     }
-
 }

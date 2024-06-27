@@ -4,7 +4,6 @@
  */
 package dao;
 
-
 import entities.Prestation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +23,8 @@ public class PrestationDao extends Dao<Prestation> {
     public PrestationDao() {
         super("Prestation");
     }
-@Override
+
+    @Override
     protected Prestation createObject(ResultSet rs) throws SQLException {
         Prestation prestation = new Prestation() {
         };
@@ -33,9 +33,17 @@ public class PrestationDao extends Dao<Prestation> {
         prestation.setNom_presta(rs.getString("nom_presta"));
         prestation.setRef_fact_partenaire(rs.getString("ref_fact_partenaire"));
         prestation.setRef_fact_airbus(rs.getString("ref_fact_airbus"));
+        prestation.setId_ra(rs.getInt("id_ra"));
+        prestation.setId_collaborateur(rs.getInt("id_collaborateur"));
+        prestation.setId_partenaire(rs.getInt("id_partenaire"));
 
         return prestation;
     }
+
+    @Override
+    protected void create(Prestation obj) throws SQLException {
+    }
+
     @Override
     public Prestation read(Integer id) {
         Prestation obj = null;
@@ -52,6 +60,9 @@ public class PrestationDao extends Dao<Prestation> {
                 obj.setNom_presta(rs.getString("nom_presta"));
                 obj.setRef_fact_partenaire(rs.getString("ref_fact_partenaire"));
                 obj.setRef_fact_airbus(rs.getString("ref_fact_airbus"));
+                obj.setId_ra(rs.getInt("id_ra"));
+                obj.setId_collaborateur(rs.getInt("id_collaborateur"));
+                obj.setId_partenaire(rs.getInt("id_partenaire"));
             }
         } catch (SQLException ex) {
             System.err.println("Erreur lors de la lecture : " + ex.getMessage());
@@ -59,18 +70,30 @@ public class PrestationDao extends Dao<Prestation> {
         return obj;
     }
 
-    
-
-    @Override
-    protected void create(Prestation obj) throws SQLException {
-    }
-
     @Override
     protected void update(Prestation obj) {
     }
 
-      @Override
-    public Collection<Prestation> list() {
+    public Collection<Prestation> listByNom(String nom_presta) {
+        ArrayList<Prestation> listNom = new ArrayList<>();
+        String sql = "SELECT * FROM " + table + " WHERE nom_presta =?";
+
+        try (
+                PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setString(1, nom_presta);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Prestation obj = createObject(rs);
+                listNom.add(obj);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return listNom;
+    }
+
+    public Collection<Prestation> listPrestation() {
         ArrayList<Prestation> list = new ArrayList<>();
         String sql = "SELECT * FROM prestation";
         try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
@@ -92,47 +115,4 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return list;
     }
-    
-     public Collection<Prestation> listByNom( String nom_presta) {
-        ArrayList<Prestation> listNom = new ArrayList<>();
-        String sql = "SELECT * FROM "+ table + " WHERE nom_presta =?";
-
-        try (
-             PreparedStatement pstmt = connexion.prepareStatement(sql)) {
-            pstmt.setString(2, nom_presta);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()){
-                Prestation obj = createObject (rs);
-                listNom.add(obj);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return listNom;
-    }
-     
-     
-//     public String getNomPrestationByCollaborateurId(int collaborateurId) {
-//        String nomPrestation = null;
-//        String query = "SELECT p.nom_presta FROM prestation p " +
-//                       "LEFT JOIN collaborateur c ON p.id_prestation = c.id_prestation " +
-//                       "WHERE c.id_collaborateur = ?";
-//
-//        try (Connection connection = MariadbConnection.getInstance();
-//             PreparedStatement statement = connection.prepareStatement(query)) {
-//            statement.setInt(1, collaborateurId);
-//            try (ResultSet resultSet = statement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    nomPrestation = resultSet.getString("nom_presta");
-//                }
-//            }
-//        } catch (SQLException e) {
-//            Logger.getLogger(PrestationDao.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//
-//        return nomPrestation;
-//    }
 }
-
-

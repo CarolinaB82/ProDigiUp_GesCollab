@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
  */
 @SuppressWarnings("serial")
 public class Collaborateur implements Identifiable, Serializable {
-    
+
     private Integer id;
     private Integer matricule;
     private String nom;
@@ -24,7 +23,6 @@ public class Collaborateur implements Identifiable, Serializable {
     private String rqth;
     private LocalDate date_de_renouvellement;
     private String metier;
-    private Integer id_prestation;
 
     @Override
     public String toString() {
@@ -41,7 +39,6 @@ public class Collaborateur implements Identifiable, Serializable {
         sb.append(", rqth=").append(rqth);
         sb.append(", date_de_renouvellement=").append(date_de_renouvellement);
         sb.append(", metier=").append(metier);
-        sb.append(", id_prestation=").append(id_prestation);
         sb.append('}');
         return sb.toString();
     }
@@ -60,56 +57,7 @@ public class Collaborateur implements Identifiable, Serializable {
         hash = 83 * hash + Objects.hashCode(this.rqth);
         hash = 83 * hash + Objects.hashCode(this.date_de_renouvellement);
         hash = 83 * hash + Objects.hashCode(this.metier);
-        hash = 83 * hash + Objects.hashCode(this.id_prestation);
         return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Collaborateur other = (Collaborateur) obj;
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        if (!Objects.equals(this.prenom, other.prenom)) {
-            return false;
-        }
-        if (!Objects.equals(this.telephone_personnel, other.telephone_personnel)) {
-            return false;
-        }
-        if (!Objects.equals(this.statut, other.statut)) {
-            return false;
-        }
-        if (!Objects.equals(this.categorie, other.categorie)) {
-            return false;
-        }
-        if (!Objects.equals(this.genre, other.genre)) {
-            return false;
-        }
-        if (!Objects.equals(this.rqth, other.rqth)) {
-            return false;
-        }
-        if (!Objects.equals(this.metier, other.metier)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.matricule, other.matricule)) {
-            return false;
-        }
-        if (!Objects.equals(this.date_de_renouvellement, other.date_de_renouvellement)) {
-            return false;
-        }
-        return Objects.equals(this.id_prestation, other.id_prestation);
     }
 
     @Override
@@ -202,19 +150,10 @@ public class Collaborateur implements Identifiable, Serializable {
         this.metier = metier;
     }
 
-    public Integer getId_prestation() {
-        return id_prestation;
-    }
-
-    public void setId_prestation(Integer id_prestation) {
-        this.id_prestation = id_prestation;
-    }
-
-     // Nouveau champ pour la prestation
+    // Nouveau champ pour la prestation
     private String nomPrestation;
 
     // Getters et setters existants
-
     public void setNomPrestation(String nomPrestation) {
         this.nomPrestation = nomPrestation;
     }
@@ -223,12 +162,3 @@ public class Collaborateur implements Identifiable, Serializable {
         return nomPrestation;
     }
 }
-
-   
-  
-
-    
-
-   
-
-   

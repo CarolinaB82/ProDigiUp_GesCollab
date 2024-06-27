@@ -23,12 +23,12 @@
 
             <ul >
                 <li><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></li>
-                <li><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></li>
+                <!--<li><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></li>-->
                 <li><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></li>
                 <li><a href="<c:url value="/rechercher"/>">Rechercher un collaborateur</a></li>
-                <li><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></li>
+                <!--<li><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></li>-->
                 <li><a href="<c:url value="/liste_collaborateurs"/>">Liste collaborateurs</a></li>
-                <li><a href="<c:url value="/prestation"/>">Voir une prestation</a></li>
+                <!-- <li><a href="<c:url value="/prestation"/>">Voir une prestation</a></li>-->
 
 
 

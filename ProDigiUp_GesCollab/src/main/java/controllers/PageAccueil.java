@@ -15,14 +15,13 @@ import java.io.IOException;
  *
  * @author asolanas
  */
-
 @WebServlet("/")
+@SuppressWarnings("serial")
 public class PageAccueil extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/jsp/page_accueil.jsp").forward(req, resp);
     }
-    
-    
+
 }

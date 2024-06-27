@@ -8,6 +8,8 @@ import entities.Partenaire;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -55,7 +57,8 @@ public class PartenaireDao extends Dao<Partenaire> {
             throw ex;
         }
     }
-@Override
+
+    @Override
     public Partenaire read(Integer id) {
         Partenaire partenaire = null;
         String sql = "SELECT * FROM partenaire WHERE id_partenaire=?";
@@ -80,7 +83,12 @@ public class PartenaireDao extends Dao<Partenaire> {
         }
         return partenaire;
     }
-    
+
+    @Override
+    protected void update(Partenaire obj) {
+
+    }
+
     // rajout test
     public boolean exists(int nom) {
         String sql = "SELECT 1 FROM partenaire WHERE nom=?";
@@ -95,9 +103,21 @@ public class PartenaireDao extends Dao<Partenaire> {
         return false;
     }
 
-@Override
-protected void update(Partenaire obj) {
-    
+    public Collection<Partenaire> listPartenaire(int idRa) {
+        String sql = "SELECT id_partenaire FROM proposer WHERE id_ra=?";
+        ArrayList<Partenaire> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idRa);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idPartenaire = rs.getInt("id_partenaire");
+                Partenaire partenaire = DaoFactory.getPartenaireDao().read(idPartenaire);
+                list.add(partenaire);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
     }
-    
 }
