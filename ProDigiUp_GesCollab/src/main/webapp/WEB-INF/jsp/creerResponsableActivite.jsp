@@ -30,7 +30,7 @@
                            maxlength="5" 
                            required
                            title="Veuillez saisir uniquement des chiffres (0-9)" 
-                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.matricule : ''}" 
+                           value="${requestScope.ra != null ? requestScope.ra.matricule : ''}" 
                            class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
                            >
                     <div class="error-details-message">${requestScope.errors.matricule}</div>
@@ -57,68 +57,63 @@
                     <div class="error-details-message">${requestScope.errors.prenom}</div>
                 </div>
                 <div>
-                    <label for="tel_pro">Téléphone Professionnel</label>
+                    <label for="telephone_professionnel">Téléphone Professionnel</label>
                     <input type="text" id="telephone_professionnel" name="telephone_professionnel"
                            pattern="\+?[0-9]{1,15}" 
                            maxlength="16" 
                            required  
                            title="Veuillez saisir exactement 10 chiffres"
 
-                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_professionnel : ''}"
+                           value="${requestScope.ra != null ? requestScope.ra.telephone_professionnel : ''}"
                            class="${not empty requestScope.errors.telephone_professionnel ? 'error-input' : ''}"
 
                            >
                     <div class="error-details-mesage">${requestScope.errors.telephone_professionnel}</div>
                 </div>
                 <div>
-                    <label for="tel_perso">Téléphone Personnel</label>
+                    <label for="telephone_personnel">Téléphone Personnel</label>
                     <input type="text" id="telephone_personnel" name="telephone_personnel"
                            pattern="\+?[0-9]{1,15}" 
                            maxlength="16" 
                            required  
                            title="Veuillez saisir exactement 10 chiffres"
 
-                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
+                           value="${requestScope.ra != null ? requestScope.ra.telephone_personnel : ''}"
                            class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
 
                            >
                     <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                 </div>
-                <form action="/submit-form" method="POST">
                     <div class="combobox-container">
                         <div class="combobox">
 
-                            <label for="multi-select-partenaire">Choisissez son partenaire :</label>
+                            <label for="multi-select">Choisissez son partenaire :</label>
                             <br>
-                            <select id="multi-select-partenaire" name="partenaireOptions" multiple>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
+                            <select id="partenaire" name="partenaire" multiple>
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <option value="${partenaire.id}">${partenaire.nom}</option>
+                                </c:forEach>
                             </select>
                             <br><br>
-                            <input type="submit" value="Soumettre Partenaire"> 
-                            </form>
+                            
                         </div>
 
                         <div class="combobox">
-                            <form action="/submit-form" method="POST">
-                                <label for="multi-select-collaborateur">Choisissez son collaborateur :</label>
+                                <label for="multi-select">Choisissez son collaborateur :</label>
                                 <br>
-                                <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
-                                    <option value="option1">Option 1</option>
-                                    <option value="option2">Option 2</option>
-                                    <option value="option3">Option 3</option>
-                                    <option value="option4">Option 4</option>
-                                </select>
+                                <select id="collaborateur" name="collaborateur" multiple>
+                                   <c:forEach var="collaborateur" items="${collaborateurList}">
+                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
                                 <br><br>
-                                <input type="submit" value="Soumettre Collaborateur"> 
+                               
 
                                 </div>
 
                                 </div>
                                 <p>Merci de remplir tous les champs</p>
-                                </fieldset>
+                               
 
 
                                 <div>
@@ -126,8 +121,10 @@
                                     <input type="reset" value="Annuler">
                                 </div>
                         </div>
+                         </fieldset>
 
-                </form>
+            </form>   
+        </main>
                 </body>
                 <%@include file="/WEB-INF/jspf/footer.jsp" %>
                 </html>

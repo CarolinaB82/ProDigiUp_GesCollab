@@ -170,4 +170,18 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         } 
         return responsablesActivites;
     }
+    
+    public int getLastIdCreated(){
+        String sql = "SELECT MAX(id_ra) AS max_id FROM ra";
+        int maxId = 0;
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de l'exécution de la requête : " + ex.getMessage());
+        }
+        return maxId;
+    }
 }

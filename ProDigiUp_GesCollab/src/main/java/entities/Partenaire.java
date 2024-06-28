@@ -35,10 +35,12 @@ public class Partenaire implements Serializable, Identifiable {
         return sb.toString();
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }

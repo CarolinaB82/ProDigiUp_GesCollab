@@ -10,10 +10,26 @@ public class DaoFactory {
     private static ResponsableActiviteDao responsableActiviteDao;
     private static PartenaireDao partenaireDao;
     private static PrestationDao prestationDao;
+    private static ProposerDao proposerDao;
+    private static PossederDao possederDao;
 
     private DaoFactory() {
     }
-
+    public static PossederDao getPossederDao(){
+        if (possederDao == null){
+            possederDao = new PossederDao();
+        }
+        return possederDao;
+    }
+    
+    
+    public static ProposerDao getProposerDao(){
+        if (proposerDao == null){
+            proposerDao = new ProposerDao();
+        }
+        return proposerDao;
+    }
+    
     public static CollaborateurDao getCollaborateurDao() {
         if (collaborateurDao == null) {
             collaborateurDao = new CollaborateurDao();

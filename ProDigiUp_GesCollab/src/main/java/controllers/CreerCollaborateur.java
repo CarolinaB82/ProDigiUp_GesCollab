@@ -5,7 +5,11 @@
 package controllers;
 
 import dao.CollaborateurDao;
+import dao.DaoFactory;
+import dao.PossederDao;
 import entities.Collaborateur;
+import entities.Posseder;
+import entities.ResponsableActivite;
 import forms.CreerCollaborateurFormChecker;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +22,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +36,10 @@ public class CreerCollaborateur extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+         Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
+        req.setAttribute("responsableActiviteList", responsableActiviteList);
+        
         req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
     }
 
@@ -63,6 +72,7 @@ public class CreerCollaborateur extends HttpServlet {
         //if (nv.getErrors().isEmpty()) {
         if (nv.getErrors().isEmpty()) {
             CollaborateurDao collaborateurDao = new CollaborateurDao();
+             PossederDao possederDao = new PossederDao();
             // Appel de la méthode create du DOA
             // Si une erreur dans l'insert alors une SQLException est levé
             // On l'intercepte dans le catch et on affiche un msg d'erreur à l'utilisateur
@@ -70,6 +80,7 @@ public class CreerCollaborateur extends HttpServlet {
             try {
                 if (collaborateurDao.exists(collaborateur.getMatricule())) {
                     nv.addError("matricule", "Le matricule existe déjà.");
+                     loadLists(req);
                     req.setAttribute("errors", nv.getErrors());
                     req.setAttribute("collaborateur", collaborateur);
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
@@ -78,7 +89,22 @@ public class CreerCollaborateur extends HttpServlet {
                 }
 
                 collaborateurDao.create(collaborateur);
-                Collaborateur collab = collaborateurDao.read(collaborateur.getId());
+                
+                //methode creer pour recuperer le dernier Id cree
+                int lastIdCreated = collaborateurDao.getLastIdCreated();
+                Collaborateur collab = collaborateurDao.read(lastIdCreated);
+                
+            String[] responsableActiviteIds = req.getParameterValues("responsable");
+                
+                if (responsableActiviteIds != null) {
+            for (String responsableId : responsableActiviteIds) {
+                Posseder posseder = new Posseder();
+                posseder.setId_ra(Integer.parseInt(responsableId));
+                posseder.setId_collaborateur(collab.getId());
+                possederDao.create(posseder);
+            }}
+                
+                
                 req.setAttribute("collaborateur", collab);
                 req.setAttribute("message", "Votre collaborateur est bien enregistré");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
@@ -86,6 +112,7 @@ public class CreerCollaborateur extends HttpServlet {
             } catch (SQLException ex) {
                 if (ex.getMessage().contains("Le matricule existe déjà")) {
                     nv.addError("matricule", "Le matricule existe déjà.");
+                    loadLists(req);
                     req.setAttribute("errors", nv.getErrors());
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
                     req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
@@ -96,6 +123,7 @@ public class CreerCollaborateur extends HttpServlet {
                 }
             }
         } else {
+            loadLists(req);
             req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
             req.setAttribute("errors", nv.getErrors());
             req.setAttribute("collaborateur", collaborateur);
@@ -103,4 +131,9 @@ public class CreerCollaborateur extends HttpServlet {
         }
 
     }
+    private void loadLists(HttpServletRequest req) throws ServletException {
+    Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
+    req.setAttribute("responsableActiviteList", responsableActiviteList);
+}
+
 }

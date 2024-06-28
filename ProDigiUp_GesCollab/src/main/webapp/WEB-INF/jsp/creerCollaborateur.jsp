@@ -162,14 +162,14 @@
                             });
                         </script>
                     </div>
-                        <div>
-                            <label for="metier">Métier</label>
-                            <input type="text" id="metier" name="metier"
-                                   pattern="[a-zA-ZÀ-ÿ' -]*"
-                                   required
-                                   title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                                   value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
-                                   class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
+                    <div>
+                        <label for="metier">Métier</label>
+                        <input type="text" id="metier" name="metier"
+                               pattern="[a-zA-ZÀ-ÿ' -]*"
+                               required
+                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
+                               class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
                                >
                         <div class="error">${requestScope.errors.metier}</div>
@@ -177,31 +177,29 @@
 
                         <div class="combobox-container">
                             <div class="combobox">
-                                <form action="/submit-form" method="POST">
-                                    <label for="multi-select">Choisissez son responsable activité :</label>
-                            <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        <option value="option4">Option 4</option>
-                                    </select>
-                                    <br><br>
-                                    <input type="submit" value="Soumettre Responsable activité"> 
 
-                                    </div>
+                                <label for="responsable">Choisissez son responsable activité :</label>
+                                <select id="responsable" name="responsable" multiple>
+                                    <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                </c:forEach>
+                                </select>
+                                <br><br>
 
-                                    </div>
-                                    <p>Merci de remplir tous les champs</p>
-                                    </fieldset>
-                                    <div>
-                                        <input type="submit" value="Envoyer">
-                                        <input type="reset" value="Annuler">
-                                    </div>
+                            </div>
+                            
+                        </div>
+                        <p>Merci de remplir tous les champs</p>
+                </fieldset>
+                <div>
+                    <input type="submit" value="Envoyer">
+                    <input type="reset" value="Annuler">
+                </div>
 
-                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                                </form>
-                                </main>
-                                </body>
-                                <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                                </html>
+            </form>
+        </main>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+</html>

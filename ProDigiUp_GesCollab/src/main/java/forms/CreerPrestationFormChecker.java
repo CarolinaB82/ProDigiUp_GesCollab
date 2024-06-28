@@ -19,24 +19,48 @@ public class CreerPrestationFormChecker extends FormChecker<Prestation> {
 
     @Override
     public Prestation checkForm() {
-        Prestation obj = new Prestation();
+        Prestation prestation = new Prestation();
 
         String siglum_presta = request.getParameter("siglum_presta");
         String nom_presta = request.getParameter("nom_presta");
         String ref_fact_partenaire = request.getParameter("ref_fact_partenaire");
         String ref_fact_airbus = request.getParameter("ref_fact_airbus");
+        String id_raStr = request.getParameter("id_ra");
+        String id_collaborateurStr = request.getParameter("id_collaborateur");
+        String id_partenaireStr = request.getParameter("id_partenaire");
+
 
         // Traiter les autres champs String
-        obj.setSiglum_presta(siglum_presta);
-        obj.setNom_presta(nom_presta);
-        obj.setRef_fact_partenaire(ref_fact_partenaire);
-        obj.setRef_fact_airbus(ref_fact_airbus);
+        prestation.setSiglum_presta(siglum_presta);
+        prestation.setNom_presta(nom_presta);
+        prestation.setRef_fact_partenaire(ref_fact_partenaire);
+        prestation.setRef_fact_airbus(ref_fact_airbus);
+        
+         try {
+            Integer id_ra = Integer.parseInt(id_raStr);
+            prestation.setId_ra(id_ra);
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur de conversion " + e.getMessage());
+        } 
+         try {
+            Integer id_collaborateur = Integer.parseInt(id_collaborateurStr);
+            prestation.setId_collaborateur(id_collaborateur);
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur de conversion " + e.getMessage());
+        } 
+         try {
+            Integer id_partenaire = Integer.parseInt(id_partenaireStr);
+            prestation.setId_partenaire(id_partenaire);
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur de conversion " + e.getMessage());
+        }
+        
 
         if (errors.isEmpty()) {
             //DaoFactory.getCollaborateurDao().save(obj);
         }
-        request.setAttribute("bean", obj);
-        return obj;
+        request.setAttribute("bean", prestation);
+        return prestation;
     }
 
 }
