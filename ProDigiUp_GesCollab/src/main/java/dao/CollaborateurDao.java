@@ -151,6 +151,17 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
+    
+    protected void delete (Integer id){
+        String sql = "DELETE FROM collaborateur WHERE id_collaborateur=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+             pstmt.executeUpdate();
+              } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
+    }
 
     public Collection<CollaborateurPrestationPartenaireRa> listCollaborateurPrestationPartenaireRa() {
         ArrayList<CollaborateurPrestationPartenaireRa> list = new ArrayList<>();

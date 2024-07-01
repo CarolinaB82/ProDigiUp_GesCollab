@@ -50,11 +50,10 @@ public class PrestationDao extends Dao<Prestation> {
             pstmt.setString(2, presta.getNom_presta());
             pstmt.setString(3, presta.getRef_fact_partenaire());
             pstmt.setString(4, presta.getRef_fact_airbus());
-            
-            
-            pstmt.setObject(5, presta.getId_ra(),Types.INTEGER);
-            pstmt.setObject(6, presta.getId_collaborateur(),Types.INTEGER);
-            pstmt.setObject(7, presta.getId_partenaire(),Types.INTEGER);
+
+            pstmt.setObject(5, presta.getId_ra(), Types.INTEGER);
+            pstmt.setObject(6, presta.getId_collaborateur(), Types.INTEGER);
+            pstmt.setObject(7, presta.getId_partenaire(), Types.INTEGER);
 
             int nbLines = pstmt.executeUpdate();
             if (nbLines == 1) {
@@ -69,7 +68,6 @@ public class PrestationDao extends Dao<Prestation> {
             throw ex;
         }
     }
-    
 
     @Override
     public Prestation read(Integer id) {
@@ -99,6 +97,32 @@ public class PrestationDao extends Dao<Prestation> {
 
     @Override
     protected void update(Prestation obj) {
+        String sql = "UPDATE prestation SET siglum_presta=?, nom_presta=?, ref_fact_partenaire=?, ref_fact_airbus=?, id_ra=?, id_collaborateur=?, id_partenaire=? "
+                + "WHERE id_prestation=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setString(1, obj.getSiglum_presta());
+            pstmt.setString(2, obj.getNom_presta());
+            pstmt.setString(3, obj.getRef_fact_partenaire());
+            pstmt.setString(4, obj.getRef_fact_airbus());
+            pstmt.setInt(5, obj.getId_ra());
+            pstmt.setInt(6, obj.getId_collaborateur());
+            pstmt.setInt(7, obj.getId_partenaire());
+
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+        }
+    }
+    
+    protected void delete (Integer id){
+        String sql = "DELETE FROM prestation WHERE id_prestation=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+             pstmt.executeUpdate();
+              } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
     }
 
     public Collection<Prestation> listByNom(String nom_presta) {
@@ -119,9 +143,8 @@ public class PrestationDao extends Dao<Prestation> {
 
         return listNom;
     }
-    
-    
-     // rajout test
+
+    // rajout test
     public boolean exists(String nom_presta) {
         String sql = "SELECT 1 FROM prestation WHERE nom_presta=?";
         try {
@@ -134,7 +157,6 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return false;
     }
-    
 
     public Collection<Prestation> listPrestation() {
         ArrayList<Prestation> list = new ArrayList<>();
@@ -161,8 +183,8 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return list;
     }
-    
-    public int getLastIdCreated(){
+
+    public int getLastIdCreated() {
         String sql = "SELECT MAX(id_prestation) AS max_id FROM prestation";
         int maxId = 0;
         try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {

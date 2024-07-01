@@ -85,9 +85,34 @@ public class PartenaireDao extends Dao<Partenaire> {
         return partenaire;
     }
 
+    
     @Override
     protected void update(Partenaire obj) {
+        String sql = "UPDATE partenaire SET nom=?, numero_voie=?, adresse=?, code_postal=?, ville=?"
+                + "WHERE id_patenaire=?";
 
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setString(1, obj.getNom());
+            pstmt.setInt(2, obj.getNumero_voie());
+            pstmt.setString(3, obj.getAdresse());
+            pstmt.setInt(4, obj.getCode_postal());
+            pstmt.setString(5, obj.getVille());
+            
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
+    }
+    protected void delete (Integer id){
+        String sql = "DELETE FROM partenaire WHERE id_partenaire=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+             pstmt.executeUpdate();
+              } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
     }
 
     // rajout test
@@ -122,7 +147,7 @@ public class PartenaireDao extends Dao<Partenaire> {
         return list;
     }
 
-     public int getLastIdCreated(){
+    public int getLastIdCreated() {
         String sql = "SELECT MAX(id_partenaire) AS max_id FROM partenaire";
         int maxId = 0;
         try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
