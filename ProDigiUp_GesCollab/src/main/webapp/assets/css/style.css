@@ -111,10 +111,10 @@ legend{
 
 
 
-.combobox-container {
+/*.combobox-container {
     display: flex;
-    align-items: center; /* Assure que les éléments sont alignés verticalement */
-    gap: 20px; /* Espace entre les combobox */
+    align-items: center; 
+    gap: 20px; 
 }
 
 .combobox {
@@ -128,9 +128,65 @@ legend{
 
 .combobox select {
     width: 100%;
-    height: 150px; /* Hauteur des combobox */
+    height: 150px; 
 }
 
 .combobox input[type="submit"] {
     margin-top: 10px;
+}*/
+
+/* Style pour le conteneur général */
+.combobox-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 300px;
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour chaque combobox */
+.combobox {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style pour les étiquettes */
+.combobox label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: auto;
+     text-align: center;
+}
+
+/* Style pour les éléments select */
+.combobox select {
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    color: #555;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.combobox select:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: none;
+}
+
+/* Style pour les options */
+.combobox select option {
+    padding: 10px;
+}
+
+/* Style pour les marges */
+.combobox br {
+    display: none; /* Optionnel : cache les br inutiles */
 }

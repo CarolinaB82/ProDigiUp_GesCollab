@@ -29,7 +29,7 @@
             <p><strong>Catégorie: </strong><c:out value="${collaborateur.categorie}"/></p>
             <p><strong>RQTH: </strong><c:out value="${collaborateur.rqth}"/></p>
             <c:if test="${collaborateur.rqth == 'oui'}">
-                <p><strong>Date de renouvellement: </strong><c:out value="${collaborateur.date_de_renouvellement}"/></p>
+                <p><strong>Date de renouvellement: </strong><c:out value="${formattedDate}"/></p>
             </c:if>
             <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
             

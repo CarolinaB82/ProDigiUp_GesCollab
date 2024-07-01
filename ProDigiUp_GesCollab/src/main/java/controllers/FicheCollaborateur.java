@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -42,6 +43,13 @@ public class FicheCollaborateur extends HttpServlet {
         Collaborateur collaborateur = collaborateurDao.read(collaborateurId);
         //CollaborateurNomPrestation collaborateur = collaborateurDao.getCollaborateurNomPrestation(collaborateurId);
 
+          // Formatage de la date
+        if (collaborateur.getDate_de_renouvellement() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
+            req.setAttribute("formattedDate", formattedDate);
+        }
+ 
         // Transmettre les informations du collaborateur à la page JSP
         req.setAttribute("collaborateur", collaborateur);
 

@@ -39,7 +39,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.nom}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="numero_voie">Numero de voie</label>
                         <input type="text" id="numero_voie" name="numero_voie"
@@ -53,6 +53,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.numero_voie}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="adresse">Adresse</label>
                         <input type="text" id="adresse" name="adresse"
@@ -65,7 +66,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.adresse}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="code_postal">Code Postal</label>
                         <input type="text" id="code_postal" name="code_postal"
@@ -80,7 +81,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.code_postal}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="ville">Ville</label>
                         <input type="text" id="ville" name="ville"
@@ -93,11 +94,11 @@
                                >
                         <div class="error-details-message">${requestScope.errors.ville}</div>
                     </div>
-
+                    <br>
 
                     <div class="combobox-container">
                         <div class="combobox">
-                            <label for="multi-select">Choisissez son responsable activité :</label>
+                            <label for="multi-select">Son responsable activité</label>
                             <br>
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">

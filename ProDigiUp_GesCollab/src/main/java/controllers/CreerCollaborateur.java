@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -36,10 +37,10 @@ public class CreerCollaborateur extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-         Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
+
+        Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
         req.setAttribute("responsableActiviteList", responsableActiviteList);
-        
+
         req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
     }
 
@@ -52,11 +53,13 @@ public class CreerCollaborateur extends HttpServlet {
         // Gestion de la sélection RQTH et de la date de renouvellement
         String rqth = req.getParameter("rqth");
         boolean isOuiSelected = "oui".equals(rqth);
+        boolean isAVieSelected = "a vie".equals(rqth);
         String dateDeRenouvellementStr = req.getParameter("date_de_renouvellement");
         LocalDate dateDeRenouvellement = null;
 
         if (isOuiSelected) {
             try {
+
                 dateDeRenouvellement = LocalDate.parse(dateDeRenouvellementStr);
             } catch (DateTimeParseException e) {
                 nv.addError("date_de_renouvellement", "Date de renouvellement invalide.");
@@ -68,11 +71,12 @@ public class CreerCollaborateur extends HttpServlet {
         collaborateur.setDate_de_renouvellement(dateDeRenouvellement);
 
         req.setAttribute("isOuiSelected", isOuiSelected);
+        req.setAttribute("isAVieSelected", isAVieSelected);
 
         //if (nv.getErrors().isEmpty()) {
         if (nv.getErrors().isEmpty()) {
             CollaborateurDao collaborateurDao = new CollaborateurDao();
-             PossederDao possederDao = new PossederDao();
+            PossederDao possederDao = new PossederDao();
             // Appel de la méthode create du DOA
             // Si une erreur dans l'insert alors une SQLException est levé
             // On l'intercepte dans le catch et on affiche un msg d'erreur à l'utilisateur
@@ -80,7 +84,7 @@ public class CreerCollaborateur extends HttpServlet {
             try {
                 if (collaborateurDao.exists(collaborateur.getMatricule())) {
                     nv.addError("matricule", "Le matricule existe déjà.");
-                     loadLists(req);
+                    loadLists(req);
                     req.setAttribute("errors", nv.getErrors());
                     req.setAttribute("collaborateur", collaborateur);
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
@@ -89,22 +93,27 @@ public class CreerCollaborateur extends HttpServlet {
                 }
 
                 collaborateurDao.create(collaborateur);
-                
+
                 //methode creer pour recuperer le dernier Id cree
                 int lastIdCreated = collaborateurDao.getLastIdCreated();
                 Collaborateur collab = collaborateurDao.read(lastIdCreated);
-                
-            String[] responsableActiviteIds = req.getParameterValues("responsable");
-                
+                // Formatage de la date
+                if (collaborateur.getDate_de_renouvellement() != null) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
+                    req.setAttribute("formattedDate", formattedDate);
+                }
+                String[] responsableActiviteIds = req.getParameterValues("responsable");
+
                 if (responsableActiviteIds != null) {
-            for (String responsableId : responsableActiviteIds) {
-                Posseder posseder = new Posseder();
-                posseder.setId_ra(Integer.parseInt(responsableId));
-                posseder.setId_collaborateur(collab.getId());
-                possederDao.create(posseder);
-            }}
-                
-                
+                    for (String responsableId : responsableActiviteIds) {
+                        Posseder posseder = new Posseder();
+                        posseder.setId_ra(Integer.parseInt(responsableId));
+                        posseder.setId_collaborateur(collab.getId());
+                        possederDao.create(posseder);
+                    }
+                }
+
                 req.setAttribute("collaborateur", collab);
                 req.setAttribute("message", "Votre collaborateur est bien enregistré");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
@@ -131,9 +140,10 @@ public class CreerCollaborateur extends HttpServlet {
         }
 
     }
+
     private void loadLists(HttpServletRequest req) throws ServletException {
-    Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
-    req.setAttribute("responsableActiviteList", responsableActiviteList);
-}
+        Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
+        req.setAttribute("responsableActiviteList", responsableActiviteList);
+    }
 
 }

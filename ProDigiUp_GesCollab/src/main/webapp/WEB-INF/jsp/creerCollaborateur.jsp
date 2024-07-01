@@ -40,7 +40,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.matricule}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom"
@@ -54,6 +54,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.nom}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="prenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom"
@@ -66,19 +67,20 @@
                                >
                         <div class="error-details-message">${requestScope.errors.prenom}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="telephone_personnel">Téléphone personnel</label>
                         <input type="text" id="telephone_personnel" name="telephone_personnel"
                                pattern="\+?[0-9]{1,15}" 
                                maxlength="16" 
-                               required  
-                               title="Veuillez saisir exactement 10 chiffres"
+                                 
+                               title="Veuillez saisir un numéro de téléphone valide (optionnel)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
                                >
                         <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="statut">Statut</label>
                         <select id="statut" name="statut">
@@ -91,6 +93,7 @@
                         </select>
                         <div class="error-details-message">${requestScope.errors.statut}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="categorie">Catégorie</label>
                         <select id="categorie" name="categorie">
@@ -99,6 +102,7 @@
                         </select>
                         <div class="error-details-message">${requestScope.errors.categorie}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="genre">Genre</label>
                         <select id="genre" name="genre">
@@ -107,6 +111,7 @@
                         </select>
                         <div class="error-details-message">${requestScope.errors.genre}</div>
                     </div>
+                    <br>
                     <div>
 
 
@@ -115,6 +120,7 @@
                             <select id="rqth" name="rqth" onchange="toggleDateField()">
                                 <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
                                 <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
+                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
                             </select>
                             <div class="error-details-message">${requestScope.errors.rqth}</div>
                         </div>
@@ -150,6 +156,10 @@
                                 if (rqthSelect.value === 'oui') {
                                     dateField.style.display = 'block';
                                     dateInput.disabled = false;
+                                } else if (rqthSelect.value === 'a vie') {
+                                    dateField.style.display = 'none';
+                                    dateInput.disabled = true;
+                                    dateInput.value = '';
                                 } else {
                                     dateField.style.display = 'non';
                                     dateInput.disabled = true;
@@ -162,6 +172,7 @@
                             });
                         </script>
                     </div>
+                    <br>
                     <div>
                         <label for="metier">Métier</label>
                         <input type="text" id="metier" name="metier"
@@ -173,21 +184,21 @@
 
                                >
                         <div class="error">${requestScope.errors.metier}</div>
-
+                        <br>
 
                         <div class="combobox-container">
                             <div class="combobox">
 
-                                <label for="responsable">Choisissez son responsable activité :</label>
+                                <label for="responsable">Son responsable activité</label>
                                 <select id="responsable" name="responsable" multiple>
                                     <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <option value="${responsable.id}">${responsable.nom}</option>
-                                </c:forEach>
+                                        <option value="${responsable.id}">${responsable.nom}</option>
+                                    </c:forEach>
                                 </select>
                                 <br><br>
 
                             </div>
-                            
+
                         </div>
                         <p>Merci de remplir tous les champs</p>
                 </fieldset>

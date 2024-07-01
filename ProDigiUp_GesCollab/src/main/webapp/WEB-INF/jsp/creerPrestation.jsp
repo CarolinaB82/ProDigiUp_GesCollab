@@ -35,7 +35,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.siglum_presta}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="nom">Nom Prestation</label>
                         <input type="text" id="nom_presta" name="nom_presta"
@@ -49,11 +49,12 @@
                                >
                         <div class="error-details-message">${requestScope.errors.nom_presta}</div>
                     </div>
+                    <br><br>
                     <div>
                         <label for="ref_fact_partenaire">Référent facturation partenaire</label>
                         <input type="text" id="ref_fact_partenaire" name="ref_fact_partenaire"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
-                               required
+
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_partenaire : ''}"
                                class="${not empty requestScope.errors.ref_fact_partenaire ? 'error-input' : ''}"
@@ -61,12 +62,12 @@
                                >
                         <div class="error-details-message">${requestScope.errors.ref_fact_partenaire}</div>
                     </div>
-
+                    <br><br>
                     <div>
                         <label for="ref_fact_airbus">Référent facturation Airbus</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
-                               required
+
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_airbus : ''}"
                                class="${not empty requestScope.errors.ref_fact_airbus ? 'error-input' : ''}"
 
@@ -74,56 +75,57 @@
                         <div class="error-details-message">${requestScope.errors.ref_fact_airbus}</div>
                     </div>
 
+                    <br><br>
+
+                    <div class="combobox-container">
+                        <div class="combobox">
+                            <label for="multi-select-responsable_activite">Son Responsable activité</label>
 
 
-                        <div class="combobox-container">
-                            <div class="combobox">
-                                <label for="multi-select-responsable_activite">Choisissez son Responsable activité :</label>
+                            <br>
+                            <select id="id_ra" name="id_ra">
+                                <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
+                        </div>
+                        <div class="combobox">
+
+                            <label for="multi-select">Son Collaborateur</label>
+                            <br><br>
+                            <select id="id_collaborateur" name="id_collaborateur">
+                                <c:forEach var="collaborateur" items="${collaborateurList}">
+                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
+                        </div>
+
+                        <div class="combobox">
+                            <label for="multi-select">Son Partenaire</label>
+                            <select id="id_partenaire" name="id_partenaire">
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <option value="${partenaire.id}">${partenaire.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br><br>
+
+                        </div>
+
+                    </div>
+                    <p>Merci de remplir tous les champs</p>
+                    <div>
+                        <input type="submit" value="Envoyer">
+                        <input type="reset" value="Annuler">
+                    </div>
+                </fieldset>
 
 
-                                <br>
-                                <select id="id_ra" name="id_ra">
-                                    <c:forEach var="responsable" items="${responsableActiviteList}">
-                                        <option value="${responsable.id}">${responsable.nom}</option>
-                                    </c:forEach>
-                                </select>
-                                <br><br>
-                            </div>
-                            <div class="combobox">
 
-                                    <label for="multi-select">Choisissez son Collaborateur :</label>
-                                    <br>
-                                    <select id="id_collaborateur" name="id_collaborateur">
-                                        <c:forEach var="collaborateur" items="${collaborateurList}">
-                                            <option value="${collaborateur.id}">${collaborateur.nom}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <br><br>
-                                    </div>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                                    <div class="combobox">
-                                            <label for="multi-select">Choisissez son Partenaire :</label>
-                                            <select id="id_partenaire" name="id_partenaire">
-                                                <c:forEach var="partenaire" items="${partenaireList}">
-                                                    <option value="${partenaire.id}">${partenaire.nom}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <br><br>
-
-                                            </div>
-
-
-                                            <p>Merci de remplir tous les champs</p>
-                                            <div>
-                                                <input type="submit" value="Envoyer">
-                                                <input type="reset" value="Annuler">
-                                            </div>
-                                            </fieldset>
-                                            
-
-                                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-                                        </main>
-                                        </body>
-                                        <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                                        </html>
+        </main>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+</html>

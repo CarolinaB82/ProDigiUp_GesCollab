@@ -24,22 +24,6 @@
         
     </fieldset>
 </body>
-   
-    
-    <!--<fieldset>
-        <legend>Rechercher</legend>
-        <form>
-            <label for="nom">Nom de la prestation</label>
-            <input type="text" id="nom" name="nom" pattern="[a-zA-Z]*"
-                   required
-                   title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                   >
-            <div class="error">${requestScope.errors.nom}</div>
-            </div>
-            <div>
-                <input type="submit" value="Rechercher">
-                <input type="reset" value="Annuler">
-                </form>-->
                 </fieldset>
                 </body>
                 <%@include file="/WEB-INF/jspf/footer.jsp" %>

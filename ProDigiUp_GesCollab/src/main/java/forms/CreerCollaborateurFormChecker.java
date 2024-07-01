@@ -57,10 +57,10 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
         }*/
 
         obj.setTelephone_personnel(telephone_personnel);
-        if (telephone_personnel == null || telephone_personnel.isEmpty()) {
-            setError("telephone_personnel", "Le numéro de téléphone personnel est requis.");
-        } else if (!telephone_personnel.matches("\\+?[0-9]{1,15}")) {
+        if (telephone_personnel != null && !telephone_personnel.isEmpty()) {
+         if (!telephone_personnel.matches("\\+?[0-9]{1,15}")) {
             setError("telephone_personnel", "Le numéro de téléphone personnel doit contenir entre 1 et 10 chiffres.");
+        }
         }
         // Traiter les autres champs String
         obj.setNom(nom);
