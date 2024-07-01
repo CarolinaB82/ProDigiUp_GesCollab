@@ -15,7 +15,11 @@
     background: linear-gradient(100deg, buttonface, paleturquoise);
     /*background-image: url("../img/rat-surmulot.jpg")*/
 }
-html, body {
+html{
+    height: 100%;
+    margin: 0;
+}
+body {
     background-color: var(--primary-color);
     height: 100%;
     margin: 0;
@@ -28,6 +32,21 @@ header{
     justify-content: space-between;
     text-align: center;
     font-family: magazine;
+}
+
+main {
+    flex: 1;
+}
+
+.liensAccueil{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 15px;
+    padding: 5px;
+    gap: 15px;
+    
+    
 }
 footer {
     display: flex;
@@ -81,8 +100,10 @@ legend{
     border-bottom: 3px solid purple; /* Bordure inférieure épaisse de couleur violette */
 }
 
-
-
+h2{
+    font-family: rabilone;
+    margin-left: 5px
+}
 
 .custom-table {
     border: 3px solid purple; /* tableaux */
@@ -96,12 +117,14 @@ legend{
    width: auto; 
     text-align: center; 
     vertical-align: middle; 
+    font-family: rabilone;
 }
 .custom-table td{
     border: 1px solid purple; /* Ajustez la taille de la bordure intérieure si nécessaire */
     min-width: 100px; /* Définit une largeur minimum pour les cellules */
     text-align: center; /* Centre le contenu horizontalement */
     vertical-align: middle; /* Centre le contenu verticalement */
+    font-family: rabilone;
 }
 
 .custom-table .collaborator-end-row {

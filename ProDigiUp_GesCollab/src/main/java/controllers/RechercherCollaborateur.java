@@ -96,6 +96,7 @@ public class RechercherCollaborateur extends HttpServlet {
                 }
 
                 req.setAttribute("resultats", resultats);
+                req.setAttribute("currentPage", "rechercher");
                 req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
             } catch (SQLException e) {
                 throw new ServletException("Erreur lors de la recherche", e);

@@ -10,6 +10,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
@@ -91,10 +94,10 @@
         <main>
             <fieldset>
                 <legend>Recherche de Responsable d'activite</legend>
-                
+
                 <form>
                     <div>
-                        <label for="rechercherRaParNom">Rechercher par nom :</label>
+                        <label for="rechercherRaParNom">Par nom :</label>
                         <input type="text" id="rechercherRaParNom" name="rechercherRaParNom" autocomplete="off">
                     </div>
                     <div id="suggestionsNom"></div>
@@ -102,14 +105,14 @@
 
                 <form>
                     <div>
-                        <label for="rechercherRaParPrenom">Rechercher par prénom :</label>
+                        <label for="rechercherRaParPrenom">Par prénom :</label>
                         <input type="text" id="rechercherRaParPrenom" name="rechercherRaParPrenom" autocomplete="off">
                     </div>
                     <div id="suggestionsPrenom"></div>
                 </form>
                 <form>
                     <div>
-                        <label for="rechercherRaParMatricule">Rechercher par matricule :</label>
+                        <label for="rechercherRaParMatricule">Par matricule :</label>
                         <input type="text" id="rechercherRaParMatricule" name="rechercherRaParMatricule" autocomplete="off">
                     </div>
                     <div id="suggestionsMatricule"></div>
@@ -153,6 +156,7 @@
 
             </fieldset>
         </main>
+        <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
-    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+
 </html>

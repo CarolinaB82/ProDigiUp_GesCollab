@@ -9,38 +9,40 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Afficher partenaire</title>
-       
+
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <fieldset>
-            <legend><strong>Fiche Partenaire</legend>
-            <p><strong>Nom :  </strong><c:out value="${partenaire.nom}"/></p>
-            <p><strong>Numéro de voie : </strong><c:out value="${partenaire.numero_voie}"/></p>
-            <p><strong>Adresse : </strong><c:out value="${partenaire.adresse}"/></p>
-            <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
-            <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
-        </fieldset>
+        <main>
+            <fieldset>
+                <legend><strong>Fiche Partenaire</legend>
+                <p><strong>Nom :  </strong><c:out value="${partenaire.nom}"/></p>
+                <p><strong>Numéro de voie : </strong><c:out value="${partenaire.numero_voie}"/></p>
+                <p><strong>Adresse : </strong><c:out value="${partenaire.adresse}"/></p>
+                <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
+                <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
+            </fieldset>
 
-   
-    
-    <fieldset>
-        <legend>Rechercher</legend>
-        <form>
-            <label for="nom">Nom du partenaire</label>
-            <input type="text" id="nom" name="nom" pattern="[a-zA-Z -]*"
-                   required
-                   title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                   >
-            <div class="error">${requestScope.errors.nom}</div>
-            </div>
-            <div>
-                <input type="submit" value="Rechercher">
-                <input type="reset" value="Annuler">
+            <fieldset>
+                <legend>Rechercher</legend>
+                <form>
+                    <label for="nom">Nom du partenaire</label>
+                    <input type="text" id="nom" name="nom" pattern="[a-zA-Z -]*"
+                           required
+                           title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                           >
+                    <div class="error">${requestScope.errors.nom}</div>
+
+                    <input type="submit" value="Rechercher">
+                    <input type="reset" value="Annuler">
                 </form>
-                </fieldset>
-                </body>
-                <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                </html>
+            </fieldset>
+        </main>
+        <%@include file="/WEB-INF/jspf/footer.jsp" %>
+    </body>
+</html>

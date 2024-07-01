@@ -10,6 +10,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
@@ -76,7 +79,7 @@
                 <legend>Recherche de Collaborateur</legend>
                 <form>
                     <div>
-                        <label for="rechercherParNom">Rechercher par nom :</label>
+                        <label for="rechercherParNom">Par nom :</label>
                         <input type="text" id="rechercherParNom" name="rechercherParNom" autocomplete="off">
                     </div>
                     <div id="suggestionsNom"></div>
@@ -84,7 +87,7 @@
 
                 <form>
                     <div>
-                        <label for="rechercherParPrenom">Rechercher par prénom :</label>
+                        <label for="rechercherParPrenom">Par prénom :</label>
                         <input type="text" id="rechercherParPrenom" name="rechercherParPrenom" autocomplete="off">
                     </div>
                     <div id="suggestionsPrenom"></div>
@@ -92,7 +95,7 @@
 
                 <form>
                     <div>
-                        <label for="rechercherParMatricule">Rechercher par matricule :</label>
+                        <label for="rechercherParMatricule">Par matricule :</label>
                         <input type="text" id="rechercherParMatricule" name="rechercherParMatricule" autocomplete="off">
                     </div>
                     <div id="suggestionsMatricule"></div>
@@ -111,7 +114,7 @@
                                     <th>Prénom</th>
                                     <th>Statut</th>
                                     <th>Métier</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -122,7 +125,7 @@
                                         <td>${collaborateur.prenom}</td>
                                         <td>${collaborateur.statut}</td>
                                         <td>${collaborateur.metier}</td>
-                                        
+
                                     </tr>
                                 </c:forEach>
                             </tbody>

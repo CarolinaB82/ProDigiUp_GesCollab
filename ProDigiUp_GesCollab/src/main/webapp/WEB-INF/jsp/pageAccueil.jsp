@@ -16,30 +16,29 @@
         <title>Accueil</title>
     </head>
     <body>
-        <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <h1 class='bienvenue'>Bienvenue cher surmulot </h1>
+        <main>
+            <%@include file="/WEB-INF/jspf/header.jsp" %>
+            <h1 class='bienvenue'>Bienvenue cher surmulot </h1>
 
-        <div class='accueil'>
+            <div class='accueil'>
 
-            <ul>
-                <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>
-                <p><a href="<c:url value="/rechercher_ra"/>">Chercher un Responsable d'Activité</a></p>
-                <!--<p><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></p>-->
-                <p><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></p>
-                <p><a href="<c:url value="/creer_prestation"/>">Créer une prestation</a></p>
-                <p><a href="<c:url value="/creer_partenaire"/>">Créer un partenaire</a></p>
-                <p><a href="<c:url value="/rechercher"/>">Rechercher un collaborateur</a></p>
-                <!--<p><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></p>-->
-                <p><a href="<c:url value="/liste_collaborateurs"/>">Liste collaborateurs</a></p>
-                <!-- <p><a href="<c:url value="/prestation"/>">Voir une prestation</a></p>-->
+                <ul>
+                    <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>
+                    <p><a href="<c:url value="/rechercher_ra"/>">Chercher un Responsable d'Activité</a></p>
+                    <!--<p><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></p>-->
+                    <p><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></p>
+                    <p><a href="<c:url value="/rechercher"/>">Chercher un collaborateur</a></p>
+                    <p><a href="<c:url value="/creer_prestation"/>">Créer une prestation</a></p>
+                    <p><a href="<c:url value="/creer_partenaire"/>">Créer un partenaire</a></p>
+                    <!--<p><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></p>-->
+                    <p><a href="<c:url value="/liste_collaborateurs"/>">Liste des collaborateurs</a></p>
+                    <!-- <p><a href="<c:url value="/prestation"/>">Voir une prestation</a></p>-->
+                </ul>
+                <img src="<c:url value="/assets/img/surmulotJo.png" />" width="500px" height="500px" alt="mulot" style='margin-left: 20px'>
+            </div>
+        </main>
 
-
-
-
-            </ul>
-            <img src="<c:url value="/assets/img/surmulot.jpg" />" width="500px" height="500px" alt="mulot" style='margin-left: 20px'>
-        </div>
-         <%@include file="/WEB-INF/jspf/footer.jsp" %>
+        <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
-   
+
 </html>

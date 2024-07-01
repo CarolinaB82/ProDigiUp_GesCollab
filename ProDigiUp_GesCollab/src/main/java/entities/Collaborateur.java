@@ -16,6 +16,8 @@ public class Collaborateur implements Identifiable, Serializable {
     private Integer matricule;
     private String nom;
     private String prenom;
+    private String mail_1;
+    private String mail_2;
     private String telephone_personnel;
     private String statut;
     private String categorie;
@@ -32,6 +34,8 @@ public class Collaborateur implements Identifiable, Serializable {
         sb.append(", matricule=").append(matricule);
         sb.append(", nom=").append(nom);
         sb.append(", prenom=").append(prenom);
+        sb.append(", mail_1=").append(mail_1);
+        sb.append(", mail_2=").append(mail_2);
         sb.append(", telephone_personnel=").append(telephone_personnel);
         sb.append(", statut=").append(statut);
         sb.append(", categorie=").append(categorie);
@@ -50,6 +54,8 @@ public class Collaborateur implements Identifiable, Serializable {
         hash = 83 * hash + Objects.hashCode(this.matricule);
         hash = 83 * hash + Objects.hashCode(this.nom);
         hash = 83 * hash + Objects.hashCode(this.prenom);
+        hash = 83 * hash + Objects.hashCode(this.mail_1);
+        hash = 83 * hash + Objects.hashCode(this.mail_2);
         hash = 83 * hash + Objects.hashCode(this.telephone_personnel);
         hash = 83 * hash + Objects.hashCode(this.statut);
         hash = 83 * hash + Objects.hashCode(this.categorie);
@@ -92,6 +98,22 @@ public class Collaborateur implements Identifiable, Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+    
+     public String getMail_1() {
+        return mail_1;
+    }
+
+    public void setMail_1(String mail_1) {
+        this.mail_1 = mail_1;
+    }
+    
+      public String getMail_2() {
+        return mail_2;
+    }
+
+    public void setMail_2(String mail_2) {
+        this.mail_2 = mail_2;
     }
 
     public String getTelephone_personnel() {
