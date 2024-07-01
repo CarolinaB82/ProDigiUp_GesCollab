@@ -63,7 +63,7 @@
                     <div>
                         <label for="mail">Mail </label>
                         <input type="email" id="mail" name="mail"
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail : ''}"
+                               value="${requestScope.ra != null ? requestScope.ra.mail : ''}"
                                class="${not empty requestScope.errors.mail ? 'error-input' : ''}"
 
                                >
@@ -78,7 +78,7 @@
                                required  
                                title="Veuillez saisir 16 caractères maximum"
 
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_professionnel : ''}"
+                               value="${requestScope.ra != null ? requestScope.ra.telephone_professionnel : ''}"
                                class="${not empty requestScope.errors.telephone_professionnel ? 'error-input' : ''}"
 
                                >
@@ -91,7 +91,7 @@
                                maxlength="30" 
                                title="Veuillez saisir 30 caractères maximum"
 
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
+                               value="${requestScope.ra != null ? requestScope.ra.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
                            >
                     <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
@@ -119,24 +119,9 @@
                                 </c:forEach>
                             </select>
                                 <br><br>
-                                <input type="submit" value="Soumettre Partenaire"> 
+                                
                                 </form>
                             </div>
-
-                            <div class="combobox">
-                                <form action="/submit-form" method="POST">
-                                    <label for="multi-select-collaborateur">Choisissez son collaborateur :</label>
-                                    <br>
-                                    <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        <option value="option4">Option 4</option>
-                                    </select>
-                                    <br><br>
-                                    <input type="submit" value="Soumettre Collaborateur"> 
-
-                                    </div>
 
                                     </div>
                                     <p>Merci de remplir tous les champs</p>
@@ -145,7 +130,7 @@
                                         <input type="reset" value="Annuler">
                                     </div>
                                     </fieldset>
-                            </div>
+                            
                     </form>
                     </main>
                     <%@include file="/WEB-INF/jspf/footer.jsp" %>
