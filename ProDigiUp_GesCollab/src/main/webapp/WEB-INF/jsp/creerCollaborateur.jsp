@@ -44,7 +44,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.matricule}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom"
@@ -57,6 +57,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.nom}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="prenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom"
@@ -69,7 +70,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.prenom}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="mail_1">Mail 1</label>
                         <input type="email" id="mail_1" name="mail_1"
@@ -100,6 +101,7 @@
                                >
                         <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="statut">Statut</label>
                         <select id="statut" name="statut">
@@ -112,6 +114,7 @@
                         </select>
                         <div class="error-details-message">${requestScope.errors.statut}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="categorie">Catégorie</label>
                         <select id="categorie" name="categorie">
@@ -120,6 +123,7 @@
                         </select>
                         <div class="error-details-message">${requestScope.errors.categorie}</div>
                     </div>
+                    <br>
                     <div>
                         <label for="genre">Genre</label>
                         <select id="genre" name="genre">
@@ -128,6 +132,7 @@
                         </select>
                         <div class="error-details-message">${requestScope.errors.genre}</div>
                     </div>
+                    <br>
                     <div>
 
 
@@ -136,6 +141,7 @@
                             <select id="rqth" name="rqth" onchange="toggleDateField()">
                                 <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
                                 <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
+                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
                             </select>
                             <div class="error-details-message">${requestScope.errors.rqth}</div>
                         </div>
@@ -171,6 +177,10 @@
                                 if (rqthSelect.value === 'oui') {
                                     dateField.style.display = 'block';
                                     dateInput.disabled = false;
+                                } else if (rqthSelect.value === 'a vie') {
+                                    dateField.style.display = 'none';
+                                    dateInput.disabled = true;
+                                    dateInput.value = '';
                                 } else {
                                     dateField.style.display = 'non';
                                     dateInput.disabled = true;
@@ -182,48 +192,46 @@
                                 toggleDateField(); // Ensure the initial state is correct based on the current selection
                             });
                         </script>
-
-                        <div>
-                            <label for="metier">Métier</label>
-                            <input type="text" id="metier" name="metier"
-                                   pattern="[a-zA-ZÀ-ÿ' -]*"
-                                   required
-                                   title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                                   value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
-                                   class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
+                    </div>
+                    <br>
+                    <div>
+                        <label for="metier">Métier</label>
+                        <input type="text" id="metier" name="metier"
+                               pattern="[a-zA-ZÀ-ÿ' -]*"
+                               required
+                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
+                               class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
                         </div>  
                         <div class="error">${requestScope.errors.metier}</div>
-
+                        <br>
 
                         <div class="combobox-container">
                             <div class="combobox">
-                                <form action="/submit-form" method="POST">
-                                    <label for="multi-select">Choisissez son responsable activité :</label>
-                                    <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        <option value="option4">Option 4</option>
-                                    </select>
-                                    <br><br>
-                                    <input type="submit" value="Soumettre Responsable activité"> 
 
-                                    </div>
+                                <label for="responsable">Son responsable activité</label>
+                                <select id="responsable" name="responsable" multiple>
+                                    <c:forEach var="responsable" items="${responsableActiviteList}">
+                                        <option value="${responsable.id}">${responsable.nom}</option>
+                                    </c:forEach>
+                                </select>
+                                <br><br>
 
-                                    </div>
-                                    <p>Merci de remplir tous les champs</p>
-                                    </fieldset>
-                                    <div>
-                                        <input type="submit" value="Envoyer">
-                                        <input type="reset" value="Annuler">
-                                    </div>
+                            </div>
 
-                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        </div>
+                        <p>Merci de remplir tous les champs</p>
+                </fieldset>
+                <div>
+                    <input type="submit" value="Envoyer">
+                    <input type="reset" value="Annuler">
+                </div>
 
-                                </form>
-                                </main>
-                                <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                                </body>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                                </html>
+            </form>
+        </main>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+</html>

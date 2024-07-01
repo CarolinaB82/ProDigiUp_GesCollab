@@ -32,20 +32,18 @@
                         <label for="siglum">Siglum Prestation</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
-                        <input type="text" id="siglum" name="siglum"  
-                               pattern="[0-9]*"
-                               required
-                               title="Veuillez saisir uniquement des chiffres (0-9)" 
+                        <input type="text" id="siglum_presta" name="siglum_presta"  
+
                                value="${requestScope.prestation != null ? requestScope.prestation.siglum_presta : ''}" 
                                class="${not empty requestScope.errors.siglum_presta ? 'error-input' : ''}"
 
                                >
                         <div class="error-details-message">${requestScope.errors.siglum_presta}</div>
                     </div>
-
+                    <br>
                     <div>
                         <label for="nom">Nom Prestation</label>
-                        <input type="text" id="nom" name="nom"
+                        <input type="text" id="nom_presta" name="nom_presta"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
@@ -56,11 +54,12 @@
                                >
                         <div class="error-details-message">${requestScope.errors.nom_presta}</div>
                     </div>
+                    <br><br>
                     <div>
-                        <label for="prenom">Référent facturation partenaire</label>
-                        <input type="text" id="prenom" name="prenom"
+                        <label for="ref_fact_partenaire">Référent facturation partenaire</label>
+                        <input type="text" id="ref_fact_partenaire" name="ref_fact_partenaire"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
-                               required
+
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_partenaire : ''}"
                                class="${not empty requestScope.errors.ref_fact_partenaire ? 'error-input' : ''}"
@@ -68,82 +67,70 @@
                                >
                         <div class="error-details-message">${requestScope.errors.ref_fact_partenaire}</div>
                     </div>
-
+                    <br><br>
                     <div>
-                        <label for="telephone_personnel">Référent facturation Airbus</label>
-                        <input type="text" id="telephone_personnel" name="telephone_personnel"
-                               pattern="\d{10}" 
-                               maxlength="10" 
-                               required  
-                               title="Veuillez saisir exactement 10 chiffres"
+                        <label for="ref_fact_airbus">Référent facturation Airbus</label>
+                        <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"
+                               pattern="[a-zA-ZÀ-ÿ' ]*"
 
-                               value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_airbus : ''}"
+                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_airbus : ''}"
                                class="${not empty requestScope.errors.ref_fact_airbus ? 'error-input' : ''}"
 
                                >
                         <div class="error-details-message">${requestScope.errors.ref_fact_airbus}</div>
                     </div>
 
+                    <br><br>
 
-                    <form action="/submit-form" method="POST">
-
-                        <div class="combobox-container">
-                            <div class="combobox">
-                                <label for="multi-select">Choisissez son Responsable activité :</label>
-
-
-                                <br>
-                                <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
-                                    <option value="option1">Option 1</option>
-                                    <option value="option2">Option 2</option>
-                                    <option value="option3">Option 3</option>
-                                    <option value="option4">Option 4</option>
-                                </select>
-                                <br><br>
-                                <input type="submit" value="Soumettre Responsable activité"> 
-                            </div>
-                            <div class="combobox">
-                                <form action="/submit-form" method="POST">
-
-                                    <label for="multi-select">Choisissez son Collaborateur :</label>
-                                    <br>
-                                    <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        <option value="option4">Option 4</option>
-                                    </select>
-                                    <br><br>
-                                    <input type="submit" value="Soumettre Collaborateur"> 
-                                    </div>
-
-                                    <div class="combobox">
-                                        <form action="/submit-form" method="POST">
-                                            <label for="multi-select">Choisissez son Partenaire :</label>
-                                            <select id="multi-select-partenaire" name="partenaireOptions" multiple>
-                                                <option value="option1">Option 1</option>
-                                                <option value="option2">Option 2</option>
-                                                <option value="option3">Option 3</option>
-                                                <option value="option4">Option 4</option>
-                                            </select>
-                                            <br><br>
-                                            <input type="submit" value="Soumettre Partenaire"> 
-
-                                            </div>
+                    <div class="combobox-container">
+                        <div class="combobox">
+                            <label for="multi-select-responsable_activite">Son Responsable activité</label>
 
 
-                                            <p>Merci de remplir tous les champs</p>
-                                            </fieldset>
-                                            <div>
-                                                <input type="submit" value="Envoyer">
-                                                <input type="reset" value="Annuler">
-                                            </div>
+                            <br>
+                            <select id="id_ra" name="id_ra">
+                                <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
+                        </div>
+                        <div class="combobox">
 
-                                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            <label for="multi-select">Son Collaborateur</label>
+                            <br><br>
+                            <select id="id_collaborateur" name="id_collaborateur">
+                                <c:forEach var="collaborateur" items="${collaborateurList}">
+                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
+                        </div>
 
-                                        </form>
-                                        </main>
-                                        <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                                        </body>
+                        <div class="combobox">
+                            <label for="multi-select">Son Partenaire</label>
+                            <select id="id_partenaire" name="id_partenaire">
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <option value="${partenaire.id}">${partenaire.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br><br>
 
-                                        </html>
+                        </div>
+
+                    </div>
+                    <p>Merci de remplir tous les champs</p>
+                    <div>
+                        <input type="submit" value="Envoyer">
+                        <input type="reset" value="Annuler">
+                    </div>
+                </fieldset>
+
+
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        </main>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+</html>

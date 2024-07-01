@@ -88,6 +88,31 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
 
     @Override
     protected void update(ResponsableActivite obj) {
+        String sql = "UPDATE ra SET nom=?, prenom=?, telephone_professionnel=?, telephone_personnel=?"
+                + "WHERE id_ra=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setString(1, obj.getNom());
+            pstmt.setString(2, obj.getPrenom());
+            pstmt.setString(3, obj.getTelephone_professionnel());
+            pstmt.setString(4, obj.getTelephone_personnel());
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
+
+    }
+    
+    protected void delete (Integer id){
+        String sql = "DELETE FROM ra WHERE id_ra=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+             pstmt.executeUpdate();
+              } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
     }
 
     // rajout test
@@ -123,12 +148,12 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
     }
 
     @Override
-    public Collection<ResponsableActivite> list(){
+    public Collection<ResponsableActivite> list() {
         ArrayList<ResponsableActivite> list = new ArrayList<>();
         String sql = "SELECT * FROM ra";
-        try (PreparedStatement pstmt = connexion.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 ResponsableActivite ra = new ResponsableActivite();
                 ra.setId(rs.getInt("id_ra"));
                 ra.setMatricule(rs.getInt("matricule"));
@@ -141,23 +166,25 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return list;
     }
-    public List<ResponsableActivite> rechercherRaParMatricule(String matricule) throws SQLException{
-        return rechercherRa ("SELECT * FROM ra WHERE matricule LIKE ?", matricule);
+
+    public List<ResponsableActivite> rechercherRaParMatricule(String matricule) throws SQLException {
+        return rechercherRa("SELECT * FROM ra WHERE matricule LIKE ?", matricule);
     }
-    public List<ResponsableActivite> rechercherRaParNom(String nom) throws SQLException{
-        return rechercherRa ("SELECT * FROM ra WHERE nom LIKE ?", nom);
+
+    public List<ResponsableActivite> rechercherRaParNom(String nom) throws SQLException {
+        return rechercherRa("SELECT * FROM ra WHERE nom LIKE ?", nom);
     }
-    public List<ResponsableActivite> rechercherRaParPrenom(String prenom) throws SQLException{
-        return rechercherRa ("SELECT * FROM ra WHERE prenom LIKE ?", prenom);
+
+    public List<ResponsableActivite> rechercherRaParPrenom(String prenom) throws SQLException {
+        return rechercherRa("SELECT * FROM ra WHERE prenom LIKE ?", prenom);
     }
-    
-    
-    private List<ResponsableActivite> rechercherRa(String sql, String param) throws SQLException{
+
+    private List<ResponsableActivite> rechercherRa(String sql, String param) throws SQLException {
         List<ResponsableActivite> responsablesActivites = new ArrayList<>();
-        try (PreparedStatement pstmt = connexion.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
             pstmt.setString(1, "%" + param + "%");
-            try(ResultSet rs = pstmt.executeQuery()){
-                while (rs.next()){
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
                     ResponsableActivite ra = new ResponsableActivite();
                     ra.setId(rs.getInt("id_ra"));
                     ra.setMatricule(rs.getInt("matricule"));
@@ -166,7 +193,21 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
                     responsablesActivites.add(ra);
                 }
             }
-        } 
+        }
         return responsablesActivites;
+    }
+
+    public int getLastIdCreated() {
+        String sql = "SELECT MAX(id_ra) AS max_id FROM ra";
+        int maxId = 0;
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de l'exécution de la requête : " + ex.getMessage());
+        }
+        return maxId;
     }
 }

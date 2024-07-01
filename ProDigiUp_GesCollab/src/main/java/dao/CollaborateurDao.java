@@ -156,6 +156,17 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
+    
+    protected void delete (Integer id){
+        String sql = "DELETE FROM collaborateur WHERE id_collaborateur=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+             pstmt.executeUpdate();
+              } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
+    }
 
     public Collection<CollaborateurPrestationPartenaireRa> listCollaborateurPrestationPartenaireRa() {
         ArrayList<CollaborateurPrestationPartenaireRa> list = new ArrayList<>();
@@ -274,5 +285,17 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         }
         return collaborateurs;
     }
-
+    public int getLastIdCreated(){
+        String sql = "SELECT MAX(id_collaborateur) AS max_id FROM collaborateur";
+        int maxId = 0;
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de l'exécution de la requête : " + ex.getMessage());
+        }
+        return maxId;
+    }
 }

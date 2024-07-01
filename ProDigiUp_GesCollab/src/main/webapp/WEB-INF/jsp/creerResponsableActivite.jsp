@@ -22,39 +22,39 @@
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <main>
             <form action="<c:url value="/creer_ra" />" method="post">
-                <div>${requestScope.message}</div>
-                <div>${requestScope.errMsg}</div>
-                <fieldset>
-                    <legend>Nouveau responsable d'activite</legend>
-                    <div>
-                        <label for="matricule">Matricule</label>
-                        <input type="text" id="matricule" name="matricule" 
-                               pattern="\d{5}" 
-                               maxlength="5" 
-                               required
-                               title="Veuillez saisir uniquement des chiffres (0-9)" 
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.matricule : ''}" 
-                               class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
-                               >
-                        <div class="error-details-message">${requestScope.errors.matricule}</div>
-                    </div>
-                    <div>
-                        <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" pattern="[a-zA-ZÀ-ÿ' -]*"
-                               required
-                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                               value="${requestScope.ra != null ? requestScope.ra.nom : ''}"
-                               class="${not empty requestScope.errors.nom ? 'error-input' : ''}"
-                               >
-                        <div class="error-details-message">${requestScope.errors.nom}</div>
-                    </div>
-                    <div>
-                        <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" pattern="[a-zA-ZÀ-ÿ' -]*"
-                               required
-                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                               value="${requestScope.ra != null ? requestScope.ra.prenom : ''}"
-                               class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
+            <div>${requestScope.message}</div>
+            <div>${requestScope.errMsg}</div>
+            <fieldset>
+                <legend>Nouveau responsable d'activite</legend>
+                <div>
+                    <label for="matricule">Matricule</label>
+                    <input type="text" id="matricule" name="matricule" 
+                           pattern="\d{5}" 
+                           maxlength="5" 
+                           required
+                           title="Veuillez saisir uniquement des chiffres (0-9)" 
+                           value="${requestScope.ra != null ? requestScope.ra.matricule : ''}" 
+                           class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
+                           >
+                    <div class="error-details-message">${requestScope.errors.matricule}</div>
+                </div>
+                <div>
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" pattern="[a-zA-ZÀ-ÿ' -]*"
+                           required
+                           title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                           value="${requestScope.ra != null ? requestScope.ra.prenom : ''}"
+                           class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
+                           >
+                     <div class="error-details-message">${requestScope.errors.nom}</div>
+                </div>
+                <div>
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" pattern="[a-zA-ZÀ-ÿ' -]*"
+                           required
+                           title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                           value="${requestScope.ra != null ? requestScope.ra.prenom : ''}"
+                           class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
 
                                >
                         <div class="error-details-message">${requestScope.errors.prenom}</div>
@@ -91,43 +91,37 @@
                                maxlength="30" 
                                title="Veuillez saisir 30 caractères maximum"
 
-                               value="${requestScope.ra != null ? requestScope.collaborateur.telephone_personnel : ''}"
+                               value="${requestScope.ra != null ? requestScope.ra.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
+                           >
+                    <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
+                </div>
+                    <div class="combobox-container">
+                        <div class="combobox">
 
-                               >
-                        <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
-                    </div>
-                    <form action="/submit-form" method="POST">
-                        <div class="combobox-container">
-                            <div class="combobox">
+                            <label for="multi-select">Son partenaire</label>
+                            <br>
+                            <select id="partenaire" name="partenaire" multiple>
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <option value="${partenaire.id}">${partenaire.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
+                            
+                        </div>
 
-                                <label for="multi-select-partenaire">Choisissez son partenaire :</label>
+                        <div class="combobox">
+                                <label for="multi-select">Son collaborateur</label>
                                 <br>
-                                <select id="multi-select-partenaire" name="partenaireOptions" multiple>
-                                    <option value="option1">Option 1</option>
-                                    <option value="option2">Option 2</option>
-                                    <option value="option3">Option 3</option>
-                                    <option value="option4">Option 4</option>
-                                </select>
+                                <select id="collaborateur" name="collaborateur" multiple>
+                                   <c:forEach var="collaborateur" items="${collaborateurList}">
+                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
                                 <br><br>
-                                <input type="submit" value="Soumettre Partenaire"> 
+                                
                                 </form>
                             </div>
-
-                            <div class="combobox">
-                                <form action="/submit-form" method="POST">
-                                    <label for="multi-select-collaborateur">Choisissez son collaborateur :</label>
-                                    <br>
-                                    <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        <option value="option4">Option 4</option>
-                                    </select>
-                                    <br><br>
-                                    <input type="submit" value="Soumettre Collaborateur"> 
-
-                                    </div>
 
                                     </div>
                                     <p>Merci de remplir tous les champs</p>
@@ -136,7 +130,7 @@
                                         <input type="reset" value="Annuler">
                                     </div>
                                     </fieldset>
-                            </div>
+                            
                     </form>
                     </main>
                     <%@include file="/WEB-INF/jspf/footer.jsp" %>

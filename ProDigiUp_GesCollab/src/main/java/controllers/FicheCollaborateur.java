@@ -43,6 +43,13 @@ public class FicheCollaborateur extends HttpServlet {
             req.setAttribute("formattedDate", formattedDate);
         }
 
+          // Formatage de la date
+        if (collaborateur.getDate_de_renouvellement() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
+            req.setAttribute("formattedDate", formattedDate);
+        }
+ 
         // Transmettre les informations du collaborateur à la page JSP
         req.setAttribute("collaborateur", collaborateur);
 

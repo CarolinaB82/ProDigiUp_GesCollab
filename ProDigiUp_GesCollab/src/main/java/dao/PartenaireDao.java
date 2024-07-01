@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -36,7 +37,7 @@ public class PartenaireDao extends Dao<Partenaire> {
     }
 
     @Override
-    protected void create(Partenaire partenaire) throws SQLException {
+    public void create(Partenaire partenaire) throws SQLException {
         String sql = "INSERT INTO partenaire (`nom`, `numero_voie`, `adresse`, `code_postal`, `ville`) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, partenaire.getNom());
@@ -84,17 +85,42 @@ public class PartenaireDao extends Dao<Partenaire> {
         return partenaire;
     }
 
+    
     @Override
     protected void update(Partenaire obj) {
+        String sql = "UPDATE partenaire SET nom=?, numero_voie=?, adresse=?, code_postal=?, ville=?"
+                + "WHERE id_patenaire=?";
 
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setString(1, obj.getNom());
+            pstmt.setInt(2, obj.getNumero_voie());
+            pstmt.setString(3, obj.getAdresse());
+            pstmt.setInt(4, obj.getCode_postal());
+            pstmt.setString(5, obj.getVille());
+            
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
+    }
+    protected void delete (Integer id){
+        String sql = "DELETE FROM partenaire WHERE id_partenaire=?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+             pstmt.executeUpdate();
+              } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }
     }
 
     // rajout test
-    public boolean exists(int nom) {
+    public boolean exists(String nom) {
         String sql = "SELECT 1 FROM partenaire WHERE nom=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, nom);
+            pstmt.setString(1, nom);
             ResultSet rs = pstmt.executeQuery();
             return rs.next();
         } catch (SQLException ex) {
@@ -119,5 +145,19 @@ public class PartenaireDao extends Dao<Partenaire> {
             System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
         }
         return list;
+    }
+
+    public int getLastIdCreated() {
+        String sql = "SELECT MAX(id_partenaire) AS max_id FROM partenaire";
+        int maxId = 0;
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de l'exécution de la requête : " + ex.getMessage());
+        }
+        return maxId;
     }
 }
