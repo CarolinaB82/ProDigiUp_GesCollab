@@ -1,3 +1,8 @@
+@font-face{
+    font-family: rabilone;
+    src: url(Rabilone.otf)
+}
+
 h1 {
     text-align: center;
 }
@@ -5,14 +10,18 @@ h1 {
 form {
     width: 50%;
     margin: auto;
+    
 }
 
 form label, form label+input {
     display: inline-block;
+    font-family: rabilone;
+    font-size: 17px
 }
 
 form label {
     width: 20%;
+    
 }
 
 form label+input {

@@ -6,12 +6,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
 
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
         <title>Créer Collaborateur</title>
@@ -30,7 +34,7 @@
                         <label for="matricule">Matricule</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
                         <input type="text" id="matricule" name="matricule" 
-                               pattern="\d{5}" 
+                               pattern="\d{1,5}" 
                                maxlength="5" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 
@@ -47,7 +51,6 @@
                                pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.nom : ''}"
                                class="${not empty requestScope.errors.nom ? 'error-input' : ''}"
 
@@ -68,12 +71,30 @@
                     </div>
 
                     <div>
+                        <label for="mail_1">Mail 1</label>
+                        <input type="email" id="mail_1" name="mail_1"
+                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
+                               class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.mail_1}</div>
+                    </div>
+                    <div>
+                        <label for="mail_2">Mail 2</label>
+                        <input type="email" id="mail_2" name="mail_2"
+                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_2 : ''}"
+                               class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.mail_2}</div>
+                    </div>
+                    
+                    <div>
                         <label for="telephone_personnel">Téléphone personnel</label>
                         <input type="text" id="telephone_personnel" name="telephone_personnel"
-                               pattern="\+?[0-9]{1,15}" 
-                               maxlength="16" 
-                               required  
-                               title="Veuillez saisir exactement 10 chiffres"
+                               pattern="\\+?[0-9\\(\\)\\- ]{1,30}" 
+                               maxlength="30" 
+                               title="Veuillez saisir 16 caractères maximum"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
                                >
@@ -84,7 +105,7 @@
                         <select id="statut" name="statut">
                             <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
                             <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                            <option value="CDD_Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD_Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
+                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
                             <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
 
 
@@ -161,7 +182,7 @@
                                 toggleDateField(); // Ensure the initial state is correct based on the current selection
                             });
                         </script>
-                    </div>
+
                         <div>
                             <label for="metier">Métier</label>
                             <input type="text" id="metier" name="metier"
@@ -171,7 +192,7 @@
                                    value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
                                    class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
-                               >
+                        </div>  
                         <div class="error">${requestScope.errors.metier}</div>
 
 
@@ -179,7 +200,7 @@
                             <div class="combobox">
                                 <form action="/submit-form" method="POST">
                                     <label for="multi-select">Choisissez son responsable activité :</label>
-                            <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
+                                    <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
                                         <option value="option1">Option 1</option>
                                         <option value="option2">Option 2</option>
                                         <option value="option3">Option 3</option>
@@ -202,6 +223,7 @@
 
                                 </form>
                                 </main>
-                                </body>
                                 <%@include file="/WEB-INF/jspf/footer.jsp" %>
+                                </body>
+
                                 </html>

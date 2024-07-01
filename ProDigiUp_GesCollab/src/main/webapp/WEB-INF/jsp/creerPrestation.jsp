@@ -5,14 +5,19 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
 
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <title>créer prestation</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -85,10 +90,10 @@
                         <div class="combobox-container">
                             <div class="combobox">
                                 <label for="multi-select">Choisissez son Responsable activité :</label>
-                                
-                                
+
+
                                 <br>
-                            <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
+                                <select id="multi-select-responsable_activite" name="responsable_activiteOptions" multiple>
                                     <option value="option1">Option 1</option>
                                     <option value="option2">Option 2</option>
                                     <option value="option3">Option 3</option>
@@ -99,10 +104,10 @@
                             </div>
                             <div class="combobox">
                                 <form action="/submit-form" method="POST">
-                                    
+
                                     <label for="multi-select">Choisissez son Collaborateur :</label>
                                     <br>
-                                <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
+                                    <select id="multi-select-collaborateur" name="collaborateurOptions" multiple>
                                         <option value="option1">Option 1</option>
                                         <option value="option2">Option 2</option>
                                         <option value="option3">Option 3</option>
@@ -115,7 +120,7 @@
                                     <div class="combobox">
                                         <form action="/submit-form" method="POST">
                                             <label for="multi-select">Choisissez son Partenaire :</label>
-                                <select id="multi-select-partenaire" name="partenaireOptions" multiple>
+                                            <select id="multi-select-partenaire" name="partenaireOptions" multiple>
                                                 <option value="option1">Option 1</option>
                                                 <option value="option2">Option 2</option>
                                                 <option value="option3">Option 3</option>
@@ -138,6 +143,7 @@
 
                                         </form>
                                         </main>
-                                        </body>
                                         <%@include file="/WEB-INF/jspf/footer.jsp" %>
+                                        </body>
+
                                         </html>

@@ -9,38 +9,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Afficher prestation</title>
-       
+
     </head>
-   <body>
-    <%@include file="/WEB-INF/jspf/header.jsp" %>
-    <fieldset>
-        <legend><strong>Fiche Prestation</strong></legend>
-        <p><strong>Siglum prestation : </strong><c:out value="${prestation.siglum_presta}"/></p>
-        <p><strong>Nom prestation : </strong><c:out value="${prestation.nom_presta}"/></p>
-        <p><strong>Référent facture partenaire : </strong><c:out value="${prestation.ref_fact_partenaire}"/></p>
-        <p><strong>Référent facture Airbus : </strong><c:out value="${prestation.ref_fact_airbus}"/></p>
-        
-    </fieldset>
-</body>
-   
-    
-    <!--<fieldset>
-        <legend>Rechercher</legend>
-        <form>
-            <label for="nom">Nom de la prestation</label>
-            <input type="text" id="nom" name="nom" pattern="[a-zA-Z]*"
-                   required
-                   title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                   >
-            <div class="error">${requestScope.errors.nom}</div>
-            </div>
-            <div>
-                <input type="submit" value="Rechercher">
-                <input type="reset" value="Annuler">
-                </form>-->
-                </fieldset>
-                </body>
-                <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                </html>
+    <body>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
+        <main>
+            <fieldset>
+                <legend><strong>Fiche Prestation</strong></legend>
+                <p><strong>Siglum prestation : </strong><c:out value="${prestation.siglum_presta}"/></p>
+                <p><strong>Nom prestation : </strong><c:out value="${prestation.nom_presta}"/></p>
+                <p><strong>Référent facture partenaire : </strong><c:out value="${prestation.ref_fact_partenaire}"/></p>
+                <p><strong>Référent facture Airbus : </strong><c:out value="${prestation.ref_fact_airbus}"/></p>
+            </fieldset>
+        </main>
+        <%@include file="/WEB-INF/jspf/footer.jsp" %>  
+    </body>
+
+</html>

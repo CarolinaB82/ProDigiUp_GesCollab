@@ -1,20 +1,14 @@
 package controllers;
 
 import dao.CollaborateurDao;
-import dao.DaoFactory;
-import dao.PrestationDao;
 import entities.Collaborateur;
-import entities.Prestation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
+import java.time.format.DateTimeFormatter;
 /**
  *
  * @author cberge
@@ -41,6 +35,13 @@ public class FicheCollaborateur extends HttpServlet {
         // Lire les informations du collaborateur depuis la base de données
         Collaborateur collaborateur = collaborateurDao.read(collaborateurId);
         //CollaborateurNomPrestation collaborateur = collaborateurDao.getCollaborateurNomPrestation(collaborateurId);
+        
+         // Formatage de la date
+        if (collaborateur.getDate_de_renouvellement() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
+            req.setAttribute("formattedDate", formattedDate);
+        }
 
         // Transmettre les informations du collaborateur à la page JSP
         req.setAttribute("collaborateur", collaborateur);

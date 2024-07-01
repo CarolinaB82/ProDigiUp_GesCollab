@@ -94,6 +94,7 @@ public class RechercherResponsableActivite extends HttpServlet {
                     
                 }
                 req.setAttribute("resultats", resultats);
+                req.setAttribute("currentPage", "rechercher_ra");
                 req.getRequestDispatcher("/WEB-INF/jsp/responsableActivite.jsp").forward(req, resp);
             } catch (SQLException e) {
                 System.out.println("Paramètres de recherche manquants ou invalides");

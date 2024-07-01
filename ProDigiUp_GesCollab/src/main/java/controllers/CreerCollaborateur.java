@@ -17,7 +17,9 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -79,6 +81,12 @@ public class CreerCollaborateur extends HttpServlet {
 
                 collaborateurDao.create(collaborateur);
                 Collaborateur collab = collaborateurDao.read(collaborateur.getId());
+                // Formatage de la date
+                if (collaborateur.getDate_de_renouvellement() != null) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
+                    req.setAttribute("formattedDate", formattedDate);
+                }
                 req.setAttribute("collaborateur", collab);
                 req.setAttribute("message", "Votre collaborateur est bien enregistré");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);

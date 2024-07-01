@@ -1,11 +1,7 @@
 package forms;
 
-import dao.DaoFactory;
 import entities.ResponsableActivite;
 import jakarta.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  *
@@ -26,6 +22,7 @@ public class CreerResponsableActiviteFormChecker extends FormChecker<Responsable
         String matriculestr = request.getParameter("matricule");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
+        String mail = request.getParameter("mail");
         String telephone_professionnel = request.getParameter("telephone_professionnel");
         String telephone_personnel = request.getParameter("telephone_personnel");
 
@@ -37,6 +34,7 @@ public class CreerResponsableActiviteFormChecker extends FormChecker<Responsable
         }
         ra.setNom(nom);
         ra.setPrenom(prenom);
+        ra.setMail(mail);
         ra.setTelephone_professionnel(telephone_professionnel);
         ra.setTelephone_personnel(telephone_personnel);
 

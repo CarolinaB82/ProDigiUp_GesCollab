@@ -10,6 +10,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
+        <c:set var="notHome" value="true" />
+        <title>Liste collaborateurs</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
@@ -121,4 +124,6 @@
                 </tbody>
             </table>
         </main>
+        <%@include file="/WEB-INF/jspf/footer.jsp" %>
+    </body>
 </html>

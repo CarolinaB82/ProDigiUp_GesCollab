@@ -14,6 +14,7 @@ public class ResponsableActivite implements Identifiable, Serializable {
     private int matricule;
     private String nom;
     private String prenom;
+    private String mail;
     private String telephone_professionnel;
     private String telephone_personnel;
 
@@ -25,6 +26,7 @@ public class ResponsableActivite implements Identifiable, Serializable {
         sb.append(", matricule=").append(matricule);
         sb.append(", nom=").append(nom);
         sb.append(", prenom=").append(prenom);
+        sb.append(", mail=").append(mail);
         sb.append(", tel_pro=").append(telephone_professionnel);
         sb.append(", tel_perso=").append(telephone_personnel);
         sb.append('}');
@@ -38,6 +40,7 @@ public class ResponsableActivite implements Identifiable, Serializable {
         hash = 97 * hash + this.matricule;
         hash = 97 * hash + Objects.hashCode(this.nom);
         hash = 97 * hash + Objects.hashCode(this.prenom);
+        hash = 97 * hash + Objects.hashCode(this.mail);
         hash = 97 * hash + Objects.hashCode(this.telephone_professionnel);
         hash = 97 * hash + Objects.hashCode(this.telephone_personnel);
         return hash;
@@ -62,6 +65,9 @@ public class ResponsableActivite implements Identifiable, Serializable {
             return false;
         }
         if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.mail, other.mail)) {
             return false;
         }
         if (!Objects.equals(this.telephone_professionnel, other.telephone_professionnel)) {
@@ -105,6 +111,14 @@ public class ResponsableActivite implements Identifiable, Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+    
+     public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getTelephone_professionnel() {
