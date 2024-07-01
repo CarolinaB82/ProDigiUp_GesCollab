@@ -63,7 +63,7 @@
                     <div>
                         <label for="mail">Mail </label>
                         <input type="email" id="mail" name="mail"
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail : ''}"
+                               value="${requestScope.ra != null ? requestScope.ra.mail : ''}"
                                class="${not empty requestScope.errors.mail ? 'error-input' : ''}"
 
                                >
@@ -78,7 +78,7 @@
                                required  
                                title="Veuillez saisir 16 caractères maximum"
 
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_professionnel : ''}"
+                               value="${requestScope.ra != null ? requestScope.ra.telephone_professionnel : ''}"
                                class="${not empty requestScope.errors.telephone_professionnel ? 'error-input' : ''}"
 
                                >
@@ -91,7 +91,7 @@
                                maxlength="30" 
                                title="Veuillez saisir 30 caractères maximum"
 
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
+                               value="${requestScope.ra != null ? requestScope.collaborateur.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
 
                                >
