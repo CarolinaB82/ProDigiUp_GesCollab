@@ -89,6 +89,7 @@
 
                             <br>
                             <select id="id_ra" name="id_ra">
+                                 <option value="">-- Aucun --</option>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
                                 </c:forEach>
@@ -100,6 +101,7 @@
                             <label for="multi-select">Son Collaborateur</label>
                             <br><br>
                             <select id="id_collaborateur" name="id_collaborateur">
+                                 <option value="">-- Aucun --</option>
                                 <c:forEach var="collaborateur" items="${collaborateurList}">
                                     <option value="${collaborateur.id}">${collaborateur.nom}</option>
                                 </c:forEach>

@@ -5,6 +5,7 @@
 package dao;
 
 import entities.Partenaire;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,27 +85,52 @@ public class PartenaireDao extends Dao<Partenaire> {
         }
         return partenaire;
     }
+  // Méthode pour mettre à jour la table des responsables d'activité associés au collaborateur
+    private void updateResponsablesActivite(Connection conn, int partenaireId, List<Integer> responsableIds) throws SQLException {
+        // Supprimer tous les enregistrements associés au collaborateur
+        if(responsableIds != null){
+            String deleteSql = "DELETE FROM proposer WHERE id_partenaire=?";
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, partenaireId);
+                deleteStmt.executeUpdate();
+            }
 
+            // Insérer les nouveaux enregistrements
+            String insertSql = "INSERT INTO proposer (id_partenaire, id_ra) VALUES (?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int responsableId : responsableIds) {
+                    insertStmt.setInt(1, partenaireId);
+                    insertStmt.setInt(2, responsableId);
+                    insertStmt.executeUpdate();
+                }
+            }         
+        }
+        
+    }
     
     @Override
-    protected void update(Partenaire obj) {
+    public void update(Partenaire partenaire) {
         String sql = "UPDATE partenaire SET nom=?, numero_voie=?, adresse=?, code_postal=?, ville=?"
-                + "WHERE id_patenaire=?";
+                + "WHERE id_partenaire=?";
 
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setString(1, obj.getNom());
-            pstmt.setInt(2, obj.getNumero_voie());
-            pstmt.setString(3, obj.getAdresse());
-            pstmt.setInt(4, obj.getCode_postal());
-            pstmt.setString(5, obj.getVille());
-            
+            pstmt.setString(1, partenaire.getNom());
+            pstmt.setInt(2, partenaire.getNumero_voie());
+            pstmt.setString(3, partenaire.getAdresse());
+            pstmt.setInt(4, partenaire.getCode_postal());
+            pstmt.setString(5, partenaire.getVille());
+            pstmt.setInt(6, partenaire.getId());
+                    
             pstmt.executeUpdate();
+            // Mettre à jour la table des responsables d'activité associés au collaborateur
+            updateResponsablesActivite(connexion, partenaire.getId(), partenaire.getResponsablesIds());
+            
         } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
-    protected void delete (Integer id){
+    public void delete (Integer id){
         String sql = "DELETE FROM partenaire WHERE id_partenaire=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
@@ -114,6 +140,7 @@ public class PartenaireDao extends Dao<Partenaire> {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
+    
 
     // rajout test
     public boolean exists(String nom) {
@@ -160,4 +187,6 @@ public class PartenaireDao extends Dao<Partenaire> {
         }
         return maxId;
     }
+    
+    
 }

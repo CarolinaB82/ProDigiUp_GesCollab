@@ -30,7 +30,7 @@ public abstract class Dao<T extends Identifiable> {
 
     protected abstract void create(T obj) throws SQLException;
 
-    protected abstract void update(T obj);
+    protected abstract void update(T obj) throws SQLException;
 
     public void save(T obj) throws SQLException {
         if (obj.getId() == null) {

@@ -7,6 +7,7 @@ package controllers;
 import dao.CollaborateurDao;
 import dao.DaoFactory;
 import dao.PossederDao;
+import dao.ResponsableActiviteDao;
 import entities.Collaborateur;
 import entities.Posseder;
 import entities.ResponsableActivite;
@@ -23,7 +24,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,6 +110,27 @@ public class CreerCollaborateur extends HttpServlet {
 
                 if (responsableActiviteIds != null) {
                     for (String responsableId : responsableActiviteIds) {
+                        int idResponsable = Integer.parseInt(responsableId);
+                   
+                        
+                        
+                        
+                        
+                                            if (idResponsable == collab.getId()) {
+                                            nv.addError("responsable", "L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                                            loadLists(req);
+                                            req.setAttribute("errors", nv.getErrors());
+                                            req.setAttribute("collaborateur", collaborateur);
+                                            req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+                                            req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
+                                            return;
+                                        }
+                        
+                        
+                        
+                        
+                        
+                        
                         Posseder posseder = new Posseder();
                         posseder.setId_ra(Integer.parseInt(responsableId));
                         posseder.setId_collaborateur(collab.getId());
@@ -115,6 +139,21 @@ public class CreerCollaborateur extends HttpServlet {
                 }
 
                 req.setAttribute("collaborateur", collab);
+                
+                ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+                List<String> responsableNoms = new ArrayList<>();
+                for(String responsableIdStr : responsableActiviteIds){
+                    ResponsableActivite responsable = responsableActiviteDao.read(Integer.parseInt(responsableIdStr));
+                    if(responsable != null) {
+                        responsableNoms.add(responsable.getNom());
+                    }
+                }
+
+                String responsablesActivite = String.join(", ", responsableNoms);
+
+                req.setAttribute("responsablesActivite", responsablesActivite);
+                
+                
                 req.setAttribute("message", "Votre collaborateur est bien enregistré");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
 

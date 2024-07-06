@@ -6,7 +6,9 @@ package controllers;
 
 import dao.CollaborateurDao;
 import dao.PrestationDao;
+import dao.ResponsableActiviteDao;
 import entities.Collaborateur;
+import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +16,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -48,8 +54,20 @@ public class AfficherCollaborateur extends HttpServlet {
             String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
             req.setAttribute("formattedDate", formattedDate);
         }
+        
+         ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+        Collection<ResponsableActivite> listResponsableActiviteCollaborateur = responsableActiviteDao.listResponsableActivite(collaborateur.getId());
+        List<String> responsableNoms = new ArrayList<>();
+        for(ResponsableActivite responsable : listResponsableActiviteCollaborateur){
+            responsableNoms.add(responsable.getNom());
+        }
+        
+        String responsablesActivite = String.join(", ", responsableNoms);
 
+        req.setAttribute("responsablesActivite", responsablesActivite);
         req.setAttribute("collaborateur", collaborateur);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
     }
+    // modifier_collaborateur.jsp
+
 }

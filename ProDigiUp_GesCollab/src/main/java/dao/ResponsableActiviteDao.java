@@ -1,13 +1,13 @@
 package dao;
 
 import entities.ResponsableActivite;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 
 /**
  *
@@ -85,32 +85,89 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return ra;
     }
+    
+    
+    
+    // Méthode pour mettre à jour la table des responsables d'activité associés au collaborateur
+    private void updatePartenaire(Connection conn, int responsableActiviteId, List<Integer> partenaireIds) throws SQLException {
+        // Supprimer tous les enregistrements associés au collaborateur
+        if(partenaireIds != null){
+            String deleteSql = "DELETE FROM proposer WHERE id_ra=?";
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, responsableActiviteId);
+                deleteStmt.executeUpdate();
+            }
+
+            // Insérer les nouveaux enregistrements
+            String insertSql = "INSERT INTO proposer (id_ra, id_partenaire) VALUES (?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int partenaireId : partenaireIds) {
+                    insertStmt.setInt(1, responsableActiviteId);
+                    insertStmt.setInt(2, partenaireId);
+                    insertStmt.executeUpdate();
+                }
+            }         
+        }
+    }
+    
+    // Méthode pour mettre à jour la table des responsables d'activité associés au collaborateur
+    private void updateCollaborateur(Connection conn, int responsableActiviteId, List<Integer> collaborateurIds) throws SQLException {
+        // Supprimer tous les enregistrements associés au collaborateur
+        if(collaborateurIds != null){
+            String deleteSql = "DELETE FROM posseder WHERE id_ra=?";
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, responsableActiviteId);
+                deleteStmt.executeUpdate();
+            }
+
+            // Insérer les nouveaux enregistrements
+            String insertSql = "INSERT INTO posseder (id_ra, id_collaborateur) VALUES (?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int collaborateurId : collaborateurIds) {
+                    insertStmt.setInt(1,responsableActiviteId);
+                    insertStmt.setInt(2, collaborateurId);
+                    insertStmt.executeUpdate();
+                }
+            }         
+        }
+        
+    }
 
     @Override
-    protected void update(ResponsableActivite obj) {
-        String sql = "UPDATE ra SET nom=?, prenom=?, telephone_professionnel=?, telephone_personnel=?"
+    public void update(ResponsableActivite responsableActivite) {
+        String sql = "UPDATE ra SET matricule=?, nom=?, prenom=?, mail=?, telephone_professionnel=?, telephone_personnel=?"
                 + "WHERE id_ra=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setString(1, obj.getNom());
-            pstmt.setString(2, obj.getPrenom());
-            pstmt.setString(3, obj.getTelephone_professionnel());
-            pstmt.setString(4, obj.getTelephone_personnel());
+            pstmt.setInt(1, responsableActivite.getMatricule());
+            pstmt.setString(2, responsableActivite.getNom());
+            pstmt.setString(3, responsableActivite.getPrenom());
+            pstmt.setString(4, responsableActivite.getMail());
+            pstmt.setString(5, responsableActivite.getTelephone_professionnel());
+            pstmt.setString(6, responsableActivite.getTelephone_personnel());
+            pstmt.setInt(7, responsableActivite.getId());
+                        
+
+
             pstmt.executeUpdate();
 
+            updatePartenaire(connexion, responsableActivite.getId(), responsableActivite.getPartenaireIds());
+//            updateCollaborateur(connexion, responsableActivite.getId(), responsableActivite.getCollaborateurIds());
+
+            
         } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
 
     }
-    
-    protected void delete (Integer id){
+
+    public void delete(Integer id) {
         String sql = "DELETE FROM ra WHERE id_ra=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
-             pstmt.executeUpdate();
-              } catch (SQLException ex) {
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
@@ -135,6 +192,24 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, idCollaborateur);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idRa = rs.getInt("id_ra");
+                ResponsableActivite responsableActive = DaoFactory.ResponsableActiviteDao().read(idRa);
+                list.add(responsableActive);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public Collection<ResponsableActivite> listResponsablesActivite(int idPartenaire) {
+        String sql = "SELECT id_ra FROM proposer WHERE id_partenaire=?";
+        ArrayList<ResponsableActivite> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idPartenaire);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 int idRa = rs.getInt("id_ra");

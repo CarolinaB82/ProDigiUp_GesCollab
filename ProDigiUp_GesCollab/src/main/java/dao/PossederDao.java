@@ -5,9 +5,12 @@
 package dao;
 
 import entities.Posseder;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -45,4 +48,60 @@ public class PossederDao extends Dao<Posseder>{
     protected void update(Posseder obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    
+    
+    
+    
+    
+   // Méthode pour récupérer les identifiants des responsables d'activité associés à un collaborateur
+    public List<Integer> getResponsablesIds(int collaborateurId) {
+        List<Integer> responsableIds = new ArrayList<>();
+        
+        String sql = "SELECT id_ra FROM posseder WHERE id_collaborateur = ?";
+        try (
+             PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, collaborateurId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                int responsableId = rs.getInt("id_responsable");
+                responsableIds.add(responsableId);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des responsables d'activité : " + e.getMessage());
+        }
+        
+        return responsableIds;
+    
+    }
+    
+    
+     public List<Integer> getCollaborateurIds(int responsableActiviteId) {
+        List<Integer> collaborateurIds = new ArrayList<>();
+        
+        String sql = "SELECT id_collaborateur FROM posseder WHERE id_ra = ?";
+        try (
+             PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, responsableActiviteId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                int collaborateurId = rs.getInt("id_collaborateur");
+                collaborateurIds.add(collaborateurId);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des collaborateurs : " + e.getMessage());
+        }
+        
+        return collaborateurIds;
+    
+    }
+
+   
 }
+

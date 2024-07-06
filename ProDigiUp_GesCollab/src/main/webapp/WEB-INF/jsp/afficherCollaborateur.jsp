@@ -25,6 +25,7 @@
         <main>
             <fieldset>
                 <legend>Fiche Collaborateur</legend>
+                <div>${requestScope.message}</div>
 
                 <p><strong>Matricule: </strong><c:out value="${collaborateur.matricule}"/></p>
                 <p><strong>Genre: </strong><c:out value="${collaborateur.genre}"/></p>
@@ -40,6 +41,28 @@
                     <p><strong>Date de renouvellement: </strong><c:out value="${formattedDate}"/></p>
                 </c:if>
                 <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
+                
+                <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
+
+
+                  <div class="button-container">
+                <form action="/ProDigiUp_GesCollab/modifier_collaborateur" method="get"style="display: inline;">
+                    <input type="hidden" name="id" value="${collaborateur.id}" />
+                    <input type="submit" value="Modifier">
+                </form>
+
+               <!--<form action="<c:url value='/collaborateur'/>" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="${collaborateur.id}" />
+                    <input type="hidden" name="action" value="deactivate" />
+                    <button type="submit">Désactiver</button>
+                </form>-->
+
+                <form action="<c:url value='/supprimer_collaborateur'/>" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="${collaborateur.id}" />
+                    <input type="hidden" name="action" value="delete" />
+                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce collaborateur ?');">Supprimer</button>
+                </form>
+            </div>
             </fieldset>  
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
