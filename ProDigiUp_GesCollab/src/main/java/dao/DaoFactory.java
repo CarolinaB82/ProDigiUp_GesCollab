@@ -13,6 +13,10 @@ public class DaoFactory {
     private static ProposerDao proposerDao;
     private static PossederDao possederDao;
 
+    
+
+    
+
     private DaoFactory() {
     }
     public static PossederDao getPossederDao(){

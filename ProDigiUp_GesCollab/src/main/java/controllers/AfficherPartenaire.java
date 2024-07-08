@@ -6,9 +6,11 @@ package controllers;
 
 import dao.DaoFactory;
 import dao.PartenaireDao;
+import dao.ResponsableActiviteDao;
 import entities.CollaborateurPrestationPartenaireRa;
 import entities.Partenaire;
 import entities.PrestationRaPartenaire;
+import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +18,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -45,7 +49,19 @@ public class AfficherPartenaire extends HttpServlet {
         Partenaire partenaire = partenaireDao.read(partenaireId);
 
         req.setAttribute("partenaire", partenaire);
+ ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+        Collection<ResponsableActivite> listResponsableActivitePartenaire = responsableActiviteDao.listResponsablesActivite(partenaire.getId());
+        List<String> responsableNoms = new ArrayList<>();
+        for(ResponsableActivite responsable : listResponsableActivitePartenaire){
+            responsableNoms.add(responsable.getNom());
+        }
+        
+        String responsablesActivite = String.join(", ", responsableNoms);
 
+        req.setAttribute("responsablesActivite", responsablesActivite);
+        
+        
+        
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);
     }
 

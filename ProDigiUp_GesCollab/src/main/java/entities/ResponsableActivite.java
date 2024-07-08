@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -136,5 +137,24 @@ public class ResponsableActivite implements Identifiable, Serializable {
     public void setTelephone_personnel(String telephone_personnel) {
         this.telephone_personnel = telephone_personnel;
     }
-
+    
+      private  List<Integer> partenaireIds;
+     
+    public  List<Integer> getPartenaireIds(){
+        return partenaireIds;
+    }
+    public void setPartenaireIds( List<Integer> partenaireIds){
+            this.partenaireIds = partenaireIds;
+    
+    }
+    
+private  List<Integer> collaborateurIds;
+     
+    public  List<Integer> getCollaborateurIds(){
+        return collaborateurIds;
+    }
+    public void setCollaborateurIds( List<Integer> collaborateurIds){
+            this.collaborateurIds = collaborateurIds;
+    
+    }
 }

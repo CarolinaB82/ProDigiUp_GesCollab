@@ -8,6 +8,8 @@ import entities.Proposer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -40,8 +42,53 @@ public class ProposerDao extends Dao<Proposer>{
             throw ex;
         }
     }
+         // Méthode pour récupérer les identifiants des responsables d'activité associés à un collaborateur
+    public List<Integer> getResponsablesIds(int partenaireId) {
+        List<Integer> responsableIds = new ArrayList<>();
         
+        String sql = "SELECT id_ra FROM proposer WHERE id_partenaire = ?";
+        try (
+             PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, partenaireId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                int responsableId = rs.getInt("id_ra");
+                responsableIds.add(responsableId);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des responsables d'activité : " + e.getMessage());
+        }
         
+        return responsableIds;
+    
+    
+    }
+        
+         public List<Integer> getPartenaireIds(int responsableActiviteId) {
+        List<Integer> partenaireIds = new ArrayList<>();
+        
+        String sql = "SELECT id_partenaire FROM proposer WHERE id_ra = ?";
+        try (
+             PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, responsableActiviteId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                int partenaireId = rs.getInt("id_partenaire");
+                partenaireIds.add(partenaireId);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des collaborateurs : " + e.getMessage());
+        }
+        
+        return partenaireIds;
+    
+    }
         
         
     

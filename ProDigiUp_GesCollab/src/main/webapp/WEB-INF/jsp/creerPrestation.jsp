@@ -121,6 +121,7 @@
 
                             <br>
                             <select id="id_ra" name="id_ra">
+                                 <option value="">-- Aucun --</option>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
                                 </c:forEach>

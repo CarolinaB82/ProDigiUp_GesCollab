@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -126,5 +127,14 @@ public class Partenaire implements Serializable, Identifiable {
         }
         return Objects.equals(this.id, other.id);
     }
+    
+     private  List<Integer> responsableIds;
+     
+    public  List<Integer> getResponsablesIds(){
+        return responsableIds;
+    }
+    public void setResponsableIds( List<Integer> responsableIds){
+            this.responsableIds = responsableIds;
+}
 
 }

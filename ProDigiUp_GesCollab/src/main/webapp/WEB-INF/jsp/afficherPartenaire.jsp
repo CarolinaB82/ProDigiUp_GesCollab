@@ -26,6 +26,21 @@
                 <p><strong>Adresse : </strong><c:out value="${partenaire.adresse}"/></p>
                 <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
                 <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
+
+                <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
+
+
+                <div class="button-container">
+                    <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
+                        <input type="hidden" name="id" value="${partenaire.id}" />
+                        <input type="submit" value="Modifier">
+                    </form>
+                        <form action="<c:url value='/supprimer_partenaire'/>" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="${partenaire.id}" />
+                    <input type="hidden" name="action" value="delete" />
+                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
+                </form>
+                </div>
             </fieldset>
 
             <fieldset>

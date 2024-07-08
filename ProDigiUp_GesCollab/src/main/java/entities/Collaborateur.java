@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.util.Objects;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -183,4 +184,15 @@ public class Collaborateur implements Identifiable, Serializable {
     public String getNomPrestation() {
         return nomPrestation;
     }
+    
+    
+    
+     private  List<Integer> responsableIds;
+     
+    public  List<Integer> getResponsablesIds(){
+        return responsableIds;
+    }
+    public void setResponsableIds( List<Integer> responsableIds){
+            this.responsableIds = responsableIds;
+}
 }

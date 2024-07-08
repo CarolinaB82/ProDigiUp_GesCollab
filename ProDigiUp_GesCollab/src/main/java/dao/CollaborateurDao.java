@@ -125,48 +125,101 @@ public class CollaborateurDao extends Dao<Collaborateur> {
     }
 
     @Override
-    public void update(Collaborateur obj) {
+    public void update(Collaborateur collaborateur) throws SQLException {
         String sql = "UPDATE collaborateur SET matricule=?, nom=?, prenom=?, mail_1=?, mail_2=?, telephone_personnel=?, statut=?, categorie=?, genre=?, rqth=?, date_de_renouvellement=?, metier=?"
                 + "WHERE id_collaborateur=?";
 
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, obj.getMatricule());
-            pstmt.setString(2, obj.getNom());
-            pstmt.setString(3, obj.getPrenom());
-            pstmt.setString(4, obj.getMail_1());
-            pstmt.setString(5, obj.getMail_2());
-            pstmt.setString(6, obj.getTelephone_personnel());
-            pstmt.setString(7, obj.getStatut());
-            pstmt.setString(8, obj.getCategorie());
-            pstmt.setString(9, obj.getGenre());
-            pstmt.setString(10, obj.getRqth());
-            LocalDate localDate = obj.getDate_de_renouvellement();
+            pstmt.setInt(1, collaborateur.getMatricule());
+            pstmt.setString(2, collaborateur.getNom());
+            pstmt.setString(3, collaborateur.getPrenom());
+            pstmt.setString(4, collaborateur.getMail_1());
+            pstmt.setString(5, collaborateur.getMail_2());
+            pstmt.setString(6, collaborateur.getTelephone_personnel());
+            pstmt.setString(7, collaborateur.getStatut());
+            pstmt.setString(8, collaborateur.getCategorie());
+            pstmt.setString(9, collaborateur.getGenre());
+            pstmt.setString(10, collaborateur.getRqth());
+            LocalDate localDate = collaborateur.getDate_de_renouvellement();
             if (localDate != null) {
                 pstmt.setDate(11, java.sql.Date.valueOf(localDate));
             } else {
                 pstmt.setDate(11, null);
             }
 
-            pstmt.setString(12, obj.getMetier());
+            pstmt.setString(12, collaborateur.getMetier());
+            pstmt.setInt(13, collaborateur.getId());
+
 
             pstmt.executeUpdate();
+            
+            // Mettre à jour la table des responsables d'activité associés au collaborateur
+            updateResponsablesActivite(connexion, collaborateur.getId(), collaborateur.getResponsablesIds());
+
+       
 
         } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
+        
+        
     }
     
-    protected void delete (Integer id){
+      // Méthode pour mettre à jour la table des responsables d'activité associés au collaborateur
+    private void updateResponsablesActivite(Connection conn, int collaborateurId, List<Integer> responsableIds) throws SQLException {
+        // Supprimer tous les enregistrements associés au collaborateur
+        if(responsableIds != null){
+            String deleteSql = "DELETE FROM posseder WHERE id_collaborateur=?";
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, collaborateurId);
+                deleteStmt.executeUpdate();
+            }
+
+            // Insérer les nouveaux enregistrements
+            String insertSql = "INSERT INTO posseder (id_collaborateur, id_ra) VALUES (?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int responsableId : responsableIds) {
+                    insertStmt.setInt(1, collaborateurId);
+                    insertStmt.setInt(2, responsableId);
+                    insertStmt.executeUpdate();
+                }
+            }         
+        }
+        
+    }
+
+    
+    public void desactiver(Integer collaborateurId) {
+        // Logique pour désactiver le collaborateur dans la base de données
+        // Par exemple :
+        String sql = "UPDATE collaborateur SET statut = 'désactivé' WHERE id_collaborateur = ?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, collaborateurId);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+        }}
+        
+
+    
+    public void delete (Integer collaborateurId){
         String sql = "DELETE FROM collaborateur WHERE id_collaborateur=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, collaborateurId);
              pstmt.executeUpdate();
               } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
+    private Connection getConnection() {
+        // Implémentation de la méthode pour obtenir une connexion à la base de données
+        return null;
+        // Implémentation de la méthode pour obtenir une connexion à la base de données
+    }
+
 
     public Collection<CollaborateurPrestationPartenaireRa> listCollaborateurPrestationPartenaireRa() {
         ArrayList<CollaborateurPrestationPartenaireRa> list = new ArrayList<>();
@@ -187,6 +240,24 @@ public class CollaborateurDao extends Dao<Collaborateur> {
             collabPrestPartRa.setPrestRaPart(listPrestationsRaPart);
             collabPrestPartRa.setPrestationActive(!listPrestationCollaborateur(collab.getId()).isEmpty());
             list.add(collabPrestPartRa);
+        }
+        return list;
+    }
+    
+    public Collection<Collaborateur> listCollaborateur(int idRa) {
+        String sql = "SELECT id_collaborateur FROM posseder WHERE id_ra=?";
+        ArrayList<Collaborateur> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idRa);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idCollaborateur = rs.getInt("id_collaborateur");
+                Collaborateur collaborateur = DaoFactory.getCollaborateurDao().read(idCollaborateur);
+                list.add(collaborateur);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
         }
         return list;
     }
@@ -215,6 +286,20 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, matricule);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean existsForOtherCollab(int matricule, int idCollaborateur) {
+        String sql = "SELECT 1 FROM collaborateur WHERE matricule=? and id_collaborateur != ?";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, matricule);
+            pstmt.setInt(2, idCollaborateur);
             ResultSet rs = pstmt.executeQuery();
             return rs.next();
         } catch (SQLException ex) {
@@ -298,4 +383,6 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         }
         return maxId;
     }
+    
+    
 }
