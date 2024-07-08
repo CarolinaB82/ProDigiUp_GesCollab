@@ -22,9 +22,12 @@
             <fieldset>
                 <legend><strong>Fiche Prestation</strong></legend>
                 <p><strong>Siglum prestation : </strong><c:out value="${prestation.siglum_presta}"/></p>
+                <p><strong>Numéro d'affaire : </strong><c:out value="${prestation.num_affaire}"/></p>
                 <p><strong>Nom prestation : </strong><c:out value="${prestation.nom_presta}"/></p>
                 <p><strong>Référent facture partenaire : </strong><c:out value="${prestation.ref_fact_partenaire}"/></p>
+                <p><strong>Mail partenaire : </strong><c:out value="${prestation.mail_partenaire}"/></p>
                 <p><strong>Référent facture Airbus : </strong><c:out value="${prestation.ref_fact_airbus}"/></p>
+                <p><strong>Mail airbus : </strong><c:out value="${prestation.mail_airbus}"/></p>
             </fieldset>
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>  

@@ -42,6 +42,20 @@
                     </div>
                     <br>
                     <div>
+                        <label for="numéro">Numéro d'affaire</label>
+                        <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
+
+                        <input type="text" id="num_affaire" name="num_affaire"  
+
+                               value="${requestScope.prestation != null ? requestScope.prestation.num_affaire : ''}" 
+                               class="${not empty requestScope.errors.num_affaire ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.num_affaire}</div>
+                    </div>
+                    <br>
+                    
+                    <div>
                         <label for="nom">Nom Prestation</label>
                         <input type="text" id="nom_presta" name="nom_presta"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
@@ -69,6 +83,19 @@
                     </div>
                     <br><br>
                     <div>
+                        <label for="mail_partenaire">Mail partenaire</label>
+                        <input type="email" id="mail_partenaire" name="mail_partenaire"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+                               title="Veuillez saisir une adresse e-mail valide"
+                               value="${requestScope.prestation != null ? requestScope.prestation.mail_partenaire : ''}"
+                               class="${not empty requestScope.errors.mail_partenaire ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.mail_partenaire}</div>
+                    </div>
+                    <br><br>
+                    <div>
                         <label for="ref_fact_airbus">Référent facturation Airbus</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
@@ -80,6 +107,19 @@
                         <div class="error-details-message">${requestScope.errors.ref_fact_airbus}</div>
                     </div>
 
+                    <br><br>
+                    <div>
+                        <label for="mail_airbus">Mail airbus</label>
+                        <input type="email" id="mail_airbus" name="mail_airbus"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+                               title="Veuillez saisir une adresse e-mail valide"
+                               value="${requestScope.prestation != null ? requestScope.prestation.mail_airbus : ''}"
+                               class="${not empty requestScope.errors.mail_airbus ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.mail_airbus}</div>
+                    </div>
                     <br><br>
 
                     <div class="combobox-container">

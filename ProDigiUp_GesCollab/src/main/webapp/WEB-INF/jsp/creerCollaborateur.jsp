@@ -74,6 +74,9 @@
                     <div>
                         <label for="mail_1">Mail 1</label>
                         <input type="email" id="mail_1" name="mail_1"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+                               title="Veuillez saisir une adresse e-mail valide"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
                                class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
 
@@ -83,6 +86,9 @@
                     <div>
                         <label for="mail_2">Mail 2</label>
                         <input type="email" id="mail_2" name="mail_2"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+                               title="Veuillez saisir une adresse e-mail valide"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_2 : ''}"
                                class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
 
