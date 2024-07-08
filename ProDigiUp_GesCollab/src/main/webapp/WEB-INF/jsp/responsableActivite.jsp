@@ -102,7 +102,7 @@
                     </div>
                     <div id="suggestionsNom"></div>
                 </form>
-
+                <br>
                 <form>
                     <div>
                         <label for="rechercherRaParPrenom">Par prénom :</label>
@@ -110,6 +110,7 @@
                     </div>
                     <div id="suggestionsPrenom"></div>
                 </form>
+                <br>
                 <form>
                     <div>
                         <label for="rechercherRaParMatricule">Par matricule :</label>

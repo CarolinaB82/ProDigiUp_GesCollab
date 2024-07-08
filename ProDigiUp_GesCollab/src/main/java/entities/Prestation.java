@@ -16,9 +16,12 @@ public class Prestation implements Serializable, Identifiable {
 
     private Integer id;
     private String siglum_presta;
+    private String num_affaire;
     private String nom_presta;
     private String ref_fact_partenaire;
+    private String mail_partenaire;
     private String ref_fact_airbus;
+    private String mail_airbus;
     private Integer id_ra;
     private Integer id_partenaire;
     private Integer id_collaborateur;
@@ -40,6 +43,14 @@ public class Prestation implements Serializable, Identifiable {
     public void setSiglum_presta(String siglum_presta) {
         this.siglum_presta = siglum_presta;
     }
+    
+    public String getNum_affaire() {
+        return num_affaire;
+    }
+
+    public void setNum_affaire(String num_affaire) {
+        this.num_affaire = num_affaire;
+    }
 
     public String getNom_presta() {
         return nom_presta;
@@ -57,12 +68,28 @@ public class Prestation implements Serializable, Identifiable {
         this.ref_fact_partenaire = ref_fact_partenaire;
     }
 
+     public String getMail_partenaire() {
+        return mail_partenaire;
+    }
+
+    public void setMail_partenaire(String mail_partenaire) {
+        this.mail_partenaire = mail_partenaire;
+    }
+    
     public String getRef_fact_airbus() {
         return ref_fact_airbus;
     }
 
     public void setRef_fact_airbus(String ref_fact_airbus) {
         this.ref_fact_airbus = ref_fact_airbus;
+    }
+    
+    public String getMail_airbus() {
+        return mail_airbus;
+    }
+
+    public void setMail_airbus(String mail_airbus) {
+        this.mail_airbus = mail_airbus;
     }
 
     public Integer getId_ra() {

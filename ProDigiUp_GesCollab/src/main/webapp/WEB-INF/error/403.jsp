@@ -20,12 +20,14 @@
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <h1>Oups! Vous n'avez pas accès à cette page!</h1>
-        <div>
-            <img src="<c:url value="/assets/img/403.jpg" />" width="500px" height="500px" alt="ratperdu"/>
-            <img src="<c:url value="/assets/img/403F.jpg" />" width="500px" height="500px" alt="ratperdu"/>
-        </div>
-        <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+        <main>
+            <h1>Oups! Vous n'avez pas accès à cette page!</h1>
+            <div>
+                <img src="<c:url value="/assets/img/403.jpg" />" width="500px" height="500px" alt="ratperdu"/>
+                <img src="<c:url value="/assets/img/403F.jpg" />" width="500px" height="500px" alt="ratperdu"/>
+            </div>
+            <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+        </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
 </html>

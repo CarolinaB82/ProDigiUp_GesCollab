@@ -48,7 +48,7 @@
                     <div>
                         <label for="numero_voie">Numero de voie</label>
                         <input type="text" id="numero_voie" name="numero_voie"
-                               pattern="[0-9]*"
+                               pattern="\\+?[0-9\\(\\)\\- ]{1,30}" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 
 
@@ -108,7 +108,9 @@
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
+
                                 </c:forEach>
+                                <option value="">-- Aucun --</option>
                             </select>
                             <br><br>
 

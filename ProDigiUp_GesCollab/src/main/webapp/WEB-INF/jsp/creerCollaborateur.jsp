@@ -34,7 +34,7 @@
                         <label for="matricule">Matricule</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
                         <input type="text" id="matricule" name="matricule" 
-                               pattern="\d{1,5}" 
+                               pattern="0?[0-9]{1,5}" 
                                maxlength="5" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 
@@ -42,7 +42,7 @@
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.matricule}</div>
+                        <div class="error">${requestScope.errors.matricule}</div>
                     </div>
                     <br>
                     <div>
@@ -55,7 +55,7 @@
                                class="${not empty requestScope.errors.nom ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.nom}</div>
+                        <div class="error">${requestScope.errors.nom}</div>
                     </div>
                     <br>
                     <div>
@@ -68,17 +68,18 @@
                                class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.prenom}</div>
+                        <div class="error">${requestScope.errors.prenom}</div>
                     </div>
                     <br>
                     <div>
                         <label for="mail_1">Mail 1</label>
                         <input type="email" id="mail_1" name="mail_1"
+                               required
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
                                class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.mail_1}</div>
+                        <div class="error">${requestScope.errors.mail_1}</div>
                     </div>
                     <div>
                         <label for="mail_2">Mail 2</label>
@@ -87,7 +88,7 @@
                                class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.mail_2}</div>
+                        <div class="error">${requestScope.errors.mail_2}</div>
                     </div>
                     
                     <div>
@@ -99,7 +100,7 @@
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
                                >
-                        <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
+                        <div class="error">${requestScope.errors.telephone_personnel}</div>
                     </div>
                     <br>
                     <div>
@@ -112,7 +113,7 @@
 
 
                         </select>
-                        <div class="error-details-message">${requestScope.errors.statut}</div>
+                        <div class="error">${requestScope.errors.statut}</div>
                     </div>
                     <br>
                     <div>
@@ -121,7 +122,7 @@
                             <option value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'selected' : ''}>ETAM</option>
                             <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>Cadre</option>
                         </select>
-                        <div class="error-details-message">${requestScope.errors.categorie}</div>
+                        <div class="error">${requestScope.errors.categorie}</div>
                     </div>
                     <br>
                     <div>
@@ -130,7 +131,7 @@
                             <option value="Madame" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Madame' ? 'selected' : ''}>Madame</option>
                             <option value="Monsieur" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Monsieur' ? 'selected' : ''}>Monsieur</option>
                         </select>
-                        <div class="error-details-message">${requestScope.errors.genre}</div>
+                        <div class="error">${requestScope.errors.genre}</div>
                     </div>
                     <br>
                     <div>
@@ -143,7 +144,7 @@
                                 <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
                                 <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
                             </select>
-                            <div class="error-details-message">${requestScope.errors.rqth}</div>
+                            <div class="error">${requestScope.errors.rqth}</div>
                         </div>
 
                         <c:if test="${isOuiSelected}">
@@ -154,7 +155,7 @@
                                        required
                                        value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}"
                                        >
-                                <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
+                                <div class="error">${requestScope.errors.date_de_renouvellement}</div>
                             </div>
                         </c:if>
 
@@ -164,7 +165,7 @@
                                 <input type="date" id="date_de_renouvellement" name="date_de_renouvellement"
                                        placeholder="jj-mm-aaaa" 
                                        value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
-                                <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
+                                <div class="error">${requestScope.errors.date_de_renouvellement}</div>
                             </div>
                         </c:if>
 

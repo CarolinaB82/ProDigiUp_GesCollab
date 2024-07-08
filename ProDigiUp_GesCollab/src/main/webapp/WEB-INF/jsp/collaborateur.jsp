@@ -84,7 +84,7 @@
                     </div>
                     <div id="suggestionsNom"></div>
                 </form>
-
+                <br>
                 <form>
                     <div>
                         <label for="rechercherParPrenom">Par prénom :</label>
@@ -92,7 +92,7 @@
                     </div>
                     <div id="suggestionsPrenom"></div>
                 </form>
-
+                <br>
                 <form>
                     <div>
                         <label for="rechercherParMatricule">Par matricule :</label>

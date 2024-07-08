@@ -31,9 +31,12 @@ public class PrestationDao extends Dao<Prestation> {
         };
         prestation.setId(rs.getInt("id_" + table));
         prestation.setSiglum_presta(rs.getString("siglum_presta"));
+        prestation.setNum_affaire(rs.getString("num_affaire"));
         prestation.setNom_presta(rs.getString("nom_presta"));
         prestation.setRef_fact_partenaire(rs.getString("ref_fact_partenaire"));
+        prestation.setMail_partenaire(rs.getString("mail_partenaire"));
         prestation.setRef_fact_airbus(rs.getString("ref_fact_airbus"));
+        prestation.setMail_airbus(rs.getString("mail_airbus"));
         prestation.setId_ra(rs.getInt("id_ra"));
         prestation.setId_collaborateur(rs.getInt("id_collaborateur"));
         prestation.setId_partenaire(rs.getInt("id_partenaire"));
@@ -43,17 +46,20 @@ public class PrestationDao extends Dao<Prestation> {
 
     @Override
     public void create(Prestation presta) throws SQLException {
-        String sql = "INSERT INTO prestation(siglum_presta, nom_presta, ref_fact_partenaire, ref_fact_airbus, id_ra, id_collaborateur, id_partenaire) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO prestation(siglum_presta, num_affaire, nom_presta, ref_fact_partenaire, mail_partenaire,"
+                + "ref_fact_airbus, mail_airbus, id_ra, id_collaborateur, id_partenaire) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, presta.getSiglum_presta());
-            pstmt.setString(2, presta.getNom_presta());
-            pstmt.setString(3, presta.getRef_fact_partenaire());
-            pstmt.setString(4, presta.getRef_fact_airbus());
-
-            pstmt.setObject(5, presta.getId_ra(), Types.INTEGER);
-            pstmt.setObject(6, presta.getId_collaborateur(), Types.INTEGER);
-            pstmt.setObject(7, presta.getId_partenaire(), Types.INTEGER);
+            pstmt.setString(2, presta.getNum_affaire());
+            pstmt.setString(3, presta.getNom_presta());
+            pstmt.setString(4, presta.getRef_fact_partenaire());
+            pstmt.setString(5, presta.getMail_partenaire());
+            pstmt.setString(6, presta.getRef_fact_airbus());
+            pstmt.setString(7, presta.getMail_airbus());
+            pstmt.setObject(8, presta.getId_ra(), Types.INTEGER);
+            pstmt.setObject(9, presta.getId_collaborateur(), Types.INTEGER);
+            pstmt.setObject(10, presta.getId_partenaire(), Types.INTEGER);
 
             int nbLines = pstmt.executeUpdate();
             if (nbLines == 1) {
@@ -82,9 +88,12 @@ public class PrestationDao extends Dao<Prestation> {
                 obj = new Prestation();
                 obj.setId(rs.getInt("id_prestation"));
                 obj.setSiglum_presta(rs.getString("siglum_presta"));
+                obj.setNum_affaire(rs.getString("num_affaire"));
                 obj.setNom_presta(rs.getString("nom_presta"));
                 obj.setRef_fact_partenaire(rs.getString("ref_fact_partenaire"));
+                obj.setMail_partenaire(rs.getString("mail_partenaire"));
                 obj.setRef_fact_airbus(rs.getString("ref_fact_airbus"));
+                obj.setMail_airbus(rs.getString("mail_airbus"));
                 obj.setId_ra(rs.getInt("id_ra"));
                 obj.setId_collaborateur(rs.getInt("id_collaborateur"));
                 obj.setId_partenaire(rs.getInt("id_partenaire"));
@@ -96,32 +105,36 @@ public class PrestationDao extends Dao<Prestation> {
     }
 
     @Override
-    protected void update(Prestation obj) {
-        String sql = "UPDATE prestation SET siglum_presta=?, nom_presta=?, ref_fact_partenaire=?, ref_fact_airbus=?, id_ra=?, id_collaborateur=?, id_partenaire=? "
-                + "WHERE id_prestation=?";
+    public void update(Prestation obj) {
+        String sql = "UPDATE prestation SET siglum_presta=?, num_affaire=?, nom_presta=?, ref_fact_partenaire=?, mail_partenaire=?, ref_fact_airbus=?, mail_airbus=?, id_ra=?, id_collaborateur=?, id_partenaire=? WHERE id_prestation=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setString(1, obj.getSiglum_presta());
-            pstmt.setString(2, obj.getNom_presta());
-            pstmt.setString(3, obj.getRef_fact_partenaire());
-            pstmt.setString(4, obj.getRef_fact_airbus());
-            pstmt.setInt(5, obj.getId_ra());
-            pstmt.setInt(6, obj.getId_collaborateur());
-            pstmt.setInt(7, obj.getId_partenaire());
+            pstmt.setString(2, obj.getNum_affaire());
+            pstmt.setString(3, obj.getNom_presta());
+            pstmt.setString(4, obj.getRef_fact_partenaire());
+            pstmt.setString(5, obj.getMail_partenaire());
+            pstmt.setString(6, obj.getRef_fact_airbus());
+            pstmt.setString(7, obj.getMail_airbus());
+            pstmt.setInt(8, obj.getId_ra());
+            pstmt.setInt(9, obj.getId_collaborateur());
+            pstmt.setInt(10, obj.getId_partenaire());
+            pstmt.setInt(11, obj.getId());
 
             pstmt.executeUpdate();
         } catch (SQLException ex) {
+            System.out.println("Erreur lors de la mise à jour : " + ex.getMessage());
         }
     }
-    
-    protected void delete (Integer id){
+
+    public void delete(Integer id) {
         String sql = "DELETE FROM prestation WHERE id_prestation=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
-             pstmt.executeUpdate();
-              } catch (SQLException ex) {
-            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors du delete : " + ex.getMessage());
         }
     }
 
@@ -168,9 +181,12 @@ public class PrestationDao extends Dao<Prestation> {
                 Prestation c = new Prestation();
                 c.setId(rs.getInt("id_collaborateur"));
                 c.setSiglum_presta(rs.getString("singlum_presta"));
+                c.setNum_affaire(rs.getString("num_affaire"));
                 c.setNom_presta(rs.getString("nom_presta"));
                 c.setRef_fact_partenaire(rs.getString("ref_fact_partenaire"));
+                c.setMail_partenaire(rs.getString("mail_partenaire"));
                 c.setRef_fact_airbus(rs.getString("ref_fact_airbus"));
+                c.setMail_airbus(rs.getString("mail_airbus"));
                 c.setId_ra(rs.getInt("id_ra"));
                 c.setId_collaborateur(rs.getInt("id_collaborateur"));
                 c.setId_partenaire(rs.getInt("id_partenaire"));
@@ -197,4 +213,5 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return maxId;
     }
+
 }

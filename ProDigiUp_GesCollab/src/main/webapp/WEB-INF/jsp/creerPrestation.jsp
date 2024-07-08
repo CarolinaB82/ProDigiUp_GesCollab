@@ -42,6 +42,19 @@
                     </div>
                     <br>
                     <div>
+                        <label for="num_affaire">Numéro d'affaire Prestation</label>
+                        <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
+
+                        <input type="text" id="num_affaire" name="num_affaire"  
+                               required
+                               value="${requestScope.prestation != null ? requestScope.prestation.num_affaire : ''}" 
+                               class="${not empty requestScope.errors.num_affaire ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.num_affaire}</div>
+                    </div>
+                    <br>
+                    <div>
                         <label for="nom">Nom Prestation</label>
                         <input type="text" id="nom_presta" name="nom_presta"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
@@ -63,11 +76,21 @@
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_partenaire : ''}"
                                class="${not empty requestScope.errors.ref_fact_partenaire ? 'error-input' : ''}"
-
                                >
                         <div class="error-details-message">${requestScope.errors.ref_fact_partenaire}</div>
                     </div>
-                    <br><br>
+                    <br>
+                    <div>
+                        <label for="mail_partenaire">Mail de contact du Partenaire</label>
+                        <input type="email" id="mail_partenaire" name="mail_partenaire"
+                               value="${requestScope.prestation != null ? requestScope.prestation.mail_partenaire : ''}"
+                               class="${not empty requestScope.errors.mail_partenaire ? 'error-input' : ''}"
+
+                               >
+                        <div class="error">${requestScope.errors.mail_partenaire}</div>
+                    </div>
+                    <br>
+
                     <div>
                         <label for="ref_fact_airbus">Référent facturation Airbus</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"
@@ -79,8 +102,17 @@
                                >
                         <div class="error-details-message">${requestScope.errors.ref_fact_airbus}</div>
                     </div>
+                    <br>
+                    <div>
+                        <label for="mail_airbus">Mail de contact Airbus</label>
+                        <input type="email" id="mail_airbus" name="mail_airbus"
+                               value="${requestScope.prestation != null ? requestScope.prestation.mail_airbus : ''}"
+                               class="${not empty requestScope.errors.mail_airbus ? 'error-input' : ''}"
 
-                    <br><br>
+                               >
+                        <div class="error">${requestScope.errors.mail_airbus}</div>
+                    </div>
+                    <br>
 
                     <div class="combobox-container">
                         <div class="combobox">
@@ -100,6 +132,7 @@
                             <label for="multi-select">Son Collaborateur</label>
                             <br><br>
                             <select id="id_collaborateur" name="id_collaborateur">
+                                <option value="">-- Aucun --</option>
                                 <c:forEach var="collaborateur" items="${collaborateurList}">
                                     <option value="${collaborateur.id}">${collaborateur.nom}</option>
                                 </c:forEach>
@@ -125,11 +158,7 @@
                         <input type="reset" value="Annuler">
                     </div>
                 </fieldset>
-
-
-
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>

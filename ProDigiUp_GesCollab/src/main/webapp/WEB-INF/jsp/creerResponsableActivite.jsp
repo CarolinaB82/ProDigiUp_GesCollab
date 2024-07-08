@@ -29,14 +29,14 @@
                 <div>
                     <label for="matricule">Matricule</label>
                     <input type="text" id="matricule" name="matricule" 
-                           pattern="\d{5}" 
+                           pattern="0?[0-9]{1,5}"
                            maxlength="5" 
                            required
                            title="Veuillez saisir uniquement des chiffres (0-9)" 
                            value="${requestScope.ra != null ? requestScope.ra.matricule : ''}" 
                            class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
                            >
-                    <div class="error-details-message">${requestScope.errors.matricule}</div>
+                    <div class="error">${requestScope.errors.matricule}</div>
                 </div>
                 <div>
                     <label for="nom">Nom</label>
@@ -46,7 +46,7 @@
                            value="${requestScope.ra != null ? requestScope.ra.prenom : ''}"
                            class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
                            >
-                     <div class="error-details-message">${requestScope.errors.nom}</div>
+                     <div class="error">${requestScope.errors.nom}</div>
                 </div>
                 <div>
                     <label for="prenom">Prénom</label>
@@ -57,7 +57,7 @@
                            class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.prenom}</div>
+                        <div class="error">${requestScope.errors.prenom}</div>
                     </div>
                     
                     <div>
@@ -67,7 +67,7 @@
                                class="${not empty requestScope.errors.mail ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.mail}</div>
+                        <div class="error">${requestScope.errors.mail}</div>
                     </div>
                     
                     <div>
@@ -82,7 +82,7 @@
                                class="${not empty requestScope.errors.telephone_professionnel ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-mesage">${requestScope.errors.telephone_professionnel}</div>
+                        <div class="error">${requestScope.errors.telephone_professionnel}</div>
                     </div>
                     <div>
                         <label for="tel_perso">Téléphone Personnel</label>
@@ -94,7 +94,7 @@
                                value="${requestScope.ra != null ? requestScope.ra.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
                            >
-                    <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
+                    <div class="error">${requestScope.errors.telephone_personnel}</div>
                 </div>
                     <div class="combobox-container">
                         <div class="combobox">
