@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,7 +44,7 @@ public class Prestation implements Serializable, Identifiable {
     public void setSiglum_presta(String siglum_presta) {
         this.siglum_presta = siglum_presta;
     }
-    
+
     public String getNum_affaire() {
         return num_affaire;
     }
@@ -68,14 +69,14 @@ public class Prestation implements Serializable, Identifiable {
         this.ref_fact_partenaire = ref_fact_partenaire;
     }
 
-     public String getMail_partenaire() {
+    public String getMail_partenaire() {
         return mail_partenaire;
     }
 
     public void setMail_partenaire(String mail_partenaire) {
         this.mail_partenaire = mail_partenaire;
     }
-    
+
     public String getRef_fact_airbus() {
         return ref_fact_airbus;
     }
@@ -83,7 +84,7 @@ public class Prestation implements Serializable, Identifiable {
     public void setRef_fact_airbus(String ref_fact_airbus) {
         this.ref_fact_airbus = ref_fact_airbus;
     }
-    
+
     public String getMail_airbus() {
         return mail_airbus;
     }
@@ -171,4 +172,37 @@ public class Prestation implements Serializable, Identifiable {
         return Objects.equals(this.id_collaborateur, other.id_collaborateur);
     }
 
+    private List<Integer> responsableIds;
+
+    public List<Integer> getResponsablesIds() {
+        return responsableIds;
+    }
+
+    public void setResponsableIds(List<Integer> responsableIds) {
+        this.responsableIds = responsableIds;
+    }
+
+    private List<Integer> collaborateurIds;
+
+    public List<Integer> getCollaborateurIds() {
+        return collaborateurIds;
+    }
+
+    public void setCollaborateurIds(List<Integer> collaborateurIds) {
+        this.collaborateurIds = collaborateurIds;
+
+    }
+       private  List<Integer> partenaireIds;
+     
+    public  List<Integer> getPartenaireIds(){
+        return partenaireIds;
+    }
+    public void setPartenaireIds( List<Integer> partenaireIds){
+            this.partenaireIds = partenaireIds;
+    
+    }
+
+    public String getNom() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

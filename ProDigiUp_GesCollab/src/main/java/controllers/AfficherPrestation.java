@@ -4,10 +4,16 @@
  */
 package controllers;
 
+import dao.CollaborateurDao;
 import dao.DaoFactory;
+import dao.PartenaireDao;
 import dao.PrestationDao;
+import dao.ResponsableActiviteDao;
+import entities.Collaborateur;
 import entities.CollaborateurPrestationPartenaireRa;
+import entities.Partenaire;
 import entities.Prestation;
+import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -30,23 +38,52 @@ public class AfficherPrestation extends HttpServlet {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
         String prestationIdParam = req.getParameter("id");
-        int prestationId = 1; // Valeur par défaut ou celle que vous choisissez si aucun paramètre n'est fourni
+        int prestationId = 1;
 
-        if (prestationIdParam != null && !prestationIdParam.isEmpty()) {
+        if (prestationIdParam != null && prestationIdParam.isEmpty()) {
             try {
                 prestationId = Integer.parseInt(prestationIdParam);
             } catch (NumberFormatException e) {
-                // Gérer l'erreur de conversion si nécessaire
             }
         }
 
         PrestationDao prestationDao = new PrestationDao();
-        // Lire les informations du collaborateur depuis la base de données
         Prestation prestation = prestationDao.read(prestationId);
 
+        if (prestation == null) {
+            resp.sendRedirect(req.getContextPath() + "/404.jsp");
+            return;
+        }
+        ResponsableActiviteDao raDao = new ResponsableActiviteDao();
+        Collection<ResponsableActivite> listResponsableActivitePrestation = raDao.listResponsableActivite(prestation.getId());
+        List<String> responsableNoms = new ArrayList<>();
+        for (ResponsableActivite responsable : listResponsableActivitePrestation) {
+            responsableNoms.add(responsable.getNom());
+        }
+
+        //CollaborateurDao collaborateurDao = new CollaborateurDao();
+        Collection<Collaborateur> listPrestationCollaborateur = prestationDao.listPrestationCollaborateur(prestation.getId());
+        List<String> collaborateurNoms = new ArrayList<>();
+        for (Collaborateur collaborateur : listPrestationCollaborateur) {
+            collaborateurNoms.add(collaborateur.getNom());
+        }
+
+        //PartenaireDao partenaireDao = new PartenaireDao();
+        Collection<Partenaire> listPrestationPartenaire = prestationDao.listPrestationPartenaire(prestation.getId());
+        List<String> partenaireNoms = new ArrayList<>();
+        for (Partenaire partenaire : listPrestationPartenaire) {
+            partenaireNoms.add(partenaire.getNom());
+        }
+
+        String ras = String.join(", ", responsableNoms);
+        String collaborateurs = String.join(", ", collaborateurNoms);
+        String partenaires = String.join(", ", partenaireNoms);
+
         req.setAttribute("prestation", prestation);
-
+        req.setAttribute("ras", ras);
+        req.setAttribute("collaborateurs", collaborateurs);
+        req.setAttribute("partenaires", partenaires);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
-
     }
+
 }

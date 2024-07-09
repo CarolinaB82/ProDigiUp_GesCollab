@@ -49,19 +49,17 @@ public class AfficherPartenaire extends HttpServlet {
         Partenaire partenaire = partenaireDao.read(partenaireId);
 
         req.setAttribute("partenaire", partenaire);
- ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+        ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
         Collection<ResponsableActivite> listResponsableActivitePartenaire = responsableActiviteDao.listResponsablesActivite(partenaire.getId());
         List<String> responsableNoms = new ArrayList<>();
-        for(ResponsableActivite responsable : listResponsableActivitePartenaire){
+        for (ResponsableActivite responsable : listResponsableActivitePartenaire) {
             responsableNoms.add(responsable.getNom());
         }
-        
+
         String responsablesActivite = String.join(", ", responsableNoms);
 
         req.setAttribute("responsablesActivite", responsablesActivite);
-        
-        
-        
+
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);
     }
 

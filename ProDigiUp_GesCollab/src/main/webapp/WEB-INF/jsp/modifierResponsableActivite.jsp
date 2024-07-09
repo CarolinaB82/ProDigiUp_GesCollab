@@ -30,7 +30,7 @@
                     <div>
                         <label for="matricule">Matricule</label>
                         <input type="text" id="matricule" name="matricule" 
-                               pattern="\d{5}" 
+                               pattern="\d{1,5}" 
                                maxlength="5" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 

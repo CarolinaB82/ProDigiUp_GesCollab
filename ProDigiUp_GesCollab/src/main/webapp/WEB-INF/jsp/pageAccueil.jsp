@@ -34,7 +34,7 @@
                     <p><a href="<c:url value="/liste_collaborateurs"/>">Liste des collaborateurs</a></p>
                     <!-- <p><a href="<c:url value="/prestation"/>">Voir une prestation</a></p>-->
                 </ul>
-                <img src="<c:url value="/assets/img/surmulotJo.png" />" width="500px" height="500px" alt="mulot" style='margin-left: 20px'>
+                    <a href='https://fr.wikipedia.org/wiki/Rattus_norvegicus' target="_blank" ><img src="<c:url value="/assets/img/surmulotJo.png" />" width="500px" height="500px" alt="mulot" style='margin-left: 20px'></a>
             </div>
         </main>
 

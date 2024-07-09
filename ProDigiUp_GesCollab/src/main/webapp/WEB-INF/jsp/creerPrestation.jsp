@@ -57,10 +57,7 @@
                     <div>
                         <label for="nom">Nom Prestation</label>
                         <input type="text" id="nom_presta" name="nom_presta"
-                               pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
-                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-
                                value="${requestScope.prestation != null ? requestScope.prestation.nom_presta : ''}"
                                class="${not empty requestScope.errors.nom_presta ? 'error-input' : ''}"
 

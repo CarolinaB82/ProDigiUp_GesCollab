@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -19,6 +21,11 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
 
     public ModifierCollaborateurFormChecker(HttpServletRequest request) {
         super(request);
+    }
+    private Map<String, String> errors = new HashMap<>();
+
+    public Map<String, String> getErrors() {
+        return errors;
     }
 
     @Override
@@ -31,7 +38,7 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
         // Récupérer les valeurs des champs modifiables
         String matriculeStr = request.getParameter("matricule");
         int matricule = Integer.parseInt(matriculeStr);
-        
+
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String mail_1 = request.getParameter("mail_1");
@@ -92,7 +99,6 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
             CollaborateurDao collaborateurDao = new CollaborateurDao();
             collaborateurDao.update(obj);
         }*/
-
         // Définir l'objet Collaborateur dans l'attribut de la requête pour l'affichage
         request.setAttribute("collaborateur", obj);
 

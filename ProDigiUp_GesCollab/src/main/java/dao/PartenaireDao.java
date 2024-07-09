@@ -5,6 +5,7 @@
 package dao;
 
 import entities.Partenaire;
+import entities.Prestation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -167,6 +168,24 @@ public class PartenaireDao extends Dao<Partenaire> {
                 int idPartenaire = rs.getInt("id_partenaire");
                 Partenaire partenaire = DaoFactory.getPartenaireDao().read(idPartenaire);
                 list.add(partenaire);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
+    
+    public Collection<Prestation> listPrestationPartenaire(int idPartenaire) {
+        String sql = "SELECT * FROM prestation WHERE id_partenaire=?";
+        ArrayList<Prestation> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idPartenaire);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idPrestation = rs.getInt("id_prestation");
+                Prestation prestation = DaoFactory.getPrestationDao().read(idPrestation);
+                list.add(prestation);
             }
         } catch (SQLException ex) {
             System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());

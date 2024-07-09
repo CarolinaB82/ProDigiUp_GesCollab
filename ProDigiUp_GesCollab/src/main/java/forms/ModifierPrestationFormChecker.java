@@ -1,116 +1,105 @@
 package forms;
 
-import dao.DaoFactory;
 import entities.Prestation;
-import jakarta.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author asolanas
  */
-public class ModifierPrestationFormChecker extends FormChecker<Prestation>{
-    
-    private final String NEW_SIGLUM_PRESTA = "new_siglum_presta";
-    private final String NEW_NUM_AFFAIRE = "new_num_affaire";
-    private final String NEW_NOM_PRESTA = "new_nom_presta";
-    private final String NEW_REF_FACT_PARTENAIRE = "new_ref_fact_partenaire";
-    private final String NEW_MAIL_PARTENAIRE = "new_mail_partenaire";
-    private final String NEW_REF_FACT_AIRBUS = "new_ref_fact_airbus";
-    private final String NEW_MAIL_AIRBUS = "new_mail_airbus";
-        
 
-    public ModifierPrestationFormChecker(HttpServletRequest request) {
-        super(request);
+
+public class ModifierPrestationFormChecker {
+    private Map<String, String> errors = new HashMap<>();
+
+    public Map<String, String> getErrors() {
+        return errors;
     }
 
-    @Override
-    public Prestation checkForm() {
-        String new_siglum_presta = getParameter(NEW_SIGLUM_PRESTA);
-        String new_num_affaire = getParameter(NEW_NUM_AFFAIRE);
-        String new_nom_presta = getParameter(NEW_NOM_PRESTA);
-        String new_ref_fact_partenaire = getParameter(NEW_REF_FACT_PARTENAIRE);
-        String new_mail_partenaire = getParameter(NEW_MAIL_PARTENAIRE);
-        String new_ref_fact_airbus = getParameter(NEW_REF_FACT_AIRBUS);
-        String new_mail_airbus = getParameter(NEW_MAIL_AIRBUS);
-        
-        Prestation prestation = (Prestation) request.getSession().getAttribute("prestation");
-        if (!prestation.getSiglum_presta().equals(new_siglum_presta)){
-            setError(NEW_SIGLUM_PRESTA, "Siglum inchangé");
+    public Prestation checkForm(HttpServletRequest request) {
+        String siglum_presta = getFieldValue(request, "siglum_presta");
+        String num_affaire = getFieldValue(request, "num_affaire");
+        String nom_presta = getFieldValue(request, "nom_presta");
+        String ref_fact_partenaire = getFieldValue(request, "ref_fact_partenaire");
+        String mail_partenaire = getFieldValue(request, "mail_partenaire");
+        String ref_fact_airbus = getFieldValue(request, "ref_fact_airbus");
+        String mail_airbus = getFieldValue(request, "mail_airbus");
+        int id_ra = getIntFieldValue(request, "id_ra");
+        int id_collaborateur = getIntFieldValue(request, "id_collaborateur");
+        int id_partenaire = getIntFieldValue(request, "id_partenaire");
+
+        Prestation prestation = new Prestation();
+
+        try {
+            validateSiglumPresta(siglum_presta);
+            prestation.setSiglum_presta(siglum_presta);
+        } catch (Exception e) {
+            setError("siglum_presta", e.getMessage());
         }
-        if (!prestation.getNum_affaire().equals(new_num_affaire)){
-            setError(NEW_NUM_AFFAIRE, "numéro affaire inchangé");
+
+        try {
+            validateNumAffaire(num_affaire);
+            prestation.setNum_affaire(num_affaire);
+        } catch (Exception e) {
+            setError("num_affaire", e.getMessage());
         }
-        if (!prestation.getNom_presta().equals(new_nom_presta)){
-            setError(NEW_NOM_PRESTA, "nom prestation inchangé");
+
+        try {
+            validateNomPresta(nom_presta);
+            prestation.setNom_presta(nom_presta);
+        } catch (Exception e) {
+            setError("nom_presta", e.getMessage());
         }
-        if (!prestation.getRef_fact_partenaire().equals(new_ref_fact_partenaire)){
-            setError(NEW_REF_FACT_PARTENAIRE, "référent partenaire inchangé");
-        }
-        if (!prestation.getMail_partenaire().equals(new_mail_partenaire)){
-            setError(NEW_MAIL_PARTENAIRE, "mail partenaire inchangé");
-        }
-        if (!prestation.getRef_fact_airbus().equals(new_ref_fact_airbus)){
-            setError(NEW_REF_FACT_AIRBUS, "référent airbus inchangé");
-        }
-        if (!prestation.getMail_airbus().equals(new_mail_airbus)){
-            setError(NEW_MAIL_AIRBUS, "mail airbus inchangé");
-        }
-        if (errors.isEmpty()){
-            prestation.setSiglum_presta(new_siglum_presta);
-            prestation.setNum_affaire(new_num_affaire);
-            prestation.setNom_presta(new_nom_presta);
-            prestation.setRef_fact_partenaire(new_ref_fact_partenaire);
-            prestation.setMail_partenaire(new_mail_partenaire);
-            prestation.setRef_fact_airbus(new_ref_fact_airbus);
-            prestation.setMail_airbus(new_mail_airbus);
-            
-            try {
-                DaoFactory.getPrestationDao().save(prestation);
-            } catch (SQLException ex) {
-                Logger.getLogger(ModifierPrestationFormChecker.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        request.setAttribute("errors", errors);
-        request.setAttribute("bean", prestation);
+
+        prestation.setRef_fact_partenaire(ref_fact_partenaire);
+        prestation.setMail_partenaire(mail_partenaire);
+        prestation.setRef_fact_airbus(ref_fact_airbus);
+        prestation.setMail_airbus(mail_airbus);
+        prestation.setId_ra(id_ra);
+        prestation.setId_collaborateur(id_collaborateur);
+        prestation.setId_partenaire(id_partenaire);
+
         return prestation;
     }
-    
-     public static boolean isFormValid(Prestation prestation) {
-        if (prestation.getSiglum_presta() == null || prestation.getSiglum_presta().isEmpty()) {
-            return false;
+
+    private void validateSiglumPresta(String siglum_presta) throws Exception {
+        if (siglum_presta == null || siglum_presta.trim().isEmpty()) {
+            throw new Exception("Le siglum de la prestation est obligatoire.");
         }
-        if (prestation.getNum_affaire() == null || prestation.getNum_affaire().isEmpty()) {
-            return false;
+    }
+
+    private void validateNumAffaire(String num_affaire) throws Exception {
+        if (num_affaire == null || num_affaire.trim().isEmpty()) {
+            throw new Exception("Le numéro d'affaire est obligatoire.");
         }
-        if (prestation.getNom_presta() == null || prestation.getNom_presta().isEmpty()) {
-            return false;
+    }
+
+    private void validateNomPresta(String nom_presta) throws Exception {
+        if (nom_presta == null || nom_presta.trim().isEmpty()) {
+            throw new Exception("Le nom de la prestation est obligatoire.");
         }
-        if (prestation.getRef_fact_partenaire() == null || prestation.getRef_fact_partenaire().isEmpty()) {
-            return false;
+    }
+
+    private void setError(String field, String message) {
+        errors.put(field, message);
+    }
+
+    private String getFieldValue(HttpServletRequest request, String fieldName) {
+        String value = request.getParameter(fieldName);
+        return (value == null || value.trim().isEmpty()) ? null : value.trim();
+    }
+
+    private int getIntFieldValue(HttpServletRequest request, String fieldName) {
+        String value = getFieldValue(request, fieldName);
+        try {
+            return (value != null) ? Integer.parseInt(value) : 0;
+        } catch (NumberFormatException e) {
+            setError(fieldName, "La valeur doit être un nombre.");
+            return 0;
         }
-        if (prestation.getMail_partenaire() == null || prestation.getMail_partenaire().isEmpty()) {
-            return false;
-        }
-        if (prestation.getRef_fact_airbus() == null || prestation.getRef_fact_airbus().isEmpty()) {
-            return false;
-        }
-        if (prestation.getMail_airbus() == null || prestation.getMail_airbus().isEmpty()) {
-            return false;
-        }
-        if (prestation.getId_ra() <= 0) {
-            return false;
-        }
-        if (prestation.getId_collaborateur() <= 0) {
-            return false;
-        }
-        if (prestation.getId_partenaire() <= 0) {
-            return false;
-        }
-        return true;
     }
 }
+
     
 
