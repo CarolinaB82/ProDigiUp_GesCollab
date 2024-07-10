@@ -27,7 +27,7 @@
                 <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
                 <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
 
-                <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
+                <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
 
 
                 <div class="button-container">
@@ -43,7 +43,7 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <!--<fieldset>
                 <legend>Rechercher</legend>
                 <form>
                     <label for="nom">Nom du partenaire</label>
@@ -56,7 +56,7 @@
                     <input type="submit" value="Rechercher">
                     <input type="reset" value="Annuler">
                 </form>
-            </fieldset>
+            </fieldset>-->
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>

@@ -44,7 +44,6 @@ public class Prestation implements Serializable, Identifiable {
     public void setSiglum_presta(String siglum_presta) {
         this.siglum_presta = siglum_presta;
     }
-
     public String getNum_affaire() {
         return num_affaire;
     }
@@ -52,7 +51,7 @@ public class Prestation implements Serializable, Identifiable {
     public void setNum_affaire(String num_affaire) {
         this.num_affaire = num_affaire;
     }
-
+   
     public String getNom_presta() {
         return nom_presta;
     }
@@ -68,7 +67,6 @@ public class Prestation implements Serializable, Identifiable {
     public void setRef_fact_partenaire(String ref_fact_partenaire) {
         this.ref_fact_partenaire = ref_fact_partenaire;
     }
-
     public String getMail_partenaire() {
         return mail_partenaire;
     }
@@ -84,7 +82,6 @@ public class Prestation implements Serializable, Identifiable {
     public void setRef_fact_airbus(String ref_fact_airbus) {
         this.ref_fact_airbus = ref_fact_airbus;
     }
-
     public String getMail_airbus() {
         return mail_airbus;
     }
@@ -119,20 +116,23 @@ public class Prestation implements Serializable, Identifiable {
 
     @Override
     public String toString() {
-        return "Prestation{" + "id=" + id + ", siglum_presta=" + siglum_presta + ", nom_presta=" + nom_presta + ", ref_fact_partenaire=" + ref_fact_partenaire + ", ref_fact_airbus=" + ref_fact_airbus + ", id_ra=" + id_ra + ", id_partenaire=" + id_partenaire + ", id_collaborateur=" + id_collaborateur + '}';
+        return "Prestation{" + "id=" + id + ", siglum_presta=" + siglum_presta + ", num_affaire=" + num_affaire + ", nom_presta=" + nom_presta + ", ref_fact_partenaire=" + ref_fact_partenaire + ", mail_partenaire=" + mail_partenaire + ", ref_fact_airbus=" + ref_fact_airbus + ", mail_airbus=" + mail_airbus + ", id_ra=" + id_ra + ", id_partenaire=" + id_partenaire + ", id_collaborateur=" + id_collaborateur + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.siglum_presta);
-        hash = 31 * hash + Objects.hashCode(this.nom_presta);
-        hash = 31 * hash + Objects.hashCode(this.ref_fact_partenaire);
-        hash = 31 * hash + Objects.hashCode(this.ref_fact_airbus);
-        hash = 31 * hash + Objects.hashCode(this.id_ra);
-        hash = 31 * hash + Objects.hashCode(this.id_partenaire);
-        hash = 31 * hash + Objects.hashCode(this.id_collaborateur);
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.siglum_presta);
+        hash = 83 * hash + Objects.hashCode(this.num_affaire);
+        hash = 83 * hash + Objects.hashCode(this.nom_presta);
+        hash = 83 * hash + Objects.hashCode(this.ref_fact_partenaire);
+        hash = 83 * hash + Objects.hashCode(this.mail_partenaire);
+        hash = 83 * hash + Objects.hashCode(this.ref_fact_airbus);
+        hash = 83 * hash + Objects.hashCode(this.mail_airbus);
+        hash = 83 * hash + Objects.hashCode(this.id_ra);
+        hash = 83 * hash + Objects.hashCode(this.id_partenaire);
+        hash = 83 * hash + Objects.hashCode(this.id_collaborateur);
         return hash;
     }
 
@@ -151,13 +151,22 @@ public class Prestation implements Serializable, Identifiable {
         if (!Objects.equals(this.siglum_presta, other.siglum_presta)) {
             return false;
         }
+        if (!Objects.equals(this.num_affaire, other.num_affaire)) {
+            return false;
+        }
         if (!Objects.equals(this.nom_presta, other.nom_presta)) {
             return false;
         }
         if (!Objects.equals(this.ref_fact_partenaire, other.ref_fact_partenaire)) {
             return false;
         }
+        if (!Objects.equals(this.mail_partenaire, other.mail_partenaire)) {
+            return false;
+        }
         if (!Objects.equals(this.ref_fact_airbus, other.ref_fact_airbus)) {
+            return false;
+        }
+        if (!Objects.equals(this.mail_airbus, other.mail_airbus)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {

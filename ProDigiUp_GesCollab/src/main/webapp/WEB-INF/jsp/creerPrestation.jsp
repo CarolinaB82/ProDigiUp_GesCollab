@@ -29,7 +29,7 @@
                 <fieldset>
                     <legend>Nouvelle Prestation</legend>
                     <div>
-                        <label for="siglum">Siglum Prestation</label>
+                        <label for="siglum_presta">Siglum Prestation</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="siglum_presta" name="siglum_presta"  
@@ -88,6 +88,19 @@
                     </div>
                     <br>
 
+                    <div>
+                        <label for="mail_partenaire">Mail partenaire</label>
+                        <input type="email" id="mail_partenaire" name="mail_partenaire"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+                               title="Veuillez saisir une adresse e-mail valide"
+                               value="${requestScope.prestation != null ? requestScope.prestation.mail_partenaire : ''}"
+                               class="${not empty requestScope.errors.mail_partenaire ? 'error-input' : ''}"
+
+                               >
+                        <div class="error-details-message">${requestScope.errors.mail_partenaire}</div>
+                    </div>
+                    <br><br>
                     <div>
                         <label for="ref_fact_airbus">Référent facturation Airbus</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"

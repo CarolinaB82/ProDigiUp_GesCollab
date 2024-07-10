@@ -107,6 +107,7 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return obj;
     }
+    
 
     private void updatePartenaire(Connection conn, int prestationId, List<Integer> partenaireIds) throws SQLException {
         if (partenaireIds != null) {
@@ -220,6 +221,34 @@ public class PrestationDao extends Dao<Prestation> {
 
         return listNom;
     }
+    
+//    @Override
+//    public Collection<Prestation> list() {
+//        ArrayList<Prestation> list = new ArrayList<>();
+//        String sql = "SELECT * FROM prestation";
+//        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+//
+//            ResultSet rs = pstmt.executeQuery();
+//            while (rs.next()) {
+//                Prestation c = new Prestation();
+//                c.setId(rs.getInt("id_prestation"));
+//                c.setSiglum_presta(rs.getString("siglum_presta"));
+//                c.setNum_affaire(rs.getString("numero_affaire"));
+//                c.setNom_presta(rs.getString("nom_presta"));
+//                c.setRef_fact_partenaire(rs.getString("ref_fact_partenaire"));
+//                c.setMail_partenaire(rs.getString("mail_partenaire"));
+//                c.setRef_fact_airbus(rs.getString("ref_fact_airbus"));
+//                c.setMail_airbus(rs.getString("mail_airbus"));
+//                c.setId_ra(rs.getInt("id_ra"));
+//                c.setId_collaborateur(rs.getInt("id_collaborateur"));
+//                c.setId_partenaire(rs.getInt("id_partenaire"));
+//                list.add(c);
+//            }
+//        } catch (SQLException ex) {
+//            System.err.println("Erreur lors du listage : " + ex.getMessage());
+//        }
+//        return list;
+//    }
 
     // rajout test
     public boolean exists(String nom_presta) {
