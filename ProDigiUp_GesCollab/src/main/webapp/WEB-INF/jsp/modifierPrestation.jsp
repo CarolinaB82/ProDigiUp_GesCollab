@@ -66,27 +66,28 @@
                             <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
                         </div>
                         <br>
+                        <div>
+                            <label for="id_ra">Responsable d'activité :</label>
+                            <select id="id_ra" name="id_ra" required>
+                                <c:forEach var="responsable" items="${responsablesActivite}">
+                                    <option value="${responsable.id}" ${responsable.id == prestation.id_ra ? 'selected' : ''}>${responsable.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br>
 
-                        <label for="id_ra">Responsable d'Activité:</label>
-                        <select id="id_ra" name="id_ra">
-                            <c:forEach var="ra" items="${responsablesActivite}">
-                                <option value="${ra.id}" <c:if test="${ra.id == prestation.id_ra}">selected</c:if>>${ra.nom}</option>
-                            </c:forEach>
-                        </select>
-
-                        <label for="id_collaborateur">Collaborateur:</label>
-                        <select id="id_collaborateur" name="id_collaborateur">
-                            <c:forEach var="collaborateur" items="${collaborateurs}">
-                                <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
-                            </c:forEach>
-                        </select>
-
-                        <label for="id_partenaire">Partenaire:</label>
-                        <select id="id_partenaire" name="id_partenaire">
-                            <c:forEach var="partenaire" items="${partenaires}">
-                                <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
-                            </c:forEach>
-                        </select>
+                            <label for="id_collaborateur">Collaborateur:</label>
+                            <select id="id_collaborateur" name="id_collaborateur">
+                                <c:forEach var="collaborateur" items="${collaborateurs}">
+                                    <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br>
+                            <label for="id_partenaire">Partenaire:</label>
+                            <select id="id_partenaire" name="id_partenaire">
+                                <c:forEach var="partenaire" items="${partenaires}">
+                                    <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
+                                </c:forEach>
+                            </select>
                         </div>
 
                         <br>

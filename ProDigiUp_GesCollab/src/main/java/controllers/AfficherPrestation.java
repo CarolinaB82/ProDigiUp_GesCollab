@@ -31,6 +31,7 @@ import java.util.List;
  */
 @WebServlet("/prestation")
 @SuppressWarnings("serial")
+
 public class AfficherPrestation extends HttpServlet {
 
     @Override
@@ -44,31 +45,31 @@ public class AfficherPrestation extends HttpServlet {
             try {
                 prestationId = Integer.parseInt(prestationIdParam);
             } catch (NumberFormatException e) {
+                // Gérer l'erreur de conversion si nécessaire
             }
         }
 
-        PrestationDao prestationDao = new PrestationDao();
+        PrestationDao prestationDao = DaoFactory.getPrestationDao();
         Prestation prestation = prestationDao.read(prestationId);
 
         if (prestation == null) {
             resp.sendRedirect(req.getContextPath() + "/404.jsp");
             return;
         }
-        //ResponsableActiviteDao raDao = new ResponsableActiviteDao();
-        Collection<ResponsableActivite> listResponsableActivitePrestation = prestationDao.listPrestationResponsableActivite(prestation.getId());
+
+         Collection<ResponsableActivite> listResponsableActivitePrestation = prestationDao.listPrestationResponsableActivite(prestation.getId());
         List<String> responsableNoms = new ArrayList<>();
         for (ResponsableActivite responsable : listResponsableActivitePrestation) {
             responsableNoms.add(responsable.getNom());
         }
+         System.out.println("Responsables d'activité : " + responsableNoms);
 
-        //CollaborateurDao collaborateurDao = new CollaborateurDao();
         Collection<Collaborateur> listPrestationCollaborateur = prestationDao.listPrestationCollaborateur(prestation.getId());
         List<String> collaborateurNoms = new ArrayList<>();
         for (Collaborateur collaborateur : listPrestationCollaborateur) {
             collaborateurNoms.add(collaborateur.getNom());
         }
 
-        //PartenaireDao partenaireDao = new PartenaireDao();
         Collection<Partenaire> listPrestationPartenaire = prestationDao.listPrestationPartenaire(prestation.getId());
         List<String> partenaireNoms = new ArrayList<>();
         for (Partenaire partenaire : listPrestationPartenaire) {
@@ -85,5 +86,5 @@ public class AfficherPrestation extends HttpServlet {
         req.setAttribute("partenaires", partenaires);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
     }
-
 }
+
