@@ -40,7 +40,7 @@ public class AfficherPrestation extends HttpServlet {
         String prestationIdParam = req.getParameter("id");
         int prestationId = 1;
 
-        if (prestationIdParam != null && prestationIdParam.isEmpty()) {
+        if (prestationIdParam != null && !prestationIdParam.isEmpty()) {
             try {
                 prestationId = Integer.parseInt(prestationIdParam);
             } catch (NumberFormatException e) {
@@ -54,8 +54,8 @@ public class AfficherPrestation extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/404.jsp");
             return;
         }
-        ResponsableActiviteDao raDao = new ResponsableActiviteDao();
-        Collection<ResponsableActivite> listResponsableActivitePrestation = raDao.listResponsableActivite(prestation.getId());
+        //ResponsableActiviteDao raDao = new ResponsableActiviteDao();
+        Collection<ResponsableActivite> listResponsableActivitePrestation = prestationDao.listPrestationResponsableActivite(prestation.getId());
         List<String> responsableNoms = new ArrayList<>();
         for (ResponsableActivite responsable : listResponsableActivitePrestation) {
             responsableNoms.add(responsable.getNom());
@@ -75,12 +75,12 @@ public class AfficherPrestation extends HttpServlet {
             partenaireNoms.add(partenaire.getNom());
         }
 
-        String ras = String.join(", ", responsableNoms);
+        String responsablesActivite = String.join(", ", responsableNoms);
         String collaborateurs = String.join(", ", collaborateurNoms);
         String partenaires = String.join(", ", partenaireNoms);
 
         req.setAttribute("prestation", prestation);
-        req.setAttribute("ras", ras);
+        req.setAttribute("responsablesActivite", responsablesActivite);
         req.setAttribute("collaborateurs", collaborateurs);
         req.setAttribute("partenaires", partenaires);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);

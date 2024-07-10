@@ -23,14 +23,14 @@
         <%@include file="/WEB-INF/jspf/header.jsp" %>
 
         <main>
-            <form action="<c:url value="/modifierPrestation" />" method="post">                 
+            <form action="<c:url value="/modifierPrestation"/>" method="post">                 
                 <div>${requestScope.message}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
                     <legend>Modifier la Prestation</legend>
                     <form action="ModifierPrestation" method="post">
 
-                        <input type="hidden" name="id_prestation" value="${prestation.id_prestation}">
+                        <input type="hidden" name="id" value="${prestation.id}">
                         <div>
                             <label for="siglum_presta">Siglum Presta:</label>
                             <input type="text" id="siglum_presta" name="siglum_presta" value="${prestation.siglum_presta}">
@@ -67,55 +67,33 @@
                         </div>
                         <br>
 
-                        <div class="combobox-container">
-                            <div class="combobox">
-                                <label for="multi-select">Responsable d'activité mié à la prestation</label>
-                                <br>
-                                <select id="responsable" name="responsable" multiple>
-                                    <c:forEach var="responsable" items="${responsableActiviteList}">
-                                        <!--<option value="${responsable.id}">${responsable.nom}</option>-->
-                                        <option value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">selected</c:if>>${responsable.nom}</option>
-                                    </c:forEach>
-                                </select>
-                                <br><br>
+                        <label for="id_ra">Responsable d'Activité:</label>
+                        <select id="id_ra" name="id_ra">
+                            <c:forEach var="ra" items="${responsablesActivite}">
+                                <option value="${ra.id}" <c:if test="${ra.id == prestation.id_ra}">selected</c:if>>${ra.nom}</option>
+                            </c:forEach>
+                        </select>
 
-                            </div>
-                            <br>
-                            <div class="combobox-container">
-                                <div class="combobox">
-                                    <label for="multi-select">Collaborateur lié à la prestation</label>
-                                    <br>
-                                    <select id="collaborateur" name="collaborateur" multiple>
-                                        <option value="">-- Aucun --</option>
-                                        <c:forEach var="collaborateur" items="${collaborateurList}">
-                                            <!--<option value="${collaborateur.id}">${collaborateur.nom}</option>-->
-                                            <option value="${collaborateur.id}" <c:if test="${selectedCollaborateurs.contains(collaborateur.id)}">selected</c:if>>${collaborateur.nom}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <br><br>
+                        <label for="id_collaborateur">Collaborateur:</label>
+                        <select id="id_collaborateur" name="id_collaborateur">
+                            <c:forEach var="collaborateur" items="${collaborateurs}">
+                                <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
+                            </c:forEach>
+                        </select>
 
-                                </div>
-                            </div>
-                            <br>
-                            <div class="combobox-container">
-                                <div class="combobox">
-                                    <label for="multi-select">Partenaire lié à la prestation</label>
-                                    <br>
-                                    <select id="partenaire" name="partenaire" multiple>
-                                        <option value="">-- Aucun --</option>
-                                        <c:forEach var="partenaire" items="${partnenaireList}">
-                                            <!--<option value="${partenaire.id}">${partenaire.nom}</option>-->
-                                            <option value="${partenaire.id}" <c:if test="${selectedPartenaires.contains(partenaire.id)}">selected</c:if>>${partenaire.nom}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
+                        <label for="id_partenaire">Partenaire:</label>
+                        <select id="id_partenaire" name="id_partenaire">
+                            <c:forEach var="partenaire" items="${partenaires}">
+                                <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
+                            </c:forEach>
+                        </select>
+                        </div>
 
-                            <br>
-                            <div>
-                                <input type="submit" value="Modifier">
-                                <input type="reset" value="Annuler">
-                            </div>
+                        <br>
+                        <div>
+                            <input type="submit" value="Modifier">
+                            <input type="reset" value="Annuler">
+                        </div>
                     </form>
                 </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

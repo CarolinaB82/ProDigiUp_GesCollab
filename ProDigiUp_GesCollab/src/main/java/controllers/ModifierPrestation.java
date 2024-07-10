@@ -28,7 +28,6 @@ import java.util.Map;
  * @author asolanas
  */
 @WebServlet("/modifierPrestation")
-@SuppressWarnings("serial")
 public class ModifierPrestation extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -53,32 +52,85 @@ public class ModifierPrestation extends HttpServlet {
 
         Collection<Partenaire> partenaires = partenaireDao.list();
         Collection<Collaborateur> collaborateurs = collaborateurDao.list();
-        Collection<ResponsableActivite> ras = raDao.list();
+        Collection<ResponsableActivite> responsablesActivite = raDao.list();
 
         req.setAttribute("prestation", prestation);
         req.setAttribute("partenaires", partenaires);
         req.setAttribute("collaborateurs", collaborateurs);
-        req.setAttribute("ras", ras);
+        req.setAttribute("responsablesActivite", responsablesActivite);
         req.getRequestDispatcher("/WEB-INF/jsp/modifierPrestation.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
-        ModifierPrestationFormChecker formChecker = new ModifierPrestationFormChecker();
-        Prestation prestation = formChecker.checkForm((javax.servlet.http.HttpServletRequest) req);
-        Map<String, String> errors = formChecker.getErrors();
+    ModifierPrestationFormChecker nv = new ModifierPrestationFormChecker(req);
+    Prestation prestation = nv.checkForm();
 
-        if (errors.isEmpty()) {
-            PrestationDao prestationDao = new PrestationDao();
-            prestationDao.update(prestation);
-            resp.sendRedirect(req.getContextPath() + "/prestation?id=" + prestation.getId());
-        } else {
-            req.setAttribute("errors", errors);
-            req.setAttribute("prestation", prestation);
-            req.getRequestDispatcher("/WEB-INF/jsp/modifierPrestation.jsp").forward(req, resp);
-        }
+    if (prestation == null) {
+        resp.sendRedirect(req.getContextPath() + "/404.jsp");
+        return;
     }
 
+    PrestationDao prestationDao = new PrestationDao();
+    ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+    PartenaireDao partenaireDao = new PartenaireDao();
+    CollaborateurDao collaborateurDao = new CollaborateurDao();
+
+    if (nv.getErrors().isEmpty()) {
+        prestationDao.update(prestation);
+
+        // Relecture des données mises à jour
+        prestation = prestationDao.read(prestation.getId());
+
+        // Relecture des responsables, collaborateurs et partenaires associés
+        Collection<ResponsableActivite> listPrestationResponsableActivite = responsableActiviteDao.listResponsableActivite(prestation.getId());
+        List<String> responsableNoms = new ArrayList<>();
+        for (ResponsableActivite responsable : listPrestationResponsableActivite) {
+            responsableNoms.add(responsable.getNom());
+        }
+
+        Collection<Collaborateur> listPrestationCollaborateur = prestationDao.listPrestationCollaborateur(prestation.getId());
+        List<String> collaborateurNoms = new ArrayList<>();
+        for (Collaborateur collaborateur : listPrestationCollaborateur) {
+            collaborateurNoms.add(collaborateur.getNom());
+        }
+
+        Collection<Partenaire> listPrestationPartenaire = prestationDao.listPrestationPartenaire(prestation.getId());
+        List<String> partenaireNoms = new ArrayList<>();
+        for (Partenaire partenaire : listPrestationPartenaire) {
+            partenaireNoms.add(partenaire.getNom());
+        }
+
+        // Transmission des données mises à jour
+        String responsablesActivite = String.join(", ", responsableNoms);
+        String collaborateurs = String.join(", ", collaborateurNoms);
+        String partenaires = String.join(", ", partenaireNoms);
+
+        req.setAttribute("prestation", prestation);
+        req.setAttribute("responsablesActivite", responsablesActivite);
+        req.setAttribute("partenaires", partenaires);
+        req.setAttribute("collaborateurs", collaborateurs);
+        req.setAttribute("message", "La prestation a été mise à jour avec succès.");
+        req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
+    } else {
+        Collection<ResponsableActivite> responsableActiviteList = responsableActiviteDao.list();
+        Collection<Partenaire> partenaireList = partenaireDao.list();
+        Collection<Collaborateur> collaborateurList = collaborateurDao.list();
+        req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+        req.setAttribute("selectedResponsables", responsableActiviteList);
+        req.setAttribute("selectedPartenaires", partenaireList);
+        req.setAttribute("selectedCollaborateurs", collaborateurList);
+        req.setAttribute("responsableActiviteList", responsableActiviteList);
+        req.setAttribute("partenaireList", partenaireList);
+        req.setAttribute("collaborateurList", collaborateurList);
+        req.setAttribute("errors", nv.getErrors());
+        req.setAttribute("prestation", prestation);
+        req.getRequestDispatcher("/WEB-INF/jsp/modifierPrestation.jsp").forward(req, resp);
+    }
 }
+
+}
+
+

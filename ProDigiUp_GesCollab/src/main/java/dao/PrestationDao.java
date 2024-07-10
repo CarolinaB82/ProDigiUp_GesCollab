@@ -7,6 +7,7 @@ package dao;
 import entities.Collaborateur;
 import entities.Partenaire;
 import entities.Prestation;
+import entities.ResponsableActivite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -107,16 +108,16 @@ public class PrestationDao extends Dao<Prestation> {
         return obj;
     }
 
-    private void updatePartenaire (Connection conn, int prestationId, List<Integer> partenaireIds) throws SQLException{
-        if (partenaireIds != null){
+    private void updatePartenaire(Connection conn, int prestationId, List<Integer> partenaireIds) throws SQLException {
+        if (partenaireIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_prestation=?";
-            try(PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)){
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
                 deleteStmt.setInt(1, prestationId);
                 deleteStmt.executeUpdate();
             }
             String insertSql = "INSERT INTO proposer (id_presatation, id_partenaire) VALUES (?, ?)";
-            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)){
-                for(int partenaireId : partenaireIds){
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int partenaireId : partenaireIds) {
                     insertStmt.setInt(1, prestationId);
                     insertStmt.setInt(2, partenaireId);
                     insertStmt.executeUpdate();
@@ -124,17 +125,17 @@ public class PrestationDao extends Dao<Prestation> {
             }
         }
     }
-    
-      private void updateCollaborateur (Connection conn, int prestationId, List<Integer> collaborateurIds) throws SQLException{
-        if (collaborateurIds != null){
+
+    private void updateCollaborateur(Connection conn, int prestationId, List<Integer> collaborateurIds) throws SQLException {
+        if (collaborateurIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_prestation=?";
-            try(PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)){
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
                 deleteStmt.setInt(1, prestationId);
                 deleteStmt.executeUpdate();
             }
             String insertSql = "INSERT INTO proposer (id_prestation, id_collaborateur) VALUES (?, ?)";
-            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)){
-                for(int collaborateurId : collaborateurIds){
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int collaborateurId : collaborateurIds) {
                     insertStmt.setInt(1, prestationId);
                     insertStmt.setInt(2, collaborateurId);
                     insertStmt.executeUpdate();
@@ -142,8 +143,8 @@ public class PrestationDao extends Dao<Prestation> {
             }
         }
     }
-      
-       private void updateResponsablesActivite(Connection conn, int prestationId, List<Integer> responsableIds) throws SQLException {
+
+    private void updateResponsablesActivite(Connection conn, int prestationId, List<Integer> responsableIds) throws SQLException {
         if (responsableIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_prestation=?";
             try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
@@ -181,7 +182,7 @@ public class PrestationDao extends Dao<Prestation> {
             pstmt.setInt(11, obj.getId());
 
             pstmt.executeUpdate();
-            
+
             updatePartenaire(connexion, obj.getId(), obj.getPartenaireIds());
             updateCollaborateur(connexion, obj.getId(), obj.getCollaborateurIds());
             updateResponsablesActivite(connexion, obj.getId(), obj.getResponsablesIds());
@@ -191,7 +192,7 @@ public class PrestationDao extends Dao<Prestation> {
     }
 
     public void delete(Integer id) {
-        String sql = "DELETE FROM prestation WHERE id_prestation=?"; 
+        String sql = "DELETE FROM prestation WHERE id_prestation=?";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
@@ -262,43 +263,67 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return list;
     }
-   
-   public Collection<Collaborateur> listPrestationCollaborateur(int idPrestation){
-    String sql = "SELECT id_collaborateur FROM prestation WHERE id_prestation=?";
-    ArrayList<Collaborateur> list = new ArrayList<>();
-    try {
-        PreparedStatement pstmt = connexion.prepareStatement(sql);
-        pstmt.setInt(1, idPrestation);
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()){
-            int idCollaborateur = rs.getInt("id_collaborateur");
-            Collaborateur collaborateur = DaoFactory.getCollaborateurDao().read(idCollaborateur);
-            list.add(collaborateur);
+
+    public Collection<ResponsableActivite> listPrestationResponsableActivite(int idPrestation) {
+        String sql = "SELECT id_ra FROM prestation WHERE id_prestation = ?";
+        ArrayList<ResponsableActivite> list = new ArrayList<>();
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setInt(1, idPrestation);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int idRa = rs.getInt("id_ra");
+                    ResponsableActivite ra = DaoFactory.ResponsableActiviteDao().read(idRa);
+                    if (ra != null) {
+                        list.add(ra);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        return list;
     }
-    return list;
-}
-   
-     public Collection<Partenaire> listPrestationPartenaire(int idPrestation){
-    String sql = "SELECT id_partenaire FROM prestation WHERE id_prestation=?";
-    ArrayList<Partenaire> list = new ArrayList<>();
-    try {
-        PreparedStatement pstmt = connexion.prepareStatement(sql);
-        pstmt.setInt(1, idPrestation);
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()){
-            int idPartenaire = rs.getInt("id_partenaire");
-            Partenaire partenaire = DaoFactory.getPartenaireDao().read(idPartenaire);
-            list.add(partenaire);
+
+    public Collection<Collaborateur> listPrestationCollaborateur(int idPrestation) {
+        String sql = "SELECT id_collaborateur FROM prestation WHERE id_prestation = ?";
+        ArrayList<Collaborateur> list = new ArrayList<>();
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setInt(1, idPrestation);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int idCollaborateur = rs.getInt("id_collaborateur");
+                    Collaborateur collaborateur = DaoFactory.getCollaborateurDao().read(idCollaborateur);
+                    if (collaborateur != null) {
+                        list.add(collaborateur);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        return list;
     }
-    return list;
-}
- 
+
+    public Collection<Partenaire> listPrestationPartenaire(int idPrestation) {
+        String sql = "SELECT id_partenaire FROM prestation WHERE id_prestation = ?";
+        ArrayList<Partenaire> list = new ArrayList<>();
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setInt(1, idPrestation);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int idPartenaire = rs.getInt("id_partenaire");
+                    Partenaire partenaire = DaoFactory.getPartenaireDao().read(idPartenaire);
+                    if (partenaire != null) {
+                        list.add(partenaire);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
+
     public int getLastIdCreated() {
         String sql = "SELECT MAX(id_prestation) AS max_id FROM prestation";
         int maxId = 0;
@@ -313,5 +338,4 @@ public class PrestationDao extends Dao<Prestation> {
         return maxId;
     }
 
-    
 }

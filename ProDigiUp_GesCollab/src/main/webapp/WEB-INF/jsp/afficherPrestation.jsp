@@ -28,13 +28,13 @@
                 <p><strong>Mail partenaire : </strong><c:out value="${prestation.mail_partenaire}"/></p>
                 <p><strong>Référent facture Airbus : </strong><c:out value="${prestation.ref_fact_airbus}"/></p>
                 <p><strong>Mail référent Airbus : </strong><c:out value="${prestation.mail_airbus}"/></p>
-                <p><strong>Responsable(s) activité: </strong><c:out value="${ras}"/></p>
+                <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
                 <p><strong>Collaborateur associé : </strong><c:out value="${collaborateurs}"/></p>
                 <p><strong>Partenaire : </strong><c:out value="${partenaires}"/></p>
 
                 
                 <div class="button-container">
-                    <form action="/ProDigiUp_GesCollab/modifierPretation" method="get"style="display: inline;">
+                    <form action="<c:url value='/modifierPrestation'/>" method="get"style="display: inline;">
                         <input type="hidden" name="id" value="${prestation.id}" />
                         <input type="submit" value="Modifier">
                     </form>
