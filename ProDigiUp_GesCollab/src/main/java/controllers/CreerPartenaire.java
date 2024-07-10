@@ -7,6 +7,7 @@ package controllers;
 import dao.DaoFactory;
 import dao.PartenaireDao;
 import dao.ProposerDao;
+import dao.ResponsableActiviteDao;
 import entities.Partenaire;
 import entities.Proposer;
 import entities.ResponsableActivite;
@@ -19,7 +20,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,6 +79,21 @@ public class CreerPartenaire extends HttpServlet {
             
             
                 req.setAttribute("partenaire", part);
+                
+                
+                  ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+                List<String> responsableNoms = new ArrayList<>();
+                for(String responsableIdStr : responsableActiviteIds){
+                    ResponsableActivite responsable = responsableActiviteDao.read(Integer.parseInt(responsableIdStr));
+                    if(responsable != null) {
+                        responsableNoms.add(responsable.getNom());
+                    }
+                }
+
+                String responsablesActivite = String.join(", ", responsableNoms);
+
+                req.setAttribute("responsablesActivite", responsablesActivite);
+                
                 req.setAttribute("message", "Partenaire bien ajouté !");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);
             } catch (SQLException ex) {

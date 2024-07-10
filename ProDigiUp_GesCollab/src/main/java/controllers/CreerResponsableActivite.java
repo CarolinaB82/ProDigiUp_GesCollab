@@ -1,6 +1,8 @@
 package controllers;
 
+import dao.CollaborateurDao;
 import dao.DaoFactory;
+import dao.PartenaireDao;
 import dao.PossederDao;
 import dao.ProposerDao;
 import dao.ResponsableActiviteDao;
@@ -19,7 +21,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,6 +96,31 @@ public class CreerResponsableActivite extends HttpServlet {
                
                 //  ResponsableActivite ra = responsableActiviteDao.read(responsableActivite.getId());
                 req.setAttribute("ra", ra);
+                
+                PartenaireDao partenaireDao = new PartenaireDao();
+                List<String> partenaireNoms = new ArrayList<>();
+                for(String partenaireIdStr : partenaireIds){
+                    Partenaire part = partenaireDao.read(Integer.parseInt(partenaireIdStr));
+                    if(part != null) {
+                        partenaireNoms.add(part.getNom());
+                    }
+                }
+                
+                String partenaire = String.join(", ", partenaireNoms);
+                req.setAttribute("partenaire", partenaire);
+                
+                CollaborateurDao collaborateurDao = new CollaborateurDao();
+                List<String> collaborateurNoms = new ArrayList<>();
+                for(String collaborateurIdStr : collaborateurIds){
+                    Collaborateur collaborateur = collaborateurDao.read(Integer.parseInt(collaborateurIdStr));
+                    if(collaborateur != null) {
+                        collaborateurNoms.add(collaborateur.getNom());
+                    }
+                }
+                
+                String collaborateur = String.join(", ", collaborateurNoms);
+                req.setAttribute("collaborateur", collaborateur);
+                
                 req.setAttribute("message", "Responsable d'Activité bien ajouté !");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherResponsableActivite.jsp").forward(req, resp);
             } catch (SQLException ex) {

@@ -99,7 +99,7 @@
                     <div class="combobox-container">
                         <div class="combobox">
 
-                            <label for="multi-select">Son partenaire</label>
+                            <label for="multi-select">Partenaire(s)</label>
                             <br>
                             <select id="partenaire" name="partenaire" multiple>
                                 <c:forEach var="partenaire" items="${partenaireList}">
@@ -111,7 +111,7 @@
                         </div>
 
                         <div class="combobox">
-                                <label for="multi-select">Son collaborateur</label>
+                                <label for="multi-select">Collaborateur(s)</label>
                                 <br>
                                 <select id="collaborateur" name="collaborateur" multiple>
                                    <c:forEach var="collaborateur" items="${collaborateurList}">

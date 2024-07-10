@@ -29,7 +29,7 @@
                 <fieldset>
                     <legend>Nouvelle Prestation</legend>
                     <div>
-                        <label for="siglum">Siglum Prestation</label>
+                        <label for="siglum_presta">Siglum Prestation</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="siglum_presta" name="siglum_presta"  
@@ -42,7 +42,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="numéro">Numéro d'affaire</label>
+                        <label for="num_presta">Numéro d'affaire</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="num_affaire" name="num_affaire"  
@@ -56,7 +56,7 @@
                     <br>
                     
                     <div>
-                        <label for="nom">Nom Prestation</label>
+                        <label for="nom_presta">Nom Prestation</label>
                         <input type="text" id="nom_presta" name="nom_presta"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
                                required

@@ -102,7 +102,7 @@
                 </form>
             </fieldset>
             <fieldset>
-                <legend>Résultats de recherche</legend>
+                <legend>RÉsultats de recherche</legend>
                 <%-- Code pour afficher les résultats de recherche --%>
                 <div id="resultats">
                     <c:if test="${not empty resultats}">

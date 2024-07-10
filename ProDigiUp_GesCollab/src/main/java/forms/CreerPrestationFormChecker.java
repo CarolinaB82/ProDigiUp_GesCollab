@@ -22,8 +22,8 @@ public class CreerPrestationFormChecker extends FormChecker<Prestation> {
         Prestation prestation = new Prestation();
 
         String siglum_presta = request.getParameter("siglum_presta");
-        String nom_presta = request.getParameter("nom_presta");
         String num_affaire = request.getParameter("num_affaire");
+        String nom_presta = request.getParameter("nom_presta");
         String ref_fact_partenaire = request.getParameter("ref_fact_partenaire");
         String mail_partenaire = request.getParameter("mail_partenaire");
         String ref_fact_airbus = request.getParameter("ref_fact_airbus");
@@ -35,8 +35,8 @@ public class CreerPrestationFormChecker extends FormChecker<Prestation> {
 
         // Traiter les autres champs String
         prestation.setSiglum_presta(siglum_presta);
-        prestation.setNom_presta(nom_presta);
         prestation.setNum_affaire(num_affaire);
+        prestation.setNom_presta(nom_presta);
         prestation.setRef_fact_partenaire(ref_fact_partenaire);
         prestation.setMail_partenaire(mail_partenaire);
         prestation.setRef_fact_airbus(ref_fact_airbus);

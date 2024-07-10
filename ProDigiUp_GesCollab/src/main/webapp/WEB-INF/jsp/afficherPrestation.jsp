@@ -28,6 +28,23 @@
                 <p><strong>Mail partenaire : </strong><c:out value="${prestation.mail_partenaire}"/></p>
                 <p><strong>Référent facture Airbus : </strong><c:out value="${prestation.ref_fact_airbus}"/></p>
                 <p><strong>Mail airbus : </strong><c:out value="${prestation.mail_airbus}"/></p>
+                
+                 <p><strong>Partenaire : </strong><c:out value="${partenaire}"/></p>
+                <p><strong>Collaborateur : </strong><c:out value="${collaborateur}"/></p>
+                <p><strong>Responsable activité : </strong><c:out value="${responsablesActivite}"/></p>
+
+
+                <div class="button-container">
+                    <form action="/ProDigiUp_GesCollab/modifierPrestation" method="get"style="display: inline;">
+                        <input type="hidden" name="id" value="${prestation.id}" />
+                        <input type="submit" value="Modifier">
+                    </form>
+                         <form action="<c:url value='/supprimerPrestation'/>" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="${prestation.id}" />
+                    <input type="hidden" name="action" value="delete" />
+                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette prestation ?');">Supprimer</button>
+                </form>
+                </div>
             </fieldset>
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>  

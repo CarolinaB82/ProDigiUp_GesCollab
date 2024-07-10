@@ -4,10 +4,16 @@
  */
 package controllers;
 
+import dao.CollaborateurDao;
 import dao.DaoFactory;
+import dao.PartenaireDao;
 import dao.PrestationDao;
+import dao.ResponsableActiviteDao;
+import entities.Collaborateur;
 import entities.CollaborateurPrestationPartenaireRa;
+import entities.Partenaire;
 import entities.Prestation;
+import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -45,6 +51,17 @@ public class AfficherPrestation extends HttpServlet {
         Prestation prestation = prestationDao.read(prestationId);
 
         req.setAttribute("prestation", prestation);
+        CollaborateurDao collaborateurDao = new CollaborateurDao();
+        Collaborateur collabPresta = collaborateurDao.read(prestation.getId_collaborateur());
+        req.setAttribute("collaborateur", collabPresta.getNom());
+
+        ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+        ResponsableActivite responsable = responsableActiviteDao.read(prestation.getId_ra());
+        req.setAttribute("responsablesActivite", responsable.getNom());
+
+        PartenaireDao partenaireDao = new PartenaireDao();
+        Partenaire part = partenaireDao.read(prestation.getId_partenaire());
+        req.setAttribute("partenaire", part.getNom());
 
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
 

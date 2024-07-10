@@ -21,8 +21,26 @@
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
-            <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
+           
+<div class='liensAccueil'>
 
+                
+                    <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>
+                   
+                    <!--<p><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></p>-->
+                    <p><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></p>
+                    
+                    <p><a href="<c:url value="/creer_prestation"/>">Créer une prestation</a></p>
+                    <p><a href="<c:url value="/creer_partenaire"/>">Créer un partenaire</a></p>
+                    <!--<p><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></p>-->
+                    <p><a href="<c:url value="/liste_prestations"/>">Liste des prestations</a></p>
+                    <!-- <p><a href="<c:url value="/prestation"/>">Voir une prestation</a></p>-->
+                
+                
+</div>
+                    <br><br>
+                    <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
+                    <br><br><br>
             <!--<table border="1" style="border: 3px solid purple; border-collapse: collapse;">-->
             <table border="1" class="custom-table">
 

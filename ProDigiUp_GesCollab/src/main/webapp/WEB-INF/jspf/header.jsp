@@ -22,8 +22,24 @@
     </div>
     <nav >
         <ul class="liensAccueil">
-             <c:if test="${notHome}">
+           <!-- <c:choose>
+                <c:when test="${prestations == 'liste_prestations'}">
+                    <p><a href="<c:url value="/accueil"/>">Déconnexion</a></p>
+                </c:when>
+                <c:otherwise>
+                    <c:if test="${notHome}">
+                        <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+                    </c:if>
+                </c:otherwise>
+            </c:choose>-->
+            
+            <c:if test="${notHome}">
                 <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+            </c:if>
+            
+            
+             <c:if test="${notHome}">
+                <p><a href="<c:url value="/liste_collaborateurs"/>">Retour à la liste collaborateurs</a></p>
             </c:if>
             <c:if test="${notHome && currentPage != 'rechercher_ra'}">
                 <p><a href="<c:url value="/rechercher_ra"/>">Chercher un RA</a></p>

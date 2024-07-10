@@ -4,8 +4,11 @@
  */
 package controllers;
 
+import dao.CollaborateurDao;
 import dao.DaoFactory;
+import dao.PartenaireDao;
 import dao.PrestationDao;
+import dao.ResponsableActiviteDao;
 import entities.Collaborateur;
 import entities.Partenaire;
 import entities.Prestation;
@@ -19,7 +22,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +53,7 @@ public class CreerPrestation extends HttpServlet {
          @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        
         CreerPrestationFormChecker rafc = new CreerPrestationFormChecker(req);
         Prestation prestation = rafc.checkForm();
 
@@ -63,11 +69,30 @@ public class CreerPrestation extends HttpServlet {
                     return;
                 }
                 
+                 
+                 
                 prestationDao.create(prestation);
                 //methode creer pour recuperer le dernier Id cree
                 int lastIdCreated = prestationDao.getLastIdCreated();
                 Prestation presta = prestationDao.read(lastIdCreated);
-                req.setAttribute("prestation", presta);
+                
+                 req.setAttribute("prestation", presta);
+                 
+                CollaborateurDao collaborateurDao = new CollaborateurDao();
+                Collaborateur collabPresta = collaborateurDao.read(presta.getId_collaborateur());
+                req.setAttribute("collaborateur", collabPresta.getNom());
+                
+                ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+                ResponsableActivite responsable = responsableActiviteDao.read(presta.getId_ra());
+                req.setAttribute("responsablesActivite", responsable.getNom());
+
+                 PartenaireDao partenaireDao = new PartenaireDao();
+                 Partenaire part = partenaireDao.read(presta.getId_partenaire());
+                req.setAttribute("partenaire", part.getNom());
+                 
+                 
+                
+                
                 req.setAttribute("message", "Prestation bien ajouté !");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
             } catch (SQLException ex) {
