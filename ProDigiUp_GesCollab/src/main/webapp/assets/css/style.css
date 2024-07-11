@@ -13,13 +13,13 @@
 
 :root {
     background: linear-gradient(100deg, buttonface, paleturquoise);
-    /*background-image: url("../img/rat-surmulot.jpg")*/
+
 }
 
 .custom-link {
-            transform: translateX(-10px);
-            font-size: 40px; /* Vous pouvez ajuster la taille selon vos besoins */
-        }
+    transform: translateX(-10px);
+    font-size: 40px;
+}
 html{
     height: 100%;
     margin: 0;
@@ -37,12 +37,101 @@ header{
     justify-content: space-between;
     text-align: center;
     font-family: magazine;
+    padding: 10px;
 }
 
 main {
     flex: 1;
 }
 
+*{
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+}
+
+nav{
+    width: 100%;
+    margin: 10px;
+    position: sticky;
+    font-family: rabilone;
+}
+
+nav ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul li{
+    width: 20%;
+    position: relative;
+    border: 1px solid #ccc; /* Ajout de la bordure */
+    border-radius: 10px; /* Coins arrondis */
+    margin: 5px; /* Marge entre les éléments */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
+    display: flex; /* Ajouté */
+    align-items: center; /* Ajouté : Centre verticalement */
+    justify-content: center; /* Ajouté : Centre horizontalement */
+}
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav a{
+    display: flex; /* Ajouté */
+    align-items: center; /* Ajouté : Centre verticalement */
+    justify-content: center; /* Ajouté : Centre horizontalement */
+    text-decoration: none;
+    color: black;
+    border-bottom: 2px solid transparent;
+    padding: 10px 15px;
+    width: 100%; /* Ajouté : Prendre toute la largeur du parent */
+    height: 100%; /* Ajouté : Prendre toute la hauteur du parent */
+    line-height: normal; /* Modifié : Retirer line-height fixe */
+}
+
+.sous{
+    display: none;
+    box-shadow: 0px 1px 2px #CCC;
+    background-color: oldlace;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    border: 1px solid #ccc; /* Ajout de la bordure */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    top: 100%;
+}
+nav > ul li:hover .sous{
+    display: block;
+    
+}
+.sous li{
+    float: none;
+    width: 100%;
+    text-align: left;
+    border: none; /* Supprimer la bordure interne */
+    margin: 0;
+}
+.sous a{
+    padding: 10px;
+    border-bottom: none;
+}
+.sous a:hover{
+    border-bottom: none;
+    background-color: #fff;
+}
+
+.conteneur{
+    margin: 300px 20px;
+    height: 1000px;
+}
 .liensAccueil{
     display: flex;
     justify-content: space-between;
@@ -50,26 +139,34 @@ main {
     margin: 10px 15px;
     padding: 5px;
     gap: 15px;
-    
-    
 }
-footer {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 50px;
-    position: relative;
-    }
+/* Style pour rendre les liens neutres */
+.neutral-links a {
+    color: inherit; /* Inherit the color from the parent element */
+    text-decoration: none; /* Remove underline */
+}
 
-a {
-    text-decoration: none !important;
+.neutral-links a:visited {
+    color: inherit; /* Same color for visited links */
+}
+
+.neutral-links a:hover {
+    color: inherit; /* Same color when hovering */
+    text-decoration: none; /* No underline on hover */
+}
+
+.neutral-links a:active {
+    color: inherit; /* Same color when active */
+}
+
+footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: rabilone;
-    color: black;
-    text-align: center;
-
+    height: 50px;
+    position: relative;
+    margin-top: 20px;
+    font-family: rabilone
 }
 
 .bienvenue{
@@ -88,7 +185,20 @@ legend{
     align-items: center;
     margin-bottom: 10px;
     justify-content: center;
-     margin-right: 10px; /* espace entre les liens */
+    margin-right: 10px; /* espace entre les liens */
+    font-family: rabilone;
+    text-decoration: none;
+    text-align: center;
+}
+h1{
+    font-family: magazine;
+}
+.en_tete_accueil{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: magazine;
 }
 .error-message {
     color: red;
@@ -112,57 +222,33 @@ h2{
 }
 
 .custom-table {
-    border: 3px solid purple; /* tableaux */
+    border: 4px solid midnightblue; /* tableaux */
     border-collapse: collapse;
     width : 100%;
+    color: black;
 }
 
 .custom-table th  {
-    border: 3px solid purple;
-   padding: 10px;    
-   width: auto; 
-    text-align: center; 
-    vertical-align: middle; 
+    border: 3px solid midnightblue;
+    padding: 10px;
+    width: auto;
+    text-align: center;
+    vertical-align: middle;
     font-family: rabilone;
+    text-decoration: none !important;
 }
 .custom-table td{
-    border: 1px solid purple; /* Ajustez la taille de la bordure intérieure si nécessaire */
+    border: 3px solid midnightblue; /* Ajustez la taille de la bordure intérieure si nécessaire */
     min-width: 100px; /* Définit une largeur minimum pour les cellules */
     text-align: center; /* Centre le contenu horizontalement */
     vertical-align: middle; /* Centre le contenu verticalement */
     font-family: rabilone;
+    text-decoration: none !important;
 }
 
 .custom-table .collaborator-end-row {
-    border-bottom: 3px solid purple;
+    border-bottom: 3px solid midnightblue;
 }
-
-
-
-
-/*.combobox-container {
-    display: flex;
-    align-items: center; 
-    gap: 20px; 
-}
-
-.combobox {
-    flex: 1;
-}
-
-.combobox label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.combobox select {
-    width: 100%;
-    height: 150px; 
-}
-
-.combobox input[type="submit"] {
-    margin-top: 10px;
-}*/
 
 /* Style pour le conteneur général */
 .combobox-container {
@@ -188,7 +274,7 @@ h2{
     font-size: 14px;
     color: #333;
     margin-bottom: auto;
-     text-align: center;
+    text-align: center;
 }
 
 /* Style pour les éléments select */
@@ -219,3 +305,70 @@ h2{
 .combobox br {
     display: none; /* Optionnel : cache les br inutiles */
 }
+
+/* Styles pour les fiches */
+fieldset {
+    border: 2px solid #87CEEB; /* Bordure bleue pastel */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 20px; /* Espacement intérieur */
+    background-color: #F0F8FF; /* Couleur de fond pastel */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    margin-bottom: 20px; /* Espacement sous les fiches */
+}
+
+.fiches p {
+    margin-bottom: 10px; /* Espacement entre les lignes */
+    font-size: 16px; /* Taille de police */
+    color: #333; /* Couleur du texte */
+    font-family: rabilone;
+}
+
+.legend {
+    font-family: magazine; /* Assurez-vous que la police est bien importée */
+    font-size: 24px;
+    color: #333;
+}
+.centered-form {
+    display: flex;
+    flex-direction: column; /* Afficher les éléments en colonne */
+    align-items: center; /* Centre les éléments horizontalement */
+    justify-content: center; /* Centre les éléments verticalement */
+    margin: 0 auto; /* Centre le formulaire horizontalement */
+    border: 2px solid #87CEEB; /* Bordure bleue pastel */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 20px; /* Espacement intérieur */
+    background-color: #F0F8FF; /* Couleur de fond pastel */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    width: fit-content; /* Largeur ajustée au contenu */
+    font-family: rabilone;
+}
+
+.centered-form div {
+    margin-bottom: 10px; /* Espacement entre les éléments du formulaire */
+}
+
+.centered-form label {
+    margin-bottom: 5px; /* Espacement en bas des labels */
+}
+
+.centered-form input, .centered-form button {
+    border-radius: 5px; /* Coins arrondis pour les inputs et le bouton */
+    padding: 10px; /* Espacement intérieur des inputs et du bouton */
+    border: 1px solid #ccc; /* Bordure pour les inputs et le bouton */
+}
+
+.centered-form button {
+    background-color: #87CEEB; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte du bouton */
+    border: none; /* Supprimer la bordure du bouton */
+    cursor: pointer; /* Curseur pointeur pour le bouton */
+}
+
+.centered-form button:hover {
+    background-color: #00BFFF; /* Couleur de fond du bouton au survol */
+}
+
+
+
+
+

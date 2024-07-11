@@ -21,42 +21,28 @@
         <main>
             <fieldset>
                 <legend><strong>Fiche Partenaire</legend>
-                <p><strong>Nom :  </strong><c:out value="${partenaire.nom}"/></p>
-                <p><strong>Numéro de voie : </strong><c:out value="${partenaire.numero_voie}"/></p>
-                <p><strong>Adresse : </strong><c:out value="${partenaire.adresse}"/></p>
-                <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
-                <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
+                <div class='fiches'>
+                    <p><strong>Nom :  </strong><c:out value="${partenaire.nom}"/></p>
+                    <p><strong>Numéro de voie : </strong><c:out value="${partenaire.numero_voie}"/></p>
+                    <p><strong>Adresse : </strong><c:out value="${partenaire.adresse}"/></p>
+                    <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
+                    <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
+                    <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
 
-                <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
-
-
-                <div class="button-container">
-                    <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
-                        <input type="hidden" name="id" value="${partenaire.id}" />
-                        <input type="submit" value="Modifier">
-                    </form>
+                    <div class="custom-button">
+                        <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
+                            <input type="hidden" name="id" value="${partenaire.id}" />
+                            <input type="submit" value="Modifier">
+                        </form>
                         <form action="<c:url value='/supprimer_partenaire'/>" method="post" style="display: inline;">
-                    <input type="hidden" name="id" value="${partenaire.id}" />
-                    <input type="hidden" name="action" value="delete" />
-                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
-                </form>
+                            <input type="hidden" name="id" value="${partenaire.id}" />
+                            <input type="hidden" name="action" value="delete" />
+                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
+                        </form>
+                    </div>
                 </div>
+
             </fieldset>
-
-            <!--<fieldset>
-                <legend>Rechercher</legend>
-                <form>
-                    <label for="nom">Nom du partenaire</label>
-                    <input type="text" id="nom" name="nom" pattern="[a-zA-Z -]*"
-                           required
-                           title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                           >
-                    <div class="error">${requestScope.errors.nom}</div>
-
-                    <input type="submit" value="Rechercher">
-                    <input type="reset" value="Annuler">
-                </form>
-            </fieldset>-->
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>

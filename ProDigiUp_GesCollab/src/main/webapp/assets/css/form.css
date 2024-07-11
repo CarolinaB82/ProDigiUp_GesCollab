@@ -10,7 +10,7 @@ h1 {
 form {
     width: 50%;
     margin: auto;
-    
+    font-family: rabilone;
 }
 
 form label, form label+input {

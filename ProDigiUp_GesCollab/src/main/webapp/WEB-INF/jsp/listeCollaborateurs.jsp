@@ -21,41 +21,23 @@
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
-           
-<div class='liensAccueil'>
 
-                
-                    <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>
-                   
-                    <!--<p><a href="<c:url value="/afficher_ra"/>">Voir un Responsable d'Activité</a></p>-->
-                    <p><a href="<c:url value="/creer_collaborateur"/>">Créer un collaborateur</a></p>
-                    
-                    <p><a href="<c:url value="/creer_prestation"/>">Créer une prestation</a></p>
-                    <p><a href="<c:url value="/creer_partenaire"/>">Créer un partenaire</a></p>
-                    <!--<p><a href="<c:url value="/partenaire"/>">Voir un partenaire</a></p>-->
-                    <p><a href="<c:url value="/liste_prestations"/>">Liste des prestations</a></p>
-                    <!-- <p><a href="<c:url value="/prestation"/>">Voir une prestation</a></p>-->
-                
-                
-</div>
-                    <br><br>
-                    <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
-                    <br><br><br>
+
+            <br><br>
+            <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
+            <br><br><br>
             <!--<table border="1" style="border: 3px solid purple; border-collapse: collapse;">-->
-            <table border="1" class="custom-table">
-
-
+            <table border="1" class="custom-table neutral-links" style='text-decoration: none'>
                 <thead>
-
                     <tr>
                         <th>Matricule</th>
-                        <th>Nom</th>
+                        <th>🔗Nom</th>
                         <th>Prénom</th>
                         <th>Statut</th>
                         <th>En activé</th>
-                        <th>Prestation</th>
-                        <th>Nom Responsable Activité</th>
-                        <th>Nom Partenaire</th>
+                        <th>🔗Prestation</th>
+                        <th>🔗Responsable d'Activité</th>
+                        <th>🔗Partenaire</th>
 
                     </tr>
 

@@ -77,16 +77,6 @@
                         <div class="error-details-message">${requestScope.errors.ref_fact_partenaire}</div>
                     </div>
                     <br>
-                    <div>
-                        <label for="mail_partenaire">Mail de contact du Partenaire</label>
-                        <input type="email" id="mail_partenaire" name="mail_partenaire"
-                               value="${requestScope.prestation != null ? requestScope.prestation.mail_partenaire : ''}"
-                               class="${not empty requestScope.errors.mail_partenaire ? 'error-input' : ''}"
-
-                               >
-                        <div class="error">${requestScope.errors.mail_partenaire}</div>
-                    </div>
-                    <br>
 
                     <div>
                         <label for="mail_partenaire">Mail partenaire</label>
@@ -131,7 +121,7 @@
 
                             <br>
                             <select id="id_ra" name="id_ra">
-                                 <option value="">-- Aucun --</option>
+                                <option value="">-- Aucun --</option>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
                                 </c:forEach>

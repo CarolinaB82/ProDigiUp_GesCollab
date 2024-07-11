@@ -1,6 +1,6 @@
 <%-- 
-    Document   : page_accueil
-    Created on : 13 juin 2024, 12:16:35
+    Document   : pageConnexion
+    Created on : 11 juil. 2024, 15:43:19
     Author     : asolanas
 --%>
 
@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Accueil</title>
+        <title>Connexion</title>
     </head>
     <body>
         <main>
@@ -22,14 +22,19 @@
 
                 <h1>ProDigiUp Gestion des ressources</h1>
             </div>
-                
-            <h1 class='bienvenue'>Bienvenue</h1>
-            <div class='accueil'>
-                <a href="https://fr.wikipedia.org/wiki/Rattus_norvegicus" target="_blank"><img src="<c:url value="/assets/img/surmulotJo.png" />" width="500px" height="500px" alt="mulot"style='margin-left: 70px'></a>
-            </div>
-            <div >
-                <h1 class='bienvenue neutral-links'><a href="<c:url value="/connexion"/>" >entrer dans l'application</a></h1>
-            </div>
+            <nav class="centered-form">
+                <div >
+                    <label for="login">Identifiant</label>
+                    <input type="text" id="login" name="login" >
+                </div>
+
+                <div >     
+                    <label for="login">Mot de passe</label>
+                    <input type="password" id="password" name="password" >
+                </div>
+                <input type="submit" value="Connexion">
+                <h2 class='neutral-links'><a href="<c:url value="/liste_collaborateurs"/>">Connexion</a></h2>
+            </nav>
         </main>
 
         <%@include file="/WEB-INF/jspf/footer.jsp" %>

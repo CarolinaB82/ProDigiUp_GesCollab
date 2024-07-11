@@ -109,8 +109,8 @@
                         <table class="custom-table">
                             <thead>
                                 <tr>
-                                    <th>Matricule</th>
-                                    <th>Nom</th>
+                                    <th>🔗Matricule</th>
+                                    <th>🔗Nom</th>
                                     <th>Prénom</th>
                                     <th>Statut</th>
                                     <th>Métier</th>

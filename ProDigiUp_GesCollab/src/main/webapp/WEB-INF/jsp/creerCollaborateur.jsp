@@ -93,7 +93,7 @@
                                >
                         <div class="error">${requestScope.errors.mail_2}</div>
                     </div>
-                    
+
                     <div>
                         <label for="telephone_personnel">Téléphone personnel</label>
                         <input type="text" id="telephone_personnel" name="telephone_personnel"
@@ -207,25 +207,25 @@
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
-                        </div>  
-                        <div class="error">${requestScope.errors.metier}</div>
-                        <br>
+                    </div>  
+                    <div class="error">${requestScope.errors.metier}</div>
+                    <br>
 
-                        <div class="combobox-container">
-                            <div class="combobox">
+                    <div class="combobox-container">
+                        <div class="combobox">
 
-                                <label for="responsable">Responsable activité</label>
-                                <select id="responsable" name="responsable" multiple>
-                                    <c:forEach var="responsable" items="${responsableActiviteList}">
-                                        <option value="${responsable.id}">${responsable.nom}</option>
-                                    </c:forEach>
-                                </select>
-                                <br><br>
-
-                            </div>
+                            <label for="responsable">Responsable activité</label>
+                            <select id="responsable" name="responsable" multiple>
+                                <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
 
                         </div>
-                        <p>Merci de remplir tous les champs</p>
+
+                    </div>
+                    <p>Merci de remplir tous les champs</p>
                 </fieldset>
                 <div>
                     <input type="submit" value="Envoyer">
@@ -235,19 +235,19 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
-                        <script>
-    function validateForm() {
-        var matricule = document.getElementById('matricule').value;
-        var responsables = document.getElementById('responsable').options;
-        for (var i = 0; i < responsables.length; i++) {
-            if (responsables[i].selected && responsables[i].value === matricule) {
-                alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                return false;
-            }
-        }
-        return true;
-    }
-</script>
+            <script>
+                function validateForm() {
+                    var matricule = document.getElementById('matricule').value;
+                    var responsables = document.getElementById('responsable').options;
+                    for (var i = 0; i < responsables.length; i++) {
+                        if (responsables[i].selected && responsables[i].value === matricule) {
+                            alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            </script>
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>

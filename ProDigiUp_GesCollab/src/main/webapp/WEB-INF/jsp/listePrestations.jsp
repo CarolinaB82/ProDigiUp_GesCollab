@@ -25,7 +25,7 @@
             <h2>Liste des prestations</h2>
 
             <!--<table border="1" style="border: 3px solid purple; border-collapse: collapse;">-->
-            <table border="1" class="custom-table">
+            <table border="1" class="custom-table neutral-links">
 <thead>
 
                     <tr>
