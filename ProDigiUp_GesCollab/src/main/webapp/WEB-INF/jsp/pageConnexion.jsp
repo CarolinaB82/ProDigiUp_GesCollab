@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
 
 
 <!DOCTYPE html>
@@ -14,27 +15,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Connexion</title>
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
     </head>
     <body>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
-            <div class='en_tete_accueil'>
-                <a href="https://www.prodigiup.com/" target="_blank"><img src="<c:url value="/assets/img/logo.png" />" width="300px" height="100px" alt="logo"></a> 
-
-                <h1>ProDigiUp Gestion des ressources</h1>
-            </div>
             <nav class="centered-form">
-                <div >
-                    <label for="login">Identifiant</label>
-                    <input type="text" id="login" name="login" >
+                <div>
+                    <label for="username">Identifiant :</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div>
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password">
                 </div>
 
-                <div >     
-                    <label for="login">Mot de passe</label>
-                    <input type="password" id="password" name="password" >
+                <div class="buttons">
+                    <button type="submit" class="btn-connexion" onclick="location.href = '<c:url value='/liste_collaborateurs'/>'">Connexion</button>
                 </div>
-                <input type="submit" value="Connexion">
-                <h2 class='neutral-links'><a href="<c:url value="/liste_collaborateurs"/>">Connexion</a></h2>
             </nav>
+
         </main>
 
         <%@include file="/WEB-INF/jspf/footer.jsp" %>

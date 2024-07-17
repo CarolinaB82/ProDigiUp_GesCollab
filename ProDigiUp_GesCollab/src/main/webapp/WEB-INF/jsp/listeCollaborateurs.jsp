@@ -5,49 +5,75 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
         <title>Liste collaborateurs</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const deleteSuccess = urlParams.get('deleteSuccess');
+                if (deleteSuccess === 'true') {
+                    alert('La suppression a été effectuée avec succès.');
+                }
+            });
+        </script>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
-
-
             <br><br>
             <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
             <br><br><br>
-            <!--<table border="1" style="border: 3px solid purple; border-collapse: collapse;">-->
-            <table border="1" class="custom-table neutral-links" style='text-decoration: none'>
+            <table border="1" class="custom-table neutral-links">
                 <thead>
                     <tr>
-                        <th>Matricule</th>
-                        <th>🔗Nom</th>
-                        <th>Prénom</th>
-                        <th>Statut</th>
-                        <th>En activé</th>
-                        <th>🔗Prestation</th>
-                        <th>🔗Responsable d'Activité</th>
-                        <th>🔗Partenaire</th>
-
-                    </tr>
-
-                </thead>
-                <tbody>
-
+                        <th>
+                            <a href="?sort=matricule&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
+                              → Matricule <c:if test="${param.sort == 'matricule'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=nom&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
+                                → Nom🔗<c:if test="${param.sort == 'nom'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                </a>
+                            </th>
+                            <th>Prénom</th>
+                            <th>Statut</th>
+                            <th>
+                                <a href="?sort=activite&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
+                               → En activité <c:if test="${param.sort == 'activite'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=nom_presta&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
+                                → Prestation🔗 <c:if test="${param.sort == 'nom_presta'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=responsable&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
+                                → Responsable d'Activité🔗 <c:if test="${param.sort == 'responsable'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="?sort=partenaire&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
+                                → Partenaire🔗 <c:if test="${param.sort == 'partenaire'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <c:forEach var="collaborateur" items="${requestScope.collaborateurs}">
                         <c:set var="prestationSize" value="${collaborateur.prestRaPart != null ? collaborateur.prestRaPart.size() : 0}" />
                         <c:if test="${prestationSize == 0}">
-                            <tr class="collaborateur-row collaborator-end-row">
+                            <tr class="collaborateur-row collaborator-end-row neutral-links">
                                 <td>
                                     <c:out value="${collaborateur.collaborateur.matricule}"/>
                                 </td>
@@ -72,7 +98,9 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-
+                                <td>-</td> <!-- Ajouter une cellule avec contenu par défaut -->
+                                <td>-</td> <!-- Ajouter une cellule avec contenu par défaut -->
+                                <td>-</td> <!-- Ajouter une cellule avec contenu par défaut -->
                             </tr>
                         </c:if>
                         <c:forEach var="preRaPar" items="${collaborateur.prestRaPart}" varStatus="status">
@@ -81,7 +109,6 @@
                                     <td rowspan="${prestationSize}">
                                         <c:out value="${collaborateur.collaborateur.matricule}"/>
                                     </td>
-
                                     <td rowspan="${prestationSize}">
                                         <a href="<c:url value='/collaborateur?id=${collaborateur.collaborateur.id}'/>">
                                             <c:out value="${collaborateur.collaborateur.nom}"/>
@@ -103,20 +130,42 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
-
                                 </c:if>
                                 <td>
-                                    <a href="<c:url value='/prestation?id=${preRaPar.prestation.id}'/>">
-                                        <c:out value="${preRaPar.prestation.nom_presta}"/>                                        </a>
-
+                                    <c:choose>
+                                        <c:when test="${not empty preRaPar.prestation.nom_presta}">
+                                            <a href="<c:url value='/prestation?id=${preRaPar.prestation.id}'/>">
+                                                <c:out value="${preRaPar.prestation.nom_presta}"/>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            -
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                                 <td>
-                                    <a href="<c:url value='/afficher_ra?id=${preRaPar.resp.id}'/>">
-                                        <c:out value="${preRaPar.resp.nom}"/>
+                                    <c:choose>
+                                        <c:when test="${not empty preRaPar.resp.nom}">
+                                            <a href="<c:url value='/afficher_ra?id=${preRaPar.resp.id}'/>">
+                                                <c:out value="${preRaPar.resp.nom}"/>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            -
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                                 <td>
-                                    <a href="<c:url value='/partenaire?id=${preRaPar.part.id}'/>">
-                                        <c:out value="${preRaPar.part.nom}"/>
+                                    <c:choose>
+                                        <c:when test="${not empty preRaPar.part.nom}">
+                                            <a href="<c:url value='/partenaire?id=${preRaPar.part.id}'/>">
+                                                <c:out value="${preRaPar.part.nom}"/>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            -
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -127,3 +176,4 @@
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
 </html>
+

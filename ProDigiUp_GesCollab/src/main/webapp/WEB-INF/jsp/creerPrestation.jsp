@@ -14,14 +14,14 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>créer prestation</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        
         <main>
             <form action="/ProDigiUp_GesCollab/creer_prestation" method="post">                  
                 <div>${requestScope.message}</div>
@@ -114,53 +114,109 @@
                     </div>
                     <br>
 
-                    <div class="combobox-container">
-                        <div class="combobox">
-                            <label for="multi-select-responsable_activite">Son Responsable activité</label>
-
-
-                            <br>
-                            <select id="id_ra" name="id_ra">
-                                <option value="">-- Aucun --</option>
+                    <div class="dropdown-container">
+                        <label for="responsable">Responsable activité</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
+                            <div class="dropdown-menu">
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                    <label>
+                                        <input type="checkbox" name="responsable" value="${responsable.id}">
+                                        ${responsable.nom}
+                                    </label>
                                 </c:forEach>
-                            </select>
-                            <br><br>
+                            </div>
                         </div>
-                        <div class="combobox">
-
-                            <label for="multi-select">Son Collaborateur</label>
-                            <br><br>
-                            <select id="id_collaborateur" name="id_collaborateur">
-                                <option value="">-- Aucun --</option>
-                                <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
-                        </div>
-
-                        <div class="combobox">
-                            <label for="multi-select">Son Partenaire</label>
-                            <select id="id_partenaire" name="id_partenaire">
-                                <c:forEach var="partenaire" items="${partenaireList}">
-                                    <option value="${partenaire.id}">${partenaire.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br><br>
-
-                        </div>
-
                     </div>
-                    <p>Merci de remplir tous les champs</p>
-                    <div>
-                        <input type="submit" value="Envoyer">
+                    <div class="dropdown-container">
+                        <label for="collaborateur">Son Collaborateur</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Collaborateur(s)</button>
+                            <div class="dropdown-menu">
+                                 <label>
+                                    <input type="checkbox" name="collaborateur" value="none" id="checkbox-none">
+                                    Aucun
+                                </label>
+                                <c:forEach var="collaborateur" items="${collaborateurList}">
+                                    <label>
+                                        <input type="checkbox" name="collaborateur" value="${collaborateur.id}">
+                                        ${collaborateur.nom} ${collaborateur.prenom}
+                                    </label>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-container">
+                        <label for="partenaire">Son Partenaire</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Partenaire(s)</button>
+                            <div class="dropdown-menu">
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <label>
+                                        <input type="checkbox" name="partenaire" value="${partenaire.id}">
+                                        ${partenaire.nom}
+                                    </label>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="button-container">
+                        <input  type="submit" value="Valider">
                         <input type="reset" value="Annuler">
                     </div>
                 </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            </form>
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+            const checkboxNone = document.getElementById('checkbox-none');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                    this.classList.toggle('active');
+                    const dropdownMenu = this.nextElementSibling;
+                    if (dropdownMenu.style.display === 'block') {
+                        dropdownMenu.style.display = 'none';
+                    } else {
+                        dropdownMenu.style.display = 'block';
+                    }
+                });
+            });
+
+            // Empêche la fermeture du menu lorsque l'on clique sur une option
+            dropdownMenus.forEach(menu => {
+                menu.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+
+            // Fermer le menu déroulant si on clique en dehors
+            window.addEventListener('click', function () {
+                dropdownToggles.forEach(toggle => {
+                    toggle.classList.remove('active');
+                    const dropdownMenu = toggle.nextElementSibling;
+                    dropdownMenu.style.display = 'none';
+                });
+            });
+
+            // Fermer le menu déroulant lorsque "Aucun" est coché
+            checkboxNone.addEventListener('change', function () {
+                if (this.checked) {
+                    dropdownToggles.forEach(toggle => {
+                        toggle.classList.remove('active');
+                        const dropdownMenu = toggle.nextElementSibling;
+                        dropdownMenu.style.display = 'none';
+                    });
+                }
+            });
+        });
+    </script>
 </html>

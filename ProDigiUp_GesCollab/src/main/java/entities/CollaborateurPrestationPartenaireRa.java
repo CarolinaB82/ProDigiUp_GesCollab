@@ -40,4 +40,5 @@ public class CollaborateurPrestationPartenaireRa {
         this.prestationActive = prestationActive;
     }
 
+    
 }

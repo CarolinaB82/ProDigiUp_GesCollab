@@ -11,15 +11,16 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>voir un RA</title>
+        
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
-                <legend><strong>Fiche Responsable d'Activite</legend>
+                <legend><strong>Fiche Responsable d'Activité</legend>
                 <div class='fiches'>
                     <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
                     <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
@@ -30,7 +31,7 @@
                     <p><strong>Partenaire(s): </strong><c:out value="${partenaire}"/></p>
                     <p><strong>Collaborateur(s): </strong><c:out value="${collaborateur}"/></p>
 
-                    <div class="custom-button">
+                    <div class="button-container">
                         <form action="/ProDigiUp_GesCollab/modifier_ra" method="get"style="display: inline;">
                             <input type="hidden" name="id" value="${ra.id}" />
                             <input type="submit" value="Modifier">

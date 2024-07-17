@@ -16,15 +16,15 @@
         <c:set var="notHome" value="true" />
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <title>Fiche collaborateur</title>
+        
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
-                <legend>Fiche Collaborateur</legend>
+                <legend><strong>Fiche Collaborateur</legend>
                 <div>${requestScope.message}</div>
                 <div class='fiches'>
                     <p><strong>Matricule: </strong><c:out value="${collaborateur.matricule}"/></p>
@@ -43,25 +43,17 @@
                     <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
                     <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
 
-                    <div class="custom-button">
-                        <form action="/ProDigiUp_GesCollab/modifier_collaborateur" method="get"style="display: inline;">
+                    <div class="button-container">
+                        <form action="/ProDigiUp_GesCollab/modifier_collaborateur" method="get" style="display: inline;">
                             <input type="hidden" name="id" value="${collaborateur.id}" />
                             <input type="submit" value="Modifier">
                         </form>
+                        <form action="<c:url value='/supprimer_collaborateur'/>" method="post" style="display: inline;">
+                            <input type="hidden" name="id" value="${collaborateur.id}" />
+                            <input type="hidden" name="action" value="delete" />
+                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce collaborateur ?');">Supprimer</button>
+                        </form>
                     </div>
-
-
-               <!--<form action="<c:url value='/collaborateur'/>" method="post" style="display: inline;">
-                    <input type="hidden" name="id" value="${collaborateur.id}" />
-                    <input type="hidden" name="action" value="deactivate" />
-                    <button type="submit">Désactiver</button>
-                </form>-->
-
-                    <form action="<c:url value='/supprimer_collaborateur'/>" method="post" style="display: inline;">
-                        <input type="hidden" name="id" value="${collaborateur.id}" />
-                        <input type="hidden" name="action" value="delete" />
-                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce collaborateur ?');">Supprimer</button>
-                    </form>
                 </div>
             </fieldset>  
         </main>

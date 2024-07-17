@@ -33,8 +33,8 @@ public class SupprimerResponsableActivite extends HttpServlet {
 
                 ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
                 responsableActiviteDao.delete(raId);
-                
-                resp.sendRedirect("liste_collaborateurs"); // Redirection vers la liste après suppression
+                 
+                resp.sendRedirect("liste_collaborateurs?deleteSuccess=true"); // Redirection vers la liste après suppression
                 return;
             } catch (NumberFormatException e) {
                 // Gérer l'erreur de conversion si nécessaire

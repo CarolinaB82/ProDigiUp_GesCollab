@@ -14,25 +14,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Accueil</title>
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
     </head>
     <body>
+        <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
-            <div class='en_tete_accueil'>
-                <a href="https://www.prodigiup.com/" target="_blank"><img src="<c:url value="/assets/img/logo.png" />" width="300px" height="100px" alt="logo"></a> 
-
-                <h1>ProDigiUp Gestion des ressources</h1>
-            </div>
-                
-            <h1 class='bienvenue'>Bienvenue</h1>
-            <div class='accueil'>
-                <a href="https://fr.wikipedia.org/wiki/Rattus_norvegicus" target="_blank"><img src="<c:url value="/assets/img/surmulotJo.png" />" width="500px" height="500px" alt="mulot"style='margin-left: 70px'></a>
-            </div>
-            <div >
-                <h1 class='bienvenue neutral-links'><a href="<c:url value="/connexion"/>" >entrer dans l'application</a></h1>
+            <div class='bienvenue centered-flex'>
+                <h1>Bienvenue</h1>
+                <a href="https://fr.wikipedia.org/wiki/Rattus_norvegicus" target="_blank"><img src="<c:url value="/assets/img/imageaccueil.png" />" height="250" width="500"  alt="prodiup"></a>
+                <h1 class='bienvenue neutral-links'><a href="<c:url value="/connexion"/>" >Entrer dans l'application</a></h1>
             </div>
         </main>
-
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
-
 </html>

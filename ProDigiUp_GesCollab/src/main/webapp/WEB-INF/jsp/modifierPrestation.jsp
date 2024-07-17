@@ -6,18 +6,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
-        <title>modifier prestation</title>
+        <title>Modifier Prestation</title>
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -27,80 +26,142 @@
                 <div>${requestScope.message}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
-                    <legend>Modifier la Prestation</legend>
-                    <form action="ModifierPrestation" method="post">
+                    <legend>Modifier Prestation</legend>
+                    <input type="hidden" name="id" value="${prestation.id}">
 
-                        <input type="hidden" name="id" value="${prestation.id}">
-                        <div>
-                            <label for="siglum_presta">Siglum Presta:</label>
-                            <input type="text" id="siglum_presta" name="siglum_presta" value="${prestation.siglum_presta}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="num_affaire">Num Affaire:</label>
-                            <input type="text" id="num_affaire" name="num_affaire" value="${prestation.num_affaire}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="nom_presta">Nom Presta:</label>
-                            <input type="text" id="nom_presta" name="nom_presta" value="${prestation.nom_presta}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="ref_fact_partenaire">Ref Fact Partenaire:</label>
-                            <input type="text" id="ref_fact_partenaire" name="ref_fact_partenaire" value="${prestation.ref_fact_partenaire}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="mail_partenaire">Mail Partenaire:</label>
-                            <input type="email" id="mail_partenaire" name="mail_partenaire" value="${prestation.mail_partenaire}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="ref_fact_airbus">Ref Fact Airbus:</label>
-                            <input type="text" id="ref_fact_airbus" name="ref_fact_airbus" value="${prestation.ref_fact_airbus}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="mail_airbus">Mail Airbus:</label>
-                            <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
-                        </div>
-                        <br>
-                        <div>
-                            <label for="id_ra">Responsable d'activité :</label>
-                            <select id="id_ra" name="id_ra" required>
+                    <!-- Siglum Presta -->
+                    <div>
+                        <label for="siglum_presta">Siglum Presta:</label>
+                        <input type="text" id="siglum_presta" name="siglum_presta" value="${prestation.siglum_presta}">
+                    </div>
+
+                    <!-- Num Affaire -->
+                    <div>
+                        <label for="num_affaire">Num Affaire:</label>
+                        <input type="text" id="num_affaire" name="num_affaire" value="${prestation.num_affaire}">
+                    </div>
+
+                    <!-- Nom Presta -->
+                    <div>
+                        <label for="nom_presta">Nom Presta:</label>
+                        <input type="text" id="nom_presta" name="nom_presta" value="${prestation.nom_presta}">
+                    </div>
+
+                    <!-- Ref Fact Partenaire -->
+                    <div>
+                        <label for="ref_fact_partenaire">Ref Fact Partenaire:</label>
+                        <input type="text" id="ref_fact_partenaire" name="ref_fact_partenaire" value="${prestation.ref_fact_partenaire}">
+                    </div>
+
+                    <!-- Mail Partenaire -->
+                    <div>
+                        <label for="mail_partenaire">Mail Partenaire:</label>
+                        <input type="email" id="mail_partenaire" name="mail_partenaire" value="${prestation.mail_partenaire}">
+                    </div>
+
+                    <!-- Ref Fact Airbus -->
+                    <div>
+                        <label for="ref_fact_airbus">Ref Fact Airbus:</label>
+                        <input type="text" id="ref_fact_airbus" name="ref_fact_airbus" value="${prestation.ref_fact_airbus}">
+                    </div>
+
+                    <!-- Mail Airbus -->
+                    <div>
+                        <label for="mail_airbus">Mail Airbus:</label>
+                        <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
+                    </div>
+
+                    <!-- Responsable Activité -->
+                    <div class="dropdown-container">
+                        <label for="responsable">Responsable activité</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
+                            <div class="dropdown-menu">
                                 <c:forEach var="responsable" items="${responsablesActivite}">
-                                    <option value="${responsable.id}" ${responsable.id == prestation.id_ra ? 'selected' : ''}>${responsable.nom}</option>
+                                    <label>
+                                        <input type="checkbox" name="responsableIds" value="${responsable.id}" <c:if test="${fn:contains(prestation.responsableIds, responsable.id)}">checked</c:if>>
+                                        ${responsable.nom}
+                                    </label>
                                 </c:forEach>
-                            </select>
-                            <br>
+                            </div>
+                        </div>
+                    </div>
 
-                            <label for="id_collaborateur">Collaborateur:</label>
-                            <select id="id_collaborateur" name="id_collaborateur">
+                    <!-- Collaborateur -->
+                    <div class="dropdown-container">
+                        <label for="collaborateur">Son Collaborateur</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Collaborateur(s)</button>
+                            <div class="dropdown-menu">
                                 <c:forEach var="collaborateur" items="${collaborateurs}">
-                                    <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
+                                    <label>
+                                        <input type="checkbox" name="collaborateurIds" value="${collaborateur.id}" <c:if test="${fn:contains(prestation.collaborateurIds, collaborateur.id)}">checked</c:if>>
+                                        ${collaborateur.nom} ${collaborateur.prenom}
+                                    </label>
                                 </c:forEach>
-                            </select>
-                            <br>
-                            <label for="id_partenaire">Partenaire:</label>
-                            <select id="id_partenaire" name="id_partenaire">
-                                <c:forEach var="partenaire" items="${partenaires}">
-                                    <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
-                                </c:forEach>
-                            </select>
+                            </div>
                         </div>
+                    </div>
 
-                        <br>
-                        <div>
-                            <input type="submit" value="Modifier">
-                            <input type="reset" value="Annuler">
+                    <!-- Partenaire -->
+                    <div class="dropdown-container">
+                        <label for="partenaire">Son Partenaire</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Partenaire(s)</button>
+                            <div class="dropdown-menu">
+                                <c:forEach var="partenaire" items="${partenaires}">
+                                    <label>
+                                        <input type="checkbox" name="partenaireIds" value="${partenaire.id}" <c:if test="${fn:contains(prestation.partenaireIds, partenaire.id)}">checked</c:if>>
+                                        ${partenaire.nom}
+                                    </label>
+                                </c:forEach>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="button-container">
+                        <input type="submit" value="Enregistrer">
+                        <button type="button" onclick="window.location.href='<c:url value="/liste_collaborateurs"/>'">Annuler</button>
+                    </div>
+
                 </fieldset>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            </form>
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+                dropdownToggles.forEach(toggle => {
+                    toggle.addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        this.classList.toggle('active');
+                        const dropdownMenu = this.nextElementSibling;
+                        if (dropdownMenu.style.display === 'block') {
+                            dropdownMenu.style.display = 'none';
+                        } else {
+                            dropdownMenu.style.display = 'block';
+                        }
+                    });
+                });
+
+                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                dropdownMenus.forEach(menu => {
+                    menu.addEventListener('click', function (event) {
+                        event.stopPropagation();
+                    });
+                });
+
+                window.addEventListener('click', function () {
+                    dropdownToggles.forEach(toggle => {
+                        toggle.classList.remove('active');
+                        const dropdownMenu = toggle.nextElementSibling;
+                        dropdownMenu.style.display = 'none';
+                    });
+                });
+            });
+        </script>
     </body>
-
 </html>
-

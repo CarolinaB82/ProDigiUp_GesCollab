@@ -1,31 +1,33 @@
 @font-face{
-    font-family: rabilone;
-    src: url(Rabilone.otf)
+    font-family: walkaway;
+    src: url(WalkwayBlack.ttf)
 }
 
 h1 {
     text-align: center;
 }
 
-form {
-    width: 50%;
-    margin: auto;
-    font-family: rabilone;
-}
-
-form label, form label+input {
-    display: inline-block;
-    font-family: rabilone;
-    font-size: 17px
-}
-
+/* Ajustement des labels et inputs */
 form label {
-    width: 20%;
-    
+    font-family: walkaway;
+    display: inline-block;
+    width: 40%; /* Largeur des labels */
+    font-size: 20px;
+    vertical-align: top; /* Alignement vertical */
+    text-align: left; /* Alignement du texte à droite */
+    padding-right: 10px; /* Espacement entre le label et l'input */
+    white-space: nowrap; /* Empêche le retour à la ligne */
 }
 
-form label+input {
-    width: 75%;
+form label + input,
+form label + select,
+form label + .dropdown {
+    display: inline-block;
+    width: 65%; /* Largeur des inputs */
+    font-size: 20px;
+    vertical-align: top; /* Alignement vertical */
+    margin-bottom: 10px;
+    font-family: walkaway;
 }
 
 .buttons {
@@ -34,11 +36,11 @@ form label+input {
 }
 
 .buttons > input {
-    margin:1em;     
+    margin:1em;
 }
 
 .error {
-    height: 1.5em;;
+    height: 1.5em;
     color: red;
     font-size: 0.8em;
     font-style: italic;
@@ -47,7 +49,28 @@ form label+input {
 
 .ok {
     background-color: green;
-    color: whitesmoke;
+    color: #17407B;
     font-size: 1.5em;
     font-style: italic;
+}
+.btn-connexion {
+    background-color: #87CEEB; /* Couleur de fond bleu pastel */
+    color: white; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 10px 20px; /* Espacement intérieur */
+    font-size: 16px; /* Taille de la police */
+    cursor: pointer; /* Curseur en forme de main */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
+    text-decoration: none; /* Pas de soulignement */
+    display: inline-block; /* Affichage en ligne */
+    font-family: walkaway;
+}
+
+.btn-connexion:hover {
+    background-color: #6FB8E0; /* Couleur de fond légèrement plus foncée au survol */
+}
+
+.btn-connexion:active {
+    background-color: #5CA9CE; /* Couleur de fond encore plus foncée lorsque le bouton est cliqué */
 }

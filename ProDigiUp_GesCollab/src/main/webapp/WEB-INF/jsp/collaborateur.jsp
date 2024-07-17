@@ -7,15 +7,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>rechercher collaborateur</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -104,7 +104,7 @@
             <fieldset>
                 <legend>Resultats de recherche</legend>
                 <%-- Code pour afficher les résultats de recherche --%>
-                <div id="resultats">
+                <div id="resultats" class="neutral-links">
                     <c:if test="${not empty resultats}">
                         <table class="custom-table">
                             <thead>

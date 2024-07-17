@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,12 @@ public class RechercherResponsableActivite extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
-        
-         System.out.println("Recherche: " + recherche + ", Type: " + type);
+
+        System.out.println("Recherche: " + recherche + ", Type: " + type);
 
         if (recherche != null && type != null) {
             try {
@@ -52,7 +54,7 @@ public class RechercherResponsableActivite extends HttpServlet {
                     case "prenom":
                         suggestions = responsableActiviteDao.rechercherRaParPrenom(recherche);
                         break;
-                    
+
                     default:
                         suggestions = new ArrayList<>();
                 }
@@ -62,8 +64,8 @@ public class RechercherResponsableActivite extends HttpServlet {
                 out.println("<table class='custom-table'>");
                 out.println("<thead>");
                 out.println("<tr>");
-                out.println("<th>Matricule</th>");
-                out.println("<th>Nom</th>");
+                out.println("<th>🔗Matricule</th>");
+                out.println("<th>🔗Nom</th>");
                 out.println("<th>Prénom</th>");
                 out.println("</tr>");
                 out.println("</thead>");
@@ -91,7 +93,7 @@ public class RechercherResponsableActivite extends HttpServlet {
                     resultats.addAll(responsableActiviteDao.rechercherRaParMatricule(recherche));
                     resultats.addAll(responsableActiviteDao.rechercherRaParNom(recherche));
                     resultats.addAll(responsableActiviteDao.rechercherRaParPrenom(recherche));
-                    
+
                 }
                 req.setAttribute("resultats", resultats);
                 req.setAttribute("currentPage", "rechercher_ra");

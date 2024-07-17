@@ -24,15 +24,14 @@ public class SupprimerCollaborateur extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         
-         String collaborateurIdParam = req.getParameter("id");
+        String collaborateurIdParam = req.getParameter("id");
         if (collaborateurIdParam != null && !collaborateurIdParam.isEmpty()) {
             try {
                 int collaborateurId = Integer.parseInt(collaborateurIdParam);
 
                 CollaborateurDao collaborateurDao = new CollaborateurDao();
                 collaborateurDao.delete(collaborateurId);
-                
-                resp.sendRedirect("liste_collaborateurs"); // Redirection vers la liste après suppression
+                resp.sendRedirect("liste_collaborateurs?deleteSuccess=true"); // Redirection vers la liste après suppression avec un paramètre de succès
                 return;
             } catch (NumberFormatException e) {
                 // Gérer l'erreur de conversion si nécessaire
@@ -44,3 +43,4 @@ public class SupprimerCollaborateur extends HttpServlet {
         resp.sendRedirect("403.jsp"); // Exemple de redirection vers une page d'erreur
     }
 }
+

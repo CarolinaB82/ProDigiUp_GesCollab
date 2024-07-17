@@ -32,7 +32,7 @@ public class SupprimerPrestation extends HttpServlet {
                 PrestationDao prestationDao = new PrestationDao();
                 prestationDao.delete(prestationId);
 
-                resp.sendRedirect("liste_collaborateurs"); // Redirection vers la liste après suppression
+                resp.sendRedirect("liste_collaborateurs?deleteSuccess=true"); // Redirection vers la liste après suppression
                 return;
             } catch (NumberFormatException e) {
                 // Gérer l'erreur de conversion si nécessaire

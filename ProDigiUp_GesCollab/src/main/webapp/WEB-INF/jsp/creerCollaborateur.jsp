@@ -15,22 +15,22 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <title>Créer Collaborateur</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+
         <main>
             <form action="/ProDigiUp_GesCollab/creer_collaborateur" method="post">                  
                 <div>${requestScope.message}</div>
                 <div>${requestScope.errMsg}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
-                    <legend>Nouveau Collaborateur</legend>
-                    <div>
+                    <legend class="legend-texte">Nouveau Collaborateur</legend>
+                    <div class="fieldset-texte">
                         <label for="matricule">Matricule</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
                         <input type="text" id="matricule" name="matricule" 
@@ -44,8 +44,8 @@
                                >
                         <div class="error">${requestScope.errors.matricule}</div>
                     </div>
-                    <br>
-                    <div>
+
+                    <div class="fieldset-texte">
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom"
                                pattern="[a-zA-ZÀ-ÿ' -]*"
@@ -57,7 +57,7 @@
                                >
                         <div class="error">${requestScope.errors.nom}</div>
                     </div>
-                    <br>
+
                     <div>
                         <label for="prenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom"
@@ -70,7 +70,7 @@
                                >
                         <div class="error">${requestScope.errors.prenom}</div>
                     </div>
-                    <br>
+
                     <div>
                         <label for="mail_1">Mail 1</label>
                         <input type="email" id="mail_1" name="mail_1"
@@ -105,99 +105,7 @@
                                >
                         <div class="error">${requestScope.errors.telephone_personnel}</div>
                     </div>
-                    <br>
-                    <div>
-                        <label for="statut">Statut</label>
-                        <select id="statut" name="statut">
-                            <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
-                            <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
-                            <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
 
-
-                        </select>
-                        <div class="error">${requestScope.errors.statut}</div>
-                    </div>
-                    <br>
-                    <div>
-                        <label for="categorie">Catégorie</label>
-                        <select id="categorie" name="categorie">
-                            <option value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'selected' : ''}>ETAM</option>
-                            <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>Cadre</option>
-                        </select>
-                        <div class="error">${requestScope.errors.categorie}</div>
-                    </div>
-                    <br>
-                    <div>
-                        <label for="genre">Genre</label>
-                        <select id="genre" name="genre">
-                            <option value="Madame" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Madame' ? 'selected' : ''}>Madame</option>
-                            <option value="Monsieur" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Monsieur' ? 'selected' : ''}>Monsieur</option>
-                        </select>
-                        <div class="error">${requestScope.errors.genre}</div>
-                    </div>
-                    <br>
-                    <div>
-
-
-                        <div>
-                            <label for="rqth">RQTH</label>
-                            <select id="rqth" name="rqth" onchange="toggleDateField()">
-                                <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
-                                <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
-                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
-                            </select>
-                            <div class="error">${requestScope.errors.rqth}</div>
-                        </div>
-
-                        <c:if test="${isOuiSelected}">
-                            <div id="date-renouvellement" style="display:none;">
-                                <label for="date_de_renouvellement">Date de renouvellement</label>
-                                <input type="date" id="date_de_renouvellement" name="date_de_renouvellement" *
-                                       placeholder="jj-mm-aaaa"
-                                       required
-                                       value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}"
-                                       >
-                                <div class="error">${requestScope.errors.date_de_renouvellement}</div>
-                            </div>
-                        </c:if>
-
-                        <c:if test="${!isOuiSelected}">
-                            <div id="date-renouvellement" style="display:none;">
-                                <label for="date_de_renouvellement">Date de renouvellement</label>
-                                <input type="date" id="date_de_renouvellement" name="date_de_renouvellement"
-                                       placeholder="jj-mm-aaaa" 
-                                       value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
-                                <div class="error">${requestScope.errors.date_de_renouvellement}</div>
-                            </div>
-                        </c:if>
-
-                        <script>
-                            function toggleDateField() {
-                                var rqthSelect = document.getElementById('rqth');
-                                var dateField = document.getElementById('date-renouvellement');
-                                var dateInput = document.getElementById('date_de_renouvellement');
-
-                                if (rqthSelect.value === 'oui') {
-                                    dateField.style.display = 'block';
-                                    dateInput.disabled = false;
-                                } else if (rqthSelect.value === 'a vie') {
-                                    dateField.style.display = 'none';
-                                    dateInput.disabled = true;
-                                    dateInput.value = '';
-                                } else {
-                                    dateField.style.display = 'non';
-                                    dateInput.disabled = true;
-                                    dateInput.value = ''; // Clear the value to avoid submission
-                                }
-                            }
-
-                            document.addEventListener("DOMContentLoaded", function () {
-                                toggleDateField(); // Ensure the initial state is correct based on the current selection
-                            });
-                        </script>
-                    </div>
-                    <br>
                     <div>
                         <label for="metier">Métier</label>
                         <input type="text" id="metier" name="metier"
@@ -206,48 +114,186 @@
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
-
-                    </div>  
-                    <div class="error">${requestScope.errors.metier}</div>
-                    <br>
-
-                    <div class="combobox-container">
-                        <div class="combobox">
-
-                            <label for="responsable">Responsable activité</label>
-                            <select id="responsable" name="responsable" multiple>
-                                <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <option value="${responsable.id}">${responsable.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
-
+                    </div> 
+                    <br><br>
+                    <div class="dropdown-container">
+                        <label for="statut">Statut</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Statut</button>
+                            <div class="dropdown-menu">
+                                <label>
+                                    <input type="checkbox" name="statut" value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'checked' : ''}>
+                                    CDD
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="statut" value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'checked' : ''}>
+                                    CDI
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="statut" value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'checked' : ''}>
+                                    CDD Tremplin
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="statut" value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'checked' : ''}>
+                                    Stage
+                                </label>
+                            </div>
                         </div>
-
                     </div>
-                    <p>Merci de remplir tous les champs</p>
+
+                    <div class="dropdown-container">
+                        <label for="categorie">Catégorie</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Catégorie</button>
+                            <div class="dropdown-menu">
+                                <label>
+                                    <input type="checkbox" name="categorie" value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'checked' : ''}>
+                                    ETAM
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="categorie" value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'checked' : ''}>
+                                    Cadre
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-container">
+                        <label for="genre">Genre</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Genre</button>
+                            <div class="dropdown-menu">
+                                <label>
+                                    <input type="checkbox" name="genre" value="Madame" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Madame' ? 'checked' : ''}>
+                                    Madame
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="genre" value="Monsieur" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Monsieur' ? 'checked' : ''}>
+                                    Monsieur
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-container">
+                        <label for="rqth">RQTH</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner RQTH</button>
+                            <div class="dropdown-menu">
+                                <label>
+                                    <input type="checkbox" name="rqth" value="oui" ${isOuiSelected ? 'checked' : ''}>
+                                    Oui
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="rqth" value="non" >
+                                    Non
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="rqth" value="a vie" ${isAVieSelected ? 'checked' : ''}>
+                                    A vie
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="date-renouvellement" style="display:none;">
+                        <label for="date_de_renouvellement">Date de renouvellement</label>
+                        <input type="date" id="date_de_renouvellement" name="date_de_renouvellement" placeholder="jj-mm-aaaa" value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
+                        <div class="error">${requestScope.errors.date_de_renouvellement}</div>
+                    </div>
+
+                    <div class="error">${requestScope.errors.metier}</div>
+
+                    <div class="dropdown-container">
+                        <label for="responsable">Responsable activité</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
+                            <div class="dropdown-menu">
+                                <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <label>
+                                        <input type="checkbox" name="responsable" value="${responsable.id}">
+                                        ${responsable.nom}
+                                    </label>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <input  type="submit" value="Valider">
+                        <input type="reset" value="Annuler">
+                    </div>
                 </fieldset>
-                <div>
-                    <input type="submit" value="Envoyer">
-                    <input type="reset" value="Annuler">
-                </div>
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
             <script>
-                function validateForm() {
-                    var matricule = document.getElementById('matricule').value;
-                    var responsables = document.getElementById('responsable').options;
-                    for (var i = 0; i < responsables.length; i++) {
-                        if (responsables[i].selected && responsables[i].value === matricule) {
-                            alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                            return false;
+                document.addEventListener('DOMContentLoaded', function () {
+                    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+                    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                    const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+
+                    dropdownToggles.forEach(toggle => {
+                        toggle.addEventListener('click', function (event) {
+                            event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                            this.classList.toggle('active');
+                            const dropdownMenu = this.nextElementSibling;
+                            if (dropdownMenu.style.display === 'block') {
+                                dropdownMenu.style.display = 'none';
+                            } else {
+                                dropdownMenu.style.display = 'block';
+                            }
+                        });
+                    });
+
+                    // Empêche la fermeture du menu lorsque l'on clique sur une option
+                    dropdownMenus.forEach(menu => {
+                        menu.addEventListener('click', function (event) {
+                            event.stopPropagation();
+                        });
+                    });
+
+                    // Fermer le menu déroulant lorsqu'une option est cochée
+                    checkboxes.forEach(checkbox => {
+                        checkbox.addEventListener('change', function () {
+                            const dropdownMenu = this.closest('.dropdown-menu');
+                            const dropdownToggle = dropdownMenu.previousElementSibling;
+
+                            if (this.value === 'oui') {
+                                toggleDateField();
+                            }
+
+                            dropdownToggle.classList.remove('active');
+                            dropdownMenu.style.display = 'none';
+                        });
+                    });
+
+                    // Gestion du champ de date pour RQTH
+                    function toggleDateField() {
+                        var rqthSelect = document.querySelector('input[name="rqth"]:checked');
+                        var dateField = document.getElementById('date-renouvellement');
+                        var dateInput = document.getElementById('date_de_renouvellement');
+
+                        if (rqthSelect && rqthSelect.value === 'oui') {
+                            dateField.style.display = 'block';
+                            dateInput.disabled = false;
+                        } else {
+                            dateField.style.display = 'none';
+                            dateInput.disabled = true;
+                            dateInput.value = '';
                         }
                     }
-                    return true;
-                }
+
+                    // Ajout d'écouteurs sur les options RQTH
+                    document.querySelectorAll('input[name="rqth"]').forEach(input => {
+                        input.addEventListener('change', toggleDateField);
+                    });
+
+                    toggleDateField(); // Assurez-vous que l'état initial est correct
+                });
             </script>
+
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>

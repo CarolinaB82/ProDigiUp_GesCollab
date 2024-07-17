@@ -12,10 +12,9 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>rechercher ra</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -93,7 +92,7 @@
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
-                <legend>Recherche de Responsable d'activite</legend>
+                <legend>Rechercher un Responsable d'activité</legend>
 
                 <form>
                     <div>
@@ -123,8 +122,8 @@
 
 
             <fieldset>
-                <legend>Resultats de recherche</legend>
-                <div id="resultats">
+                <legend>Résultats de recherche</legend>
+                <div id="resultats" class="neutral-links">
                     <c:if test="${not empty erreur}">
                         <p style="color: red;"><c:out value="${erreur}" /></p>
                     </c:if>

@@ -26,6 +26,7 @@ public class Prestation implements Serializable, Identifiable {
     private Integer id_ra;
     private Integer id_partenaire;
     private Integer id_collaborateur;
+    
 
     @Override
     public Integer getId() {
@@ -183,7 +184,7 @@ public class Prestation implements Serializable, Identifiable {
 
     private List<Integer> responsableIds;
 
-    public List<Integer> getResponsablesIds() {
+    public List<Integer> getResponsableIds() {
         return responsableIds;
     }
 

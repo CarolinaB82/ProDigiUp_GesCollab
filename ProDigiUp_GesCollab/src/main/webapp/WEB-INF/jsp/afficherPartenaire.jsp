@@ -11,10 +11,10 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Afficher partenaire</title>
-
+       
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -29,7 +29,7 @@
                     <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
                     <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
 
-                    <div class="custom-button">
+                    <div class="button-container">
                         <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
                             <input type="hidden" name="id" value="${partenaire.id}" />
                             <input type="submit" value="Modifier">

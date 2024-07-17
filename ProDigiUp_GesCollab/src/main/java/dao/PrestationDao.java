@@ -186,7 +186,7 @@ public class PrestationDao extends Dao<Prestation> {
 
             updatePartenaire(connexion, obj.getId(), obj.getPartenaireIds());
             updateCollaborateur(connexion, obj.getId(), obj.getCollaborateurIds());
-            updateResponsablesActivite(connexion, obj.getId(), obj.getResponsablesIds());
+            updateResponsablesActivite(connexion, obj.getId(), obj.getResponsableIds());
         } catch (SQLException ex) {
             System.out.println("Erreur lors de la mise à jour : " + ex.getMessage());
         }

@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 
 <!DOCTYPE html>
@@ -14,21 +14,21 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>créer partenaire</title>
     </head>
     <body> 
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+
         <main>
             <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="post">                  
                 <div>${requestScope.message}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
-                    <legend>Nouveau Partenaire</legend>
-                <input type="hidden" name="id" value="${partenaire.id}" />
+                    <legend>Modifier Partenaire</legend>
+                    <input type="hidden" name="id" value="${partenaire.id}" />
 
 
                     <div>
@@ -102,30 +102,71 @@
                     </div>
                     <br>
 
-                    <div class="combobox-container">
-                        <div class="combobox">
-                            <label for="multi-select">Son responsable activité</label>
-                            <br>
-                            <select id="responsable" name="responsable" multiple>
+                    <div class="dropdown-container">
+                        <label for="responsable">Responsable activité</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
+                            <div class="dropdown-menu">
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <!--<option value="${responsable.id}">${responsable.nom}</option>-->
-                                    <option value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">selected</c:if>>${responsable.nom}</option>
+                                    <label>
+                                        <input type="checkbox" name="responsable" value="${responsable.id}">
+                                        ${responsable.nom}
+                                    </label>
                                 </c:forEach>
-                            </select>
-                            <br><br>
-
+                            </div>
                         </div>
-
                     </div>
-                    <p>Merci de remplir tous les champs</p>
-                </fieldset>
-                <input type="submit" value="Enregistrer">
+                    <br><br>
 
+                    <div class="button-container">
+                        <input type="submit" value="Valider">
+                        <button type="button" onclick="redirectToList()">Annuler</button>
+                    </div>
+                </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
-                    
+
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
+    <script>
+                            function redirectToList() {
+                                window.location.href = '<c:url value="/liste_collaborateurs"/>';
+                            }
+
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+                                dropdownToggles.forEach(toggle => {
+                                    toggle.addEventListener('click', function (event) {
+                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                                        this.classList.toggle('active');
+                                        const dropdownMenu = this.nextElementSibling;
+                                        if (dropdownMenu.style.display === 'block') {
+                                            dropdownMenu.style.display = 'none';
+                                        } else {
+                                            dropdownMenu.style.display = 'block';
+                                        }
+                                    });
+                                });
+
+                                // Empêche la fermeture du menu lorsque l'on clique sur une option
+                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                                dropdownMenus.forEach(menu => {
+                                    menu.addEventListener('click', function (event) {
+                                        event.stopPropagation();
+                                    });
+                                });
+
+                                // Fermer le menu déroulant si on clique en dehors
+                                window.addEventListener('click', function () {
+                                    dropdownToggles.forEach(toggle => {
+                                        toggle.classList.remove('active');
+                                        const dropdownMenu = toggle.nextElementSibling;
+                                        dropdownMenu.style.display = 'none';
+                                    });
+                                });
+                            });
+    </script>
 </html>

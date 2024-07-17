@@ -84,6 +84,7 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setMatricule(Integer matricule) {
         this.matricule = matricule;
     }
+    
 
     public String getNom() {
         return nom;

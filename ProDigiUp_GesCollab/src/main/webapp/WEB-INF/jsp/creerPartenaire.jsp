@@ -16,12 +16,13 @@
         <c:set var="notHome" value="true" />
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <title>créer partenaire</title>
     </head>
     <body> 
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        
         <main>
             <form action="/ProDigiUp_GesCollab/creer_partenaire" method="post">                  
                 <div>${requestScope.message}</div>
@@ -101,28 +102,25 @@
                     </div>
                     <br>
 
-                    <div class="combobox-container">
-                        <div class="combobox">
-                            <label for="multi-select">Responsable(s) activité(s)</label>
-                            <br>
-                            <select id="responsable" name="responsable" multiple>
+                    <div class="dropdown-container">
+                        <label for="responsable">Responsable activité</label>
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
+                            <div class="dropdown-menu">
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <option value="${responsable.id}">${responsable.nom}</option>
-
+                                    <label>
+                                        <input type="checkbox" name="responsable" value="${responsable.id}">
+                                        ${responsable.nom}
+                                    </label>
                                 </c:forEach>
-                                <option value="">-- Aucun --</option>
-                            </select>
-                            <br><br>
-
+                            </div>
                         </div>
-
                     </div>
-                    <p>Merci de remplir tous les champs</p>
-                </fieldset>
-                <div>
-                    <input type="submit" value="Envoyer">
-                    <input type="reset" value="Annuler">
-                </div>
+                    <div class="button-container">
+                        <input  type="submit" value="Valider">
+                        <input type="reset" value="Annuler">
+                    </div>                </fieldset>
+
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -130,4 +128,41 @@
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                    this.classList.toggle('active');
+                    const dropdownMenu = this.nextElementSibling;
+                    if (dropdownMenu.style.display === 'block') {
+                        dropdownMenu.style.display = 'none';
+                    } else {
+                        dropdownMenu.style.display = 'block';
+                    }
+                });
+            });
+
+            // Empêche la fermeture du menu lorsque l'on clique sur une option
+            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+            dropdownMenus.forEach(menu => {
+                menu.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+
+            // Fermer le menu déroulant si on clique en dehors
+            window.addEventListener('click', function () {
+                dropdownToggles.forEach(toggle => {
+                    toggle.classList.remove('active');
+                    const dropdownMenu = toggle.nextElementSibling;
+                    dropdownMenu.style.display = 'none';
+                });
+            });
+        });
+
+
+    </script>
 </html>
