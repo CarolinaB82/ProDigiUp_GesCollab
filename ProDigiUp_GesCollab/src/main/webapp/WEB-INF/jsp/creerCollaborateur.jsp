@@ -31,13 +31,13 @@
                 <fieldset>
                     <legend class="legend-texte">Nouveau Collaborateur</legend>
                     <div class="fieldset-texte">
-                        <label for="matricule">Matricule</label>
+                        <label for="matricule">*Matricule</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
                         <input type="text" id="matricule" name="matricule" 
                                pattern="0?[0-9]{1,5}" 
                                maxlength="5" 
                                required
-                               title="Veuillez saisir uniquement des chiffres (0-9)" 
+                               title="Veuillez saisir uniquement des chiffres (0-9), 5 max" 
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.matricule : ''}" 
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
@@ -46,9 +46,8 @@
                     </div>
 
                     <div class="fieldset-texte">
-                        <label for="nom">Nom</label>
+                        <label for="nom">*Nom</label>
                         <input type="text" id="nom" name="nom"
-                               pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.nom : ''}"
@@ -59,9 +58,8 @@
                     </div>
 
                     <div>
-                        <label for="prenom">Prénom</label>
+                        <label for="prenom">*Prénom</label>
                         <input type="text" id="prenom" name="prenom"
-                               pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.prenom : ''}"
@@ -72,7 +70,7 @@
                     </div>
 
                     <div>
-                        <label for="mail_1">Mail 1</label>
+                        <label for="mail_1">*Mail 1</label>
                         <input type="email" id="mail_1" name="mail_1"
                                required
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
@@ -85,7 +83,6 @@
                         <label for="mail_2">Mail 2</label>
                         <input type="email" id="mail_2" name="mail_2"
                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-
                                title="Veuillez saisir une adresse e-mail valide"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_2 : ''}"
                                class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
@@ -107,7 +104,7 @@
                     </div>
 
                     <div>
-                        <label for="metier">Métier</label>
+                        <label for="metier">*Métier</label>
                         <input type="text" id="metier" name="metier"
                                pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
@@ -116,7 +113,7 @@
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
                     </div> 
                     <br><br>
-                     <div>
+                    <div>
                         <label for="statut">Statut</label>
                         <select id="statut" name="statut">
                             <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
@@ -208,92 +205,92 @@
                         </script>
                     </div>
 
-                     <div class="combobox-container">
-                            <div class="combobox">
+                    <div class="combobox-container">
+                        <div class="combobox">
 
-                                <label for="responsable">Responsable activité</label>
-                                <select id="responsable" name="responsable" multiple>
-                                    <c:forEach var="responsable" items="${responsableActiviteList}">
-                                        <option value="${responsable.id}">${responsable.nom}</option>
-                                    </c:forEach>
-                                </select>
+                            <label for="responsable">Responsable activité</label>
+                            <select id="responsable" name="responsable" multiple>
+                                <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                </c:forEach>
+                            </select>
 
-                    <div class="button-container">
-                        <input  type="submit" value="Valider">
-                        <input type="reset" value="Annuler">
-                    </div>
-                </fieldset>
+                            <div class="button-container">
+                                <input  type="submit" value="Valider">
+                                <input type="reset" value="Annuler">
+                            </div>
+                            </fieldset>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-            </form>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-                    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                    const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+                            </form>
+                            <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+                                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                                                const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
 
-                    dropdownToggles.forEach(toggle => {
-                        toggle.addEventListener('click', function (event) {
-                            event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                            this.classList.toggle('active');
-                            const dropdownMenu = this.nextElementSibling;
-                            if (dropdownMenu.style.display === 'block') {
-                                dropdownMenu.style.display = 'none';
-                            } else {
-                                dropdownMenu.style.display = 'block';
-                            }
-                        });
-                    });
+                                                dropdownToggles.forEach(toggle => {
+                                                    toggle.addEventListener('click', function (event) {
+                                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                                                        this.classList.toggle('active');
+                                                        const dropdownMenu = this.nextElementSibling;
+                                                        if (dropdownMenu.style.display === 'block') {
+                                                            dropdownMenu.style.display = 'none';
+                                                        } else {
+                                                            dropdownMenu.style.display = 'block';
+                                                        }
+                                                    });
+                                                });
 
-                    // Empêche la fermeture du menu lorsque l'on clique sur une option
-                    dropdownMenus.forEach(menu => {
-                        menu.addEventListener('click', function (event) {
-                            event.stopPropagation();
-                        });
-                    });
+                                                // Empêche la fermeture du menu lorsque l'on clique sur une option
+                                                dropdownMenus.forEach(menu => {
+                                                    menu.addEventListener('click', function (event) {
+                                                        event.stopPropagation();
+                                                    });
+                                                });
 
-                    // Fermer le menu déroulant lorsqu'une option est cochée
-                    checkboxes.forEach(checkbox => {
-                        checkbox.addEventListener('change', function () {
-                            const dropdownMenu = this.closest('.dropdown-menu');
-                            const dropdownToggle = dropdownMenu.previousElementSibling;
+                                                // Fermer le menu déroulant lorsqu'une option est cochée
+                                                checkboxes.forEach(checkbox => {
+                                                    checkbox.addEventListener('change', function () {
+                                                        const dropdownMenu = this.closest('.dropdown-menu');
+                                                        const dropdownToggle = dropdownMenu.previousElementSibling;
 
-                            if (this.value === 'oui') {
-                                toggleDateField();
-                            }
+                                                        if (this.value === 'oui') {
+                                                            toggleDateField();
+                                                        }
 
-                            dropdownToggle.classList.remove('active');
-                            dropdownMenu.style.display = 'none';
-                        });
-                    });
+                                                        dropdownToggle.classList.remove('active');
+                                                        dropdownMenu.style.display = 'none';
+                                                    });
+                                                });
 
-                    // Gestion du champ de date pour RQTH
-                    function toggleDateField() {
-                        var rqthSelect = document.querySelector('input[name="rqth"]:checked');
-                        var dateField = document.getElementById('date-renouvellement');
-                        var dateInput = document.getElementById('date_de_renouvellement');
+                                                // Gestion du champ de date pour RQTH
+                                                function toggleDateField() {
+                                                    var rqthSelect = document.querySelector('input[name="rqth"]:checked');
+                                                    var dateField = document.getElementById('date-renouvellement');
+                                                    var dateInput = document.getElementById('date_de_renouvellement');
 
-                        if (rqthSelect && rqthSelect.value === 'oui') {
-                            dateField.style.display = 'block';
-                            dateInput.disabled = false;
-                        } else {
-                            dateField.style.display = 'none';
-                            dateInput.disabled = true;
-                            dateInput.value = '';
-                        }
-                    }
+                                                    if (rqthSelect && rqthSelect.value === 'oui') {
+                                                        dateField.style.display = 'block';
+                                                        dateInput.disabled = false;
+                                                    } else {
+                                                        dateField.style.display = 'none';
+                                                        dateInput.disabled = true;
+                                                        dateInput.value = '';
+                                                    }
+                                                }
 
-                    // Ajout d'écouteurs sur les options RQTH
-                    document.querySelectorAll('input[name="rqth"]').forEach(input => {
-                        input.addEventListener('change', toggleDateField);
-                    });
+                                                // Ajout d'écouteurs sur les options RQTH
+                                                document.querySelectorAll('input[name="rqth"]').forEach(input => {
+                                                    input.addEventListener('change', toggleDateField);
+                                                });
 
-                    toggleDateField(); // Assurez-vous que l'état initial est correct
-                });
-            </script>
+                                                toggleDateField(); // Assurez-vous que l'état initial est correct
+                                            });
+                            </script>
 
-        </main>
-    </body>
-    <%@include file="/WEB-INF/jspf/footer.jsp" %>
-</html>
+                            </main>
+                            </body>
+                            <%@include file="/WEB-INF/jspf/footer.jsp" %>
+                            </html>

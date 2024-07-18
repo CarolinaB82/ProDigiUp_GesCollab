@@ -28,7 +28,7 @@
                 <fieldset>
                     <legend>Nouveau responsable d'activité</legend>
                     <div>
-                        <label for="matricule">Matricule</label>
+                        <label for="matricule">*Matricule</label>
                         <input type="text" id="matricule" name="matricule" 
                                pattern="0?[0-9]{1,5}"
                                maxlength="5" 
@@ -40,7 +40,7 @@
                         <div class="error">${requestScope.errors.matricule}</div>
                     </div>
                     <div>
-                        <label for="nom">Nom</label>
+                        <label for="nom">*Nom</label>
                         <input type="text" id="nom" name="nom" pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
@@ -50,7 +50,7 @@
                         <div class="error">${requestScope.errors.nom}</div>
                     </div>
                     <div>
-                        <label for="prenom">Prénom</label>
+                        <label for="prenom">*Prénom</label>
                         <input type="text" id="prenom" name="prenom" pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
@@ -72,7 +72,7 @@
                     </div>
 
                     <div>
-                        <label for="tel_pro">Téléphone Professionnel</label>
+                        <label for="tel_pro">*Téléphone Professionnel</label>
                         <input type="text" id="telephone_professionnel" name="telephone_professionnel"
                                pattern="\\+?[0-9\\(\\)\\- ]{1,30}" 
                                maxlength="30" 
@@ -101,7 +101,7 @@
                         <div class="combobox">
 
                             <label for="multi-select">Partenaire(s)</label>
-                            <br>
+                            
                             <select id="partenaire" name="partenaire" multiple>
                                 <c:forEach var="partenaire" items="${partenaireList}">
                                     <option value="${partenaire.id}">${partenaire.nom}</option>
@@ -113,10 +113,10 @@
                         
                             <div class="combobox">
                                 <label for="multi-select">Collaborateur(s)</label>
-                                <br>
+                               
                                 <select id="collaborateur" name="collaborateur" multiple>
                                    <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                    <option value="${collaborateur.id}">${collaborateur.nom} ${collaborateur.prenom}</option>
                                 </c:forEach>
                             </select>
                                 <br><br>

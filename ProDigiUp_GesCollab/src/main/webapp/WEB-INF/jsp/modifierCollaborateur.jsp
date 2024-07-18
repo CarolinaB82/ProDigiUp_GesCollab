@@ -224,73 +224,7 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         </form>
-        <script>
-                            function redirectToList() {
-                                window.location.href = '<c:url value="/liste_collaborateurs"/>';
-                            }
-
-                            function validateForm() {
-                                var matricule = document.getElementById('matricule').value;
-                                var responsables = document.getElementById('responsable').options;
-                                for (var i = 0; i < responsables.length; i++) {
-                                    if (responsables[i].selected && responsables[i].value === matricule) {
-                                        alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                                        return false;
-                                    }
-                                }
-                                return true;
-                            }
-
-                            document.addEventListener('DOMContentLoaded', function () {
-                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-                                dropdownToggles.forEach(toggle => {
-                                    toggle.addEventListener('click', function (event) {
-                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                                        this.classList.toggle('active');
-                                        const dropdownMenu = this.nextElementSibling;
-                                        if (dropdownMenu.style.display === 'block') {
-                                            dropdownMenu.style.display = 'none';
-                                        } else {
-                                            dropdownMenu.style.display = 'block';
-                                        }
-                                    });
-                                });
-
-                                // Empêche la fermeture du menu lorsque l'on clique sur une option
-                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                                dropdownMenus.forEach(menu => {
-                                    menu.addEventListener('click', function (event) {
-                                        event.stopPropagation();
-                                    });
-                                });
-
-                                // Fermer le menu déroulant si on clique en dehors
-                                window.addEventListener('click', function () {
-                                    dropdownToggles.forEach(toggle => {
-                                        toggle.classList.remove('active');
-                                        const dropdownMenu = toggle.nextElementSibling;
-                                        dropdownMenu.style.display = 'none';
-                                    });
-                                });
-
-                                toggleDateField(); // Ensure the initial state is correct based on the current selection
-                            });
-
-                            function toggleDateField(value) {
-                                var dateField = document.getElementById('date-renouvellement');
-                                var dateInput = document.getElementById('date_de_renouvellement');
-
-                                if (value === 'oui') {
-                                    dateField.style.display = 'block';
-                                    dateInput.disabled = false;
-                                } else {
-                                    dateField.style.display = 'none';
-                                    dateInput.disabled = true;
-                                    dateInput.value = ''; // Clear the value to avoid submission
-                                }
-                            }
-        </script>
+        
     </main>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </body>

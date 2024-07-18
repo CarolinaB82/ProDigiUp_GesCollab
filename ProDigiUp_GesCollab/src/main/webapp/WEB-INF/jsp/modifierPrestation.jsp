@@ -67,7 +67,7 @@
                     <div class="combobox-container">
                         <div class="combobox">
                             <label for="multi-select-responsable_activite">Responsable activité</label>
-                            <br>
+
                             <!--<label for="id_ra">Responsable d'Activité:</label>-->
                             <select id="id_ra" name="id_ra" >
                                 <c:forEach var="ra" items="${responsablesActivite}">
@@ -77,22 +77,19 @@
                         </div>
 
                         <div class="combobox">
-
                             <label for="multi-select">Collaborateur</label>
-                            <br>
                             <!--<label for="id_collaborateur">Collaborateur:</label>-->
+                            
                             <select id="id_collaborateur" name="id_collaborateur" >
                                 <c:forEach var="collaborateur" items="${collaborateurs}">
-                                    <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
+                                    <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom} ${collaborateur.prenom}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
                         <div class="combobox">
                             <label for="multi-select">Partenaire</label>
-                            <br>
                             <!--<label for="id_partenaire">Partenaire:</label>-->
-
                             <select id="id_partenaire" name="id_partenaire">
                                 <c:forEach var="partenaire" items="${partenaires}">
                                     <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>

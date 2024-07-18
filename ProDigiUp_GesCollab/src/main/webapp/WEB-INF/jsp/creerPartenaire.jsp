@@ -22,7 +22,7 @@
     </head>
     <body> 
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        
+
         <main>
             <form action="/ProDigiUp_GesCollab/creer_partenaire" method="post">                  
                 <div>${requestScope.message}</div>
@@ -32,7 +32,7 @@
 
 
                     <div>
-                        <label for="nom">Nom Partenaire</label>
+                        <label for="nom">*Nom Partenaire</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="nom" name="nom"  
@@ -47,7 +47,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="numero_voie">Numero de voie</label>
+                        <label for="numero_voie">*Numero de voie</label>
                         <input type="text" id="numero_voie" name="numero_voie"
                                pattern="\\+?[0-9\\(\\)\\- ]{1,30}" 
                                required
@@ -61,7 +61,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="adresse">Adresse</label>
+                        <label for="adresse">*Adresse</label>
                         <input type="text" id="adresse" name="adresse"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
@@ -74,7 +74,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="code_postal">Code Postal</label>
+                        <label for="code_postal">*Code Postal</label>
                         <input type="text" id="code_postal" name="code_postal"
                                pattern="\d{5}" 
                                maxlength="5" 
@@ -89,7 +89,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="ville">Ville</label>
+                        <label for="ville">*Ville</label>
                         <input type="text" id="ville" name="ville"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
@@ -102,10 +102,10 @@
                     </div>
                     <br>
 
-                     <div class="combobox-container">
+                    <div class="combobox-container">
                         <div class="combobox">
                             <label for="multi-select">Responsable(s) activité(s)</label>
-                            <br>
+                            
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
@@ -114,53 +114,16 @@
                             <br><br>
 
                         </div>
-                    <div class="button-container">
-                        <input  type="submit" value="Valider">
-                        <input type="reset" value="Annuler">
-                    </div>                </fieldset>
-
-
+                        <div class="button-container">
+                            <input  type="submit" value="Valider">
+                            <input type="reset" value="Annuler">
+                        </div>                
+                </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                    this.classList.toggle('active');
-                    const dropdownMenu = this.nextElementSibling;
-                    if (dropdownMenu.style.display === 'block') {
-                        dropdownMenu.style.display = 'none';
-                    } else {
-                        dropdownMenu.style.display = 'block';
-                    }
-                });
-            });
-
-            // Empêche la fermeture du menu lorsque l'on clique sur une option
-            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-            dropdownMenus.forEach(menu => {
-                menu.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                });
-            });
-
-            // Fermer le menu déroulant si on clique en dehors
-            window.addEventListener('click', function () {
-                dropdownToggles.forEach(toggle => {
-                    toggle.classList.remove('active');
-                    const dropdownMenu = toggle.nextElementSibling;
-                    dropdownMenu.style.display = 'none';
-                });
-            });
-        });
-
-
-    </script>
 </html>

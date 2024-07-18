@@ -16,6 +16,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
+        <style>
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                cursor: pointer;
+            }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+        </style>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -36,32 +65,37 @@
                 <thead>
                     <tr>
                         <th>
-                            <a href="?sort=matricule&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                                → Matricule <c:if test="${param.sort == 'matricule'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
-                                </a>
+                            <a href="?sort=matricule&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
+                               class="tooltip">Matricule <c:if test="${param.sort == 'matricule'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                   <span class="tooltiptext">Cliquez pour trier</span>
+                               </a>
                             </th>
                             <th>
-                                <a href="?sort=nom&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                                → Nom🔗<c:if test="${param.sort == 'nom'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
-                                </a>
+                                <a href="?sort=nom&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
+                               class="tooltip">🔗Nom <c:if test="${param.sort == 'nom'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                   <span class="tooltiptext">Cliquez pour trier</span>
+                               </a>
                             </th>
                             <th>Prénom</th>
                             <th>Statut</th>
                             <th>
-                                <a href="?sort=activite&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                                → En activité <c:if test="${param.sort == 'activite'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
-                                </a>
+                                <a href="?sort=activite&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
+                               class="tooltip">En activité <c:if test="${param.sort == 'activite'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                   <span class="tooltiptext">Cliquez pour trier</span>
+                               </a>
                             </th>
-                            <th> Prestation🔗  </th>                             
+                            <th>🔗Prestation</th>
                             <th>
-                                <a href="?sort=responsable&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                                → Responsable d'Activité🔗 <c:if test="${param.sort == 'responsable'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
-                                </a>
+                                <a href="?sort=responsable&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
+                               class="tooltip">Responsable d'Activité <c:if test="${param.sort == 'responsable'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                   <span class="tooltiptext">Cliquez pour trier</span>
+                               </a>
                             </th>
                             <th>
-                                <a href="?sort=partenaire&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                                → Partenaire🔗 <c:if test="${param.sort == 'partenaire'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
-                                </a>
+                                <a href="?sort=partenaire&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
+                               class="tooltip">🔗Partenaire <c:if test="${param.sort == 'partenaire'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                   <span class="tooltiptext">Cliquez pour trier</span>
+                               </a>
                             </th>
                         </tr>
                     </thead>

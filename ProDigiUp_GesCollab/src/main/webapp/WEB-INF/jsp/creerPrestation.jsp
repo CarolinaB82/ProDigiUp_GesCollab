@@ -33,7 +33,7 @@
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="siglum_presta" name="siglum_presta"  
-
+                               
                                value="${requestScope.prestation != null ? requestScope.prestation.siglum_presta : ''}" 
                                class="${not empty requestScope.errors.siglum_presta ? 'error-input' : ''}"
 
@@ -42,25 +42,25 @@
                     </div>
                     <br>
                     <div>
-                        <label for="num_affaire">Numéro d'affaire Prestation</label>
+                        <label for="num_affaire">*Numéro d'affaire Prestation</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="num_affaire" name="num_affaire"  
                                required
                                value="${requestScope.prestation != null ? requestScope.prestation.num_affaire : ''}" 
                                class="${not empty requestScope.errors.num_affaire ? 'error-input' : ''}"
-
+                               
                                >
                         <div class="error-details-message">${requestScope.errors.num_affaire}</div>
                     </div>
                     <br>
                     <div>
-                        <label for="nom">Nom Prestation</label>
+                        <label for="nom">*Nom Prestation</label>
                         <input type="text" id="nom_presta" name="nom_presta"
                                required
                                value="${requestScope.prestation != null ? requestScope.prestation.nom_presta : ''}"
                                class="${not empty requestScope.errors.nom_presta ? 'error-input' : ''}"
-
+                               
                                >
                         <div class="error-details-message">${requestScope.errors.nom_presta}</div>
                     </div>
@@ -68,9 +68,7 @@
                     <div>
                         <label for="ref_fact_partenaire">Référent facturation partenaire</label>
                         <input type="text" id="ref_fact_partenaire" name="ref_fact_partenaire"
-                               pattern="[a-zA-ZÀ-ÿ' ]*"
-
-                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_partenaire : ''}"
                                class="${not empty requestScope.errors.ref_fact_partenaire ? 'error-input' : ''}"
                                >
@@ -94,8 +92,6 @@
                     <div>
                         <label for="ref_fact_airbus">Référent facturation Airbus</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"
-                               pattern="[a-zA-ZÀ-ÿ' ]*"
-
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_airbus : ''}"
                                class="${not empty requestScope.errors.ref_fact_airbus ? 'error-input' : ''}"
 
@@ -114,14 +110,12 @@
                     </div>
                     <br>
 
-                     <div class="combobox-container">
+                    <div class="combobox-container">
                         <div class="combobox">
                             <label for="multi-select-responsable_activite">Son Responsable activité</label>
 
-
-                            <br>
                             <select id="id_ra" name="id_ra">
-                                 <option value="">-- Aucun --</option>
+                                <option value="">-- Aucun --</option>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
                                 </c:forEach>
@@ -131,11 +125,11 @@
                         <div class="combobox">
 
                             <label for="multi-select">Son Collaborateur</label>
-                            <br><br>
+
                             <select id="id_collaborateur" name="id_collaborateur">
-                                 <option value="">-- Aucun --</option>
+                                <option value="">-- Aucun --</option>
                                 <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                    <option value="${collaborateur.id}">${collaborateur.nom} ${collaborateur.prenom}</option>
                                 </c:forEach>
                             </select>
                             <br><br>
@@ -143,6 +137,7 @@
 
                         <div class="combobox">
                             <label for="multi-select">Son Partenaire</label>
+
                             <select id="id_partenaire" name="id_partenaire">
                                 <c:forEach var="partenaire" items="${partenaireList}">
                                     <option value="${partenaire.id}">${partenaire.nom}</option>
@@ -165,51 +160,5 @@
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-            const checkboxNone = document.getElementById('checkbox-none');
 
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                    this.classList.toggle('active');
-                    const dropdownMenu = this.nextElementSibling;
-                    if (dropdownMenu.style.display === 'block') {
-                        dropdownMenu.style.display = 'none';
-                    } else {
-                        dropdownMenu.style.display = 'block';
-                    }
-                });
-            });
-
-            // Empêche la fermeture du menu lorsque l'on clique sur une option
-            dropdownMenus.forEach(menu => {
-                menu.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                });
-            });
-
-            // Fermer le menu déroulant si on clique en dehors
-            window.addEventListener('click', function () {
-                dropdownToggles.forEach(toggle => {
-                    toggle.classList.remove('active');
-                    const dropdownMenu = toggle.nextElementSibling;
-                    dropdownMenu.style.display = 'none';
-                });
-            });
-
-            // Fermer le menu déroulant lorsque "Aucun" est coché
-            checkboxNone.addEventListener('change', function () {
-                if (this.checked) {
-                    dropdownToggles.forEach(toggle => {
-                        toggle.classList.remove('active');
-                        const dropdownMenu = toggle.nextElementSibling;
-                        dropdownMenu.style.display = 'none';
-                    });
-                }
-            });
-        });
-    </script>
 </html>
