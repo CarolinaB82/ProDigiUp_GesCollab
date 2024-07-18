@@ -97,40 +97,35 @@
                                >
                         <div class="error">${requestScope.errors.telephone_personnel}</div>
                     </div>
-                    <div class="dropdown-container">
-                        <label for="partenaire">Son Partenaire</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Partenaire(s)</button>
-                            <div class="dropdown-menu">
-                                <c:forEach var="partenaire" items="${partenaireList}">
-                                    <label>
-                                        <input type="checkbox" name="partenaire" value="${partenaire.id}">
-                                        ${partenaire.nom}
-                                    </label>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="combobox-container">
+                        <div class="combobox">
 
-                    <div class="dropdown-container">
-                        <label for="collaborateur">Son Collaborateur</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Collaborateur(s)</button>
-                            <div class="dropdown-menu">
-                                <label>
-                                    <input type="checkbox" name="collaborateur" value="none" id="checkbox-none">
-                                    Aucun
-                                </label>
-                                <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <label>
-                                        <input type="checkbox" name="collaborateur" value="${collaborateur.id}">
-                                        ${collaborateur.nom} ${collaborateur.prenom}
-                                    </label>
+                            <label for="multi-select">Partenaire(s)</label>
+                            <br>
+                            <select id="partenaire" name="partenaire" multiple>
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <option value="${partenaire.id}">${partenaire.nom}</option>
                                 </c:forEach>
-                            </div>
+                            </select>
+                            <br><br>
+                            
                         </div>
+                        
+                            <div class="combobox">
+                                <label for="multi-select">Collaborateur(s)</label>
+                                <br>
+                                <select id="collaborateur" name="collaborateur" multiple>
+                                   <c:forEach var="collaborateur" items="${collaborateurList}">
+                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
+                                <br><br>
+                                
+                                </form>
+                            </div>
                     </div>
-                    </div>
+                        
+                   
                     <div class="button-container">
                         <input  type="submit" value="Valider">
                         <input type="reset" value="Annuler">

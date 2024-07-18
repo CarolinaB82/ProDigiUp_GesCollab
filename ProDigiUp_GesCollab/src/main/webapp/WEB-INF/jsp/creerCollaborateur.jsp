@@ -116,108 +116,107 @@
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
                     </div> 
                     <br><br>
-                    <div class="dropdown-container">
+                     <div>
                         <label for="statut">Statut</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Statut</button>
-                            <div class="dropdown-menu">
-                                <label>
-                                    <input type="checkbox" name="statut" value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'checked' : ''}>
-                                    CDD
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="statut" value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'checked' : ''}>
-                                    CDI
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="statut" value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'checked' : ''}>
-                                    CDD Tremplin
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="statut" value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'checked' : ''}>
-                                    Stage
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                        <select id="statut" name="statut">
+                            <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
+                            <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
+                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
+                            <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
 
-                    <div class="dropdown-container">
+
+                        </select>
+                        <div class="error-details-message">${requestScope.errors.statut}</div>
+                    </div>
+                    <br>
+                    <div>
                         <label for="categorie">Catégorie</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Catégorie</button>
-                            <div class="dropdown-menu">
-                                <label>
-                                    <input type="checkbox" name="categorie" value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'checked' : ''}>
-                                    ETAM
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="categorie" value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'checked' : ''}>
-                                    Cadre
-                                </label>
-                            </div>
-                        </div>
+                        <select id="categorie" name="categorie">
+                            <option value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'selected' : ''}>ETAM</option>
+                            <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>Cadre</option>
+                        </select>
+                        <div class="error-details-message">${requestScope.errors.categorie}</div>
                     </div>
-
-                    <div class="dropdown-container">
+                    <br>
+                    <div>
                         <label for="genre">Genre</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Genre</button>
-                            <div class="dropdown-menu">
-                                <label>
-                                    <input type="checkbox" name="genre" value="Madame" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Madame' ? 'checked' : ''}>
-                                    Madame
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="genre" value="Monsieur" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Monsieur' ? 'checked' : ''}>
-                                    Monsieur
-                                </label>
-                            </div>
+                        <select id="genre" name="genre">
+                            <option value="Madame" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Madame' ? 'selected' : ''}>Madame</option>
+                            <option value="Monsieur" ${requestScope.collaborateur != null && requestScope.collaborateur.genre == 'Monsieur' ? 'selected' : ''}>Monsieur</option>
+                        </select>
+                        <div class="error-details-message">${requestScope.errors.genre}</div>
+                    </div>
+                    <br>
+                    <div>
+
+
+                        <div>
+                            <label for="rqth">RQTH</label>
+                            <select id="rqth" name="rqth" onchange="toggleDateField()">
+                                <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
+                                <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
+                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
+                            </select>
+                            <div class="error-details-message">${requestScope.errors.rqth}</div>
                         </div>
-                    </div>
 
-                    <div class="dropdown-container">
-                        <label for="rqth">RQTH</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner RQTH</button>
-                            <div class="dropdown-menu">
-                                <label>
-                                    <input type="checkbox" name="rqth" value="oui" ${isOuiSelected ? 'checked' : ''}>
-                                    Oui
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="rqth" value="non" >
-                                    Non
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="rqth" value="a vie" ${isAVieSelected ? 'checked' : ''}>
-                                    A vie
-                                </label>
+                        <c:if test="${isOuiSelected}">
+                            <div id="date-renouvellement" style="display:none;">
+                                <label for="date_de_renouvellement">Date de renouvellement</label>
+                                <input type="date" id="date_de_renouvellement" name="date_de_renouvellement" *
+                                       placeholder="jj-mm-aaaa"
+                                       required
+                                       value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}"
+                                       >
+                                <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
                             </div>
-                        </div>
-                    </div>
+                        </c:if>
 
-                    <div id="date-renouvellement" style="display:none;">
-                        <label for="date_de_renouvellement">Date de renouvellement</label>
-                        <input type="date" id="date_de_renouvellement" name="date_de_renouvellement" placeholder="jj-mm-aaaa" value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
-                        <div class="error">${requestScope.errors.date_de_renouvellement}</div>
-                    </div>
-
-                    <div class="error">${requestScope.errors.metier}</div>
-
-                    <div class="dropdown-container">
-                        <label for="responsable">Responsable activité</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
-                            <div class="dropdown-menu">
-                                <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <label>
-                                        <input type="checkbox" name="responsable" value="${responsable.id}">
-                                        ${responsable.nom}
-                                    </label>
-                                </c:forEach>
+                        <c:if test="${!isOuiSelected}">
+                            <div id="date-renouvellement" style="display:none;">
+                                <label for="date_de_renouvellement">Date de renouvellement</label>
+                                <input type="date" id="date_de_renouvellement" name="date_de_renouvellement"
+                                       placeholder="jj-mm-aaaa" 
+                                       value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
+                                <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
                             </div>
-                        </div>
+                        </c:if>
+
+                        <script>
+                            function toggleDateField() {
+                                var rqthSelect = document.getElementById('rqth');
+                                var dateField = document.getElementById('date-renouvellement');
+                                var dateInput = document.getElementById('date_de_renouvellement');
+
+                                if (rqthSelect.value === 'oui') {
+                                    dateField.style.display = 'block';
+                                    dateInput.disabled = false;
+                                } else if (rqthSelect.value === 'a vie') {
+                                    dateField.style.display = 'none';
+                                    dateInput.disabled = true;
+                                    dateInput.value = '';
+                                } else {
+                                    dateField.style.display = 'non';
+                                    dateInput.disabled = true;
+                                    dateInput.value = ''; // Clear the value to avoid submission
+                                }
+                            }
+
+                            document.addEventListener("DOMContentLoaded", function () {
+                                toggleDateField(); // Ensure the initial state is correct based on the current selection
+                            });
+                        </script>
                     </div>
+
+                     <div class="combobox-container">
+                            <div class="combobox">
+
+                                <label for="responsable">Responsable activité</label>
+                                <select id="responsable" name="responsable" multiple>
+                                    <c:forEach var="responsable" items="${responsableActiviteList}">
+                                        <option value="${responsable.id}">${responsable.nom}</option>
+                                    </c:forEach>
+                                </select>
 
                     <div class="button-container">
                         <input  type="submit" value="Valider">

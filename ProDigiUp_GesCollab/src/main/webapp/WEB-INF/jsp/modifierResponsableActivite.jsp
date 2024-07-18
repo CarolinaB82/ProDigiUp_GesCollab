@@ -97,33 +97,22 @@
                                >
                         <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                     </div>
-                    <div class="dropdown-container">
-                        <label for="collaborateur">Son Collaborateur</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Collaborateur(s)</button>
-                            <div class="dropdown-menu">
-                                <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <label>
-                                        <input type="checkbox" name="collaborateur" value="${collaborateur.id}">
-                                        ${collaborateur.nom} ${collaborateur.prenom}
-                                    </label>
-                                </c:forEach>
-                            </div>
-                        </div>
+                     <div>
+                        <label for="collaborateur">Collaborateur:</label>
+                        <select id="collaborateur" name="collaborateur" multiple>
+                            <c:forEach var="collaborateur" items="${collaborateurs}">
+                                <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom} ${collaborateur.prenom}</option>
+                            </c:forEach>
+                        </select>
                     </div>
-                    <div class="dropdown-container">
-                        <label for="partenaire">Son Partenaire</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Partenaire(s)</button>
-                            <div class="dropdown-menu">
-                                <c:forEach var="partenaire" items="${partenaireList}">
-                                    <label>
-                                        <input type="checkbox" name="partenaire" value="${partenaire.id}">
-                                        ${partenaire.nom}
-                                    </label>
-                                </c:forEach>
-                            </div>
-                        </div>
+
+                    <div>
+                        <label for="partenaire">Partenaire:</label>
+                        <select id="partenaire" name="partenaire">
+                            <c:forEach var="partenaire" items="${partenaires}">
+                                <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <br><br>
                     <div class="button-container">

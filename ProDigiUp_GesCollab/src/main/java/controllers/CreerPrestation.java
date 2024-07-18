@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public class CreerPrestation extends HttpServlet {
     
-    @Override
+     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
@@ -124,4 +124,3 @@ private void loadLists(HttpServletRequest req) throws ServletException {
     req.setAttribute("partenaireList", partenaireList);
 }
 }
-

@@ -21,7 +21,7 @@
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        
+
         <main>
             <form action="/ProDigiUp_GesCollab/creer_prestation" method="post">                  
                 <div>${requestScope.message}</div>
@@ -114,51 +114,44 @@
                     </div>
                     <br>
 
-                    <div class="dropdown-container">
-                        <label for="responsable">Responsable activité</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
-                            <div class="dropdown-menu">
+                     <div class="combobox-container">
+                        <div class="combobox">
+                            <label for="multi-select-responsable_activite">Son Responsable activité</label>
+
+
+                            <br>
+                            <select id="id_ra" name="id_ra">
+                                 <option value="">-- Aucun --</option>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <label>
-                                        <input type="checkbox" name="responsable" value="${responsable.id}">
-                                        ${responsable.nom}
-                                    </label>
+                                    <option value="${responsable.id}">${responsable.nom}</option>
                                 </c:forEach>
-                            </div>
+                            </select>
+                            <br><br>
                         </div>
-                    </div>
-                    <div class="dropdown-container">
-                        <label for="collaborateur">Son Collaborateur</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Collaborateur(s)</button>
-                            <div class="dropdown-menu">
-                                 <label>
-                                    <input type="checkbox" name="collaborateur" value="none" id="checkbox-none">
-                                    Aucun
-                                </label>
+                        <div class="combobox">
+
+                            <label for="multi-select">Son Collaborateur</label>
+                            <br><br>
+                            <select id="id_collaborateur" name="id_collaborateur">
+                                 <option value="">-- Aucun --</option>
                                 <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <label>
-                                        <input type="checkbox" name="collaborateur" value="${collaborateur.id}">
-                                        ${collaborateur.nom} ${collaborateur.prenom}
-                                    </label>
+                                    <option value="${collaborateur.id}">${collaborateur.nom}</option>
                                 </c:forEach>
-                            </div>
+                            </select>
+                            <br><br>
                         </div>
-                    </div>
-                    <div class="dropdown-container">
-                        <label for="partenaire">Son Partenaire</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Partenaire(s)</button>
-                            <div class="dropdown-menu">
+
+                        <div class="combobox">
+                            <label for="multi-select">Son Partenaire</label>
+                            <select id="id_partenaire" name="id_partenaire">
                                 <c:forEach var="partenaire" items="${partenaireList}">
-                                    <label>
-                                        <input type="checkbox" name="partenaire" value="${partenaire.id}">
-                                        ${partenaire.nom}
-                                    </label>
+                                    <option value="${partenaire.id}">${partenaire.nom}</option>
                                 </c:forEach>
-                            </div>
+                            </select>
+                            <br><br><br>
+
                         </div>
+
                     </div>
 
 
@@ -172,7 +165,7 @@
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
-     <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
             const dropdownMenus = document.querySelectorAll('.dropdown-menu');

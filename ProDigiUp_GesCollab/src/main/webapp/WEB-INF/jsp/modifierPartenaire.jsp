@@ -102,20 +102,16 @@
                     </div>
                     <br>
 
-                    <div class="dropdown-container">
-                        <label for="responsable">Responsable activité</label>
-                        <div class="dropdown">
-                            <button type="button" class="dropdown-toggle">Sélectionner Responsable(s)</button>
-                            <div class="dropdown-menu">
+                    <div class="combobox-container">
+                        <div class="combobox">
+                            <label for="multi-select">Son responsable activité</label>
+                            <br>
+                            <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <label>
-                                        <input type="checkbox" name="responsable" value="${responsable.id}">
-                                        ${responsable.nom}
-                                    </label>
+                                    <!--<option value="${responsable.id}">${responsable.nom}</option>-->
+                                    <option value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">selected</c:if>>${responsable.nom}</option>
                                 </c:forEach>
-                            </div>
-                        </div>
-                    </div>
+                            </select>
                     <br><br>
 
                     <div class="button-container">

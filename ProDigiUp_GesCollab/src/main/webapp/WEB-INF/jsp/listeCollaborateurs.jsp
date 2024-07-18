@@ -37,7 +37,7 @@
                     <tr>
                         <th>
                             <a href="?sort=matricule&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                              → Matricule <c:if test="${param.sort == 'matricule'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                → Matricule <c:if test="${param.sort == 'matricule'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
                                 </a>
                             </th>
                             <th>
@@ -49,14 +49,10 @@
                             <th>Statut</th>
                             <th>
                                 <a href="?sort=activite&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                               → En activité <c:if test="${param.sort == 'activite'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                → En activité <c:if test="${param.sort == 'activite'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
                                 </a>
                             </th>
-                            <th>
-                                <a href="?sort=nom_presta&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
-                                → Prestation🔗 <c:if test="${param.sort == 'nom_presta'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
-                                </a>
-                            </th>
+                            <th> Prestation🔗  </th>                             
                             <th>
                                 <a href="?sort=responsable&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>">
                                 → Responsable d'Activité🔗 <c:if test="${param.sort == 'responsable'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>

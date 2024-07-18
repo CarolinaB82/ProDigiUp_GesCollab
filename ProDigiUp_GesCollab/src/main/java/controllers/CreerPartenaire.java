@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public class CreerPartenaire extends HttpServlet {
     
-    @Override
+   @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
                 Collection<ResponsableActivite> responsableActiviteList = DaoFactory.ResponsableActiviteDao().list();
