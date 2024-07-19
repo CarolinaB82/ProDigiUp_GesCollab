@@ -193,33 +193,37 @@ public class Prestation implements Serializable, Identifiable {
 
  
 
-    /*private List<Integer> responsableIds;
-
-    public List<Integer> getResponsablesIds() {
-        return responsableIds;
-    }
-
-    public void setResponsableIds(List<Integer> responsableIds) {
-        this.responsableIds = responsableIds;
-    }
-
-    private List<Integer> collaborateurIds;
-
-    public List<Integer> getCollaborateurIds() {
-        return collaborateurIds;
-    }
-
-    public void setCollaborateurIds(List<Integer> collaborateurIds) {
-        this.collaborateurIds = collaborateurIds;
-
-    }
-       private  List<Integer> partenaireIds;
-     
-    public  List<Integer> getPartenaireIds(){
-        return partenaireIds;
-    }
-    public void setPartenaireIds( List<Integer> partenaireIds){
-            this.partenaireIds = partenaireIds;
-    
-    }*/
+//    private List<Integer> responsableIds;
+//
+//    public List<Integer> getResponsablesIds() {
+//        return responsableIds;
+//    }
+//
+//    public void setResponsableIds(List<Integer> responsableIds) {
+//        this.responsableIds = responsableIds;
+//    }
+//
+//    private List<Integer> collaborateurIds;
+//
+//    public List<Integer> getCollaborateurIds() {
+//        return collaborateurIds;
+//    }
+//
+//    public void setCollaborateurIds(List<Integer> collaborateurIds) {
+//        this.collaborateurIds = collaborateurIds;
+//
+//    }
+//       private  List<Integer> partenaireIds;
+//     
+//    public  List<Integer> getPartenaireIds(){
+//        return partenaireIds;
+//    }
+//    public void setPartenaireIds( List<Integer> partenaireIds){
+//            this.partenaireIds = partenaireIds;
+//    
+//    }
+//
+//    public String getNom() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 }
