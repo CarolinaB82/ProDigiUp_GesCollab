@@ -6,17 +6,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Cette classe est utilisée pour valider et traiter les données soumises depuis
+ * un formulaire de modification d'une prestation. Elle encapsule la logique de
+ * validation des champs et la création d'un objet Prestation avec les données
+ * validées ou la gestion des erreurs en cas de données invalides.
  *
  * @author asolanas
  */
 public class ModifierPrestationFormChecker {
+
     private HttpServletRequest request;
     private Map<String, String> errors = new HashMap<>();
 
+    /**
+     * Constructeur de la classe ModifierPrestationFormChecker. Initialise
+     * l'objet avec la requête HTTP à partir de laquelle les données du
+     * formulaire seront récupérées.
+     *
+     * @param request La requête HTTP contenant les données du formulaire à
+     * valider.
+     */
     public ModifierPrestationFormChecker(HttpServletRequest request) {
         this.request = request;
     }
 
+    /**
+     * Méthode principale pour valider et traiter les données soumises depuis le
+     * formulaire de modification d'une prestation.
+     *
+     * @return Un objet Prestation contenant les données validées du formulaire.
+     */
     public Prestation checkForm() {
         Prestation obj = new Prestation();
         String idStr = request.getParameter("id");

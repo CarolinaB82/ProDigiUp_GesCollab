@@ -13,12 +13,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * servlet nommée RechercherResponsableActivite qui gère les requêtes HTTP GET /
+ * contrôleur dans l'architecture MVC Gestion de la recherche par différents
+ * critères Traitement des requetes AJAX pour les suggestions Affichage des
+ * resultats complets sur la JSP
  *
  * @author asolanas
  */
@@ -32,10 +35,18 @@ public class RechercherResponsableActivite extends HttpServlet {
         this.responsableActiviteDao = new ResponsableActiviteDao();
     }
 
+    /**
+     * Traite les requêtes GET pour la recherche de responsables d'activité ou
+     * les suggestions AJAX.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
+
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
 
@@ -64,8 +75,8 @@ public class RechercherResponsableActivite extends HttpServlet {
                 out.println("<table class='custom-table'>");
                 out.println("<thead>");
                 out.println("<tr>");
-                out.println("<th>🔗Matricule</th>");
-                out.println("<th>🔗Nom</th>");
+                out.println("<th>Matricule</th>");
+                out.println("<th>Nom</th>");
                 out.println("<th>Prénom</th>");
                 out.println("</tr>");
                 out.println("</thead>");

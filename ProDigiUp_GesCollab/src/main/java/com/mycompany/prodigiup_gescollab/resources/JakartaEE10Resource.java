@@ -5,8 +5,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
 /**
- *
- * @author 
+ * Description de la classe JakartaEE10Resource.
+ * 
+ * @author Caroline 
  */
 @Path("jakartaee10")
 public class JakartaEE10Resource {

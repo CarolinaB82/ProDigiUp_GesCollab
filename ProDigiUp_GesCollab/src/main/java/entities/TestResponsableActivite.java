@@ -1,13 +1,9 @@
 package entities;
 
-import dao.ResponsableActiviteDao;
-import java.text.DateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Date;
+
 
 /**
+ * Description de la classe
  *
  * @author asolanas
  */

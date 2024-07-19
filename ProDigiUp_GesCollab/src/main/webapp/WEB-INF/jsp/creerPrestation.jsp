@@ -112,7 +112,7 @@
 
                     <div class="combobox-container">
                         <div class="combobox">
-                            <label for="multi-select-responsable_activite">Son Responsable activité</label>
+                            <label for="multi-select-responsable_activite">Responsable activité</label>
 
                             <select id="id_ra" name="id_ra">
                                 <option value="">-- Aucun --</option>
@@ -136,8 +136,7 @@
                         </div>
 
                         <div class="combobox">
-                            <label for="multi-select">Son Partenaire</label>
-
+                            <label for="multi-select">Partenaire</label>
                             <select id="id_partenaire" name="id_partenaire">
                                 <c:forEach var="partenaire" items="${partenaireList}">
                                     <option value="${partenaire.id}">${partenaire.nom}</option>

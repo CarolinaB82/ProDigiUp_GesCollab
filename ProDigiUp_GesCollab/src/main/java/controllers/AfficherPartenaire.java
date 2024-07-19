@@ -7,9 +7,8 @@ package controllers;
 import dao.DaoFactory;
 import dao.PartenaireDao;
 import dao.ResponsableActiviteDao;
-import entities.CollaborateurPrestationPartenaireRa;
 import entities.Partenaire;
-import entities.PrestationRaPartenaire;
+import entities.Prestation;
 import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,6 +22,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * servlet nommée AfficherPartenaire qui gère les requêtes HTTP GET / contrôleur
+ * dans l'architecture MVC Afficher les détails d'un partenaire Interaction avec
+ * la base de données Utilisation de JSP pour la vue
  *
  * @author asolanas
  */
@@ -30,6 +32,14 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class AfficherPartenaire extends HttpServlet {
 
+    /**
+     * Gère les requêtes GET pour afficher les détails d'un partenaire.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -58,8 +68,25 @@ public class AfficherPartenaire extends HttpServlet {
 
         String responsablesActivite = String.join(", ", responsableNoms);
 
-        req.setAttribute("responsablesActivite", responsablesActivite);
+        Collection<Prestation> prestations = partenaireDao.listPrestationPartenaire(partenaireId);
+        List<String> responsableNomsPrestation = new ArrayList<>();
+        List<Integer> respIdAdd = new ArrayList<>();
+        for (Prestation presta : prestations) {
+            Integer raPrestation = presta.getId_ra();
+            boolean raExists = respIdAdd.stream()
+                    .anyMatch(p -> p == raPrestation);
+            if (!raExists) {
+                String nomRaPrestation = responsableActiviteDao.read(raPrestation).getNom();
+                responsableNomsPrestation.add(nomRaPrestation);
+                respIdAdd.add(raPrestation);
+            }
+        }
 
+        String responsablesActivitePrestations = String.join(", ", responsableNomsPrestation);
+
+        req.setAttribute("responsablesActivite", responsablesActivite);
+        req.setAttribute("responsablesActivitePrestation", responsablesActivitePrestations);
+        req.setAttribute("partenaire", partenaire);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);
     }
 

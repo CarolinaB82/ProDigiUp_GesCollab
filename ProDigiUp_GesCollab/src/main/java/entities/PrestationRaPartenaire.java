@@ -4,9 +4,10 @@
  */
 package entities;
 
-import java.util.Collection;
-
 /**
+ * Représente une association entre une prestation, un responsable d'activité
+ * (RA) et un partenaire. Cette classe permet de lier une prestation spécifique
+ * à un responsable d'activité et à un partenaire.
  *
  * @author cberge
  */

@@ -5,9 +5,9 @@
 package controllers;
 
 import dao.CollaborateurDao;
-import dao.PrestationDao;
 import dao.ResponsableActiviteDao;
 import entities.Collaborateur;
+import entities.Prestation;
 import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,13 +16,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 /**
+ * servlet nommée AfficherCollaborateur qui gère les requêtes HTTP GET /
+ * contrôleur dans l'architecture MVC Afficher les détails d'un collaborateur
+ * Interaction avec la base de données Utilisation de JSP pour la vue
  *
  * @author asolanas
  */
@@ -30,10 +32,18 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class AfficherCollaborateur extends HttpServlet {
 
+    /**
+     * Gère les requêtes GET pour afficher les détails d'un collaborateur.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        
+
         String collaborateurIdParam = req.getParameter("id");
         int collaborateurId = 1;
 
@@ -54,17 +64,35 @@ public class AfficherCollaborateur extends HttpServlet {
             String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
             req.setAttribute("formattedDate", formattedDate);
         }
-        
-         ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+
+        ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
         Collection<ResponsableActivite> listResponsableActiviteCollaborateur = responsableActiviteDao.listResponsableActivite(collaborateur.getId());
         List<String> responsableNoms = new ArrayList<>();
-        for(ResponsableActivite responsable : listResponsableActiviteCollaborateur){
+        for (ResponsableActivite responsable : listResponsableActiviteCollaborateur) {
             responsableNoms.add(responsable.getNom());
         }
-        
+
         String responsablesActivite = String.join(", ", responsableNoms);
+        
+        Collection<Prestation> prestations = collaborateurDao.listPrestationCollaborateur(collaborateurId);
+        List<String> responsableNomsPrestation = new ArrayList<>();
+        List<Integer> respIdAdd = new ArrayList<>();
+        for(Prestation presta : prestations){
+            Integer raPrestation = presta.getId_ra();
+            boolean raExists = respIdAdd.stream()
+                                   .anyMatch(p -> p == raPrestation);
+            if(!raExists){
+                String nomRaPrestation = responsableActiviteDao.read(raPrestation).getNom();
+                responsableNomsPrestation.add(nomRaPrestation);
+                respIdAdd.add(raPrestation);
+            }
+            
+        }
+        
+        String responsablesActivitePrestations = String.join(", ", responsableNomsPrestation);
 
         req.setAttribute("responsablesActivite", responsablesActivite);
+        req.setAttribute("responsablesActivitePrestation", responsablesActivitePrestations);
         req.setAttribute("collaborateur", collaborateur);
         req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
     }

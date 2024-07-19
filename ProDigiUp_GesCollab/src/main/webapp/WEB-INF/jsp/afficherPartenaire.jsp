@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,11 +30,15 @@
                     <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
                     <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
 
-                    <div class="button-container">
-                        <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
-                            <input type="hidden" name="id" value="${partenaire.id}" />
-                            <input type="submit" value="Modifier">
-                        </form>
+                <p><strong>Responsable(s) activité : </strong><c:out value="${responsablesActivite}"/></p>
+                <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
+
+
+                <div class="button-container">
+                    <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
+                        <input type="hidden" name="id" value="${partenaire.id}" />
+                        <input type="submit" value="Modifier">
+                    </form>
                         <form action="<c:url value='/supprimer_partenaire'/>" method="post" style="display: inline;">
                             <input type="hidden" name="id" value="${partenaire.id}" />
                             <input type="hidden" name="action" value="delete" />

@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -106,20 +108,28 @@
                         </select>
                     </div>
 
-                    <div>
-                        <label for="partenaire">Partenaire:</label>
-                        <select id="partenaire" name="partenaire">
-                            <c:forEach var="partenaire" items="${partenaires}">
-                                <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <br><br>
-                    <div class="button-container">
-                        <input type="submit" value="Valider">
-                        <button type="button" onclick="redirectToList()">Annuler</button>
-                    </div>
-                </fieldset>
+                            <label for="multi-select">Partenaire</label>
+                            <br>
+                            <select id="partenaire" name="partenaire" multiple>
+                                <c:forEach var="partenaire" items="${partenaireList}">
+                                    <!--<option value="${partenaire.id}">${partenaire.nom}</option>-->
+                                    <option value="${partenaire.id}" <c:if test="${selectedPartenaires.contains(partenaire.id)}">selected</c:if>>${partenaire.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
+
+                        </div>
+
+                        <div class="combobox">
+                            <label for="multi-select">Collaborateur</label>
+                            <br>
+                            <select id="collaborateur" name="collaborateur" multiple>
+                                <c:forEach var="collaborateur" items="${collaborateurList}">
+                                 <!--<option value="${collaborateur.id}">${collaborateur.nom}</option>-->
+                                    <option value="${collaborateur.id}" <c:if test="${selectedCollaborateurs.contains(collaborateur.id)}">selected</c:if>>${collaborateur.nom}</option>
+                                </c:forEach>
+                            </select>
+                            <br><br>
 
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

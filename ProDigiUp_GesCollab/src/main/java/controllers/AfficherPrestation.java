@@ -15,18 +15,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
- 
+
 /**
-* servlet nommée AfficherPrestation qui gère les requêtes HTTP GET / contrôleur
-* dans l'architecture MVC Afficher les détails d'une prestation Interaction
-* avec la base de données Utilisation de JSP pour la vue  *
-*
-* @author cberge
-*/
+ * servlet nommée AfficherPrestation qui gère les requêtes HTTP GET / contrôleur
+ * dans l'architecture MVC Afficher les détails d'une prestation Interaction
+ * avec la base de données Utilisation de JSP pour la vue  *
+ *
+ * @author cberge
+ */
 @WebServlet("/prestation")
 @SuppressWarnings("serial")
 public class AfficherPrestation extends HttpServlet {
- 
+
     /**
      * Gère les requêtes GET pour afficher les détails d'une prestation.
      *

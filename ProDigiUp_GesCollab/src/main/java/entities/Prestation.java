@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Représente une prestation avec ses détails associés.
+ * Cette classe contient les informations telles que le sigle de la prestation,
+ * le numéro d'affaire, le nom de la prestation, les références de facturation pour le partenaire et Airbus,
+ * les identifiants associés au Responsable d'Activité (RA), au partenaire et au collaborateur.
+ * Implémente l'interface Identifiable pour identifier de manière unique chaque instance de Prestation.
+ * La classe est sérialisable pour permettre sa sauvegarde et sa restauration.
+ * 
  * @author cberge
  */
 @SuppressWarnings("serial")
@@ -42,9 +48,12 @@ public class Prestation implements Serializable, Identifiable {
         return siglum_presta;
     }
 
+    
     public void setSiglum_presta(String siglum_presta) {
         this.siglum_presta = siglum_presta;
     }
+    
+    
     public String getNum_affaire() {
         return num_affaire;
     }
@@ -210,9 +219,5 @@ public class Prestation implements Serializable, Identifiable {
     public void setPartenaireIds( List<Integer> partenaireIds){
             this.partenaireIds = partenaireIds;
     
-    }
-
-    public String getNom() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * conçue pour gérer les associations entre les identifiants de responsables d'activité (id_ra) 
+ * et les identifiants de collaborateurs (id_collaborateur)
+ * Constructeur
+ * Methode 
+ * Methode spécifique
+ * Gestion des exceptions
  *
  * @author cberge
  */

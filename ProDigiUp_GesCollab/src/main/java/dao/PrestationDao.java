@@ -8,11 +8,18 @@ import entities.Collaborateur;
 import entities.Partenaire;
 import entities.Prestation;
 import entities.ResponsableActivite;
+import historique.CSVUtil;
+import historique.JsonUtil;
+import static historique.JsonUtil.collaborateurToJson;
+import static historique.JsonUtil.prestationToJson;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,6 +27,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Implementation d'une DAO Gestion du CRUD sur les objets Prestation dans la
+ * base de données relationnelles Connexion a la BDD Constructeur Methodes CRUD
+ * Gestion des exceptions Methodes specifiques La classe PrestationDao encapsule
+ * la logique d'accès aux données pour les objets Prestation
  *
  * @author cberge
  */
@@ -29,6 +40,14 @@ public class PrestationDao extends Dao<Prestation> {
         super("Prestation");
     }
 
+    /**
+     * Crée un objet Prestation à partir des données extraites d'un ResultSet.
+     *
+     * @param rs le ResultSet contenant les données de la base de données
+     * @return un objet Prestation initialisé avec les données du ResultSet
+     * @throws SQLException si une erreur survient lors de l'accès aux données
+     * du ResultSet
+     */
     @Override
     protected Prestation createObject(ResultSet rs) throws SQLException {
         Prestation prestation = new Prestation() {
@@ -48,6 +67,14 @@ public class PrestationDao extends Dao<Prestation> {
         return prestation;
     }
 
+    /**
+     * Crée une nouvelle prestation dans la base de données à partir des
+     * informations fournies.
+     *
+     * @param presta la prestation à créer dans la base de données
+     * @throws SQLException si une erreur survient lors de l'insertion dans la
+     * base de données
+     */
     @Override
     public void create(Prestation presta) throws SQLException {
         String sql = "INSERT INTO prestation(siglum_presta, num_affaire, nom_presta, ref_fact_partenaire, mail_partenaire,"
@@ -79,6 +106,14 @@ public class PrestationDao extends Dao<Prestation> {
         }
     }
 
+    /**
+     * Lit et retourne une prestation à partir de la base de données en fonction
+     * de son identifiant.
+     *
+     * @param id l'identifiant de la prestation à lire
+     * @return la prestation correspondant à l'identifiant spécifié, ou null si
+     * aucune prestation n'est trouvée
+     */
     @Override
     public Prestation read(Integer id) {
         Prestation obj = null;
@@ -107,8 +142,18 @@ public class PrestationDao extends Dao<Prestation> {
         }
         return obj;
     }
-    
 
+    /**
+     * Met à jour les relations entre une prestation et ses partenaires dans la
+     * base de données.
+     *
+     * @param conn la connexion à la base de données
+     * @param prestationId l'identifiant de la prestation à mettre à jour
+     * @param partenaireIds la liste des identifiants des partenaires à associer
+     * à la prestation
+     * @throws SQLException si une erreur survient lors de l'accès ou de la mise
+     * à jour dans la base de données
+     */
     private void updatePartenaire(Connection conn, int prestationId, List<Integer> partenaireIds) throws SQLException {
         if (partenaireIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_prestation=?";
@@ -127,6 +172,17 @@ public class PrestationDao extends Dao<Prestation> {
         }
     }
 
+    /**
+     * Met à jour les relations entre une prestation et ses collaborateurs dans
+     * la base de données.
+     *
+     * @param conn la connexion à la base de données
+     * @param prestationId l'identifiant de la prestation à mettre à jour
+     * @param collaborateurIds la liste des identifiants des collaborateurs à
+     * associer à la prestation
+     * @throws SQLException si une erreur survient lors de l'accès ou de la mise
+     * à jour dans la base de données
+     */
     private void updateCollaborateur(Connection conn, int prestationId, List<Integer> collaborateurIds) throws SQLException {
         if (collaborateurIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_prestation=?";
@@ -145,6 +201,17 @@ public class PrestationDao extends Dao<Prestation> {
         }
     }
 
+    /**
+     * Met à jour les relations entre une prestation et ses responsables
+     * d'activité dans la base de données.
+     *
+     * @param conn la connexion à la base de données
+     * @param prestationId l'identifiant de la prestation à mettre à jour
+     * @param responsableIds la liste des identifiants des responsables
+     * d'activité à associer à la prestation
+     * @throws SQLException si une erreur survient lors de l'accès ou de la mise
+     * à jour dans la base de données
+     */
     private void updateResponsablesActivite(Connection conn, int prestationId, List<Integer> responsableIds) throws SQLException {
         if (responsableIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_prestation=?";
@@ -164,11 +231,22 @@ public class PrestationDao extends Dao<Prestation> {
         }
     }
 
+    /**
+     * Met à jour une prestation dans la base de données avec les nouvelles
+     * valeurs spécifiées.
+     *
+     * @param obj la prestation contenant les nouvelles valeurs à mettre à jour
+     */
     @Override
     public void update(Prestation obj) {
         String sql = "UPDATE prestation SET siglum_presta=?, num_affaire=?, nom_presta=?, ref_fact_partenaire=?, mail_partenaire=?,"
                 + " ref_fact_airbus=?, mail_airbus=?, id_ra=?, id_collaborateur=?, id_partenaire=? WHERE id_prestation=?";
+        String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
+                + "VALUES ( ?, ?, ?, ?, ?, ?)";
         try {
+            Prestation prestationAvant = read(obj.getId());
+            
+            
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setString(1, obj.getSiglum_presta());
             pstmt.setString(2, obj.getNum_affaire());
@@ -183,26 +261,94 @@ public class PrestationDao extends Dao<Prestation> {
             pstmt.setInt(11, obj.getId());
 
             pstmt.executeUpdate();
+            
+            Prestation prestationApres = read(obj.getId());
 
-            updatePartenaire(connexion, obj.getId(), obj.getPartenaireIds());
+            /*updatePartenaire(connexion, obj.getId(), obj.getPartenaireIds());
             updateCollaborateur(connexion, obj.getId(), obj.getCollaborateurIds());
-            updateResponsablesActivite(connexion, obj.getId(), obj.getResponsableIds());
+            updateResponsablesActivite(connexion, obj.getId(), obj.getResponsablesIds());*/
+            
+            
+            PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
+                 pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmtInsertHistorique.setString(2, "mise à jour");
+            
+            pstmtInsertHistorique.setString(3, "prestation");
+            pstmtInsertHistorique.setInt(4, obj.getId());
+            
+            
+            
+                         // Date d'action actuelle
+
+            pstmtInsertHistorique.setString(5, JsonUtil.prestationToJson(prestationAvant)); // Convertir en JSON ou autre format texte
+            pstmtInsertHistorique.setString(6, JsonUtil.prestationToJson(prestationApres)); // Convertir en JSON ou autre format texte
+
+            pstmtInsertHistorique.executeUpdate();
+
+                // Journalisation avant et après la modification
+                CSVUtil.writeHistory("Modification de prestation", prestationAvant);
+                CSVUtil.writeHistory("Après modification", prestationApres);
+            
+            
         } catch (SQLException ex) {
             System.out.println("Erreur lors de la mise à jour : " + ex.getMessage());
         }
+         catch (IOException ex) {
+            Logger.getLogger(CollaborateurDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void delete(Integer id) {
+    /**
+     * Supprime une prestation de la base de données en fonction de son
+     * identifiant.
+     *
+     * @param id l'identifiant de la prestation à supprimer
+     */
+    public void delete(Integer id) throws IOException {
         String sql = "DELETE FROM prestation WHERE id_prestation=?";
         try {
+            
+            Prestation prestation = read(id);
+            
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
+            
+            // Enregistrer historique dans la BDD
+            String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
+                + "VALUES ( ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
+                 pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmtInsertHistorique.setString(2, "suppression");
+            
+            pstmtInsertHistorique.setString(3, "prestation");
+            pstmtInsertHistorique.setInt(4, prestation.getId());
+            
+                         // Date d'action actuelle
+
+            pstmtInsertHistorique.setString(5, prestationToJson(prestation)); // Convertir en JSON ou autre format texte
+            pstmtInsertHistorique.setString(6, null); // Convertir en JSON ou autre format texte
+
+            pstmtInsertHistorique.executeUpdate();
+            
+            
+            
+            // Enregistrer les informations dans le fichier CSV
+            CSVUtil.writeHistory("Avant suppression de prestation", prestation);
+            
+            
         } catch (SQLException ex) {
             System.out.println("Erreur lors du delete : " + ex.getMessage());
         }
     }
 
+    /**
+     * Retourne une collection de prestations à partir du nom spécifié.
+     *
+     * @param nom_presta le nom de la prestation à rechercher
+     * @return une collection de prestations correspondant au nom spécifié
+     */
     public Collection<Prestation> listByNom(String nom_presta) {
         ArrayList<Prestation> listNom = new ArrayList<>();
         String sql = "SELECT * FROM " + table + " WHERE nom_presta =?";
@@ -221,7 +367,7 @@ public class PrestationDao extends Dao<Prestation> {
 
         return listNom;
     }
-    
+
 //    @Override
 //    public Collection<Prestation> list() {
 //        ArrayList<Prestation> list = new ArrayList<>();
@@ -249,8 +395,13 @@ public class PrestationDao extends Dao<Prestation> {
 //        }
 //        return list;
 //    }
-
-    // rajout test
+    /**
+     * Vérifie si une prestation avec le nom spécifié existe dans la base de
+     * données.
+     *
+     * @param nom_presta le nom de la prestation à vérifier
+     * @return true si une prestation avec le nom spécifié existe, sinon false
+     */
     public boolean exists(String nom_presta) {
         String sql = "SELECT 1 FROM prestation WHERE nom_presta=?";
         try {
@@ -264,6 +415,12 @@ public class PrestationDao extends Dao<Prestation> {
         return false;
     }
 
+    /**
+     * Récupère la liste complète de toutes les prestations enregistrées dans la
+     * base de données.
+     *
+     * @return une collection contenant toutes les prestations enregistrées
+     */
     public Collection<Prestation> listPrestation() {
         ArrayList<Prestation> list = new ArrayList<>();
         String sql = "SELECT * FROM prestation";
@@ -293,6 +450,36 @@ public class PrestationDao extends Dao<Prestation> {
         return list;
     }
 
+    /**
+     * Récupère l'identifiant maximum (ID) actuellement enregistré dans la table
+     * des prestations.
+     *
+     * @return l'ID maximum actuellement enregistré dans la table des
+     * prestations, ou 0 s'il n'y a pas d'enregistrement
+     */
+    public int getLastIdCreated() {
+        String sql = "SELECT MAX(id_prestation) AS max_id FROM prestation";
+        int maxId = 0;
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de l'exécution de la requête : " + ex.getMessage());
+        }
+        return maxId;
+    }
+
+    /**
+     * Récupère la liste des responsables d'activité associés à une prestation
+     * spécifique.
+     *
+     * @param idPrestation l'identifiant de la prestation pour laquelle
+     * récupérer les responsables d'activité
+     * @return une collection contenant les responsables d'activité associés à
+     * la prestation spécifiée
+     */
     public Collection<ResponsableActivite> listPrestationResponsableActivite(int idPrestation) {
         String sql = "SELECT id_ra FROM prestation WHERE id_prestation = ?";
         ArrayList<ResponsableActivite> list = new ArrayList<>();
@@ -313,6 +500,15 @@ public class PrestationDao extends Dao<Prestation> {
         return list;
     }
 
+    /**
+     * Récupère la liste des collaborateurs associés à une prestation
+     * spécifique.
+     *
+     * @param idPrestation l'identifiant de la prestation pour laquelle
+     * récupérer les collaborateurs
+     * @return une collection contenant les collaborateurs associés à la
+     * prestation spécifiée
+     */
     public Collection<Collaborateur> listPrestationCollaborateur(int idPrestation) {
         String sql = "SELECT id_collaborateur FROM prestation WHERE id_prestation = ?";
         ArrayList<Collaborateur> list = new ArrayList<>();
@@ -333,6 +529,14 @@ public class PrestationDao extends Dao<Prestation> {
         return list;
     }
 
+    /**
+     * Récupère la liste des partenaires associés à une prestation spécifique.
+     *
+     * @param idPrestation l'identifiant de la prestation pour laquelle
+     * récupérer les partenaires
+     * @return une collection contenant les partenaires associés à la prestation
+     * spécifiée
+     */
     public Collection<Partenaire> listPrestationPartenaire(int idPrestation) {
         String sql = "SELECT id_partenaire FROM prestation WHERE id_prestation = ?";
         ArrayList<Partenaire> list = new ArrayList<>();
@@ -351,20 +555,6 @@ public class PrestationDao extends Dao<Prestation> {
             System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
         }
         return list;
-    }
-
-    public int getLastIdCreated() {
-        String sql = "SELECT MAX(id_prestation) AS max_id FROM prestation";
-        int maxId = 0;
-        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                maxId = rs.getInt("max_id");
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erreur lors de l'exécution de la requête : " + ex.getMessage());
-        }
-        return maxId;
     }
 
 }

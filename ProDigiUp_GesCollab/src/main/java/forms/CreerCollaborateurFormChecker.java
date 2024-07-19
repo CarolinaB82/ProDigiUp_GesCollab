@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
+ */
 package forms;
 
 import entities.Collaborateur;
@@ -6,12 +10,32 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Cette classe est responsable de la validation et du traitement des données
+ * soumises depuis un formulaire de création ou de mise à jour d'un
+ * collaborateur. Elle utilise les données récupérées à partir d'une requête
+ * HTTP pour créer un objet Collaborateur avec les champs validés et convertis
+ * au besoin.
+ *
+ * Elle étend la classe FormChecker générique pour le type Collaborateur.
+ *
+ *
+ * @author cberge
+ */
 public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
 
     public CreerCollaborateurFormChecker(HttpServletRequest request) {
         super(request);
     }
 
+    /**
+     * Vérifie et traite les données soumises depuis un formulaire de création
+     * ou de mise à jour d'un collaborateur. Les données sont récupérées à
+     * partir de la requête HTTP.
+     *
+     * @return Un objet Collaborateur contenant les données validées du
+     * formulaire.
+     */
     @Override
     public Collaborateur checkForm() {
         Collaborateur obj = new Collaborateur();
@@ -60,7 +84,7 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
                 setError("telephone_personnel", "Le format du téléphone est incorrect.");
             }
         }
-        
+
         // Traiter les autres champs String
         obj.setNom(nom);
         obj.setPrenom(prenom);

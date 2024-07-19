@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Représente un partenaire avec ses informations de base. Implémente
+ * l'interface Identifiable pour identifier de manière unique chaque instance de
+ * Partenaire. La classe est sérialisable pour permettre sa sauvegarde et sa
+ * restauration.
  *
  * @author asolanas
  */
@@ -127,14 +131,15 @@ public class Partenaire implements Serializable, Identifiable {
         }
         return Objects.equals(this.id, other.id);
     }
-    
-     private  List<Integer> responsableIds;
-     
-    public  List<Integer> getResponsablesIds(){
+
+    private List<Integer> responsableIds;
+
+    public List<Integer> getResponsablesIds() {
         return responsableIds;
     }
-    public void setResponsableIds( List<Integer> responsableIds){
-            this.responsableIds = responsableIds;
-}
+
+    public void setResponsableIds(List<Integer> responsableIds) {
+        this.responsableIds = responsableIds;
+    }
 
 }

@@ -4,7 +4,6 @@
  */
 package forms;
 
-import dao.CollaborateurDao;
 import entities.Collaborateur;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -14,11 +13,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Cette classe est utilisée pour valider et traiter les données soumises depuis
+ * un formulaire de modification d'un collaborateur. Elle hérite de la classe
+ * abstraite FormChecker et implémente la méthode checkForm pour effectuer la
+ * validation des champs du formulaire et créer un objet Collaborateur avec les
+ * données validées.
  *
  * @author cberge
  */
 public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur> {
 
+    /**
+     * Constructeur de la classe ModifierCollaborateurFormChecker. Initialise la
+     * classe parente avec la requête HTTP.
+     *
+     * @param request La requête HTTP contenant les données du formulaire à
+     * valider.
+     */
     public ModifierCollaborateurFormChecker(HttpServletRequest request) {
         super(request);
     }
@@ -28,6 +39,13 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
         return errors;
     }
 
+    /**
+     * Méthode héritée de la classe FormChecker. Vérifie et traite les données
+     * soumises depuis le formulaire de modification d'un collaborateur.
+     *
+     * @return Un objet Collaborateur contenant les données validées du
+     * formulaire.
+     */
     @Override
     public Collaborateur checkForm() {
         Collaborateur obj = new Collaborateur();

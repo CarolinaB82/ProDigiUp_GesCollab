@@ -7,6 +7,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -38,42 +40,57 @@
                         </th>
                         <th>Référent facture partenaire</th>
                         <th>Mail partenaire</th>
-                        <th>Référent facture Airbus</th>
-                        <th>Mail Airbus</th>
+                        <th>Réf fact Airbus</th>
+                        <th>Mail Airbus</th>     
+                        <th>Partenaire</th>
+                        <th>Responsable activité</th>
+                        <th>Collaborateur</th>
                     </tr>
-                </thead>
-                <tbody>
-
-                    <c:set var="prestationSize" value="${prestations}" />
-
-                    <c:forEach var="prestation" items="${requestScope.prestations}">
-                        <tr class="collaborateur-row collaborator-end-row neutral-links">
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.siglum_presta}"/>
-                            </td>
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.num_affaire}"/>
-                            </td>
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.nom_presta}"/>
-                            </td>
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.ref_fact_partenaire}"/>
-                            </td>
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.mail_partenaire}"/>
-                            </td>
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.ref_fact_airbus}"/>
-                            </td>
-                            <td rowspan="${prestationSize}">
-                                <c:out value="${prestation.mail_airbus}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </main>
+                   </thead>
+    <tbody>
+       
+            <c:set var="prestationSize" value="${prestations}" />
+            
+                         <c:forEach var="prestation" items="${requestScope.prestations}">
+                    <tr>
+                        <td rowspan="${prestationSize}">
+                            <a href="<c:url value='/prestation?id=${prestation.prestation.id}'/>">
+                                         <c:out value="${prestation.prestation.siglum_presta}"/>
+                                    </a>
+                       
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.prestation.num_affaire}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.prestation.nom_presta}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.prestation.ref_fact_partenaire}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.prestation.mail_partenaire}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.prestation.ref_fact_airbus}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.prestation.mail_airbus}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.nomPartenaire}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.nomRa}"/>
+                        </td>
+                        <td rowspan="${prestationSize}">
+                        <c:out value="${prestation.nomCollab}"/>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
 </html>

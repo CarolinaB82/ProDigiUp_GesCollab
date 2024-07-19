@@ -8,15 +8,33 @@ import entities.Partenaire;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
+ * Cette classe est utilisée pour valider et traiter les données soumises depuis
+ * un formulaire de modification d'un partenaire. Elle hérite de la classe
+ * abstraite FormChecker et implémente la méthode checkForm pour effectuer la
+ * validation des champs du formulaire et créer un objet Partenaire avec les
+ * données validées.
  *
  * @author cberge
  */
 public class ModifierPartenaireFormChecker extends FormChecker<Partenaire> {
 
+    /**
+     * Constructeur de la classe ModifierPartenaireFormChecker. Initialise la
+     * classe parente avec la requête HTTP.
+     *
+     * @param request La requête HTTP contenant les données du formulaire à
+     * valider.
+     */
     public ModifierPartenaireFormChecker(HttpServletRequest request) {
         super(request);
     }
 
+    /**
+     * Méthode héritée de la classe FormChecker. Vérifie et traite les données
+     * soumises depuis le formulaire de modification d'un partenaire.
+     *
+     * @return Un objet Partenaire contenant les données validées du formulaire.
+     */
     @Override
     public Partenaire checkForm() {
         Partenaire obj = new Partenaire();

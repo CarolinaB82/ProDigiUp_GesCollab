@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,16 +21,19 @@
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
-                <legend><strong>Fiche Responsable d'Activité</legend>
-                <div class='fiches'>
-                    <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
-                    <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
-                    <p><strong>Prénom: </strong><c:out value="${ra.prenom}"/></p>
-                    <p><strong>Mail : </strong><c:out value="${ra.mail}"/></p>
-                    <p><strong>Téléphone Pro: </strong><c:out value="${ra.telephone_professionnel}"/></p>
-                    <p><strong>Téléphone Perso: </strong><c:out value="${ra.telephone_personnel}"/></p>
-                    <p><strong>Partenaire(s): </strong><c:out value="${partenaire}"/></p>
-                    <p><strong>Collaborateur(s): </strong><c:out value="${collaborateur}"/></p>
+                <legend><strong>Fiche Responsable d'Activite</legend>
+                <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
+                <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
+                <p><strong>Prénom: </strong><c:out value="${ra.prenom}"/></p>
+                <p><strong>Mail : </strong><c:out value="${ra.mail}"/></p>
+                <p><strong>Téléphone Pro: </strong><c:out value="${ra.telephone_professionnel}"/></p>
+                <p><strong>Téléphone Perso: </strong><c:out value="${ra.telephone_personnel}"/></p>
+                
+                
+                <p><strong>Partenaire(s): </strong><c:out value="${partenaire}"/></p>
+                <p><strong>Partenaire(s) liés aux prestations: </strong><c:out value="${partenairesPrestation}"/></p>
+                <p><strong>Collaborateur(s): </strong><c:out value="${collaborateur}"/></p>
+                <p><strong>Collaborateur(s) liés aux prestations: </strong><c:out value="${collaborateursPrestation}"/></p>
 
                     <div class="button-container">
                         <form action="/ProDigiUp_GesCollab/modifier_ra" method="get"style="display: inline;">

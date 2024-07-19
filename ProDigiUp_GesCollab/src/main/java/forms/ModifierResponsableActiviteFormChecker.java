@@ -8,15 +8,34 @@ import entities.ResponsableActivite;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
+ * Cette classe est utilisée pour valider et traiter les données soumises depuis
+ * un formulaire de modification d'un responsable d'activité. Elle encapsule la
+ * logique de validation des champs et la création d'un objet
+ * ResponsableActivite avec les données validées.
  *
  * @author cberge
  */
 public class ModifierResponsableActiviteFormChecker extends FormChecker<ResponsableActivite> {
 
+    /**
+     * Constructeur de la classe ModifierResponsableActiviteFormChecker.
+     * Initialise l'objet avec la requête HTTP à partir de laquelle les données
+     * du formulaire seront récupérées.
+     *
+     * @param request La requête HTTP contenant les données du formulaire à
+     * valider.
+     */
     public ModifierResponsableActiviteFormChecker(HttpServletRequest request) {
         super(request);
     }
 
+    /**
+     * Méthode principale pour valider et traiter les données soumises depuis le
+     * formulaire de modification d'un responsable d'activité.
+     *
+     * @return Un objet ResponsableActivite contenant les données validées du
+     * formulaire.
+     */
     @Override
     public ResponsableActivite checkForm() {
         ResponsableActivite obj = new ResponsableActivite();
