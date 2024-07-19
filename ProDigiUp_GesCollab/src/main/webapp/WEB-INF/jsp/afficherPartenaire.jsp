@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Afficher partenaire</title>
-       
+
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -29,16 +29,13 @@
                     <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
                     <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
                     <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
+                    <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
 
-                <p><strong>Responsable(s) activité : </strong><c:out value="${responsablesActivite}"/></p>
-                <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
-
-
-                <div class="button-container">
-                    <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
-                        <input type="hidden" name="id" value="${partenaire.id}" />
-                        <input type="submit" value="Modifier">
-                    </form>
+                    <div class="button-container">
+                        <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
+                            <input type="hidden" name="id" value="${partenaire.id}" />
+                            <input type="submit" value="Modifier">
+                        </form>
                         <form action="<c:url value='/supprimer_partenaire'/>" method="post" style="display: inline;">
                             <input type="hidden" name="id" value="${partenaire.id}" />
                             <input type="hidden" name="action" value="delete" />

@@ -105,7 +105,7 @@
                     <div class="combobox-container">
                         <div class="combobox">
                             <label for="multi-select">Responsable activité</label>
-                            <br>
+                           
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <!--<option value="${responsable.id}">${responsable.nom}</option>-->

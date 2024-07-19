@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
 package entities;
 
 import java.io.Serializable;
@@ -9,13 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Représente une prestation avec ses détails associés.
- * Cette classe contient les informations telles que le sigle de la prestation,
- * le numéro d'affaire, le nom de la prestation, les références de facturation pour le partenaire et Airbus,
- * les identifiants associés au Responsable d'Activité (RA), au partenaire et au collaborateur.
- * Implémente l'interface Identifiable pour identifier de manière unique chaque instance de Prestation.
- * La classe est sérialisable pour permettre sa sauvegarde et sa restauration.
- * 
+ * Représente une prestation avec ses détails associés. Cette classe contient
+ * les informations telles que le sigle de la prestation, le numéro d'affaire,
+ * le nom de la prestation, les références de facturation pour le partenaire et
+ * Airbus, les identifiants associés au Responsable d'Activité (RA), au
+ * partenaire et au collaborateur. Implémente l'interface Identifiable pour
+ * identifier de manière unique chaque instance de Prestation. La classe est
+ * sérialisable pour permettre sa sauvegarde et sa restauration.
+ *
  * @author cberge
  */
 @SuppressWarnings("serial")
@@ -32,7 +29,6 @@ public class Prestation implements Serializable, Identifiable {
     private Integer id_ra;
     private Integer id_partenaire;
     private Integer id_collaborateur;
-    
 
     @Override
     public Integer getId() {
@@ -48,12 +44,10 @@ public class Prestation implements Serializable, Identifiable {
         return siglum_presta;
     }
 
-    
     public void setSiglum_presta(String siglum_presta) {
         this.siglum_presta = siglum_presta;
     }
-    
-    
+
     public String getNum_affaire() {
         return num_affaire;
     }
@@ -61,7 +55,7 @@ public class Prestation implements Serializable, Identifiable {
     public void setNum_affaire(String num_affaire) {
         this.num_affaire = num_affaire;
     }
-   
+
     public String getNom_presta() {
         return nom_presta;
     }
@@ -77,6 +71,7 @@ public class Prestation implements Serializable, Identifiable {
     public void setRef_fact_partenaire(String ref_fact_partenaire) {
         this.ref_fact_partenaire = ref_fact_partenaire;
     }
+
     public String getMail_partenaire() {
         return mail_partenaire;
     }
@@ -92,6 +87,7 @@ public class Prestation implements Serializable, Identifiable {
     public void setRef_fact_airbus(String ref_fact_airbus) {
         this.ref_fact_airbus = ref_fact_airbus;
     }
+
     public String getMail_airbus() {
         return mail_airbus;
     }
@@ -189,35 +185,5 @@ public class Prestation implements Serializable, Identifiable {
             return false;
         }
         return Objects.equals(this.id_collaborateur, other.id_collaborateur);
-    }
-
-    private List<Integer> responsableIds;
-
-    public List<Integer> getResponsableIds() {
-        return responsableIds;
-    }
-
-    public void setResponsableIds(List<Integer> responsableIds) {
-        this.responsableIds = responsableIds;
-    }
-
-    private List<Integer> collaborateurIds;
-
-    public List<Integer> getCollaborateurIds() {
-        return collaborateurIds;
-    }
-
-    public void setCollaborateurIds(List<Integer> collaborateurIds) {
-        this.collaborateurIds = collaborateurIds;
-
-    }
-       private  List<Integer> partenaireIds;
-     
-    public  List<Integer> getPartenaireIds(){
-        return partenaireIds;
-    }
-    public void setPartenaireIds( List<Integer> partenaireIds){
-            this.partenaireIds = partenaireIds;
-    
     }
 }

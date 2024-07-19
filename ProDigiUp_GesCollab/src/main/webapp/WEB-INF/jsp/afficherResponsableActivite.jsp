@@ -15,37 +15,36 @@
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>voir un RA</title>
-        
+
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
                 <legend><strong>Fiche Responsable d'Activite</legend>
-                <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
-                <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
-                <p><strong>Prénom: </strong><c:out value="${ra.prenom}"/></p>
-                <p><strong>Mail : </strong><c:out value="${ra.mail}"/></p>
-                <p><strong>Téléphone Pro: </strong><c:out value="${ra.telephone_professionnel}"/></p>
-                <p><strong>Téléphone Perso: </strong><c:out value="${ra.telephone_personnel}"/></p>
-                
-                
-                <p><strong>Partenaire(s): </strong><c:out value="${partenaire}"/></p>
-                <p><strong>Partenaire(s) liés aux prestations: </strong><c:out value="${partenairesPrestation}"/></p>
-                <p><strong>Collaborateur(s): </strong><c:out value="${collaborateur}"/></p>
-                <p><strong>Collaborateur(s) liés aux prestations: </strong><c:out value="${collaborateursPrestation}"/></p>
-
-                    <div class="button-container">
-                        <form action="/ProDigiUp_GesCollab/modifier_ra" method="get"style="display: inline;">
-                            <input type="hidden" name="id" value="${ra.id}" />
-                            <input type="submit" value="Modifier">
-                        </form>
-                        <form action="<c:url value='/supprimer_ra'/>" method="post" style="display: inline;">
-                            <input type="hidden" name="id" value="${ra.id}" />
-                            <input type="hidden" name="action" value="delete" />
-                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce responsable d activité ?');">Supprimer</button>
-                        </form>
-                    </div> 
+                <div class='fiches'>
+                    <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
+                    <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
+                    <p><strong>Prénom: </strong><c:out value="${ra.prenom}"/></p>
+                    <p><strong>Mail : </strong><c:out value="${ra.mail}"/></p>
+                    <p><strong>Téléphone Pro: </strong><c:out value="${ra.telephone_professionnel}"/></p>
+                    <p><strong>Téléphone Perso: </strong><c:out value="${ra.telephone_personnel}"/></p>
+                    <p><strong>Partenaire(s): </strong><c:out value="${partenaire}"/></p>
+                    <p><strong>Partenaire(s) liés aux prestations: </strong><c:out value="${partenairesPrestation}"/></p>
+                    <p><strong>Collaborateur(s): </strong><c:out value="${collaborateur}"/></p>
+                    <p><strong>Collaborateur(s) liés aux prestations: </strong><c:out value="${collaborateursPrestation}"/></p>
+                </div>
+                <div class="button-container">
+                    <form action="/ProDigiUp_GesCollab/modifier_ra" method="get"style="display: inline;">
+                        <input type="hidden" name="id" value="${ra.id}" />
+                        <input type="submit" value="Modifier">
+                    </form>
+                    <form action="<c:url value='/supprimer_ra'/>" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="${ra.id}" />
+                        <input type="hidden" name="action" value="delete" />
+                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce responsable d activité ?');">Supprimer</button>
+                    </form>
+                </div> 
                 </div>
 
             </fieldset>

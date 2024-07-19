@@ -99,93 +99,88 @@
                                >
                         <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                     </div>
-                     <div>
-                        <label for="collaborateur">Collaborateur:</label>
-                        <select id="collaborateur" name="collaborateur" multiple>
-                            <c:forEach var="collaborateur" items="${collaborateurs}">
-                                <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom} ${collaborateur.prenom}</option>
-                            </c:forEach>
-                        </select>
+
+                    <label for="multi-select">Partenaire</label>
+
+                    <select id="partenaire" name="partenaire" multiple>
+                        <c:forEach var="partenaire" items="${partenaireList}">
+                            <!--<option value="${partenaire.id}">${partenaire.nom}</option>-->
+                            <option value="${partenaire.id}" <c:if test="${selectedPartenaires.contains(partenaire.id)}">selected</c:if>>${partenaire.nom}</option>
+                        </c:forEach>
+                    </select>
+                    <br><br>
+
                     </div>
 
-                            <label for="multi-select">Partenaire</label>
-                            <br>
-                            <select id="partenaire" name="partenaire" multiple>
-                                <c:forEach var="partenaire" items="${partenaireList}">
-                                    <!--<option value="${partenaire.id}">${partenaire.nom}</option>-->
-                                    <option value="${partenaire.id}" <c:if test="${selectedPartenaires.contains(partenaire.id)}">selected</c:if>>${partenaire.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
+                    <div class="combobox">
+                        <label for="multi-select">Collaborateur</label>
 
+                        <select id="collaborateur" name="collaborateur" multiple>
+                            <c:forEach var="collaborateur" items="${collaborateurList}">
+                             <!--<option value="${collaborateur.id}">${collaborateur.nom}</option>-->
+                                <option value="${collaborateur.id}" <c:if test="${selectedCollaborateurs.contains(collaborateur.id)}">selected</c:if>>${collaborateur.nom}</option>
+                            </c:forEach>
+                        </select>
+                        <br><br>
+                        <div class="button-container">
+                            <input type="submit" value="Enregistrer">
+                            <button type="button" onclick="window.location.href = '<c:url value="/liste_collaborateurs"/>'">Annuler</button>
                         </div>
-
-                        <div class="combobox">
-                            <label for="multi-select">Collaborateur</label>
-                            <br>
-                            <select id="collaborateur" name="collaborateur" multiple>
-                                <c:forEach var="collaborateur" items="${collaborateurList}">
-                                 <!--<option value="${collaborateur.id}">${collaborateur.nom}</option>-->
-                                    <option value="${collaborateur.id}" <c:if test="${selectedCollaborateurs.contains(collaborateur.id)}">selected</c:if>>${collaborateur.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
-
-
+                </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
         </main>
         <script>
-                            function redirectToList() {
-                                window.location.href = '<c:url value="/liste_collaborateurs"/>';
-                            }
+                    function redirectToList() {
+                        window.location.href = '<c:url value="/liste_collaborateurs"/>';
+                    }
 
-                            function validateForm() {
-                                var matricule = document.getElementById('matricule').value;
-                                var responsables = document.getElementById('responsable').options;
-                                for (var i = 0; i < responsables.length; i++) {
-                                    if (responsables[i].selected && responsables[i].value === matricule) {
-                                        alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                                        return false;
-                                    }
+                    function validateForm() {
+                        var matricule = document.getElementById('matricule').value;
+                        var responsables = document.getElementById('responsable').options;
+                        for (var i = 0; i < responsables.length; i++) {
+                            if (responsables[i].selected && responsables[i].value === matricule) {
+                                alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+                        dropdownToggles.forEach(toggle => {
+                            toggle.addEventListener('click', function (event) {
+                                event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                                this.classList.toggle('active');
+                                const dropdownMenu = this.nextElementSibling;
+                                if (dropdownMenu.style.display === 'block') {
+                                    dropdownMenu.style.display = 'none';
+                                } else {
+                                    dropdownMenu.style.display = 'block';
                                 }
-                                return true;
-                            }
-
-                            document.addEventListener('DOMContentLoaded', function () {
-                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-                                dropdownToggles.forEach(toggle => {
-                                    toggle.addEventListener('click', function (event) {
-                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                                        this.classList.toggle('active');
-                                        const dropdownMenu = this.nextElementSibling;
-                                        if (dropdownMenu.style.display === 'block') {
-                                            dropdownMenu.style.display = 'none';
-                                        } else {
-                                            dropdownMenu.style.display = 'block';
-                                        }
-                                    });
-                                });
-
-                                // Empêche la fermeture du menu lorsque l'on clique sur une option
-                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                                dropdownMenus.forEach(menu => {
-                                    menu.addEventListener('click', function (event) {
-                                        event.stopPropagation();
-                                    });
-                                });
-
-                                // Fermer le menu déroulant si on clique en dehors
-                                window.addEventListener('click', function () {
-                                    dropdownToggles.forEach(toggle => {
-                                        toggle.classList.remove('active');
-                                        const dropdownMenu = toggle.nextElementSibling;
-                                        dropdownMenu.style.display = 'none';
-                                    });
-                                });
                             });
+                        });
+
+                        // Empêche la fermeture du menu lorsque l'on clique sur une option
+                        const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                        dropdownMenus.forEach(menu => {
+                            menu.addEventListener('click', function (event) {
+                                event.stopPropagation();
+                            });
+                        });
+
+                        // Fermer le menu déroulant si on clique en dehors
+                        window.addEventListener('click', function () {
+                            dropdownToggles.forEach(toggle => {
+                                toggle.classList.remove('active');
+                                const dropdownMenu = toggle.nextElementSibling;
+                                dropdownMenu.style.display = 'none';
+                            });
+                        });
+                    });
 
         </script>
     </body>

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
 package dao;
 
 import entities.Collaborateur;
@@ -510,7 +506,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
         for (Collaborateur collab : listeCollaborateur) {
             CollaborateurPrestationPartenaireRa collabPrestPartRa = new CollaborateurPrestationPartenaireRa();
             collabPrestPartRa.setCollaborateur(collab);
-            System.out.println("Fetching Collaborateurs...");
+
             Collection<Prestation> prestations = listPrestationCollaborateur(collab.getId());
             ArrayList<PrestationRaPartenaire> listPrestationsRaPart = new ArrayList<>();
             for (Prestation presta : prestations) {
