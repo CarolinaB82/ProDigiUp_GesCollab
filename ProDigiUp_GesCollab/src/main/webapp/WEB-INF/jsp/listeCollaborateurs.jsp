@@ -43,6 +43,8 @@
             .tooltip:hover .tooltiptext {
                 visibility: visible;
                 opacity: 1;
+                background-color: #A8B7DB;
+                color: #17407B
             }
         </style>
         <script>

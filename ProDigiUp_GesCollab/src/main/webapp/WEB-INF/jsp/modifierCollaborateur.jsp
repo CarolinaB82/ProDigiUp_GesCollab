@@ -112,13 +112,13 @@
                     <div class="error-details-message">${requestScope.errors.metier}</div>
                 </div>  
                 <br>
-               <div>
+                <div>
                     <label for="statut">Statut</label>
                     <select id="statut" name="statut">
                         <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
                         <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                        <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
-                        <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
+                        <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD TREMPLIN</option>
+                        <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>STAGE</option>
 
 
                     </select>
@@ -129,7 +129,7 @@
                     <label for="categorie">Catégorie</label>
                     <select id="categorie" name="categorie">
                         <option value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'selected' : ''}>ETAM</option>
-                        <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>Cadre</option>
+                        <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>CADRE</option>
                     </select>
                     <div class="error-details-message">${requestScope.errors.categorie}</div>
                 </div>
@@ -149,9 +149,9 @@
                     <div>
                         <label for="rqth">RQTH</label>
                         <select id="rqth" name="rqth" onchange="toggleDateField()" >
-                            <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
-                            <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
-                            <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
+                            <option value="oui" ${isOuiSelected ? 'selected' : ''}>Oui</option>
+                            <option value="non" ${!isOuiSelected ? 'selected' : ''}>Non</option>
+                            <option value="a vie" ${isAVieSelected ? 'selected' : ''}>A vie</option>
                         </select>
                         <div class="error-details-message">${requestScope.errors.rqth}</div>
                     </div>
@@ -207,16 +207,17 @@
 
                 <div class="combobox-container">
                     <div class="combobox">
-
-                        <label for="responsable">Son responsable activité</label>
+                        <label for="responsable">Son responsable d'activité</label>
                         <select id="responsable" name="responsable" multiple>
                             <c:forEach var="responsable" items="${responsableActiviteList}">
                                 <option value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">selected</c:if>>${responsable.nom}</option>
                             </c:forEach>
                         </select>
-                <div class="button-container">
-                    <input type="submit" value="Valider">
-                    <button type="button" onclick="redirectToList()">Annuler</button>
+                        <div class="button-container">
+                            <input type="submit" value="Valider">
+                            <button type="button" onclick="redirectToList()">Annuler</button>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
 
@@ -224,7 +225,7 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         </form>
-        
+
     </main>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </body>

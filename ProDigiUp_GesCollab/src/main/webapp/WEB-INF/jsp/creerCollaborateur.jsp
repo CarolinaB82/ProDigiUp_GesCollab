@@ -118,8 +118,8 @@
                         <select id="statut" name="statut">
                             <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
                             <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
-                            <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
+                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD TREMPLIN</option>
+                            <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>STAGE</option>
 
 
                         </select>
@@ -130,7 +130,7 @@
                         <label for="categorie">Catégorie</label>
                         <select id="categorie" name="categorie">
                             <option value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'selected' : ''}>ETAM</option>
-                            <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>Cadre</option>
+                            <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>CADRE</option>
                         </select>
                         <div class="error-details-message">${requestScope.errors.categorie}</div>
                     </div>
@@ -150,9 +150,9 @@
                         <div>
                             <label for="rqth">RQTH</label>
                             <select id="rqth" name="rqth" onchange="toggleDateField()">
-                                <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
-                                <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
-                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
+                                <option value="oui" ${isOuiSelected ? 'selected' : ''}>Oui</option>
+                                <option value="non" ${!isOuiSelected ? 'selected' : ''}>Non</option>
+                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>A vie</option>
                             </select>
                             <div class="error-details-message">${requestScope.errors.rqth}</div>
                         </div>
@@ -208,7 +208,7 @@
                     <div class="combobox-container">
                         <div class="combobox">
 
-                            <label for="responsable">Responsable activité</label>
+                            <label for="responsable">Responsable d'activité</label>
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
@@ -219,78 +219,14 @@
                                 <input  type="submit" value="Valider">
                                 <input type="reset" value="Annuler">
                             </div>
-                            </fieldset>
+                        </div>
+                    </div>
+                </fieldset>
 
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                            </form>
-                            <script>
-                                            document.addEventListener('DOMContentLoaded', function () {
-                                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-                                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                                                const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
-
-                                                dropdownToggles.forEach(toggle => {
-                                                    toggle.addEventListener('click', function (event) {
-                                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                                                        this.classList.toggle('active');
-                                                        const dropdownMenu = this.nextElementSibling;
-                                                        if (dropdownMenu.style.display === 'block') {
-                                                            dropdownMenu.style.display = 'none';
-                                                        } else {
-                                                            dropdownMenu.style.display = 'block';
-                                                        }
-                                                    });
-                                                });
-
-                                                // Empêche la fermeture du menu lorsque l'on clique sur une option
-                                                dropdownMenus.forEach(menu => {
-                                                    menu.addEventListener('click', function (event) {
-                                                        event.stopPropagation();
-                                                    });
-                                                });
-
-                                                // Fermer le menu déroulant lorsqu'une option est cochée
-                                                checkboxes.forEach(checkbox => {
-                                                    checkbox.addEventListener('change', function () {
-                                                        const dropdownMenu = this.closest('.dropdown-menu');
-                                                        const dropdownToggle = dropdownMenu.previousElementSibling;
-
-                                                        if (this.value === 'oui') {
-                                                            toggleDateField();
-                                                        }
-
-                                                        dropdownToggle.classList.remove('active');
-                                                        dropdownMenu.style.display = 'none';
-                                                    });
-                                                });
-
-                                                // Gestion du champ de date pour RQTH
-                                                function toggleDateField() {
-                                                    var rqthSelect = document.querySelector('input[name="rqth"]:checked');
-                                                    var dateField = document.getElementById('date-renouvellement');
-                                                    var dateInput = document.getElementById('date_de_renouvellement');
-
-                                                    if (rqthSelect && rqthSelect.value === 'oui') {
-                                                        dateField.style.display = 'block';
-                                                        dateInput.disabled = false;
-                                                    } else {
-                                                        dateField.style.display = 'none';
-                                                        dateInput.disabled = true;
-                                                        dateInput.value = '';
-                                                    }
-                                                }
-
-                                                // Ajout d'écouteurs sur les options RQTH
-                                                document.querySelectorAll('input[name="rqth"]').forEach(input => {
-                                                    input.addEventListener('change', toggleDateField);
-                                                });
-
-                                                toggleDateField(); // Assurez-vous que l'état initial est correct
-                                            });
-                            </script>
-
-                            </main>
-                            </body>
-                            <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                            </html>
+            </form>
+        </main>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+</html>

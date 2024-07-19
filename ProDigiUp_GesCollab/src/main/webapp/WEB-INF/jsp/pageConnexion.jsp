@@ -20,6 +20,7 @@
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
+            <h1>Authentification</h1>
             <nav class="centered-form">
                 <div>
                     <label for="username">Identifiant :</label>
