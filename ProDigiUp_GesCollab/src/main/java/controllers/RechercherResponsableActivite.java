@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * servlet nommée RechercherResponsableActivite qui gère les requêtes HTTP GET /
+ * contrôleur dans l'architecture MVC Gestion de la recherche par différents
+ * critères Traitement des requetes AJAX pour les suggestions Affichage des
+ * resultats complets sur la JSP
  *
  * @author asolanas
  */
@@ -31,13 +35,22 @@ public class RechercherResponsableActivite extends HttpServlet {
         this.responsableActiviteDao = new ResponsableActiviteDao();
     }
 
+    /**
+     * Traite les requêtes GET pour la recherche de responsables d'activité ou
+     * les suggestions AJAX.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
-        
-         System.out.println("Recherche: " + recherche + ", Type: " + type);
+
+        System.out.println("Recherche: " + recherche + ", Type: " + type);
 
         if (recherche != null && type != null) {
             try {
@@ -52,7 +65,7 @@ public class RechercherResponsableActivite extends HttpServlet {
                     case "prenom":
                         suggestions = responsableActiviteDao.rechercherRaParPrenom(recherche);
                         break;
-                    
+
                     default:
                         suggestions = new ArrayList<>();
                 }
@@ -91,7 +104,7 @@ public class RechercherResponsableActivite extends HttpServlet {
                     resultats.addAll(responsableActiviteDao.rechercherRaParMatricule(recherche));
                     resultats.addAll(responsableActiviteDao.rechercherRaParNom(recherche));
                     resultats.addAll(responsableActiviteDao.rechercherRaParPrenom(recherche));
-                    
+
                 }
                 req.setAttribute("resultats", resultats);
                 req.setAttribute("currentPage", "rechercher_ra");

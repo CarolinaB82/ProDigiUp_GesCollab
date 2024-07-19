@@ -28,6 +28,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * servlet nommée CreerRa qui gère les requêtes HTTP GET et POST / contrôleur
+ * dans l'architecture MVC Creation de partenaire Valication des données en lien
+ * avec CreerResponsableActiviteFormChecker Interaction avec la base de données
+ * Utilisation JSP pour la vue
  *
  * @author asolanas
  */
@@ -35,6 +39,17 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public class CreerResponsableActivite extends HttpServlet {
 
+    /**
+     * Gère les requêtes GET pour afficher la page de création de responsable
+     * d'activité. Charge les listes de collaborateurs et partenaires depuis la
+     * base de données et les ajoute en tant qu'attributs à la requête avant de
+     * rediriger vers la page de création.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -46,6 +61,16 @@ public class CreerResponsableActivite extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/creerResponsableActivite.jsp").forward(req, resp);
     }
 
+    /**
+     * Gère les requêtes POST pour créer un nouveau responsable d'activité à
+     * partir des données du formulaire. Valide le formulaire et gère les
+     * erreurs le cas échéant.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -93,34 +118,34 @@ public class CreerResponsableActivite extends HttpServlet {
                         proposerDao.create(proposer);
                     }
                 }
-               
+
                 //  ResponsableActivite ra = responsableActiviteDao.read(responsableActivite.getId());
                 req.setAttribute("ra", ra);
-                
+
                 PartenaireDao partenaireDao = new PartenaireDao();
                 List<String> partenaireNoms = new ArrayList<>();
-                for(String partenaireIdStr : partenaireIds){
+                for (String partenaireIdStr : partenaireIds) {
                     Partenaire part = partenaireDao.read(Integer.parseInt(partenaireIdStr));
-                    if(part != null) {
+                    if (part != null) {
                         partenaireNoms.add(part.getNom());
                     }
                 }
-                
+
                 String partenaire = String.join(", ", partenaireNoms);
                 req.setAttribute("partenaire", partenaire);
-                
+
                 CollaborateurDao collaborateurDao = new CollaborateurDao();
                 List<String> collaborateurNoms = new ArrayList<>();
-                for(String collaborateurIdStr : collaborateurIds){
+                for (String collaborateurIdStr : collaborateurIds) {
                     Collaborateur collaborateur = collaborateurDao.read(Integer.parseInt(collaborateurIdStr));
-                    if(collaborateur != null) {
+                    if (collaborateur != null) {
                         collaborateurNoms.add(collaborateur.getNom());
                     }
                 }
-                
+
                 String collaborateur = String.join(", ", collaborateurNoms);
                 req.setAttribute("collaborateur", collaborateur);
-                
+
                 req.setAttribute("message", "Responsable d'Activité bien ajouté !");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherResponsableActivite.jsp").forward(req, resp);
             } catch (SQLException ex) {

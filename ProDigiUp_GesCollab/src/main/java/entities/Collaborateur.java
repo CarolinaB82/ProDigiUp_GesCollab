@@ -1,30 +1,71 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.io.Serializable;
 
 import java.util.Objects;
 import java.time.LocalDate;
 import java.util.List;
 
+@JsonPropertyOrder({
+    "id",
+    "matricule",
+    "nom",
+    "prenom",
+    "mail_1",
+    "mail_2",
+    "telephone_personnel",
+    "statut",
+    "categorie",
+    "genre",
+    "rqth",
+    "date_de_renouvellement",
+    "metier",
+    "responsablesIds"
+})
+
 /**
- *
+ * Représente un collaborateur dans le système.
+ * Cette classe implémente l'interface Identifiable et est sérialisable.
+ * Elle contient des attributs décrivant les informations d'un collaborateur.
+ * 
+ * Les attributs incluent l'identifiant, le matricule, le nom, le prénom,
+ * les adresses e-mail, les numéros de téléphone, le statut, la catégorie,
+ * le genre, l'indicateur de RQTH, la date de renouvellement et le métier du collaborateur.
+ * 
+ * Elle inclut également le nom de la prestation associée et une liste d'identifiants
+ * des responsables liés au collaborateur.
  * @author cberge
  */
 @SuppressWarnings("serial")
 public class Collaborateur implements Identifiable, Serializable {
 
+    @JsonProperty(index=1)
     private Integer id;
+    @JsonProperty(index=2)
     private Integer matricule;
+    @JsonProperty(index=3)
     private String nom;
+    @JsonProperty(index=4)
     private String prenom;
+    @JsonProperty(index=5)
     private String mail_1;
+    @JsonProperty(index=6)
     private String mail_2;
+    @JsonProperty(index=7)
     private String telephone_personnel;
+    @JsonProperty(index=8)
     private String statut;
+    @JsonProperty(index=9)
     private String categorie;
+    @JsonProperty(index=10)
     private String genre;
+    @JsonProperty(index=11)
     private String rqth;
+    @JsonProperty(index=12)
     private LocalDate date_de_renouvellement;
+    @JsonProperty(index=13)
     private String metier;
 
     @Override
@@ -172,20 +213,6 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setMetier(String metier) {
         this.metier = metier;
     }
-
-    // Nouveau champ pour la prestation
-    private String nomPrestation;
-
-    // Getters et setters existants
-    public void setNomPrestation(String nomPrestation) {
-        this.nomPrestation = nomPrestation;
-    }
-
-    public String getNomPrestation() {
-        return nomPrestation;
-    }
-    
-    
     
      private  List<Integer> responsableIds;
      

@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Représente un responsable d'activité avec ses attributs principaux comme
+ * l'identifiant, le matricule, le nom, le prénom, l'email, et les numéros de
+ * téléphone professionnel et personnel.
  *
- * @author Amélie Solanas Pruvost <future CDA>
+ * @author Amélie Solanas Pruvost future CDA
  */
 @SuppressWarnings("serial")
 public class ResponsableActivite implements Identifiable, Serializable {
@@ -113,8 +116,8 @@ public class ResponsableActivite implements Identifiable, Serializable {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
-    
-     public String getMail() {
+
+    public String getMail() {
         return mail;
     }
 
@@ -137,24 +140,26 @@ public class ResponsableActivite implements Identifiable, Serializable {
     public void setTelephone_personnel(String telephone_personnel) {
         this.telephone_personnel = telephone_personnel;
     }
-    
-      private  List<Integer> partenaireIds;
-     
-    public  List<Integer> getPartenaireIds(){
+
+    private List<Integer> partenaireIds;
+
+    public List<Integer> getPartenaireIds() {
         return partenaireIds;
     }
-    public void setPartenaireIds( List<Integer> partenaireIds){
-            this.partenaireIds = partenaireIds;
-    
+
+    public void setPartenaireIds(List<Integer> partenaireIds) {
+        this.partenaireIds = partenaireIds;
+
     }
-    
-private  List<Integer> collaborateurIds;
-     
-    public  List<Integer> getCollaborateurIds(){
+
+    private List<Integer> collaborateurIds;
+
+    public List<Integer> getCollaborateurIds() {
         return collaborateurIds;
     }
-    public void setCollaborateurIds( List<Integer> collaborateurIds){
-            this.collaborateurIds = collaborateurIds;
-    
+
+    public void setCollaborateurIds(List<Integer> collaborateurIds) {
+        this.collaborateurIds = collaborateurIds;
+
     }
 }

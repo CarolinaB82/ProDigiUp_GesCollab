@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * servlet nommée RechercherCollaborateur qui gère les requêtes HTTP GET /
+ * contrôleur dans l'architecture MVC Gestion de la recherche par différents
+ * critères Traitement des requetes AJAX pour les suggestions Affichage des
+ * resultats complets sur la JSP
  *
  * @author asolanas
  */
@@ -33,6 +37,15 @@ public class RechercherCollaborateur extends HttpServlet {
         this.collaborateurDao = new CollaborateurDao();
     }
 
+    /**
+     * Traite les requêtes GET pour la recherche de collaborateurs ou les
+     * suggestions AJAX.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String recherche = req.getParameter("recherche");
@@ -78,7 +91,7 @@ public class RechercherCollaborateur extends HttpServlet {
                     out.println("<td>" + collaborateur.getStatut() + "</td>");
                     out.println("</tr>");
                 }
-            out.println("</tbody>");
+                out.println("</tbody>");
                 out.println("</table>");
                 out.close();
                 return;

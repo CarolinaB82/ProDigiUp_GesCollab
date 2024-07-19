@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Représente l'association entre un Responsable d'Activité (RA) et un
+ * Collaborateur. Cette classe permet de lier un RA à un Collaborateur par leur
+ * identifiant respectif. Implémente l'interface Identifiable pour identifier de
+ * manière unique chaque instance de Posseder. La classe est sérialisable pour
+ * permettre sa sauvegarde et sa restauration.
  *
  * @author cberge
  */
@@ -17,10 +22,6 @@ public class Posseder implements Serializable, Identifiable {
     private Integer id_ra;
     private Integer id_collaborateur;
 
-    
-    
-    
-    
     public Integer getId_ra() {
         return id_ra;
     }
@@ -77,8 +78,4 @@ public class Posseder implements Serializable, Identifiable {
     public void setId(Integer id) {
     }
 
-    
-    
-    
- 
 }

@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +28,7 @@
                 <div>${requestScope.errMsg}</div>
                 <fieldset>
                     <legend>Nouveau responsable d'activite</legend>
-                      <input type="hidden" name="id" value="${ra.id}" />
+                    <input type="hidden" name="id" value="${ra.id}" />
                     <div>
                         <label for="matricule">Matricule</label>
                         <input type="text" id="matricule" name="matricule" 
@@ -100,7 +102,7 @@
                     <div class="combobox-container">
                         <div class="combobox">
 
-                            <label for="multi-select">Son partenaire</label>
+                            <label for="multi-select">Partenaire</label>
                             <br>
                             <select id="partenaire" name="partenaire" multiple>
                                 <c:forEach var="partenaire" items="${partenaireList}">
@@ -113,7 +115,7 @@
                         </div>
 
                         <div class="combobox">
-                            <label for="multi-select">Son collaborateur</label>
+                            <label for="multi-select">Collaborateur</label>
                             <br>
                             <select id="collaborateur" name="collaborateur" multiple>
                                 <c:forEach var="collaborateur" items="${collaborateurList}">

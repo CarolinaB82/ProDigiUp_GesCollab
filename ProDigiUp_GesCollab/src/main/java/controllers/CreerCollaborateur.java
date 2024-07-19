@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +30,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * servlet nommée CreerCollaborateur qui gère les requêtes HTTP GET et POST /
+ * contrôleur dans l'architecture MVC Creation de collaborateur Valication des
+ * données en lien avec CreerCollaborateurFormChecker Interaction avec la base
+ * de données Utilisation JSP pour la vue
  *
  * @author cberge
  */
@@ -38,6 +41,14 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public class CreerCollaborateur extends HttpServlet {
 
+    /**
+     * Gère les requêtes GET pour afficher la page de création de collaborateur.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -47,6 +58,16 @@ public class CreerCollaborateur extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
     }
 
+    /**
+     * Gère les requêtes POST pour créer un nouveau collaborateur à partir des
+     * données du formulaire. Valide le formulaire et gère les erreurs le cas
+     * échéant.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -111,26 +132,17 @@ public class CreerCollaborateur extends HttpServlet {
                 if (responsableActiviteIds != null) {
                     for (String responsableId : responsableActiviteIds) {
                         int idResponsable = Integer.parseInt(responsableId);
-                   
-                        
-                        
-                        
-                        
-                                            if (idResponsable == collab.getId()) {
-                                            nv.addError("responsable", "L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                                            loadLists(req);
-                                            req.setAttribute("errors", nv.getErrors());
-                                            req.setAttribute("collaborateur", collaborateur);
-                                            req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
-                                            req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
-                                            return;
-                                        }
-                        
-                        
-                        
-                        
-                        
-                        
+
+                        if (idResponsable == collab.getId()) {
+                            nv.addError("responsable", "L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                            loadLists(req);
+                            req.setAttribute("errors", nv.getErrors());
+                            req.setAttribute("collaborateur", collaborateur);
+                            req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+                            req.getRequestDispatcher("/WEB-INF/jsp/creerCollaborateur.jsp").forward(req, resp);
+                            return;
+                        }
+
                         Posseder posseder = new Posseder();
                         posseder.setId_ra(Integer.parseInt(responsableId));
                         posseder.setId_collaborateur(collab.getId());
@@ -139,21 +151,23 @@ public class CreerCollaborateur extends HttpServlet {
                 }
 
                 req.setAttribute("collaborateur", collab);
-                
+
                 ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
                 List<String> responsableNoms = new ArrayList<>();
-                for(String responsableIdStr : responsableActiviteIds){
-                    ResponsableActivite responsable = responsableActiviteDao.read(Integer.parseInt(responsableIdStr));
-                    if(responsable != null) {
-                        responsableNoms.add(responsable.getNom());
+                if (responsableActiviteIds != null) {
+                    for (String responsableIdStr : responsableActiviteIds) {
+                        ResponsableActivite responsable = responsableActiviteDao.read(Integer.parseInt(responsableIdStr));
+                        if (responsable != null) {
+                            responsableNoms.add(responsable.getNom());
+                        }
                     }
                 }
+                
 
                 String responsablesActivite = String.join(", ", responsableNoms);
 
                 req.setAttribute("responsablesActivite", responsablesActivite);
-                
-                
+
                 req.setAttribute("message", "Votre collaborateur est bien enregistré");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
 

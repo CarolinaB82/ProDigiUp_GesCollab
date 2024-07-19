@@ -28,7 +28,7 @@
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
                     <legend>Nouveau Partenaire</legend>
-                <input type="hidden" name="id" value="${partenaire.id}" />
+                    <input type="hidden" name="id" value="${partenaire.id}" />
 
 
                     <div>
@@ -104,7 +104,7 @@
 
                     <div class="combobox-container">
                         <div class="combobox">
-                            <label for="multi-select">Son responsable activité</label>
+                            <label for="multi-select">Responsable activité</label>
                             <br>
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
@@ -124,7 +124,7 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
-                    
+
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>

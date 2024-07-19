@@ -5,6 +5,9 @@
 package entities;
 
 /**
+ * Interface représentant une entité identifiée par un identifiant unique de
+ * type Integer. Les classes implémentant cette interface doivent fournir des
+ * méthodes pour récupérer et définir cet identifiant.
  *
  * @author cberge
  */

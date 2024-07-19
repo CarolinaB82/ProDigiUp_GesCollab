@@ -66,30 +66,43 @@
                             <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
                         </div>
                         <br>
+                        <div class="combobox-container">
+                            <div class="combobox">
+                                <label for="multi-select-responsable_activite">Responsable activité</label>
+                                <br>
+                                <!--<label for="id_ra">Responsable d'Activité:</label>-->
+                                <select id="id_ra" name="id_ra" >
+                                    <c:forEach var="ra" items="${responsablesActivite}">
+                                        <option value="${ra.id}" <c:if test="${ra.id == prestation.id_ra}">selected</c:if>>${ra.nom}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
 
-                        <label for="id_ra">Responsable d'Activité:</label>
-                        <select id="id_ra" name="id_ra">
-                            <c:forEach var="ra" items="${responsablesActivite}">
-                                <option value="${ra.id}" <c:if test="${ra.id == prestation.id_ra}">selected</c:if>>${ra.nom}</option>
-                            </c:forEach>
-                        </select>
+                            <div class="combobox">
 
-                        <label for="id_collaborateur">Collaborateur:</label>
-                        <select id="id_collaborateur" name="id_collaborateur">
-                            <c:forEach var="collaborateur" items="${collaborateurs}">
-                                <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
-                            </c:forEach>
-                        </select>
+                                <label for="multi-select">Collaborateur</label>
+                                <br>
+                                <!--<label for="id_collaborateur">Collaborateur:</label>-->
+                                <select id="id_collaborateur" name="id_collaborateur">
+                                    <c:forEach var="collaborateur" items="${collaborateurs}">
+                                        <option value="${collaborateur.id}" <c:if test="${collaborateur.id == prestation.id_collaborateur}">selected</c:if>>${collaborateur.nom}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
 
-                        <label for="id_partenaire">Partenaire:</label>
-                        <select id="id_partenaire" name="id_partenaire">
-                            <c:forEach var="partenaire" items="${partenaires}">
-                                <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
-                            </c:forEach>
-                        </select>
+                            <div class="combobox">
+                                <label for="multi-select">Partenaire</label>
+                                <br>
+                                <!--<label for="id_partenaire">Partenaire:</label>-->
+
+                                <select id="id_partenaire" name="id_partenaire">
+                                    <c:forEach var="partenaire" items="${partenaires}">
+                                        <option value="${partenaire.id}" <c:if test="${partenaire.id == prestation.id_partenaire}">selected</c:if>>${partenaire.nom}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                         </div>
 
-                        <br>
                         <div>
                             <input type="submit" value="Modifier">
                             <input type="reset" value="Annuler">

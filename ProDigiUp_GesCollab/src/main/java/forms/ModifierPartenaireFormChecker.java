@@ -8,15 +8,33 @@ import entities.Partenaire;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
+ * Cette classe est utilisée pour valider et traiter les données soumises depuis
+ * un formulaire de modification d'un partenaire. Elle hérite de la classe
+ * abstraite FormChecker et implémente la méthode checkForm pour effectuer la
+ * validation des champs du formulaire et créer un objet Partenaire avec les
+ * données validées.
  *
  * @author cberge
  */
 public class ModifierPartenaireFormChecker extends FormChecker<Partenaire> {
 
+    /**
+     * Constructeur de la classe ModifierPartenaireFormChecker. Initialise la
+     * classe parente avec la requête HTTP.
+     *
+     * @param request La requête HTTP contenant les données du formulaire à
+     * valider.
+     */
     public ModifierPartenaireFormChecker(HttpServletRequest request) {
         super(request);
     }
 
+    /**
+     * Méthode héritée de la classe FormChecker. Vérifie et traite les données
+     * soumises depuis le formulaire de modification d'un partenaire.
+     *
+     * @return Un objet Partenaire contenant les données validées du formulaire.
+     */
     @Override
     public Partenaire checkForm() {
         Partenaire obj = new Partenaire();
@@ -24,18 +42,17 @@ public class ModifierPartenaireFormChecker extends FormChecker<Partenaire> {
         String idStr = request.getParameter("id");
         int id = Integer.parseInt(idStr); // Assurez-vous que id est bien une valeur numérique
 
-        
         // Récupérer les valeurs des champs modifiables
         String nom = request.getParameter("nom");
-        
+
         String numero_voieStr = request.getParameter("numero_voie");
         int numero_voie = Integer.parseInt(numero_voieStr);
-        
+
         String adresse = request.getParameter("adresse");
-        
+
         String code_postalStr = request.getParameter("code_postal");
-         int code_postal = Integer.parseInt(code_postalStr);
-        
+        int code_postal = Integer.parseInt(code_postalStr);
+
         String ville = request.getParameter("ville");
 
         // Set id dans l'objet Collaborateur
@@ -43,7 +60,6 @@ public class ModifierPartenaireFormChecker extends FormChecker<Partenaire> {
 // Set des autres champs dans l'objet Collaborateur
         obj.setNom(nom);
 
-        
         // Vérification et conversion du matricule
         try {
             obj.setNumero_voie(numero_voie);
@@ -59,7 +75,7 @@ public class ModifierPartenaireFormChecker extends FormChecker<Partenaire> {
 //        }
 
         obj.setAdresse(adresse);
-        
+
         // Vérification et conversion du matricule
         try {
             obj.setCode_postal(code_postal);

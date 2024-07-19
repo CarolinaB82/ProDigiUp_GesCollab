@@ -43,6 +43,7 @@
                 <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
                 
                 <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
+                <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
 
 
                   <div class="button-container">

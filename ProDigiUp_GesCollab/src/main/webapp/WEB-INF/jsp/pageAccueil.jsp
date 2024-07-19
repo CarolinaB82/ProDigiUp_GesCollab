@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
 
@@ -18,10 +19,10 @@
     <body>
         <main>
             <%@include file="/WEB-INF/jspf/header.jsp" %>
-           <h1 class='bienvenue'>Bienvenue</h1>
+            <h1 class='bienvenue'>Bienvenue</h1>
 
-           <div class='accueil'>
-            <p><a href="<c:url value="/liste_collaborateurs"/>"style='margin-left: -200px'class="custom-link">Connexion</a></p>
+            <div class='accueil'>
+                <p><a href="<c:url value="/liste_collaborateurs"/>"style='margin-left: -200px'class="custom-link">Connexion</a></p>
 
                 <!-- <ul>
                     <p><a href="<c:url value="/creer_ra"/>">Créer un Responsable d'Activité</a></p>

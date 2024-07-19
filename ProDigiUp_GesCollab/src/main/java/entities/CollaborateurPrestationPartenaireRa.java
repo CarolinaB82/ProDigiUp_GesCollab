@@ -7,6 +7,11 @@ package entities;
 import java.util.Collection;
 
 /**
+ * Représente une association entre un collaborateur, des prestations avec des
+ * partenaires et une indication d'activité de prestation.
+ *
+ * Cette classe encapsule un objet Collaborateur, une collection de
+ * PrestationRaPartenaire et un indicateur d'activité de prestation.
  *
  * @author cberge
  */

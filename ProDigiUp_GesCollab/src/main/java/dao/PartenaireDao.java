@@ -5,15 +5,29 @@
 package dao;
 
 import entities.Partenaire;
+import entities.Prestation;
+import entities.ResponsableActivite;
+import historique.CSVUtil;
+import static historique.JsonUtil.collaborateurToJson;
+import static historique.JsonUtil.partenaireToJson;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
+ * Implementation d'une DAO Gestion du CRUD sur les objets Partenaire dans la
+ * base de données relationnelles Connexion a la BDD Constructeur Methodes CRUD
+ * Gestion des exceptions Methodes specifiques La classe PartenaireDao encapsule
+ * la logique d'accès aux données pour les objets Partenaire
  *
  * @author asolanas
  */
@@ -23,6 +37,14 @@ public class PartenaireDao extends Dao<Partenaire> {
         super("partenaire");
     }
 
+    /**
+     * Crée un objet Partenaire à partir des données extraites d'un ResultSet.
+     *
+     * @param rs le ResultSet contenant les données de la base de données
+     * @return un objet Partenaire initialisé avec les données du ResultSet
+     * @throws SQLException si une erreur survient lors de l'accès aux données
+     * du ResultSet
+     */
     @Override
     protected Partenaire createObject(ResultSet rs) throws SQLException {
         Partenaire partenaire = new Partenaire() {
@@ -37,6 +59,14 @@ public class PartenaireDao extends Dao<Partenaire> {
         return partenaire;
     }
 
+    /**
+     * Crée un nouveau partenaire dans la base de données avec les informations
+     * spécifiées.
+     *
+     * @param partenaire l'objet Partenaire à insérer dans la base de données
+     * @throws SQLException si une erreur survient lors de l'insertion dans la
+     * base de données
+     */
     @Override
     public void create(Partenaire partenaire) throws SQLException {
         String sql = "INSERT INTO partenaire (`nom`, `numero_voie`, `adresse`, `code_postal`, `ville`) VALUES (?, ?, ?, ?, ?)";
@@ -60,6 +90,14 @@ public class PartenaireDao extends Dao<Partenaire> {
         }
     }
 
+    /**
+     * Lit un partenaire à partir de la base de données en fonction de son
+     * identifiant.
+     *
+     * @param id l'identifiant du partenaire à rechercher
+     * @return l'objet Partenaire correspondant à l'identifiant spécifié, ou
+     * null s'il n'est pas trouvé
+     */
     @Override
     public Partenaire read(Integer id) {
         Partenaire partenaire = null;
@@ -85,10 +123,22 @@ public class PartenaireDao extends Dao<Partenaire> {
         }
         return partenaire;
     }
-  // Méthode pour mettre à jour la table des responsables d'activité associés au collaborateur
+
+    /**
+     * Met à jour les responsables d'activité associés à un partenaire dans la
+     * base de données.
+     *
+     * @param conn la connexion à la base de données
+     * @param partenaireId l'identifiant du partenaire pour lequel les
+     * responsables d'activité sont mis à jour
+     * @param responsableIds la liste des identifiants des responsables
+     * d'activité à associer au partenaire
+     * @throws SQLException si une erreur survient lors de l'accès ou de la mise
+     * à jour dans la base de données
+     */
     private void updateResponsablesActivite(Connection conn, int partenaireId, List<Integer> responsableIds) throws SQLException {
         // Supprimer tous les enregistrements associés au collaborateur
-        if(responsableIds != null){
+        if (responsableIds != null) {
             String deleteSql = "DELETE FROM proposer WHERE id_partenaire=?";
             try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
                 deleteStmt.setInt(1, partenaireId);
@@ -103,17 +153,26 @@ public class PartenaireDao extends Dao<Partenaire> {
                     insertStmt.setInt(2, responsableId);
                     insertStmt.executeUpdate();
                 }
-            }         
+            }
         }
-        
+
     }
-    
+
+    /**
+     * Met à jour un enregistrement de partenaire dans la base de données et ses
+     * responsables d'activité associés.
+     *
+     * @param partenaire l'objet Partenaire contenant les nouvelles valeurs à
+     * mettre à jour
+     */
     @Override
-    public void update(Partenaire partenaire) {
+    public void update(Partenaire partenaire) throws SQLException{
         String sql = "UPDATE partenaire SET nom=?, numero_voie=?, adresse=?, code_postal=?, ville=?"
                 + "WHERE id_partenaire=?";
-
+String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
+                + "VALUES ( ?, ?, ?, ?, ?, ?)";
         try {
+             Partenaire partenaireAvant = getPartenaire(connexion, partenaire.getId());
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setString(1, partenaire.getNom());
             pstmt.setInt(2, partenaire.getNumero_voie());
@@ -121,28 +180,146 @@ public class PartenaireDao extends Dao<Partenaire> {
             pstmt.setInt(4, partenaire.getCode_postal());
             pstmt.setString(5, partenaire.getVille());
             pstmt.setInt(6, partenaire.getId());
-                    
-            pstmt.executeUpdate();
+
+//            pstmt.executeUpdate();
             // Mettre à jour la table des responsables d'activité associés au collaborateur
             updateResponsablesActivite(connexion, partenaire.getId(), partenaire.getResponsablesIds());
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            // Vérifier si la mise à jour a réussi
+            if (rowsAffected > 0) {
+                 PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
+                  pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmtInsertHistorique.setString(2, "mise à jour");
+            
+            pstmtInsertHistorique.setString(3, "partenaire");
+            pstmtInsertHistorique.setInt(4, partenaire.getId());
+            
+                         // Date d'action actuelle
+
+            pstmtInsertHistorique.setString(5, partenaireToJson(partenaireAvant)); // Convertir en JSON ou autre format texte
+            pstmtInsertHistorique.setString(6, partenaireToJson(partenaire)); // Convertir en JSON ou autre format texte
+
+            pstmtInsertHistorique.executeUpdate();
+            
+              Partenaire partenaireApres = getPartenaire(connexion, partenaire.getId());
+
+                // Journalisation avant et après la modification
+                CSVUtil.writeHistory("Modification de partenaire", partenaireAvant);
+                CSVUtil.writeHistory("Après modification", partenaireApres);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de l'update : " + ex.getMessage());
+         } catch (IOException ex) {
+            Logger.getLogger(CollaborateurDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     public Partenaire getPartenaire(Connection connexion, int idPartenaire) throws SQLException {
+        Partenaire partenaire = null;
+        String sql = "SELECT * FROM partenaire WHERE id_partenaire=?";
+
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idPartenaire);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                partenaire = new Partenaire();
+                
+                partenaire.setId(rs.getInt("id_partenaire"));
+                partenaire.setNom(rs.getString("nom"));
+                partenaire.setNumero_voie(rs.getInt("numero_voie"));
+                partenaire.setAdresse(rs.getString("adresse"));
+                partenaire.setCode_postal(rs.getInt("code_postal"));
+                partenaire.setVille(rs.getString("ville"));
+            }
+             
+            ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+        Collection<ResponsableActivite> listResponsableActivitePartenaire = responsableActiviteDao.listResponsablesActivite(partenaire.getId());
+            
+            
+             if (partenaire != null && !listResponsableActivitePartenaire.isEmpty()) {
+                List<Integer> partenairesIds = new ArrayList<>();
+                for(ResponsableActivite resp : listResponsableActivitePartenaire){
+                    partenairesIds.add(resp.getId());
+                }
+
+                partenaire.setResponsableIds(partenairesIds);
+            }
+            
+            
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+        }
+
+        return partenaire;
+    }
+    /**
+     * Supprime un enregistrement de partenaire de la base de données en
+     * fonction de son identifiant.
+     *
+     * @param id l'identifiant de l'enregistrement de partenaire à supprimer
+     */
+    public void delete(Integer id) throws IOException{
+        String sql = "DELETE FROM partenaire WHERE id_partenaire=?";
+        try {
+            
+             // Récupérer les informations du collaborateur avant la suppression
+            Partenaire partenaire = getPartenaire(connexion, id);
+            
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            
+            // Enregistrer historique dans la BDD
+            String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
+                + "VALUES ( ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
+                 pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmtInsertHistorique.setString(2, "suppression");
+            
+            pstmtInsertHistorique.setString(3, "partenaire");
+            pstmtInsertHistorique.setInt(4, partenaire.getId());
+            
+                         // Date d'action actuelle
+
+            pstmtInsertHistorique.setString(5, partenaireToJson(partenaire)); // Convertir en JSON ou autre format texte
+            pstmtInsertHistorique.setString(6, null); // Convertir en JSON ou autre format texte
+
+            pstmtInsertHistorique.executeUpdate();
+
+            // Enregistrer les informations dans le fichier CSV
+            CSVUtil.writeHistory("Avant suppression de partenaire", partenaire);
+            
+            
             
         } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
     }
-    public void delete (Integer id){
-        String sql = "DELETE FROM partenaire WHERE id_partenaire=?";
-        try {
-            PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, id);
-             pstmt.executeUpdate();
-              } catch (SQLException ex) {
-            System.out.println("Erreur lors de l'update : " + ex.getMessage());
-        }
-    }
-    
 
-    // rajout test
+    /**
+     * Vérifie si un partenaire existe dans la base de données en fonction de
+     * son nom.
+     *
+     * @param nom le nom du partenaire à vérifier
+     * @return true si un partenaire avec le nom spécifié existe, sinon false
+     */
     public boolean exists(String nom) {
         String sql = "SELECT 1 FROM partenaire WHERE nom=?";
         try {
@@ -156,6 +333,15 @@ public class PartenaireDao extends Dao<Partenaire> {
         return false;
     }
 
+    /**
+     * Récupère la liste des partenaires associés à un responsable d'activité
+     * spécifié.
+     *
+     * @param idRa l'identifiant du responsable d'activité pour lequel récupérer
+     * les partenaires associés
+     * @return une collection de partenaires associés au responsable d'activité
+     * spécifié
+     */
     public Collection<Partenaire> listPartenaire(int idRa) {
         String sql = "SELECT id_partenaire FROM proposer WHERE id_ra=?";
         ArrayList<Partenaire> list = new ArrayList<>();
@@ -174,6 +360,13 @@ public class PartenaireDao extends Dao<Partenaire> {
         return list;
     }
 
+    /**
+     * Récupère l'identifiant le plus élevé parmi les partenaires créés dans la
+     * base de données.
+     *
+     * @return l'identifiant le plus élevé parmi les partenaires créés, ou 0 si
+     * aucun partenaire n'existe
+     */
     public int getLastIdCreated() {
         String sql = "SELECT MAX(id_partenaire) AS max_id FROM partenaire";
         int maxId = 0;
@@ -188,5 +381,22 @@ public class PartenaireDao extends Dao<Partenaire> {
         return maxId;
     }
     
-    
+    public Collection<Prestation> listPrestationPartenaire(int idPartenaire) {
+        String sql = "SELECT * FROM prestation WHERE id_partenaire=?";
+        ArrayList<Prestation> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idPartenaire);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idPrestation = rs.getInt("id_prestation");
+                Prestation prestation = DaoFactory.getPrestationDao().read(idPrestation);
+                list.add(prestation);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
+
 }

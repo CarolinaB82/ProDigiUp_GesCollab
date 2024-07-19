@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Représente une proposition faite par un responsable d'activité (RA) à un
+ * partenaire. Cette classe permet de lier un RA à un partenaire spécifique pour
+ * une proposition donnée.
  *
  * @author cberge
  */
@@ -17,7 +20,6 @@ public class Proposer implements Serializable, Identifiable {
     private Integer id_ra;
     private Integer id_partenaire;
 
-    
     public Integer getId_ra() {
         return id_ra;
     }
@@ -73,7 +75,5 @@ public class Proposer implements Serializable, Identifiable {
     @Override
     public void setId(Integer id) {
     }
-    
-    
-    
+
 }

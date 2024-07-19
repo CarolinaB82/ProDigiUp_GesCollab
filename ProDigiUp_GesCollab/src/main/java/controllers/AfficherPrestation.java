@@ -5,12 +5,10 @@
 package controllers;
 
 import dao.CollaborateurDao;
-import dao.DaoFactory;
 import dao.PartenaireDao;
 import dao.PrestationDao;
 import dao.ResponsableActiviteDao;
 import entities.Collaborateur;
-import entities.CollaborateurPrestationPartenaireRa;
 import entities.Partenaire;
 import entities.Prestation;
 import entities.ResponsableActivite;
@@ -21,9 +19,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 
 /**
+ * servlet nommée AfficherPrestation qui gère les requêtes HTTP GET / contrôleur
+ * dans l'architecture MVC Afficher les détails d'une prestation Interaction
+ * avec la base de données Utilisation de JSP pour la vue  *
  *
  * @author cberge
  */
@@ -31,6 +31,14 @@ import java.util.Collection;
 @SuppressWarnings("serial")
 public class AfficherPrestation extends HttpServlet {
 
+    /**
+     * Gère les requêtes GET pour afficher les détails d'une prestation.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());

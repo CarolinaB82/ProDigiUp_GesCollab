@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,7 +28,8 @@
                 <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
                 <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
 
-                <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
+                <p><strong>Responsable(s) activité : </strong><c:out value="${responsablesActivite}"/></p>
+                <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
 
 
                 <div class="button-container">

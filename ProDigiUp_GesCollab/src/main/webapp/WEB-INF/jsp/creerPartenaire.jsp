@@ -103,7 +103,7 @@
 
                     <div class="combobox-container">
                         <div class="combobox">
-                            <label for="multi-select">Responsable(s) activité(s)</label>
+                            <label for="multi-select">Responsable(s) activité</label>
                             <br>
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">

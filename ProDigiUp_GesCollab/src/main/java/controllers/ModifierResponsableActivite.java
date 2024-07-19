@@ -11,6 +11,7 @@ import dao.ProposerDao;
 import dao.ResponsableActiviteDao;
 import entities.Collaborateur;
 import entities.Partenaire;
+import entities.Prestation;
 import entities.ResponsableActivite;
 import forms.ModifierResponsableActiviteFormChecker;
 import jakarta.servlet.ServletException;
@@ -20,14 +21,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
+ * servlet nommée ModifierResponsableActivite qui gère les requêtes HTTP GET et
+ * POST / contrôleur dans l'architecture MVC Affichage des détails d'un ra pour
+ * modification Validation des données soumises via un formulaire Gestion des
+ * erreurs de validation Mise à jour des données dans la base de données
+ * Préparation des données pour l'affichage après la modification Interaction
+ * avec la couche de présentation
  *
  * @author cberge
  */
@@ -36,6 +40,18 @@ import java.util.logging.Logger;
 
 public class ModifierResponsableActivite extends HttpServlet {
 
+    /**
+     * Traite les requêtes GET pour afficher le formulaire de modification du
+     * responsable d'activité. Charge les informations du responsable d'activité
+     * à partir de l'identifiant fourni dans les paramètres de la requête.
+     * Charge également la liste des partenaires et collaborateurs associés à ce
+     * responsable d'activité depuis la base de données.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -45,7 +61,6 @@ public class ModifierResponsableActivite extends HttpServlet {
         ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
         ResponsableActivite ra = responsableActiviteDao.read(responsableActiviteId);
 
-        
         // Récupération des partenaires
         PartenaireDao partenaireDao = new PartenaireDao();
         Collection<Partenaire> partenaireList = partenaireDao.list();
@@ -55,7 +70,7 @@ public class ModifierResponsableActivite extends HttpServlet {
         for (Partenaire partenaire : listPartenaireRa) {
             selectedPartenaires.add(partenaire.getId());
         }
-        
+
         if (ra == null) {
             resp.sendRedirect(req.getContextPath() + "/error.jsp");
             return;
@@ -69,71 +84,33 @@ public class ModifierResponsableActivite extends HttpServlet {
         for (Collaborateur collaborateur : listCollaborateurRa) {
             selectedCollaborateurs.add(collaborateur.getId());
         }
-        
+
         if (ra == null) {
             resp.sendRedirect(req.getContextPath() + "/error.jsp");
             return;
         }
- //Détermine si les valeurs "oui" et "a vie" sont sélectionnées pour le RQTH
-//        boolean isOuiSelected = "oui".equals(collaborateur.getRqth());
-//        boolean isAVieSelected = "a vie".equals(collaborateur.getRqth());
-//       
-//        //Ajoute les informations nécessaires en tant qu'attributs à l'objet HttpServletRequest pour qu'elles soient accessibles dans la JSP
-//        req.setAttribute("isOuiSelected", isOuiSelected);
-//        req.setAttribute("isAVieSelected", isAVieSelected);
-//        
-        
-        
-        
+
         req.setAttribute("ra", ra);
         req.setAttribute("selectedPartenaires", selectedPartenaires);
         req.setAttribute("partenaireList", partenaireList);
         req.setAttribute("selectedCollaborateurs", selectedCollaborateurs);
         req.setAttribute("collaborateurList", collaborateurList);
-        
 
-  //      Formate la date de renouvellement si le collaborateur a le RQTH et une date de renouvellement spécifiée.
-//        if ("oui".equals(collaborateur.getRqth()) && collaborateur.getDate_de_renouvellement() != null) {
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//            String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
-//            req.setAttribute("formattedDate", formattedDate);
-//        }
-//        
-        
-        
-        
         //Transfère la requête et la réponse à la page JSP modifierCollaborateur.jsp pour afficher les informations du collaborateur et les responsables.
         req.getRequestDispatcher("/WEB-INF/jsp/modifierResponsableActivite.jsp").forward(req, resp);
     }
-//}
-//}
-//        
-//        //Détermine si les valeurs "oui" et "a vie" sont sélectionnées pour le RQTH
-//        boolean isOuiSelected = "oui".equals(collaborateur.getRqth());
-//        boolean isAVieSelected = "a vie".equals(collaborateur.getRqth());
-//       
-//        //Ajoute les informations nécessaires en tant qu'attributs à l'objet HttpServletRequest pour qu'elles soient accessibles dans la JSP
-//        req.setAttribute("isOuiSelected", isOuiSelected);
-//        req.setAttribute("isAVieSelected", isAVieSelected);
-//        req.setAttribute("collaborateur", collaborateur);
-//        req.setAttribute("selectedResponsables",selectedResponsables);
-//        req.setAttribute("responsableActiviteList", responsableActiviteList);
-//
-//        //Formate la date de renouvellement si le collaborateur a le RQTH et une date de renouvellement spécifiée.
-//        if ("oui".equals(collaborateur.getRqth()) && collaborateur.getDate_de_renouvellement() != null) {
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//            String formattedDate = collaborateur.getDate_de_renouvellement().format(formatter);
-//            req.setAttribute("formattedDate", formattedDate);
-//        }
-//        //Transfère la requête et la réponse à la page JSP modifierCollaborateur.jsp pour afficher les informations du collaborateur et les responsables.
-//        req.getRequestDispatcher("/WEB-INF/jsp/modifierCollaborateur.jsp").forward(req, resp);
-//    }
-//     //Ce code configure et transfère les informations nécessaires pour modifier les détails d'un collaborateur 
-//    //et afficher une liste de responsables d'activité dans une page JSP. Les étapes incluent la gestion des encodages, 
-//    //la récupération des données de la base de données, la transformation des données, la gestion des erreurs, 
-//    //et la préparation des données pour l'affichage.
-//    
 
+    /**
+     * Traite les requêtes POST pour soumettre les modifications du formulaire
+     * de modification du responsable d'activité. Valide les données du
+     * formulaire, gère les erreurs éventuelles et met à jour les informations
+     * du responsable d'activité en base de données.
+     *
+     * @param req HttpServletRequest représentant la requête HTTP
+     * @param resp HttpServletResponse représentant la réponse HTTP
+     * @throws ServletException Si une erreur de servlet se produit
+     * @throws IOException Si une erreur d'entrée-sortie se produit
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -141,17 +118,16 @@ public class ModifierResponsableActivite extends HttpServlet {
         ModifierResponsableActiviteFormChecker nv = new ModifierResponsableActiviteFormChecker(req);
         ResponsableActivite ra = nv.checkForm();
 
-        
         PartenaireDao partenaireDao = new PartenaireDao();
         Collection<Partenaire> partenaireList = partenaireDao.list();
         Collection<Partenaire> listPartenaireRa = partenaireDao.listPartenaire(ra.getId());
-        
+
         List<Integer> selectedPartenaires = new ArrayList<>();
         for (Partenaire partenaire : listPartenaireRa) {
             selectedPartenaires.add(partenaire.getId());
         }
-        
-         CollaborateurDao collaborateurDao = new CollaborateurDao();
+
+        CollaborateurDao collaborateurDao = new CollaborateurDao();
         Collection<Collaborateur> collaborateurList = collaborateurDao.list();
         Collection<Collaborateur> listCollaborateurRa = collaborateurDao.listCollaborateur(ra.getId());
 
@@ -159,19 +135,17 @@ public class ModifierResponsableActivite extends HttpServlet {
         for (Collaborateur collab : listCollaborateurRa) {
             selectedCollaborateurs.add(collab.getId());
         }
-        
+
         if (nv.getErrors().isEmpty()) {
-            
-        
-        ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
+
+            ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
             ProposerDao proposerDao = new ProposerDao();
             PossederDao possederDao = new PossederDao();
-            
-            
-             String[] PartenaireIds = req.getParameterValues("partenaire");
+
+            String[] PartenaireIds = req.getParameterValues("partenaire");
             List<Integer> partenaireIdList = new ArrayList<>();
 
-       if (PartenaireIds != null) {
+            if (PartenaireIds != null) {
                 for (String idStr : PartenaireIds) {
                     int id = Integer.parseInt(idStr);
                     partenaireIdList.add(id);
@@ -179,33 +153,32 @@ public class ModifierResponsableActivite extends HttpServlet {
             }
 
             ra.setPartenaireIds(partenaireIdList);
-            responsableActiviteDao.update(ra);
-            req.setAttribute("ra", ra);
             
-             List<String> partenairesNoms = new ArrayList<>();
+
+            List<String> partenairesNoms = new ArrayList<>();
             for (int partenaireId : partenaireIdList) {
                 Partenaire partenaire = partenaireDao.read(partenaireId);
                 if (partenaire != null) {
                     partenairesNoms.add(partenaire.getNom());
                 }
             }
-            
-            
-             String[] CollaborateurIds = req.getParameterValues("collaborateur");
+
+            String[] CollaborateurIds = req.getParameterValues("collaborateur");
             List<Integer> collaborateurIdList = new ArrayList<>();
 
-       if (CollaborateurIds != null) {
+            if (CollaborateurIds != null) {
                 for (String idStr : CollaborateurIds) {
                     int id = Integer.parseInt(idStr);
                     collaborateurIdList.add(id);
                 }
             }
 
-            ra.setCollaborateurIds(partenaireIdList);
-            responsableActiviteDao.update(ra);
-            req.setAttribute("ra", ra);
-            
-             List<String> collaborateurNoms = new ArrayList<>();
+            ra.setCollaborateurIds(collaborateurIdList);
+//            ra.setCollaborateurIds(partenaireIdList);
+//            responsableActiviteDao.update(ra);
+//            req.setAttribute("ra", ra);
+
+            List<String> collaborateurNoms = new ArrayList<>();
             for (int collaborateurId : collaborateurIdList) {
                 Collaborateur collaborateur = collaborateurDao.read(collaborateurId);
                 if (collaborateur != null) {
@@ -213,30 +186,68 @@ public class ModifierResponsableActivite extends HttpServlet {
                 }
             }
             
-             String partenaire = String.join(", ", partenairesNoms);
+            responsableActiviteDao.update(ra);
+            
+            
+            Collection<Prestation> prestations = responsableActiviteDao.listPrestationResponsableActivite(ra.getId());
+            List<String> partenaireNomsPrestation = new ArrayList<>();
+            List<Integer> partenaireIdAdd = new ArrayList<>();
+            List<String> collaborateurNomsPrestation = new ArrayList<>();
+            List<Integer> collaborateurIdAdd = new ArrayList<>();
+            for(Prestation presta : prestations){
+                Integer partPrestation = presta.getId_partenaire();
+                Integer collabPrestation = presta.getId_collaborateur();
+
+                boolean partExists = partenaireIdAdd.stream()
+                                       .anyMatch(p -> p == partPrestation);
+                boolean collabExists = collaborateurIdAdd.stream()
+                                       .anyMatch(p -> p == collabPrestation);
+
+                if(!partExists){
+                    String nomPartPrestation = partenaireDao.read(partPrestation).getNom();
+                    partenaireNomsPrestation.add(nomPartPrestation);
+                    partenaireIdAdd.add(partPrestation);
+                }
+
+                if(!collabExists){
+                    String nomCollabPrestation = collaborateurDao.read(collabPrestation).getNom();
+                    collaborateurNomsPrestation.add(nomCollabPrestation);
+                    collaborateurIdAdd.add(collabPrestation);
+                }
+            }
+
+            String partenairesPrestation = String.join(", ", partenaireNomsPrestation);
+            String collaborateursPrestation = String.join(", ", collaborateurNomsPrestation);
+
+            req.setAttribute("partenairesPrestation", partenairesPrestation);
+            req.setAttribute("collaborateursPrestation", collaborateursPrestation);
+            
+            
+            req.setAttribute("ra", ra);
+
+            String partenaire = String.join(", ", partenairesNoms);
             req.setAttribute("partenaire", partenaire);
             req.setAttribute("message", "Votre partenaire est bien modifié");
-            
+
             String collaborateur = String.join(", ", collaborateurNoms);
-            req.setAttribute("collaborateur",collaborateur);
+            req.setAttribute("collaborateur", collaborateur);
             req.setAttribute("message", "Votre collaborateur est bien modifié");
-            
+
             req.getRequestDispatcher("/WEB-INF/jsp/afficherResponsableActivite.jsp").forward(req, resp);
-            
-    } else {
-    
-     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
+
+        } else {
+
+            req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
             req.setAttribute("selectedPartenaires", selectedPartenaires);
             req.setAttribute("partenaireList", partenaireList);
             req.setAttribute("selectedCollaborateurs", selectedCollaborateurs);
             req.setAttribute("collaborateurList", collaborateurList);
             req.setAttribute("errors", nv.getErrors());
-            
+
             req.setAttribute("ra", ra);
             req.getRequestDispatcher("/WEB-INF/jsp/modifierResponsableActivite.jsp").forward(req, resp);
         }
-            
+
     }
 
 }
-       

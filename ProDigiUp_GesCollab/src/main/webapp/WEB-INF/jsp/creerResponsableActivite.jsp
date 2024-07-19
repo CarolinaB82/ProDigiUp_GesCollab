@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,7 @@
                 <div>
                     <label for="matricule">Matricule</label>
                     <input type="text" id="matricule" name="matricule" 
-                           pattern="\d{5}" 
+                           pattern="\d{1,5}" 
                            maxlength="5" 
                            required
                            title="Veuillez saisir uniquement des chiffres (0-9)" 

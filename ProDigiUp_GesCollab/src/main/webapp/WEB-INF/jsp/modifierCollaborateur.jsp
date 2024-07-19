@@ -231,17 +231,17 @@
 
         </form>
         <script>
-            function validateForm() {
-                var matricule = document.getElementById('matricule').value;
-                var responsables = document.getElementById('responsable').options;
-                for (var i = 0; i < responsables.length; i++) {
-                    if (responsables[i].selected && responsables[i].value === matricule) {
-                        alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                        return false;
-                    }
-                }
-                return true;
-            }
+                        function validateForm() {
+                            var matricule = document.getElementById('matricule').value;
+                            var responsables = document.getElementById('responsable').options;
+                            for (var i = 0; i < responsables.length; i++) {
+                                if (responsables[i].selected && responsables[i].value === matricule) {
+                                    alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
         </script>
     </main>
 </body>

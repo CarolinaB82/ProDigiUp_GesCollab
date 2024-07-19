@@ -7,6 +7,7 @@ package dao;
 import entities.Collaborateur;
 
 /**
+ * Description de la classe
  *
  * @author cberge
  */
