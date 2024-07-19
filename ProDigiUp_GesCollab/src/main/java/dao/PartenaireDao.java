@@ -166,13 +166,13 @@ public class PartenaireDao extends Dao<Partenaire> {
      * mettre à jour
      */
     @Override
-    public void update(Partenaire partenaire) throws SQLException{
+    public void update(Partenaire partenaire) throws SQLException {
         String sql = "UPDATE partenaire SET nom=?, numero_voie=?, adresse=?, code_postal=?, ville=?"
                 + "WHERE id_partenaire=?";
-String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
+        String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
                 + "VALUES ( ?, ?, ?, ?, ?, ?)";
         try {
-             Partenaire partenaireAvant = getPartenaire(connexion, partenaire.getId());
+            Partenaire partenaireAvant = getPartenaire(connexion, partenaire.getId());
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setString(1, partenaire.getNom());
             pstmt.setInt(2, partenaire.getNumero_voie());
@@ -189,21 +189,20 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
 
             // Vérifier si la mise à jour a réussi
             if (rowsAffected > 0) {
-                 PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
-                  pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            pstmtInsertHistorique.setString(2, "mise à jour");
-            
-            pstmtInsertHistorique.setString(3, "partenaire");
-            pstmtInsertHistorique.setInt(4, partenaire.getId());
-            
-                         // Date d'action actuelle
+                PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
+                pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+                pstmtInsertHistorique.setString(2, "mise à jour");
 
-            pstmtInsertHistorique.setString(5, partenaireToJson(partenaireAvant)); // Convertir en JSON ou autre format texte
-            pstmtInsertHistorique.setString(6, partenaireToJson(partenaire)); // Convertir en JSON ou autre format texte
+                pstmtInsertHistorique.setString(3, "partenaire");
+                pstmtInsertHistorique.setInt(4, partenaire.getId());
 
-            pstmtInsertHistorique.executeUpdate();
-            
-              Partenaire partenaireApres = getPartenaire(connexion, partenaire.getId());
+                // Date d'action actuelle
+                pstmtInsertHistorique.setString(5, partenaireToJson(partenaireAvant)); // Convertir en JSON ou autre format texte
+                pstmtInsertHistorique.setString(6, partenaireToJson(partenaire)); // Convertir en JSON ou autre format texte
+
+                pstmtInsertHistorique.executeUpdate();
+
+                Partenaire partenaireApres = getPartenaire(connexion, partenaire.getId());
 
                 // Journalisation avant et après la modification
                 CSVUtil.writeHistory("Modification de partenaire", partenaireAvant);
@@ -212,12 +211,12 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
             }
         } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
-         } catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(CollaborateurDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     public Partenaire getPartenaire(Connection connexion, int idPartenaire) throws SQLException {
+
+    public Partenaire getPartenaire(Connection connexion, int idPartenaire) throws SQLException {
         Partenaire partenaire = null;
         String sql = "SELECT * FROM partenaire WHERE id_partenaire=?";
 
@@ -232,7 +231,7 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
             if (rs.next()) {
 
                 partenaire = new Partenaire();
-                
+
                 partenaire.setId(rs.getInt("id_partenaire"));
                 partenaire.setNom(rs.getString("nom"));
                 partenaire.setNumero_voie(rs.getInt("numero_voie"));
@@ -240,21 +239,18 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
                 partenaire.setCode_postal(rs.getInt("code_postal"));
                 partenaire.setVille(rs.getString("ville"));
             }
-             
+
             ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
-        Collection<ResponsableActivite> listResponsableActivitePartenaire = responsableActiviteDao.listResponsablesActivite(partenaire.getId());
-            
-            
-             if (partenaire != null && !listResponsableActivitePartenaire.isEmpty()) {
+            Collection<ResponsableActivite> listResponsableActivitePartenaire = responsableActiviteDao.listResponsablesActivite(partenaire.getId());
+
+            if (partenaire != null && !listResponsableActivitePartenaire.isEmpty()) {
                 List<Integer> partenairesIds = new ArrayList<>();
-                for(ResponsableActivite resp : listResponsableActivitePartenaire){
+                for (ResponsableActivite resp : listResponsableActivitePartenaire) {
                     partenairesIds.add(resp.getId());
                 }
 
                 partenaire.setResponsableIds(partenairesIds);
             }
-            
-            
 
         } finally {
             if (rs != null) {
@@ -268,36 +264,36 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
 
         return partenaire;
     }
+
     /**
      * Supprime un enregistrement de partenaire de la base de données en
      * fonction de son identifiant.
      *
      * @param id l'identifiant de l'enregistrement de partenaire à supprimer
      */
-    public void delete(Integer id) throws IOException{
+    public void delete(Integer id) throws IOException {
         String sql = "DELETE FROM partenaire WHERE id_partenaire=?";
         try {
-            
-             // Récupérer les informations du collaborateur avant la suppression
+
+            // Récupérer les informations du collaborateur avant la suppression
             Partenaire partenaire = getPartenaire(connexion, id);
-            
+
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
-            
+
             // Enregistrer historique dans la BDD
             String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "
-                + "VALUES ( ?, ?, ?, ?, ?, ?)";
+                    + "VALUES ( ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmtInsertHistorique = connexion.prepareStatement(sqlInsertHistorique);
-                 pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmtInsertHistorique.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
             pstmtInsertHistorique.setString(2, "suppression");
-            
+
             pstmtInsertHistorique.setString(3, "partenaire");
             pstmtInsertHistorique.setInt(4, partenaire.getId());
-            
-                         // Date d'action actuelle
 
+            // Date d'action actuelle
             pstmtInsertHistorique.setString(5, partenaireToJson(partenaire)); // Convertir en JSON ou autre format texte
             pstmtInsertHistorique.setString(6, null); // Convertir en JSON ou autre format texte
 
@@ -305,9 +301,7 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
 
             // Enregistrer les informations dans le fichier CSV
             CSVUtil.writeHistory("Avant suppression de partenaire", partenaire);
-            
-            
-            
+
         } catch (SQLException ex) {
             System.out.println("Erreur lors de l'update : " + ex.getMessage());
         }
@@ -360,6 +354,24 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
         return list;
     }
 
+    public Collection<Prestation> listPrestationPartenaire(int idPartenaire) {
+        String sql = "SELECT * FROM prestation WHERE id_partenaire=?";
+        ArrayList<Prestation> list = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, idPartenaire);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int idPrestation = rs.getInt("id_prestation");
+                Prestation prestation = DaoFactory.getPrestationDao().read(idPrestation);
+                list.add(prestation);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
+        }
+        return list;
+    }
+
     /**
      * Récupère l'identifiant le plus élevé parmi les partenaires créés dans la
      * base de données.
@@ -380,23 +392,4 @@ String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table
         }
         return maxId;
     }
-    
-    public Collection<Prestation> listPrestationPartenaire(int idPartenaire) {
-        String sql = "SELECT * FROM prestation WHERE id_partenaire=?";
-        ArrayList<Prestation> list = new ArrayList<>();
-        try {
-            PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, idPartenaire);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                int idPrestation = rs.getInt("id_prestation");
-                Prestation prestation = DaoFactory.getPrestationDao().read(idPrestation);
-                list.add(prestation);
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erreur lors de la vérification de l'existence : " + ex.getMessage());
-        }
-        return list;
-    }
-
 }

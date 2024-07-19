@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
 package controllers;
-
+ 
 import dao.CollaborateurDao;
 import dao.PartenaireDao;
 import dao.PrestationDao;
@@ -21,22 +17,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-
+ 
 /**
- * servlet nommée ModifierPrestation qui gère les requêtes HTTP GET et POST /
- * contrôleur dans l'architecture MVC Affichage des détails d'une prestation
- * pour modification Validation des données soumises via un formulaire Gestion
- * des erreurs de validation Mise à jour des données dans la base de données
- * Préparation des données pour l'affichage après la modification Interaction
- * avec la couche de présentation
- *
- * @author asolanas
- */
+* servlet nommée ModifierPrestation qui gère les requêtes HTTP GET et POST /
+* contrôleur dans l'architecture MVC Affichage des détails d'une prestation
+* pour modification Validation des données soumises via un formulaire Gestion
+* des erreurs de validation Mise à jour des données dans la base de données
+* Préparation des données pour l'affichage après la modification Interaction
+* avec la couche de présentation
+*
+* @author asolanas
+*/
 @WebServlet("/modifierPrestation")
 public class ModifierPrestation extends HttpServlet {
-
+ 
     private static final long serialVersionUID = 1L;
-
+ 
     /**
      * Traite les requêtes GET pour afficher le formulaire de modification de la
      * prestation. Charge les informations de la prestation à partir de
@@ -52,32 +48,32 @@ public class ModifierPrestation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-
+ 
         int prestationId = Integer.parseInt(req.getParameter("id"));
-
+ 
         PrestationDao prestationDao = new PrestationDao();
         Prestation prestation = prestationDao.read(prestationId);
-
+ 
         if (prestation == null) {
             resp.sendRedirect(req.getContextPath() + "/404.jsp");
             return;
         }
-
+ 
         PartenaireDao partenaireDao = new PartenaireDao();
         CollaborateurDao collaborateurDao = new CollaborateurDao();
         ResponsableActiviteDao raDao = new ResponsableActiviteDao();
-
+ 
         Collection<Partenaire> partenaires = partenaireDao.list();
         Collection<Collaborateur> collaborateurs = collaborateurDao.list();
         Collection<ResponsableActivite> responsablesActivite = raDao.list();
-
+ 
         req.setAttribute("prestation", prestation);
         req.setAttribute("partenaires", partenaires);
         req.setAttribute("collaborateurs", collaborateurs);
         req.setAttribute("responsablesActivite", responsablesActivite);
         req.getRequestDispatcher("/WEB-INF/jsp/modifierPrestation.jsp").forward(req, resp);
     }
-
+ 
     /**
      * Traite les requêtes POST pour soumettre les modifications du formulaire
      * de modification de la prestation. Valide les données du formulaire, gère
@@ -92,36 +88,36 @@ public class ModifierPrestation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-
+ 
         ModifierPrestationFormChecker nv = new ModifierPrestationFormChecker(req);
         Prestation prestation = nv.checkForm();
-
+ 
         if (prestation == null) {
             resp.sendRedirect(req.getContextPath() + "/404.jsp");
             return;
         }
-
+ 
         PrestationDao prestationDao = new PrestationDao();
         ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
         PartenaireDao partenaireDao = new PartenaireDao();
         CollaborateurDao collaborateurDao = new CollaborateurDao();
-
+ 
         if (nv.getErrors().isEmpty()) {
             prestationDao.update(prestation);
-
+ 
             // Relecture des données mises à jour
             prestation = prestationDao.read(prestation.getId());
-
+ 
             Collaborateur collabPresta = collaborateurDao.read(prestation.getId_collaborateur());
             req.setAttribute("collaborateur", collabPresta.getNom());
-
+ 
             ResponsableActivite responsable = responsableActiviteDao.read(prestation.getId_ra());
             req.setAttribute("responsablesActivite", responsable.getNom());
-
+ 
             Partenaire part = partenaireDao.read(prestation.getId_partenaire());
             req.setAttribute("partenaire", part.getNom());
             req.setAttribute("prestation", prestation);
-
+ 
             req.setAttribute("message", "La prestation a été mise à jour avec succès.");
             req.getRequestDispatcher("/WEB-INF/jsp/afficherPrestation.jsp").forward(req, resp);
         } else {
@@ -140,5 +136,5 @@ public class ModifierPrestation extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/jsp/modifierPrestation.jsp").forward(req, resp);
         }
     }
-
+ 
 }

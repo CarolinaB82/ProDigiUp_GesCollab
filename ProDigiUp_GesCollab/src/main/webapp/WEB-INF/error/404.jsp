@@ -11,6 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
+
         <title>Page non trouvée</title>
         <style>
             :root {
@@ -20,12 +22,14 @@
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <h1>Oups! la page que vous cherchez n'existe pas!</h1>
-        <div>
-            <img src="<c:url value="/assets/img/404.jpg" />" width="500px" height="500px" alt="ratperdu"/>
-            <img src="<c:url value="/assets/img/404F.jpg" />" width="500px" height="500px" alt="ratperdu"/>
-        </div>
-        <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+        <main>
+            <h1>Oups! la page que vous cherchez n'existe pas!</h1>
+            <div>
+                <img src="<c:url value="/assets/img/404.jpg" />" width="500px" height="500px" alt="ratperdu"/>
+                <img src="<c:url value="/assets/img/404F.jpg" />" width="500px" height="500px" alt="ratperdu"/>
+            </div>
+            <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+        </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
 </html>

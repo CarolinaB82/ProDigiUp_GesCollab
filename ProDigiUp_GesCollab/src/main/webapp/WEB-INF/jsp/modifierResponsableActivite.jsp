@@ -14,25 +14,25 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
-        <title>Créer RA</title>
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <title>Modifier RA</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+
         <main>
             <form action="<c:url value="/modifier_ra" />" method="post">
                 <div>${requestScope.message}</div>
                 <div>${requestScope.errMsg}</div>
                 <fieldset>
-                    <legend>Nouveau responsable d'activite</legend>
+                    <legend>Modifier responsable d'activité</legend>
                     <input type="hidden" name="id" value="${ra.id}" />
                     <div>
                         <label for="matricule">Matricule</label>
                         <input type="text" id="matricule" name="matricule" 
-                               pattern="\d{5}" 
+                               pattern="\d{1,5}" 
                                maxlength="5" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 
@@ -99,42 +99,90 @@
                                >
                         <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
                     </div>
-                    <div class="combobox-container">
-                        <div class="combobox">
 
-                            <label for="multi-select">Partenaire</label>
-                            <br>
-                            <select id="partenaire" name="partenaire" multiple>
-                                <c:forEach var="partenaire" items="${partenaireList}">
-                                    <!--<option value="${partenaire.id}">${partenaire.nom}</option>-->
-                                    <option value="${partenaire.id}" <c:if test="${selectedPartenaires.contains(partenaire.id)}">selected</c:if>>${partenaire.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
+                    <label for="multi-select">Partenaire</label>
 
-                        </div>
+                    <select id="partenaire" name="partenaire" multiple>
+                        <c:forEach var="partenaire" items="${partenaireList}">
+                            <!--<option value="${partenaire.id}">${partenaire.nom}</option>-->
+                            <option value="${partenaire.id}" <c:if test="${selectedPartenaires.contains(partenaire.id)}">selected</c:if>>${partenaire.nom}</option>
+                        </c:forEach>
+                    </select>
+                    <br><br>
 
-                        <div class="combobox">
-                            <label for="multi-select">Collaborateur</label>
-                            <br>
-                            <select id="collaborateur" name="collaborateur" multiple>
-                                <c:forEach var="collaborateur" items="${collaborateurList}">
-                                 <!--<option value="${collaborateur.id}">${collaborateur.nom}</option>-->
-                                    <option value="${collaborateur.id}" <c:if test="${selectedCollaborateurs.contains(collaborateur.id)}">selected</c:if>>${collaborateur.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
+                    </div>
 
+                    <div class="combobox">
+                        <label for="multi-select">Collaborateur</label>
 
-                            <p>Merci de remplir tous les champs</p>
-                            </fieldset>
+                        <select id="collaborateur" name="collaborateur" multiple>
+                            <c:forEach var="collaborateur" items="${collaborateurList}">
+                             <!--<option value="${collaborateur.id}">${collaborateur.nom}</option>-->
+                                <option value="${collaborateur.id}" <c:if test="${selectedCollaborateurs.contains(collaborateur.id)}">selected</c:if>>${collaborateur.nom}</option>
+                            </c:forEach>
+                        </select>
+                        <br><br>
+                        <div class="button-container">
                             <input type="submit" value="Enregistrer">
+                            <button type="button" onclick="window.location.href = '<c:url value="/liste_collaborateurs"/>'">Annuler</button>
+                        </div>
+                </fieldset>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            </form>
+        </main>
+        <script>
+                    function redirectToList() {
+                        window.location.href = '<c:url value="/liste_collaborateurs"/>';
+                    }
 
-                            </form>
-                            </main>
+                    function validateForm() {
+                        var matricule = document.getElementById('matricule').value;
+                        var responsables = document.getElementById('responsable').options;
+                        for (var i = 0; i < responsables.length; i++) {
+                            if (responsables[i].selected && responsables[i].value === matricule) {
+                                alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
 
-                            </body>
-                            <%@include file="/WEB-INF/jspf/footer.jsp" %>
-                            </html>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+                        dropdownToggles.forEach(toggle => {
+                            toggle.addEventListener('click', function (event) {
+                                event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                                this.classList.toggle('active');
+                                const dropdownMenu = this.nextElementSibling;
+                                if (dropdownMenu.style.display === 'block') {
+                                    dropdownMenu.style.display = 'none';
+                                } else {
+                                    dropdownMenu.style.display = 'block';
+                                }
+                            });
+                        });
+
+                        // Empêche la fermeture du menu lorsque l'on clique sur une option
+                        const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                        dropdownMenus.forEach(menu => {
+                            menu.addEventListener('click', function (event) {
+                                event.stopPropagation();
+                            });
+                        });
+
+                        // Fermer le menu déroulant si on clique en dehors
+                        window.addEventListener('click', function () {
+                            dropdownToggles.forEach(toggle => {
+                                toggle.classList.remove('active');
+                                const dropdownMenu = toggle.nextElementSibling;
+                                dropdownMenu.style.display = 'none';
+                            });
+                        });
+                    });
+
+        </script>
+    </body>
+    <%@include file="/WEB-INF/jspf/footer.jsp" %>
+</html>

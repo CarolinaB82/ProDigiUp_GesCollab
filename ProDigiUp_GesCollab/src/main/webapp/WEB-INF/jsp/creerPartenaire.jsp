@@ -16,12 +16,13 @@
         <c:set var="notHome" value="true" />
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <title>créer partenaire</title>
     </head>
     <body> 
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+
         <main>
             <form action="/ProDigiUp_GesCollab/creer_partenaire" method="post">                  
                 <div>${requestScope.message}</div>
@@ -31,7 +32,7 @@
 
 
                     <div>
-                        <label for="nom">Nom Partenaire</label>
+                        <label for="nom">*Nom Partenaire</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
 
                         <input type="text" id="nom" name="nom"  
@@ -46,9 +47,9 @@
                     </div>
                     <br>
                     <div>
-                        <label for="numero_voie">Numero de voie</label>
+                        <label for="numero_voie">*Numero de voie</label>
                         <input type="text" id="numero_voie" name="numero_voie"
-                               pattern="[0-9]*"
+                               pattern="\\+?[0-9\\(\\)\\- ]{1,30}" 
                                required
                                title="Veuillez saisir uniquement des chiffres (0-9)" 
 
@@ -60,7 +61,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="adresse">Adresse</label>
+                        <label for="adresse">*Adresse</label>
                         <input type="text" id="adresse" name="adresse"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
@@ -73,7 +74,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="code_postal">Code Postal</label>
+                        <label for="code_postal">*Code Postal</label>
                         <input type="text" id="code_postal" name="code_postal"
                                pattern="\d{5}" 
                                maxlength="5" 
@@ -88,7 +89,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="ville">Ville</label>
+                        <label for="ville">*Ville</label>
                         <input type="text" id="ville" name="ville"
                                pattern="[a-zA-ZÀ-ÿ' ]*"
                                required
@@ -103,8 +104,8 @@
 
                     <div class="combobox-container">
                         <div class="combobox">
-                            <label for="multi-select">Responsable(s) activité</label>
-                            <br>
+                            <label for="multi-select">Responsable(s) activité(s)</label>
+                            
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
@@ -113,19 +114,16 @@
                             <br><br>
 
                         </div>
-
-                    </div>
-                    <p>Merci de remplir tous les champs</p>
+                        <div class="button-container">
+                            <input  type="submit" value="Valider">
+                            <input type="reset" value="Annuler">
+                        </div>                
                 </fieldset>
-                <div>
-                    <input type="submit" value="Envoyer">
-                    <input type="reset" value="Annuler">
-                </div>
-
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
+
 </html>

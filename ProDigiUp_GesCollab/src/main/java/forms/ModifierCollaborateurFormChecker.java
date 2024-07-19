@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Cette classe est utilisée pour valider et traiter les données soumises depuis
@@ -30,6 +32,11 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
      */
     public ModifierCollaborateurFormChecker(HttpServletRequest request) {
         super(request);
+    }
+    private Map<String, String> errors = new HashMap<>();
+
+    public Map<String, String> getErrors() {
+        return errors;
     }
 
     /**

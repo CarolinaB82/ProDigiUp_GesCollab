@@ -8,15 +8,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>rechercher collaborateur</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -85,7 +85,7 @@
                     </div>
                     <div id="suggestionsNom"></div>
                 </form>
-
+                <br>
                 <form>
                     <div>
                         <label for="rechercherParPrenom">Par prénom :</label>
@@ -93,7 +93,7 @@
                     </div>
                     <div id="suggestionsPrenom"></div>
                 </form>
-
+                <br>
                 <form>
                     <div>
                         <label for="rechercherParMatricule">Par matricule :</label>
@@ -103,15 +103,15 @@
                 </form>
             </fieldset>
             <fieldset>
-                <legend>RÉsultats de recherche</legend>
+                <legend>Resultats de recherche</legend>
                 <%-- Code pour afficher les résultats de recherche --%>
-                <div id="resultats">
+                <div id="resultats" class="neutral-links">
                     <c:if test="${not empty resultats}">
                         <table class="custom-table">
                             <thead>
                                 <tr>
-                                    <th>Matricule</th>
-                                    <th>Nom</th>
+                                    <th>🔗Matricule</th>
+                                    <th>🔗Nom</th>
                                     <th>Prénom</th>
                                     <th>Statut</th>
                                     <th>Métier</th>

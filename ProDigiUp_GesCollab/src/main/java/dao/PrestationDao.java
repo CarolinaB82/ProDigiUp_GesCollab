@@ -77,7 +77,8 @@ public class PrestationDao extends Dao<Prestation> {
      */
     @Override
     public void create(Prestation presta) throws SQLException {
-        String sql = "INSERT INTO prestation(siglum_presta, num_affaire, nom_presta, ref_fact_partenaire, mail_partenaire, ref_fact_airbus, mail_airbus, id_ra, id_collaborateur, id_partenaire) "
+        String sql = "INSERT INTO prestation(siglum_presta, num_affaire, nom_presta, ref_fact_partenaire, mail_partenaire,"
+                + "ref_fact_airbus, mail_airbus, id_ra, id_collaborateur, id_partenaire) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, presta.getSiglum_presta());

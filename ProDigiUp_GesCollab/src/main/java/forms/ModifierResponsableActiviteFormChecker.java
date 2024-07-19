@@ -41,30 +41,24 @@ public class ModifierResponsableActiviteFormChecker extends FormChecker<Responsa
         ResponsableActivite obj = new ResponsableActivite();
 
         String idStr = request.getParameter("id");
-        int id = Integer.parseInt(idStr); // Assurez-vous que id est bien une valeur numérique
+        int id = Integer.parseInt(idStr); // on vérifie que id est bien une valeur numérique
         String matriculeStr = request.getParameter("matricule");
         int matricule = Integer.parseInt(matriculeStr);
-        // Récupérer les valeurs des champs modifiables
+        
+        // on récupère les valeurs des champs modifiables
         String nom = request.getParameter("nom");
-
         String prenom = request.getParameter("prenom");
-
         String mail = request.getParameter("mail");
-
         String telephone_professionnel = request.getParameter("telephone_professionnel");
-
         String telephone_personnel = request.getParameter("telephone_personnel");
 
         // Set id dans l'objet Collaborateur
         obj.setId(id);
         obj.setMatricule(matricule);
-// Set des autres champs dans l'objet Collaborateur
+        // Set des autres champs dans l'objet Collaborateur
         obj.setNom(nom);
-
         obj.setPrenom(prenom);
-
         obj.setMail(mail);
-
         obj.setTelephone_professionnel(telephone_professionnel);
         obj.setTelephone_personnel(telephone_personnel);
 

@@ -15,87 +15,82 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <title>Créer Collaborateur</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+
         <main>
             <form action="/ProDigiUp_GesCollab/creer_collaborateur" method="post">                  
                 <div>${requestScope.message}</div>
                 <div>${requestScope.errMsg}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
-                    <legend>Nouveau Collaborateur</legend>
-                    <div>
-                        <label for="matricule">Matricule</label>
+                    <legend class="legend-texte">Nouveau Collaborateur</legend>
+                    <div class="fieldset-texte">
+                        <label for="matricule">*Matricule</label>
                         <!-- pour garder en memoire les champs deja remplis si erreur quelque part-->
                         <input type="text" id="matricule" name="matricule" 
-                               pattern="\d{1,5}" 
+                               pattern="0?[0-9]{1,5}" 
                                maxlength="5" 
                                required
-                               title="Veuillez saisir uniquement des chiffres (0-9)" 
+                               title="Veuillez saisir uniquement des chiffres (0-9), 5 max" 
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.matricule : ''}" 
                                class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.matricule}</div>
+                        <div class="error">${requestScope.errors.matricule}</div>
                     </div>
-                    <br>
-                    <div>
-                        <label for="nom">Nom</label>
+
+                    <div class="fieldset-texte">
+                        <label for="nom">*Nom</label>
                         <input type="text" id="nom" name="nom"
-                               pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.nom : ''}"
                                class="${not empty requestScope.errors.nom ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.nom}</div>
+                        <div class="error">${requestScope.errors.nom}</div>
                     </div>
-                    <br>
+
                     <div>
-                        <label for="prenom">Prénom</label>
+                        <label for="prenom">*Prénom</label>
                         <input type="text" id="prenom" name="prenom"
-                               pattern="[a-zA-ZÀ-ÿ' -]*"
                                required
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.prenom : ''}"
                                class="${not empty requestScope.errors.prenom ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.prenom}</div>
+                        <div class="error">${requestScope.errors.prenom}</div>
                     </div>
-                    <br>
-                    <div>
-                        <label for="mail_1">Mail 1</label>
-                        <input type="email" id="mail_1" name="mail_1"
-                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
 
-                               title="Veuillez saisir une adresse e-mail valide"
+                    <div>
+                        <label for="mail_1">*Mail 1</label>
+                        <input type="email" id="mail_1" name="mail_1"
+                               required
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
                                class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.mail_1}</div>
+                        <div class="error">${requestScope.errors.mail_1}</div>
                     </div>
                     <div>
                         <label for="mail_2">Mail 2</label>
                         <input type="email" id="mail_2" name="mail_2"
                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-
                                title="Veuillez saisir une adresse e-mail valide"
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_2 : ''}"
                                class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
 
                                >
-                        <div class="error-details-message">${requestScope.errors.mail_2}</div>
+                        <div class="error">${requestScope.errors.mail_2}</div>
                     </div>
-                    
+
                     <div>
                         <label for="telephone_personnel">Téléphone personnel</label>
                         <input type="text" id="telephone_personnel" name="telephone_personnel"
@@ -105,16 +100,26 @@
                                value="${requestScope.collaborateur != null ? requestScope.collaborateur.telephone_personnel : ''}"
                                class="${not empty requestScope.errors.telephone_personnel ? 'error-input' : ''}"
                                >
-                        <div class="error-details-message">${requestScope.errors.telephone_personnel}</div>
+                        <div class="error">${requestScope.errors.telephone_personnel}</div>
                     </div>
-                    <br>
+
+                    <div>
+                        <label for="metier">*Métier</label>
+                        <input type="text" id="metier" name="metier"
+                               pattern="[a-zA-ZÀ-ÿ' -]*"
+                               required
+                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
+                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
+                               class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
+                    </div> 
+                    <br><br>
                     <div>
                         <label for="statut">Statut</label>
                         <select id="statut" name="statut">
                             <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
                             <option value="CDI" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDI' ? 'selected' : ''}>CDI</option>
-                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD Tremplin</option>
-                            <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>Stage</option>
+                            <option value="CDD Tremplin" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD Tremplin' ? 'selected' : ''}>CDD TREMPLIN</option>
+                            <option value="Stage" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'Stage' ? 'selected' : ''}>STAGE</option>
 
 
                         </select>
@@ -125,7 +130,7 @@
                         <label for="categorie">Catégorie</label>
                         <select id="categorie" name="categorie">
                             <option value="ETAM" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'ETAM' ? 'selected' : ''}>ETAM</option>
-                            <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>Cadre</option>
+                            <option value="Cadre" ${requestScope.collaborateur != null && requestScope.collaborateur.categorie == 'Cadre' ? 'selected' : ''}>CADRE</option>
                         </select>
                         <div class="error-details-message">${requestScope.errors.categorie}</div>
                     </div>
@@ -145,9 +150,9 @@
                         <div>
                             <label for="rqth">RQTH</label>
                             <select id="rqth" name="rqth" onchange="toggleDateField()">
-                                <option value="oui" ${isOuiSelected ? 'selected' : ''}>oui</option>
-                                <option value="non" ${!isOuiSelected ? 'selected' : ''}>non</option>
-                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>à vie</option>
+                                <option value="oui" ${isOuiSelected ? 'selected' : ''}>Oui</option>
+                                <option value="non" ${!isOuiSelected ? 'selected' : ''}>Non</option>
+                                <option value="a vie" ${isAVieSelected ? 'selected' : ''}>A vie</option>
                             </select>
                             <div class="error-details-message">${requestScope.errors.rqth}</div>
                         </div>
@@ -199,57 +204,28 @@
                             });
                         </script>
                     </div>
-                    <br>
-                    <div>
-                        <label for="metier">Métier</label>
-                        <input type="text" id="metier" name="metier"
-                               pattern="[a-zA-ZÀ-ÿ' -]*"
-                               required
-                               title="Veuillez saisir uniquement des lettres (A-Z, a-z)"
-                               value="${requestScope.collaborateur != null ? requestScope.collaborateur.metier : ''}"
-                               class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
 
-                        </div>  
-                        <div class="error">${requestScope.errors.metier}</div>
-                        <br>
+                    <div class="combobox-container">
+                        <div class="combobox">
 
-                        <div class="combobox-container">
-                            <div class="combobox">
+                            <label for="responsable">Responsable d'activité</label>
+                            <select id="responsable" name="responsable" multiple>
+                                <c:forEach var="responsable" items="${responsableActiviteList}">
+                                    <option value="${responsable.id}">${responsable.nom}</option>
+                                </c:forEach>
+                            </select>
 
-                                <label for="responsable">Responsable activité</label>
-                                <select id="responsable" name="responsable" multiple>
-                                    <c:forEach var="responsable" items="${responsableActiviteList}">
-                                        <option value="${responsable.id}">${responsable.nom}</option>
-                                    </c:forEach>
-                                </select>
-                                <br><br>
-
+                            <div class="button-container">
+                                <input  type="submit" value="Valider">
+                                <input type="reset" value="Annuler">
                             </div>
-
                         </div>
-                        <p>Merci de remplir tous les champs</p>
+                    </div>
                 </fieldset>
-                <div>
-                    <input type="submit" value="Envoyer">
-                    <input type="reset" value="Annuler">
-                </div>
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
-                        <script>
-    function validateForm() {
-        var matricule = document.getElementById('matricule').value;
-        var responsables = document.getElementById('responsable').options;
-        for (var i = 0; i < responsables.length; i++) {
-            if (responsables[i].selected && responsables[i].value === matricule) {
-                alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                return false;
-            }
-        }
-        return true;
-    }
-</script>
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>

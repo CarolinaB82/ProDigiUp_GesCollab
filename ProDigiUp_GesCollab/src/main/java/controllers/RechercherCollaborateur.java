@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,8 @@ public class RechercherCollaborateur extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
 
@@ -74,8 +77,8 @@ public class RechercherCollaborateur extends HttpServlet {
                 out.println("<table class='custom-table'>");
                 out.println("<thead>");
                 out.println("<tr>");
-                out.println("<th>Matricule</th>");
-                out.println("<th>Nom</th>");
+                out.println("<th>🔗Matricule</th>");
+                out.println("<th>🔗Nom</th>");
                 out.println("<th>Prénom</th>");
                 out.println("<th>Métier</th>");
                 out.println("<th>Statut</th>");

@@ -46,8 +46,8 @@ public class SupprimerPartenaire extends HttpServlet {
 
                 PartenaireDao partenaireDao = new PartenaireDao();
                 partenaireDao.delete(partenaireId);
-
-                resp.sendRedirect("liste_collaborateurs"); // Redirection vers la liste après suppression
+              
+                resp.sendRedirect("liste_collaborateurs?deleteSuccess=true"); // Redirection vers la liste après suppression
                 return;
             } catch (NumberFormatException e) {
                 // Gérer l'erreur de conversion si nécessaire

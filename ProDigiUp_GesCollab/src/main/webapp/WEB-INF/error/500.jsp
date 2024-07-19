@@ -11,8 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
+
         <title>Problème de connexion</title>
-         <style>
+        <style>
             :root {
                 text-align: center;
             }
@@ -20,12 +22,14 @@
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <h1>Oups! Erreur de connexion!</h1>
-        <div>
-            <img src="<c:url value="/assets/img/500.jpg" />" width="500px" height="500px" alt="erreurConnexion"/>
-             <img src="<c:url value="/assets/img/500F.jpg" />" width="500px" height="500px" alt="erreurConnexion"/>
-        </div>
-        <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
-        <%@include file="/WEB-INF/jspf/footer.jsp" %>
+        <main>
+            <h1>Oups! Erreur de connexion!</h1>
+            <div>
+                <img src="<c:url value="/assets/img/500.jpg" />" width="500px" height="500px" alt="erreurConnexion"/>
+                <img src="<c:url value="/assets/img/500F.jpg" />" width="500px" height="500px" alt="erreurConnexion"/>
+            </div>
+            <p><a href="<c:url value="/accueil"/>">Retour à l'accueil</a></p>
+            <%@include file="/WEB-INF/jspf/footer.jsp" %>
+        </main>
     </body>
 </html>

@@ -249,5 +249,4 @@ public class ModifierResponsableActivite extends HttpServlet {
         }
 
     }
-
 }

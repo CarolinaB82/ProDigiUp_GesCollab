@@ -1,10 +1,5 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
-
- /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controllers;
@@ -49,7 +44,7 @@ public class SupprimerPrestation extends HttpServlet {
                 PrestationDao prestationDao = new PrestationDao();
                 prestationDao.delete(prestationId);
 
-                resp.sendRedirect("liste_collaborateurs"); // Redirection vers la liste après suppression
+                resp.sendRedirect("liste_collaborateurs?deleteSuccess=true"); // Redirection vers la liste après suppression
                 return;
             } catch (NumberFormatException e) {
                 // Gérer l'erreur de conversion si nécessaire

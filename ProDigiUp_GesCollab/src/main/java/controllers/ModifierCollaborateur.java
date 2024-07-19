@@ -232,7 +232,7 @@ public class ModifierCollaborateur extends HttpServlet {
                 
                 
                 req.setAttribute("responsablesActivite", responsablesActivite);
-                req.setAttribute("message", "Votre collaborateur est bien modifié");
+                req.setAttribute("message", "Votre collaborateur a bien été modifié");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
 
             } catch (SQLException ex) {

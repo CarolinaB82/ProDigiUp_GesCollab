@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 
 <!DOCTYPE html>
@@ -14,20 +14,20 @@
     <head>
         <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
         <c:set var="notHome" value="true" />
-
+        <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css">
+        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>créer partenaire</title>
     </head>
     <body> 
         <%@include file="/WEB-INF/jspf/header.jsp" %>
-        <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
+
         <main>
             <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="post">                  
                 <div>${requestScope.message}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
-                    <legend>Nouveau Partenaire</legend>
+                    <legend>Modifier Partenaire</legend>
                     <input type="hidden" name="id" value="${partenaire.id}" />
 
 
@@ -105,22 +105,20 @@
                     <div class="combobox-container">
                         <div class="combobox">
                             <label for="multi-select">Responsable activité</label>
-                            <br>
+                           
                             <select id="responsable" name="responsable" multiple>
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <!--<option value="${responsable.id}">${responsable.nom}</option>-->
                                     <option value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">selected</c:if>>${responsable.nom}</option>
                                 </c:forEach>
                             </select>
-                            <br><br>
+                    <br><br>
 
-                        </div>
-
+                    <div class="button-container">
+                        <input type="submit" value="Valider">
+                        <button type="button" onclick="redirectToList()">Annuler</button>
                     </div>
-                    <p>Merci de remplir tous les champs</p>
                 </fieldset>
-                <input type="submit" value="Enregistrer">
-
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
@@ -128,4 +126,5 @@
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
+    
 </html>
