@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 @WebServlet("/liste_collaborateurs")
 public class ListeCollaborateurs extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Traite les requêtes GET en récupérant et affichant la liste des
      * collaborateurs avec leurs prestations, partenaires et responsables

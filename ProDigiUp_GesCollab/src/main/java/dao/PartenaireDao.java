@@ -392,4 +392,6 @@ public class PartenaireDao extends Dao<Partenaire> {
         }
         return maxId;
     }
+    
+   
 }
