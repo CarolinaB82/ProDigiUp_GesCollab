@@ -393,5 +393,36 @@ public class PartenaireDao extends Dao<Partenaire> {
         return maxId;
     }
     
-   
+    public List<Partenaire> rechercherParNom(String nom) throws SQLException {
+        return rechercher("SELECT * FROM partenaire WHERE nom LIKE ?", nom);
+    }
+    
+   public List<Partenaire> rechercherParVille(String ville) throws SQLException {
+        return rechercher("SELECT * FROM partenaire WHERE ville LIKE ?", ville);
+    }
+    
+    private List<Partenaire> rechercher(String sql, String param) throws SQLException {
+        List<Partenaire> partenaires = new ArrayList<>();
+        try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + param + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Partenaire partenaire = new Partenaire();
+                    partenaire.setId(rs.getInt("id_partenaire"));
+                    partenaire.setNom(rs.getString("nom"));
+                    partenaire.setNumero_voie(rs.getInt("numero_voie"));
+                    partenaire.setAdresse(rs.getString("adresse"));
+                    partenaire.setCode_postal(rs.getInt("code_postal"));
+                    partenaire.setVille(rs.getString("ville"));
+                    partenaires.add(partenaire);
+                }
+            }
+        }
+        return partenaires;
+    }
+    
+    
+    
+    
+    
 }

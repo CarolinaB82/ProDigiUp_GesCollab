@@ -42,6 +42,9 @@
                     <ul class="sous">
                         <li><a href="<c:url value="/rechercher_ra"/>">Un responsable d'activité</a></li>
                         <li><a href="<c:url value="/rechercher"/>">Un Collaborateur</a></li>
+                        <li><a href="<c:url value="/rechercher_partenaire"/>">Un partenaire</a></li>
+
+                        
                     </ul>
                 </li>
 
