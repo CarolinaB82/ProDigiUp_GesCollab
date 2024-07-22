@@ -186,4 +186,5 @@ public class Prestation implements Serializable, Identifiable {
         }
         return Objects.equals(this.id_collaborateur, other.id_collaborateur);
     }
+
 }

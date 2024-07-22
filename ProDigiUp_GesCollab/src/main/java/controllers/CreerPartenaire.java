@@ -80,7 +80,7 @@ public class CreerPartenaire extends HttpServlet {
                     loadLists(req);
                     req.setAttribute("errors", rafc.getErrors());
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
-                    req.getRequestDispatcher("/WEB-INF/jsp/creerPrestation.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/WEB-INF/jsp/creerPartenaire.jsp").forward(req, resp);
                     return;
                 }
                 partenaireDao.create(partenaire);

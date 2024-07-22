@@ -4,6 +4,7 @@ import dao.CollaborateurDao;
 import dao.DaoFactory;
 import dao.PartenaireDao;
 import dao.ResponsableActiviteDao;
+import entities.CollaborateurPrestationPartenaireRa;
 import entities.Prestation;
 import entities.PrestationPartRaCollab;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import static org.apache.commons.lang3.ClassUtils.comparator;
 
 /**
  * servlet nommée ListePartenaires qui gère les requêtes HTTP GET / contrôleur
@@ -41,26 +46,40 @@ public class ListePrestations extends HttpServlet {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
 
         Collection<Prestation> prestations = DaoFactory.getPrestationDao().list();
-        
-         Collection<PrestationPartRaCollab> prestationsPartRaCollab = new ArrayList<>();
-         
+
+        Collection<PrestationPartRaCollab> prestationsPartRaCollab = new ArrayList<>();
+
         CollaborateurDao collabDao = DaoFactory.getCollaborateurDao();
         PartenaireDao partDao = DaoFactory.getPartenaireDao();
         ResponsableActiviteDao raDao = DaoFactory.ResponsableActiviteDao();
-        
-        for(Prestation presta: prestations){
+
+        for (Prestation presta : prestations) {
             PrestationPartRaCollab prestaPartRaCollab = new PrestationPartRaCollab();
             prestaPartRaCollab.setPrestation(presta);
             prestaPartRaCollab.setNomCollab(collabDao.read(presta.getId_collaborateur()).getNom());
             prestaPartRaCollab.setNomPartenaire(partDao.read(presta.getId_partenaire()).getNom());
             prestaPartRaCollab.setNomRa(raDao.read(presta.getId_ra()).getNom());
-            prestationsPartRaCollab.add(prestaPartRaCollab);            
+            prestationsPartRaCollab.add(prestaPartRaCollab);
         }
 
-        req.setAttribute("prestations", prestationsPartRaCollab);
+        String sort = req.getParameter("sort");
+        String order = req.getParameter("order");
+
+        Comparator<PrestationPartRaCollab> comparator = Comparator.comparing(presta -> presta.getPrestation().getNom_presta().toLowerCase());
+
+        if ("nom".equals(sort)) {
+            comparator = Comparator.comparing(presta -> presta.getPrestation().getNom_presta().toLowerCase());
+        }
+
+        if ("desc".equalsIgnoreCase(order)) {
+            comparator = comparator.reversed();
+        }
+
+        List<PrestationPartRaCollab> sortedPrestations = prestationsPartRaCollab.stream().sorted(comparator).collect(Collectors.toList());
+
+        req.setAttribute("prestations", sortedPrestations);
+        req.setAttribute("param", req.getParameterMap());
 
         req.getRequestDispatcher("/WEB-INF/jsp/listePrestations.jsp").forward(req, resp);
     }
-
 }
-

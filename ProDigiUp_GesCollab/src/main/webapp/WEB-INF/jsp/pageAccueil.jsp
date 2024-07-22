@@ -22,7 +22,7 @@
         <main>
             <div class='bienvenue centered-flex'>
                 <h1>Bienvenue</h1>
-                <a href="https://fr.wikipedia.org/wiki/Rattus_norvegicus" target="_blank"><img src="<c:url value="/assets/img/imageaccueil.png" />" height="250" width="500"  alt="prodiup"></a>
+                <a href="https://www.linkedin.com/showcase/prodigiup/posts/?feedView=all" target="_blank"><img src="<c:url value="/assets/img/imageaccueil.png" />" height="250" width="500"  alt="prodiup"></a>
                 <h1 class='bienvenue neutral-links'><a href="<c:url value="/connexion"/>" >Entrer dans l'application</a></h1>
             </div>
         </main>
