@@ -205,19 +205,29 @@
                 </div>
                 <br>
 
-                <div class="combobox-container">
-                    <div class="combobox">
-                        <label for="responsable">Son responsable d'activité</label>
-                        <select id="responsable" name="responsable" multiple>
+
+                <label for="multi-select-responsable_activite">Responsable activité</label>
+                <div class="dropdown-container">
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" id="responsableDropdown" aria-haspopup="true" aria-expanded="false">
+                            Sélectionner les responsables
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="responsableDropdown">
                             <c:forEach var="responsable" items="${responsableActiviteList}">
-                                <option value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">selected</c:if>>${responsable.nom}</option>
+                                <label>
+                                    <input type="checkbox" name="responsable" value="${responsable.id}" <c:if test="${selectedResponsables.contains(responsable.id)}">checked</c:if> />
+                                    ${responsable.nom}
+                                </label><br>
                             </c:forEach>
-                        </select>
-                        <div class="button-container">
-                            <input type="submit" value="Valider">
-                            <button type="button" onclick="redirectToList()">Annuler</button>
                         </div>
                     </div>
+                </div>
+                </div>
+                <div class="button-container">
+                    <input type="submit" value="Valider">
+                    <button type="button" onclick="redirectToList()">Annuler</button>
+                </div>
+                </div>
                 </div>
             </fieldset>
 
@@ -229,6 +239,58 @@
     </main>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </body>
+ <script>
+                            function redirectToList() {
+                                window.location.href = '<c:url value="/liste_collaborateurs"/>';
+                            }
+
+                            function validateForm() {
+                                var matricule = document.getElementById('matricule').value;
+                                var responsables = document.getElementById('responsable').options;
+                                for (var i = 0; i < responsables.length; i++) {
+                                    if (responsables[i].selected && responsables[i].value === matricule) {
+                                        alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            }
+
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+                                dropdownToggles.forEach(toggle => {
+                                    toggle.addEventListener('click', function (event) {
+                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                                        this.classList.toggle('active');
+                                        const dropdownMenu = this.nextElementSibling;
+                                        if (dropdownMenu.style.display === 'block') {
+                                            dropdownMenu.style.display = 'none';
+                                        } else {
+                                            dropdownMenu.style.display = 'block';
+                                        }
+                                    });
+                                });
+
+                                // Empêche la fermeture du menu lorsque l'on clique sur une option
+                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                                dropdownMenus.forEach(menu => {
+                                    menu.addEventListener('click', function (event) {
+                                        event.stopPropagation();
+                                    });
+                                });
+
+                                // Fermer le menu déroulant si on clique en dehors
+                                window.addEventListener('click', function () {
+                                    dropdownToggles.forEach(toggle => {
+                                        toggle.classList.remove('active');
+                                        const dropdownMenu = toggle.nextElementSibling;
+                                        dropdownMenu.style.display = 'none';
+                                    });
+                                });
+                            });
+
+        </script>
 </html>
 
 

@@ -124,7 +124,7 @@
                         </div>
                         <div class="combobox">
 
-                            <label for="multi-select">Son Collaborateur</label>
+                            <label for="multi-select">Collaborateur</label>
 
                             <select id="id_collaborateur" name="id_collaborateur">
                                 <option value="">-- Aucun --</option>

@@ -24,17 +24,18 @@
             <fieldset>
                 <legend><strong>Fiche Prestation</strong></legend>
                 <div class="fiches">
-                    <p><strong>Siglum prestation : </strong><c:out value="${prestation.siglum_presta}"/></p>
-                    <p><strong>Numéro d'affaire : </strong><c:out value="${prestation.num_affaire}"/></p>
-                    <p><strong>Nom prestation : </strong><c:out value="${prestation.nom_presta}"/></p>
-                    <p><strong>Référent facture partenaire : </strong><c:out value="${prestation.ref_fact_partenaire}"/></p>
-                    <p><strong>Mail partenaire : </strong><c:out value="${prestation.mail_partenaire}"/></p>
-                    <p><strong>Référent facture Airbus : </strong><c:out value="${prestation.ref_fact_airbus}"/></p>
-                    <p><strong>Mail airbus : </strong><c:out value="${prestation.mail_airbus}"/></p>
-                    <p><strong>Partenaire : </strong><c:out value="${partenaire}"/></p>
-                    <p><strong>Collaborateur : </strong><c:out value="${collaborateur}"/></p>
-                    <p><strong>Responsable activité : </strong><c:out value="${responsablesActivite}"/></p>
+                    <p><span class="label-text">Siglum prestation : </span><span class="value-text"><c:out value="${prestation.siglum_presta}"/></span></p>
+                    <p><span class="label-text">Numéro d'affaire : </span><span class="value-text"><c:out value="${prestation.num_affaire}"/></span></p>
+                    <p><span class="label-text">Nom prestation : </span><span class="value-text"><c:out value="${prestation.nom_presta}"/></span></p>
+                    <p><span class="label-text">Référent facture partenaire : </span><span class="value-text"><c:out value="${prestation.ref_fact_partenaire}"/></span></p>
+                    <p><span class="label-text">Mail partenaire : </span><span class="value-text"><c:out value="${prestation.mail_partenaire}"/></span></p>
+                    <p><span class="label-text">Référent facture Airbus : </span><span class="value-text"><c:out value="${prestation.ref_fact_airbus}"/></span></p>
+                    <p><span class="label-text">Mail Airbus : </span><span class="value-text"><c:out value="${prestation.mail_airbus}"/></span></p>
+                    <p><span class="label-text">Partenaire : </span><span class="value-text"><c:out value="${partenaire}"/></span></p>
+                    <p><span class="label-text">Collaborateur : </span><span class="value-text"><c:out value="${collaborateur}"/></span></p>
+                    <p><span class="label-text">Responsable activité : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
                 </div>
+
                 <div class="button-container">
                     <form action="/ProDigiUp_GesCollab/modifierPrestation" method="get"style="display: inline;">
                         <input type="hidden" name="id" value="${prestation.id}" />

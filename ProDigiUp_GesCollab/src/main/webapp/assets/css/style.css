@@ -306,7 +306,7 @@ h2 {
     font-family: walkaway;
     text-decoration: none !important;
     color: #191C37;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .custom-table td {
@@ -317,7 +317,7 @@ h2 {
     font-family: walkaway;
     text-decoration: none !important;
     padding: 11px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .custom-table .collaborator-end-row {
@@ -417,9 +417,13 @@ fieldset {
 legend {
     font-family: walkaway;
     font-size: 47px;
-    color: #17407B;
+    color:  #17407B;
 }
 
+fieldset div label{
+    font-size: 27px;
+    color: #17407B;
+}
 .fiches {
     display: inline-block;
     color: #17407B;
@@ -432,7 +436,14 @@ legend {
     font-family: walkaway;
     word-wrap: break-word;
 }
+.label-text {
+    color: #213565; /* Couleur pour le texte (label) */
+    font-weight: bold;
+}
 
+.value-text {
+    color: #546FB2; /* Couleur pour la valeur */
+}
 .button-container {
     display: flex;
     justify-content: center;

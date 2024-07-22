@@ -100,33 +100,55 @@
                     </div>
                     <div class="combobox-container">
                         <div class="combobox">
-
-                            <label for="multi-select">Partenaire(s)</label>
-                            
-                            <select id="partenaire" name="partenaire" multiple>
-                                <c:forEach var="partenaire" items="${partenaireList}">
-                                    <option value="${partenaire.id}">${partenaire.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
-                            
-                        </div>
-                        
-                            <div class="combobox">
-                                <label for="multi-select">Collaborateur(s)</label>
-                               
-                                <select id="collaborateur" name="collaborateur" multiple>
-                                   <c:forEach var="collaborateur" items="${collaborateurList}">
-                                    <option value="${collaborateur.id}">${collaborateur.nom} ${collaborateur.prenom}</option>
-                                </c:forEach>
-                            </select>
-                                <br><br>
-                                
-                                </form>
+                            <label for="partenaireDropdown">Partenaire(s)</label>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="partenaireDropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sélectionner les partenaires
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="partenaireDropdown">
+                                        <label>
+                                            <input type="checkbox" name="partenaire" value="" onclick="handleNoneOption(this, 'partenaire')"/>
+                                            Aucun
+                                        </label><br>
+                                        <c:forEach var="partenaire" items="${partenaireList}">
+                                            <label>
+                                                <input type="checkbox" name="partenaire" value="${partenaire.id}" />
+                                                ${partenaire.nom}
+                                            </label><br>
+                                        </c:forEach>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="combobox">
+                            <label for="collaborateurDropdown">Collaborateur(s)</label>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="collaborateurDropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sélectionner les collaborateurs
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="collaborateurDropdown">
+                                        <label>
+                                            <input type="checkbox" name="collaborateur" value="" onclick="handleNoneOption(this, 'collaborateur')"/>
+                                            Aucun
+                                        </label><br>
+                                        <c:forEach var="collaborateur" items="${collaborateurList}">
+                                            <label>
+                                                <input type="checkbox" name="collaborateur" value="${collaborateur.id}" />
+                                                ${collaborateur.nom} ${collaborateur.prenom}
+                                            </label><br>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                        
-                   
+
+
+
+
                     <div class="button-container">
                         <input  type="submit" value="Valider">
                         <input type="reset" value="Annuler">
@@ -140,48 +162,50 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-            const checkboxNone = document.getElementById('checkbox-none');
 
             dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                toggle.addEventListener('click', function () {
                     this.classList.toggle('active');
-                    const dropdownMenu = this.nextElementSibling;
-                    if (dropdownMenu.style.display === 'block') {
-                        dropdownMenu.style.display = 'none';
+                    const menu = this.nextElementSibling;
+                    if (menu.style.display === 'block') {
+                        menu.style.display = 'none';
                     } else {
-                        dropdownMenu.style.display = 'block';
+                        menu.style.display = 'block';
                     }
                 });
             });
 
-            // Empêche la fermeture du menu lorsque l'on clique sur une option
+            // Function to handle the "Aucun" option
+            window.handleNoneOption = function (checkbox, name) {
+                const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+                checkboxes.forEach(cb => {
+                    if (cb !== checkbox) {
+                        cb.checked = false;
+                    }
+                });
+            };
+
+            // Prevent dropdown from closing on item click
+            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
             dropdownMenus.forEach(menu => {
                 menu.addEventListener('click', function (event) {
                     event.stopPropagation();
                 });
             });
 
-            // Fermer le menu déroulant si on clique en dehors
-            window.addEventListener('click', function () {
+            // Close the dropdown if the user clicks outside of it
+            window.addEventListener('click', function (event) {
                 dropdownToggles.forEach(toggle => {
-                    toggle.classList.remove('active');
-                    const dropdownMenu = toggle.nextElementSibling;
-                    dropdownMenu.style.display = 'none';
+                    const menu = toggle.nextElementSibling;
+                    if (event.target !== toggle && !toggle.contains(event.target)) {
+                        if (menu.style.display === 'block') {
+                            menu.style.display = 'none';
+                            toggle.classList.remove('active');
+                        }
+                    }
                 });
-            });
-
-            // Fermer le menu déroulant lorsque "Aucun" est coché
-            checkboxNone.addEventListener('change', function () {
-                if (this.checked) {
-                    dropdownToggles.forEach(toggle => {
-                        toggle.classList.remove('active');
-                        const dropdownMenu = toggle.nextElementSibling;
-                        dropdownMenu.style.display = 'none';
-                    });
-                }
             });
         });
     </script>
+
 </html>

@@ -104,20 +104,36 @@
 
                     <div class="combobox-container">
                         <div class="combobox">
-                            <label for="multi-select">Responsable(s) activité(s)</label>
-                            
-                            <select id="responsable" name="responsable" multiple>
-                                <c:forEach var="responsable" items="${responsableActiviteList}">
-                                    <option value="${responsable.id}">${responsable.nom}</option>
-                                </c:forEach>
-                            </select>
-                            <br><br>
-
+                            <label for="responsableDropdown">Responsable(s) activité(s)</label>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" id="responsableDropdown" aria-haspopup="true" aria-expanded="false">
+                                        Sélectionner les responsables d'activité
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="responsableDropdown">
+                                        <label>
+                                            <input type="checkbox" name="responsable" value="" onclick="handleNoneOption(this, 'responsable')"/>
+                                            Aucun
+                                        </label><br>
+                                        <c:forEach var="responsable" items="${responsableActiviteList}">
+                                            <label>
+                                                <input type="checkbox" name="responsable" value="${responsable.id}" />
+                                                ${responsable.nom}
+                                            </label><br>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="button-container">
-                            <input  type="submit" value="Valider">
-                            <input type="reset" value="Annuler">
-                        </div>                
+                    </div>
+
+                    <br><br>
+
+                    </div>
+                    <div class="button-container">
+                        <input  type="submit" value="Valider">
+                        <input type="reset" value="Annuler">
+                    </div>                
                 </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -125,5 +141,53 @@
         </main>
     </body>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
+    <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+                                                        dropdownToggles.forEach(toggle => {
+                                                            toggle.addEventListener('click', function () {
+                                                                this.classList.toggle('active');
+                                                                const menu = this.nextElementSibling;
+                                                                if (menu.style.display === 'block') {
+                                                                    menu.style.display = 'none';
+                                                                } else {
+                                                                    menu.style.display = 'block';
+                                                                }
+                                                            });
+                                                        });
+
+                                                        // Function to handle the "Aucun" option
+                                                        window.handleNoneOption = function (checkbox, name) {
+                                                            const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+                                                            checkboxes.forEach(cb => {
+                                                                if (cb !== checkbox) {
+                                                                    cb.checked = false;
+                                                                }
+                                                            });
+                                                        };
+
+                                                        // Prevent dropdown from closing on item click
+                                                        const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                                                        dropdownMenus.forEach(menu => {
+                                                            menu.addEventListener('click', function (event) {
+                                                                event.stopPropagation();
+                                                            });
+                                                        });
+
+                                                        // Close the dropdown if the user clicks outside of it
+                                                        window.addEventListener('click', function (event) {
+                                                            dropdownToggles.forEach(toggle => {
+                                                                const menu = toggle.nextElementSibling;
+                                                                if (event.target !== toggle && !toggle.contains(event.target)) {
+                                                                    if (menu.style.display === 'block') {
+                                                                        menu.style.display = 'none';
+                                                                        toggle.classList.remove('active');
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+                                                    });
+    </script>
 
 </html>

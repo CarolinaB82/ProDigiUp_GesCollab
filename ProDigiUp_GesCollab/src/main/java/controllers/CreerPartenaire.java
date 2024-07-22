@@ -90,7 +90,8 @@ public class CreerPartenaire extends HttpServlet {
 
                 // Récupérer les responsables d'activité sélectionnés
                 String[] responsableActiviteIds = req.getParameterValues("responsable");
-// Vérifier que des responsables ont bien été sélectionnés
+
+                // Vérifier que des responsables ont bien été sélectionnés
                 if (responsableActiviteIds != null) {
                     for (String responsableId : responsableActiviteIds) {
                         Proposer proposer = new Proposer();
@@ -118,7 +119,6 @@ public class CreerPartenaire extends HttpServlet {
                 req.setAttribute("message", "Partenaire bien ajouté !");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);
             } catch (SQLException ex) {
-
                 if (ex.getMessage().contains("Le partenaire existe déjà")) {
                     rafc.addError("presta", "Le partenaire existe déjà.");
                     loadLists(req);
@@ -126,7 +126,7 @@ public class CreerPartenaire extends HttpServlet {
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
                     req.getRequestDispatcher("/WEB-INF/jsp/creerPartenaire.jsp").forward(req, resp);
                 } else {
-                    Logger.getLogger(CreerPrestation.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CreerPartenaire.class.getName()).log(Level.SEVERE, null, ex);
                     req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
                     req.getRequestDispatcher("/WEB-INF/jsp/creerPartenaire.jsp").forward(req, resp);
                 }
@@ -136,7 +136,6 @@ public class CreerPartenaire extends HttpServlet {
             req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
             req.getRequestDispatcher("/WEB-INF/jsp/creerPartenaire.jsp").forward(req, resp);
         }
-
     }
 
     private void loadLists(HttpServletRequest req) throws ServletException {

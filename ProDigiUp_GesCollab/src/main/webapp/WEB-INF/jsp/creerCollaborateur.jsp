@@ -209,17 +209,18 @@
                         <div class="combobox">
 
                             <label for="responsable">Responsable d'activité</label>
-                            <select id="responsable" name="responsable" multiple>
+                            <select id="responsable" name="responsable">
                                 <c:forEach var="responsable" items="${responsableActiviteList}">
                                     <option value="${responsable.id}">${responsable.nom}</option>
                                 </c:forEach>
                             </select>
-
-                            <div class="button-container">
-                                <input  type="submit" value="Valider">
-                                <input type="reset" value="Annuler">
-                            </div>
                         </div>
+
+                        <div class="button-container">
+                            <input  type="submit" value="Valider">
+                            <input type="reset" value="Annuler">
+                        </div>
+                    </div>
                     </div>
                 </fieldset>
 

@@ -142,18 +142,18 @@ public class ModifierResponsableActivite extends HttpServlet {
             ProposerDao proposerDao = new ProposerDao();
             PossederDao possederDao = new PossederDao();
 
-            String[] PartenaireIds = req.getParameterValues("partenaire");
+            // Récupération des valeurs des checkboxes
+            String[] partenaireIds = req.getParameterValues("partenaire");
             List<Integer> partenaireIdList = new ArrayList<>();
 
-            if (PartenaireIds != null) {
-                for (String idStr : PartenaireIds) {
+            if (partenaireIds != null) {
+                for (String idStr : partenaireIds) {
                     int id = Integer.parseInt(idStr);
                     partenaireIdList.add(id);
                 }
             }
 
             ra.setPartenaireIds(partenaireIdList);
-            
 
             List<String> partenairesNoms = new ArrayList<>();
             for (int partenaireId : partenaireIdList) {
@@ -163,20 +163,17 @@ public class ModifierResponsableActivite extends HttpServlet {
                 }
             }
 
-            String[] CollaborateurIds = req.getParameterValues("collaborateur");
+            String[] collaborateurIds = req.getParameterValues("collaborateur");
             List<Integer> collaborateurIdList = new ArrayList<>();
 
-            if (CollaborateurIds != null) {
-                for (String idStr : CollaborateurIds) {
+            if (collaborateurIds != null) {
+                for (String idStr : collaborateurIds) {
                     int id = Integer.parseInt(idStr);
                     collaborateurIdList.add(id);
                 }
             }
 
             ra.setCollaborateurIds(collaborateurIdList);
-//            ra.setCollaborateurIds(partenaireIdList);
-//            responsableActiviteDao.update(ra);
-//            req.setAttribute("ra", ra);
 
             List<String> collaborateurNoms = new ArrayList<>();
             for (int collaborateurId : collaborateurIdList) {
@@ -185,31 +182,28 @@ public class ModifierResponsableActivite extends HttpServlet {
                     collaborateurNoms.add(collaborateur.getNom());
                 }
             }
-            
+
             responsableActiviteDao.update(ra);
-            
-            
+
             Collection<Prestation> prestations = responsableActiviteDao.listPrestationResponsableActivite(ra.getId());
             List<String> partenaireNomsPrestation = new ArrayList<>();
             List<Integer> partenaireIdAdd = new ArrayList<>();
             List<String> collaborateurNomsPrestation = new ArrayList<>();
             List<Integer> collaborateurIdAdd = new ArrayList<>();
-            for(Prestation presta : prestations){
+            for (Prestation presta : prestations) {
                 Integer partPrestation = presta.getId_partenaire();
                 Integer collabPrestation = presta.getId_collaborateur();
 
-                boolean partExists = partenaireIdAdd.stream()
-                                       .anyMatch(p -> p == partPrestation);
-                boolean collabExists = collaborateurIdAdd.stream()
-                                       .anyMatch(p -> p == collabPrestation);
+                boolean partExists = partenaireIdAdd.stream().anyMatch(p -> p == partPrestation);
+                boolean collabExists = collaborateurIdAdd.stream().anyMatch(p -> p == collabPrestation);
 
-                if(!partExists){
+                if (!partExists) {
                     String nomPartPrestation = partenaireDao.read(partPrestation).getNom();
                     partenaireNomsPrestation.add(nomPartPrestation);
                     partenaireIdAdd.add(partPrestation);
                 }
 
-                if(!collabExists){
+                if (!collabExists) {
                     String nomCollabPrestation = collaborateurDao.read(collabPrestation).getNom();
                     collaborateurNomsPrestation.add(nomCollabPrestation);
                     collaborateurIdAdd.add(collabPrestation);
@@ -221,8 +215,7 @@ public class ModifierResponsableActivite extends HttpServlet {
 
             req.setAttribute("partenairesPrestation", partenairesPrestation);
             req.setAttribute("collaborateursPrestation", collaborateursPrestation);
-            
-            
+
             req.setAttribute("ra", ra);
 
             String partenaire = String.join(", ", partenairesNoms);
@@ -247,6 +240,5 @@ public class ModifierResponsableActivite extends HttpServlet {
             req.setAttribute("ra", ra);
             req.getRequestDispatcher("/WEB-INF/jsp/modifierResponsableActivite.jsp").forward(req, resp);
         }
-
     }
 }

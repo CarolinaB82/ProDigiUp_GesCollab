@@ -145,15 +145,13 @@ public class ModifierPartenaire extends HttpServlet {
             }
 
             String responsablesActivite = String.join(", ", responsableNoms);
-            
-            
+
             Collection<Prestation> prestations = partenaireDao.listPrestationPartenaire(partenaire.getId());
             List<String> responsableNomsPrestation = new ArrayList<>();
             List<Integer> respIdAdd = new ArrayList<>();
             for (Prestation presta : prestations) {
                 Integer raPrestation = presta.getId_ra();
-                boolean raExists = respIdAdd.stream()
-                        .anyMatch(p -> p == raPrestation);
+                boolean raExists = respIdAdd.stream().anyMatch(p -> p == raPrestation);
                 if (!raExists) {
                     String nomRaPrestation = responsableActiviteDao.read(raPrestation).getNom();
                     responsableNomsPrestation.add(nomRaPrestation);
@@ -163,8 +161,7 @@ public class ModifierPartenaire extends HttpServlet {
 
             String responsablesActivitePrestations = String.join(", ", responsableNomsPrestation);
             req.setAttribute("responsablesActivitePrestation", responsablesActivitePrestations);
-            
-            
+
             req.setAttribute("responsablesActivite", responsablesActivite);
             req.setAttribute("message", "Votre partenaire est bien modifié");
             req.getRequestDispatcher("/WEB-INF/jsp/afficherPartenaire.jsp").forward(req, resp);

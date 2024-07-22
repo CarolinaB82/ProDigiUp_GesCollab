@@ -4,7 +4,6 @@
  */
 package controllers;
 
-
 import dao.CollaborateurDao;
 import dao.PossederDao;
 import dao.ResponsableActiviteDao;
@@ -123,39 +122,28 @@ public class ModifierCollaborateur extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        //Crée une instance de ModifierCollaborateurFormChecker pour valider les données du formulaire et récupérer un objet Collaborateur avec les données soumises.
         ModifierCollaborateurFormChecker nv = new ModifierCollaborateurFormChecker(req);
         Collaborateur collaborateur = nv.checkForm();
 
-        //Utilise le DAO pour récupérer toutes les activités responsables et celles associées au collaborateur.
         ResponsableActiviteDao responsableActiviteDao = new ResponsableActiviteDao();
         Collection<ResponsableActivite> responsableActiviteList = responsableActiviteDao.list();
         Collection<ResponsableActivite> listResponsableActiviteCollaborateur = responsableActiviteDao.listResponsableActivite(collaborateur.getId());
 
-        //Crée une liste d'IDs des responsables à partir de la collection des responsables associés au collaborateur.
         List<Integer> selectedResponsables = new ArrayList<>();
-        // Parcourir la collection et ajouter les ID des responsables à la liste
         for (ResponsableActivite responsable : listResponsableActiviteCollaborateur) {
             selectedResponsables.add(responsable.getId());
         }
-        //Vérifie si le champ RQTH est "oui" et si la date de renouvellement est manquante, ajoute une erreur si nécessaire.
+
         boolean isOuiSelected = "oui".equals(collaborateur.getRqth());
         boolean isAVieSelected = "a vie".equals(collaborateur.getRqth());
         if (isOuiSelected && collaborateur.getDate_de_renouvellement() == null) {
             nv.addError("date_de_renouvellement", "Date de renouvellement invalide.");
         }
-        //Si le formulaire ne contient pas d'erreurs, continue le traitement ; sinon, retourne à la page du formulaire avec les erreurs.
-        if (nv.getErrors().isEmpty()) {
 
+        if (nv.getErrors().isEmpty()) {
             CollaborateurDao collaborateurDao = new CollaborateurDao();
             PossederDao possederDao = new PossederDao();
             try {
-
-                //Vérification de l'unicité du matricule : Vérifie si le matricule existe déjà pour un autre collaborateur. 
-                //Si oui, ajoute une erreur et retourne à la page du formulaire.
-                //Conversion et stockage des IDs des responsables : Convertit les IDs des responsables en entier et les stocke dans le collaborateur.
-                //Mise à jour du collaborateur : Met à jour le collaborateur dans la base de données.
-                //Préparation des attributs pour la vue : Prépare les attributs pour la vue et redirige vers la page de succès.
                 if (collaborateurDao.existsForOtherCollab(collaborateur.getMatricule(), collaborateur.getId())) {
                     nv.addError("matricule", "Le matricule existe déjà.");
                     req.setAttribute("collaborateur", collaborateur);
@@ -175,11 +163,7 @@ public class ModifierCollaborateur extends HttpServlet {
                 }
 
                 String[] responsableActiviteIds = req.getParameterValues("responsable");
-
-                // Initialiser une liste d'entiers pour stocker les IDs convertis
                 List<Integer> responsableActiviteIdList = new ArrayList<>();
-
-                // Parcourir le tableau de chaînes de caractères et convertir chaque élément en entier
                 if (responsableActiviteIds != null) {
                     for (String idStr : responsableActiviteIds) {
                         int id = Integer.parseInt(idStr);
@@ -188,11 +172,9 @@ public class ModifierCollaborateur extends HttpServlet {
                 }
 
                 collaborateur.setResponsableIds(responsableActiviteIdList);
-
                 collaborateurDao.update(collaborateur);
 
                 req.setAttribute("collaborateur", collaborateur);
-
                 req.setAttribute("isOuiSelected", isOuiSelected);
                 req.setAttribute("isAVieSelected", isAVieSelected);
                 if (collaborateur.getDate_de_renouvellement() != null) {
@@ -210,35 +192,29 @@ public class ModifierCollaborateur extends HttpServlet {
                 }
 
                 String responsablesActivite = String.join(", ", responsableNoms);
-                
-                
+
                 Collection<Prestation> prestations = collaborateurDao.listPrestationCollaborateur(collaborateur.getId());
                 List<String> responsableNomsPrestation = new ArrayList<>();
                 List<Integer> respIdAdd = new ArrayList<>();
-                for(Prestation presta : prestations){
+                for (Prestation presta : prestations) {
                     Integer raPrestation = presta.getId_ra();
-                    boolean raExists = respIdAdd.stream()
-                                           .anyMatch(p -> p == raPrestation);
-                    if(!raExists){
+                    boolean raExists = respIdAdd.stream().anyMatch(p -> p == raPrestation);
+                    if (!raExists) {
                         String nomRaPrestation = responsableActiviteDao.read(raPrestation).getNom();
                         responsableNomsPrestation.add(nomRaPrestation);
                         respIdAdd.add(raPrestation);
                     }
-
                 }
+
                 String responsablesActivitePrestations = String.join(", ", responsableNomsPrestation);
                 req.setAttribute("responsablesActivitePrestation", responsablesActivitePrestations);
-                
-                
-                
+
                 req.setAttribute("responsablesActivite", responsablesActivite);
                 req.setAttribute("message", "Votre collaborateur a bien été modifié");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherCollaborateur.jsp").forward(req, resp);
 
             } catch (SQLException ex) {
                 Logger.getLogger(ModifierCollaborateur.class.getName()).log(Level.SEVERE, null, ex);
-                // logger.log(Level.SEVERE, "Erreur lors de la modification du collaborateur", ex);
-
                 req.setAttribute("errorMsg", "Erreur lors de la modification du collaborateur");
                 req.getRequestDispatcher("/WEB-INF/jsp/modifierCollaborateur.jsp").forward(req, resp);
             }
@@ -253,5 +229,4 @@ public class ModifierCollaborateur extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/jsp/modifierCollaborateur.jsp").forward(req, resp);
         }
     }
-
 }

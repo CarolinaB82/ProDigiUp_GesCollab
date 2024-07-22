@@ -23,16 +23,27 @@
             <fieldset>
                 <legend><strong>Fiche Responsable d'Activite</legend>
                 <div class='fiches'>
-                    <p><strong>Matricule : </strong><c:out value="${ra.matricule}"/></p>
-                    <p><strong>Nom : </strong><c:out value="${ra.nom}"/></p>
-                    <p><strong>Prénom: </strong><c:out value="${ra.prenom}"/></p>
-                    <p><strong>Mail : </strong><c:out value="${ra.mail}"/></p>
-                    <p><strong>Téléphone Pro: </strong><c:out value="${ra.telephone_professionnel}"/></p>
-                    <p><strong>Téléphone Perso: </strong><c:out value="${ra.telephone_personnel}"/></p>
-                    <p><strong>Partenaire(s): </strong><c:out value="${partenaire}"/></p>
-                    <p><strong>Partenaire(s) liés aux prestations: </strong><c:out value="${partenairesPrestation}"/></p>
-                    <p><strong>Collaborateur(s): </strong><c:out value="${collaborateur}"/></p>
-                    <p><strong>Collaborateur(s) liés aux prestations: </strong><c:out value="${collaborateursPrestation}"/></p>
+                    <p><span class="label-text">Matricule : </span>
+                        <span class="value-text"><c:out value="${ra.matricule}"/></span>                    </p>
+                    <p><span class="label-text">Nom : </span>
+                        <span class="value-text"><c:out value="${ra.nom}"/></span></p>
+                    <p><span class="label-text">Prénom : </span>
+                        <span class="value-text"><c:out value="${ra.prenom}"/></span></p>
+                    <p><span class="label-text">Mail : </span>
+                        <span class="value-text"><c:out value="${ra.mail}"/></span></p>
+                    <p><span class="label-text">Téléphone Pro : </span>
+                        <span class="value-text"><c:out value="${ra.telephone_professionnel}"/></span></p>
+                    <p><span class="label-text">Téléphone Perso : </span>
+                        <span class="value-text"><c:out value="${ra.telephone_personnel}"/></span></p>
+                    <p><span class="label-text">Partenaire(s) : </span>
+                        <span class="value-text"><c:out value="${partenaire}"/></span></p>
+                    <p><span class="label-text">Partenaire(s) liés aux prestations : </span>
+                        <span class="value-text"><c:out value="${partenairesPrestation}"/></span></p>
+                    <p><span class="label-text">Collaborateur(s) : </span>
+                        <span class="value-text"><c:out value="${collaborateur}"/></span></p>
+                    <p><span class="label-text">Collaborateur(s) liés aux prestations : </span>
+                        <span class="value-text"><c:out value="${collaborateursPrestation}"/></span></p>
+
                 </div>
                 <div class="button-container">
                     <form action="/ProDigiUp_GesCollab/modifier_ra" method="get"style="display: inline;">

@@ -27,30 +27,29 @@
                 <legend><strong>Fiche Collaborateur</legend>
                 <div>${requestScope.message}</div>
                 <div class='fiches'>
-                    <p><strong>Matricule: </strong><c:out value="${collaborateur.matricule}"/></p>
-                    <p><strong>Genre: </strong><c:out value="${collaborateur.genre}"/></p>
-                    <p><strong>Nom: </strong><c:out value="${collaborateur.nom}"/></p>
-                    <p><strong>Prénom: </strong><c:out value="${collaborateur.prenom}"/></p>
-                    <p><strong>Mail 1: </strong><c:out value="${collaborateur.mail_1}"/></p>
-                    <p><strong>Mail 2: </strong><c:out value="${collaborateur.mail_2}"/></p>
-                    <p><strong>Téléphone personnel: </strong><c:out value="${collaborateur.telephone_personnel}"/></p>
-                    <p><strong>Statut: </strong><c:out value="${collaborateur.statut}"/></p>
-                    <p><strong>Catégorie: </strong><c:out value="${collaborateur.categorie}"/></p>
-                    <p><strong>RQTH: </strong><c:out value="${collaborateur.rqth}"/></p>
-                    <c:if test="${collaborateur.rqth == 'oui'}">
-                        <p><strong>Date de renouvellement: </strong><c:out value="${formattedDate}"/></p>
-                    </c:if>
-                    <p><strong>Métier: </strong><c:out value="${collaborateur.metier}"/></p>
+                    <p><span class="label-text">Matricule: </span><span class="value-text"><c:out value="${collaborateur.matricule}"/></span></p>
+                    <p><span class="label-text">Genre: </span><span class="value-text"><c:out value="${collaborateur.genre}"/></span></p>
+                    <p><span class="label-text">Nom: </span><span class="value-text"><c:out value="${collaborateur.nom}"/></span></p>
+                    <p><span class="label-text">Prénom: </span><span class="value-text"><c:out value="${collaborateur.prenom}"/></span></p>
+                    <p><span class="label-text">Mail 1: </span><span class="value-text"><c:out value="${collaborateur.mail_1}"/></span></p>
+                    <p><span class="label-text">Mail 2: </span><span class="value-text"><c:out value="${collaborateur.mail_2}"/></span></p>
+                    <p><span class="label-text">Téléphone personnel: </span><span class="value-text"><c:out value="${collaborateur.telephone_personnel}"/></span></p>
+                    <p><span class="label-text">Statut: </span><span class="value-text"><c:out value="${collaborateur.statut}"/></span></p>
+                    <p><span class="label-text">Catégorie: </span><span class="value-text"><c:out value="${collaborateur.categorie}"/></span></p>
+                    <p><span class="label-text">RQTH: </span><span class="value-text"><c:out value="${collaborateur.rqth}"/></span></p>
+                        <c:if test="${collaborateur.rqth == 'oui'}">
+                        <p><span class="label-text">Date de renouvellement: </span><span class="value-text"><c:out value="${formattedDate}"/></span></p>
+                        </c:if>
+                    <p><span class="label-text">Métier: </span><span class="value-text"><c:out value="${collaborateur.metier}"/></span></p>
+                    <p><span class="label-text">Responsable(s) activité: </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
+                    <p><span class="label-text">Responsable(s) activité liés aux prestations: </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
+                </div>
 
-                    <p><strong>Responsable(s) activité: </strong><c:out value="${responsablesActivite}"/></p>
-                    <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
-
-
-                    <div class="button-container">
-                        <form action="/ProDigiUp_GesCollab/modifier_collaborateur" method="get"style="display: inline;">
-                            <input type="hidden" name="id" value="${collaborateur.id}" />
-                            <input type="submit" value="Modifier">
-                        </form>
+                <div class="button-container">
+                    <form action="/ProDigiUp_GesCollab/modifier_collaborateur" method="get"style="display: inline;">
+                        <input type="hidden" name="id" value="${collaborateur.id}" />
+                        <input type="submit" value="Modifier">
+                    </form>
 
                <!--<form action="<c:url value='/collaborateur'/>" method="post" style="display: inline;">
                     <input type="hidden" name="id" value="${collaborateur.id}" />
@@ -58,13 +57,13 @@
                     <button type="submit">Désactiver</button>
                 </form>-->
 
-                        <form action="<c:url value='/supprimer_collaborateur'/>" method="post" style="display: inline;">
-                            <input type="hidden" name="id" value="${collaborateur.id}" />
-                            <input type="hidden" name="action" value="delete" />
-                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce collaborateur ?');">Supprimer</button>
-                        </form>
-                    </div>
+                    <form action="<c:url value='/supprimer_collaborateur'/>" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="${collaborateur.id}" />
+                        <input type="hidden" name="action" value="delete" />
+                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce collaborateur ?');">Supprimer</button>
+                    </form>
                 </div>
+
             </fieldset>  
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>

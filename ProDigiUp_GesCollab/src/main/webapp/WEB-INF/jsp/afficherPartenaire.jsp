@@ -23,25 +23,26 @@
             <fieldset>
                 <legend><strong>Fiche Partenaire</legend>
                 <div class='fiches'>
-                    <p><strong>Nom :  </strong><c:out value="${partenaire.nom}"/></p>
-                    <p><strong>Numéro de voie : </strong><c:out value="${partenaire.numero_voie}"/></p>
-                    <p><strong>Adresse : </strong><c:out value="${partenaire.adresse}"/></p>
-                    <p><strong>Code postal : </strong><c:out value="${partenaire.code_postal}"/></p>
-                    <p><strong>Ville : </strong><c:out value="${partenaire.ville}"/></p>
-                    <p><strong>Responsable(s) activité(s): </strong><c:out value="${responsablesActivite}"/></p>
-                    <p><strong>Responsable(s) activité liés aux prestations: </strong><c:out value="${responsablesActivitePrestation}"/></p>
+                    <p><span class="label-text">Nom : </span><span class="value-text"><c:out value="${partenaire.nom}"/></span></p>
+                    <p><span class="label-text">Numéro de voie : </span><span class="value-text"><c:out value="${partenaire.numero_voie}"/></span></p>
+                    <p><span class="label-text">Adresse : </span><span class="value-text"><c:out value="${partenaire.adresse}"/></span></p>
+                    <p><span class="label-text">Code postal : </span><span class="value-text"><c:out value="${partenaire.code_postal}"/></span></p>
+                    <p><span class="label-text">Ville : </span><span class="value-text"><c:out value="${partenaire.ville}"/></span></p>
+                    <p><span class="label-text">Responsable(s) activité(s) : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
+                    <p><span class="label-text">Responsable(s) activité liés aux prestations : </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
+                </div>
 
-                    <div class="button-container">
-                        <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
-                            <input type="hidden" name="id" value="${partenaire.id}" />
-                            <input type="submit" value="Modifier">
-                        </form>
-                        <form action="<c:url value='/supprimer_partenaire'/>" method="post" style="display: inline;">
-                            <input type="hidden" name="id" value="${partenaire.id}" />
-                            <input type="hidden" name="action" value="delete" />
-                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
-                        </form>
-                    </div>
+                <div class="button-container">
+                    <form action="/ProDigiUp_GesCollab/modifier_partenaire" method="get"style="display: inline;">
+                        <input type="hidden" name="id" value="${partenaire.id}" />
+                        <input type="submit" value="Modifier">
+                    </form>
+                    <form action="<c:url value='/supprimer_partenaire'/>" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="${partenaire.id}" />
+                        <input type="hidden" name="action" value="delete" />
+                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
+                    </form>
+                </div>
                 </div>
 
             </fieldset>

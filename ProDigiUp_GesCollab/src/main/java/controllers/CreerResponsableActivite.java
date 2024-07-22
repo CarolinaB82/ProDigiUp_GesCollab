@@ -83,7 +83,6 @@ public class CreerResponsableActivite extends HttpServlet {
             PossederDao possederDao = new PossederDao();
             ProposerDao proposerDao = new ProposerDao();
             try {
-
                 if (responsableActiviteDao.exists(responsableActivite.getMatricule())) {
                     rafc.addError("nom", "Le responsable activite existe déjà.");
                     loadLists(req);
@@ -119,7 +118,6 @@ public class CreerResponsableActivite extends HttpServlet {
                     }
                 }
 
-                //  ResponsableActivite ra = responsableActiviteDao.read(responsableActivite.getId());
                 req.setAttribute("ra", ra);
 
                 PartenaireDao partenaireDao = new PartenaireDao();
@@ -149,7 +147,6 @@ public class CreerResponsableActivite extends HttpServlet {
                 req.setAttribute("message", "Responsable d'Activité bien ajouté !");
                 req.getRequestDispatcher("/WEB-INF/jsp/afficherResponsableActivite.jsp").forward(req, resp);
             } catch (SQLException ex) {
-
                 if (ex.getMessage().contains("Le matricule existe déjà")) {
                     rafc.addError("matricule", "Le matricule existe déjà.");
                     loadLists(req);
@@ -167,7 +164,6 @@ public class CreerResponsableActivite extends HttpServlet {
             req.setAttribute("errorMsg", "Votre formulaire comporte des erreurs");
             req.getRequestDispatcher("/WEB-INF/jsp/creerResponsableActivite.jsp").forward(req, resp);
         }
-
     }
 
     private void loadLists(HttpServletRequest req) throws ServletException {

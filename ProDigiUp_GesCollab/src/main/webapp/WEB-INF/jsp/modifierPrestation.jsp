@@ -64,6 +64,7 @@
                         <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
                     </div>
                     <br>
+
                     <div class="combobox-container">
                         <div class="combobox">
                             <label for="multi-select-responsable_activite">Responsable activité</label>
@@ -97,7 +98,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="button-container">
                         <input type="submit" value="Enregistrer">
                         <button type="button" onclick="window.location.href = '<c:url value="/liste_collaborateurs"/>'">Annuler</button>
@@ -109,6 +109,35 @@
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
+    <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
+                                dropdownToggles.forEach(toggle => {
+                                    toggle.addEventListener('click', function () {
+                                        this.classList.toggle('active');
+                                        const menu = this.nextElementSibling;
+                                        if (menu.style.display === 'block') {
+                                            menu.style.display = 'none';
+                                        } else {
+                                            menu.style.display = 'block';
+                                        }
+                                    });
+                                });
+
+                                // Close the dropdown if the user clicks outside of it
+                                window.addEventListener('click', function (event) {
+                                    dropdownToggles.forEach(toggle => {
+                                        const menu = toggle.nextElementSibling;
+                                        if (event.target !== toggle && !toggle.contains(event.target)) {
+                                            if (menu.style.display === 'block') {
+                                                menu.style.display = 'none';
+                                                toggle.classList.remove('active');
+                                            }
+                                        }
+                                    });
+                                });
+                            });
+    </script>
 </html>
 

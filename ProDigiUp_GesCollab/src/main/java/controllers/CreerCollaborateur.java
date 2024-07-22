@@ -49,6 +49,7 @@ public class CreerCollaborateur extends HttpServlet {
      * @throws ServletException Si une erreur de servlet se produit
      * @throws IOException Si une erreur d'entrée-sortie se produit
      */
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
