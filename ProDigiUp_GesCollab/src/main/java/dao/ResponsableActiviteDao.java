@@ -579,4 +579,28 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
         }
         return list;
     }
+    
+//     public Collection<ResponsableActivite> listPartenaireResponsableActivite(int idPartenaire) {
+//        String sql = "SELECT ra.id_ra, ra.nom " +
+//                 "FROM ResponsableActivite ra " +
+//                 "JOIN proposer p ON ra.id_ra = p.id_ra " +
+//                 "WHERE p.id_partenaire = ?";
+//          List<ResponsableActivite> list = new ArrayList<>();
+//    try (PreparedStatement pstmt = connexion.prepareStatement(sql)) {
+//        pstmt.setInt(1, idPartenaire);
+//        try (ResultSet rs = pstmt.executeQuery()) {
+//            while (rs.next()) {
+//                ResponsableActivite ra = new ResponsableActivite();
+//                ra.setId(rs.getInt("id_ra"));
+//                ra.setNom(rs.getString("nom"));
+//                list.add(ra);
+//            }
+//        }
+//    } catch (SQLException ex) {
+//        System.err.println("Erreur lors de la récupération des responsables : " + ex.getMessage());
+//    }
+//    return list;
+//}
+     
+
 }

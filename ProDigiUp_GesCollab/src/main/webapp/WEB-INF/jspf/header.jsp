@@ -42,13 +42,17 @@
                     <ul class="sous">
                         <li><a href="<c:url value="/rechercher_ra"/>">Un responsable d'activité</a></li>
                         <li><a href="<c:url value="/rechercher"/>">Un Collaborateur</a></li>
+                        <li><a href="<c:url value="/rechercher_partenaire"/>">Un partenaire</a></li>
+
+                        
                     </ul>
                 </li>
 
                 <li >Listings &ensp;
                     <ul class="sous">
+                        <li><a href="<c:url value="/liste_partenaires"/>">Partenaires</a></li>
                         <li><a href="<c:url value="/liste_prestations"/>">Prestations</a></li>
-                        <li><a href="<c:url value="/liste_collaborateurs"/>">Collaborateurs</a></li>
+                        <li><a href="<c:url value="/liste_collaborateurs"/>">Collaborateurs</a></li
                     </ul>
                 </li>
             </c:if>
