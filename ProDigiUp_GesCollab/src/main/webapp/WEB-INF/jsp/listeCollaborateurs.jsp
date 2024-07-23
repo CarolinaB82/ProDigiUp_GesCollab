@@ -61,7 +61,7 @@
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <br><br>
-            <h2>Liste des collaborateurs, de leurs responsables et de leurs partenaires associés</h2>
+            <h2>Liste des collaborateurs</h2>
             <br><br><br>
             <table border="1" class="custom-table neutral-links">
                 <thead>
