@@ -21,52 +21,59 @@ import java.util.List;
     "genre",
     "rqth",
     "date_de_renouvellement",
+    "type_rqth",
     "metier",
     "responsablesIds"
 })
 
 /**
- * Représente un collaborateur dans le système.
- * Cette classe implémente l'interface Identifiable et est sérialisable.
- * Elle contient des attributs décrivant les informations d'un collaborateur.
- * 
- * Les attributs incluent l'identifiant, le matricule, le nom, le prénom,
- * les adresses e-mail, les numéros de téléphone, le statut, la catégorie,
- * le genre, l'indicateur de RQTH, la date de renouvellement et le métier du collaborateur.
- * 
- * Elle inclut également le nom de la prestation associée et une liste d'identifiants
- * des responsables liés au collaborateur.
+ * Représente un collaborateur dans le système. Cette classe implémente
+ * l'interface Identifiable et est sérialisable. Elle contient des attributs
+ * décrivant les informations d'un collaborateur.
+ *
+ * Les attributs incluent l'identifiant, le matricule, le nom, le prénom, les
+ * adresses e-mail, les numéros de téléphone, le statut, la catégorie, le genre,
+ * l'indicateur de RQTH, la date de renouvellement et le métier du
+ * collaborateur.
+ *
+ * Elle inclut également le nom de la prestation associée et une liste
+ * d'identifiants des responsables liés au collaborateur.
+ *
  * @author cberge
  */
 @SuppressWarnings("serial")
 public class Collaborateur implements Identifiable, Serializable {
 
-    @JsonProperty(index=1)
+    @JsonProperty(index = 1)
     private Integer id;
-    @JsonProperty(index=2)
+    @JsonProperty(index = 2)
     private Integer matricule;
-    @JsonProperty(index=3)
+    @JsonProperty(index = 3)
     private String nom;
-    @JsonProperty(index=4)
+    @JsonProperty(index = 4)
     private String prenom;
-    @JsonProperty(index=5)
+    @JsonProperty(index = 5)
     private String mail_1;
-    @JsonProperty(index=6)
+    @JsonProperty(index = 6)
     private String mail_2;
-    @JsonProperty(index=7)
+    @JsonProperty(index = 7)
     private String telephone_personnel;
-    @JsonProperty(index=8)
+    @JsonProperty(index = 8)
     private String statut;
-    @JsonProperty(index=9)
+    @JsonProperty(index = 9)
     private String categorie;
-    @JsonProperty(index=10)
+    @JsonProperty(index = 10)
     private String genre;
-    @JsonProperty(index=11)
+    @JsonProperty(index = 11)
     private String rqth;
-    @JsonProperty(index=12)
+    @JsonProperty(index = 12)
     private LocalDate date_de_renouvellement;
-    @JsonProperty(index=13)
+    @JsonProperty(index = 13)
+    private String type_rqth;
+    @JsonProperty(index = 14)
     private String metier;
+    @JsonProperty(index = 15)
+    private String materiel;
 
     @Override
     public String toString() {
@@ -84,7 +91,9 @@ public class Collaborateur implements Identifiable, Serializable {
         sb.append(", genre=").append(genre);
         sb.append(", rqth=").append(rqth);
         sb.append(", date_de_renouvellement=").append(date_de_renouvellement);
+        sb.append(", type_rqth=").append(type_rqth);
         sb.append(", metier=").append(metier);
+        sb.append(", materiel=").append(materiel);
         sb.append('}');
         return sb.toString();
     }
@@ -104,7 +113,9 @@ public class Collaborateur implements Identifiable, Serializable {
         hash = 83 * hash + Objects.hashCode(this.genre);
         hash = 83 * hash + Objects.hashCode(this.rqth);
         hash = 83 * hash + Objects.hashCode(this.date_de_renouvellement);
+        hash = 83 * hash + Objects.hashCode(this.type_rqth);
         hash = 83 * hash + Objects.hashCode(this.metier);
+        hash = 83 * hash + Objects.hashCode(this.materiel);
         return hash;
     }
 
@@ -141,16 +152,16 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
-    
-     public String getMail_1() {
+
+    public String getMail_1() {
         return mail_1;
     }
 
     public void setMail_1(String mail_1) {
         this.mail_1 = mail_1;
     }
-    
-      public String getMail_2() {
+
+    public String getMail_2() {
         return mail_2;
     }
 
@@ -206,6 +217,14 @@ public class Collaborateur implements Identifiable, Serializable {
         this.date_de_renouvellement = date_de_renouvellement;
     }
 
+    public String getType_rqth() {
+        return type_rqth;
+    }
+
+    public void setType_rqth(String type_rqth) {
+        this.type_rqth = type_rqth;
+    }
+
     public String getMetier() {
         return metier;
     }
@@ -213,13 +232,21 @@ public class Collaborateur implements Identifiable, Serializable {
     public void setMetier(String metier) {
         this.metier = metier;
     }
-    
-     private  List<Integer> responsableIds;
-     
-    public  List<Integer> getResponsablesIds(){
+
+    public String getMateriel() {
+        return materiel;
+    }
+
+    public void setMateriel(String materiel) {
+        this.materiel = materiel;
+    }
+    private List<Integer> responsableIds;
+
+    public List<Integer> getResponsablesIds() {
         return responsableIds;
     }
-    public void setResponsableIds( List<Integer> responsableIds){
-            this.responsableIds = responsableIds;
-}
+
+    public void setResponsableIds(List<Integer> responsableIds) {
+        this.responsableIds = responsableIds;
+    }
 }

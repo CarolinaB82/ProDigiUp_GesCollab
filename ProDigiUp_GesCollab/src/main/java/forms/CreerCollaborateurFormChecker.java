@@ -51,7 +51,9 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
         String genre = request.getParameter("genre");
         String rqth = request.getParameter("rqth");
         String dateDeRenouvellement = request.getParameter("date_de_renouvellement");
+        String type_rqth = request.getParameter("type_rqth");
         String metier = request.getParameter("metier");
+        String materiel = request.getParameter("materiel");
 
         // Convertir les champs Integer
         try {
@@ -95,7 +97,9 @@ public class CreerCollaborateurFormChecker extends FormChecker<Collaborateur> {
         obj.setCategorie(categorie);
         obj.setGenre(genre);
         obj.setRqth(rqth);
+        obj.setType_rqth(type_rqth);
         obj.setMetier(metier);
+        obj.setMateriel(materiel);
 
         if (errors.isEmpty()) {
             //DaoFactory.getCollaborateurDao().save(obj);

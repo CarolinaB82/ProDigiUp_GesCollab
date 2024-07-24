@@ -79,7 +79,7 @@
                         <th>Adresse</th>
                         <th>Code Postal</th>
                         <th>Ville</th> 
-                        <th> Ra </th>
+                        <th> Responsables d'activité </th>
                     </tr>
                 </thead>
                 <tbody> 

@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
-        <title>Créer RA</title>
+        <title>Créer responsable</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>

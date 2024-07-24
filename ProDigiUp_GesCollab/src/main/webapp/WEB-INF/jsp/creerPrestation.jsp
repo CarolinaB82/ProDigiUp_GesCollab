@@ -17,7 +17,7 @@
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
-        <title>créer prestation</title>
+        <title>Créer prestation</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -90,7 +90,7 @@
                     </div>
                     <br><br>
                     <div>
-                        <label for="ref_fact_airbus">Référent facturation Airbus</label>
+                        <label for="ref_fact_airbus">Référent facturation Client/Airbus</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus"
                                title="Veuillez saisir uniquement des lettres (A-Z, a-z)"value="${requestScope.prestation != null ? requestScope.prestation.ref_fact_airbus : ''}"
                                class="${not empty requestScope.errors.ref_fact_airbus ? 'error-input' : ''}"
@@ -100,7 +100,7 @@
                     </div>
                     <br>
                     <div>
-                        <label for="mail_airbus">Mail de contact Airbus</label>
+                        <label for="mail_airbus">Mail de contact Client/Airbus</label>
                         <input type="email" id="mail_airbus" name="mail_airbus"
                                value="${requestScope.prestation != null ? requestScope.prestation.mail_airbus : ''}"
                                class="${not empty requestScope.errors.mail_airbus ? 'error-input' : ''}"
@@ -138,6 +138,7 @@
                         <div class="combobox">
                             <label for="multi-select">Partenaire</label>
                             <select id="id_partenaire" name="id_partenaire">
+                                <option value="">-- Aucun --</option>
                                 <c:forEach var="partenaire" items="${partenaireList}">
                                     <option value="${partenaire.id}">${partenaire.nom}</option>
                                 </c:forEach>

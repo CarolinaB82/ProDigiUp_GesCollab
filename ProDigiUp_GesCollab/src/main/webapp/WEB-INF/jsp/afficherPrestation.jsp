@@ -29,8 +29,8 @@
                     <p><span class="label-text">Nom prestation : </span><span class="value-text"><c:out value="${prestation.nom_presta}"/></span></p>
                     <p><span class="label-text">Référent facture partenaire : </span><span class="value-text"><c:out value="${prestation.ref_fact_partenaire}"/></span></p>
                     <p><span class="label-text">Mail partenaire : </span><span class="value-text"><c:out value="${prestation.mail_partenaire}"/></span></p>
-                    <p><span class="label-text">Référent facture Airbus : </span><span class="value-text"><c:out value="${prestation.ref_fact_airbus}"/></span></p>
-                    <p><span class="label-text">Mail Airbus : </span><span class="value-text"><c:out value="${prestation.mail_airbus}"/></span></p>
+                    <p><span class="label-text">Référent Client/Airbus : </span><span class="value-text"><c:out value="${prestation.ref_fact_airbus}"/></span></p>
+                    <p><span class="label-text">Mail Client/Airbus : </span><span class="value-text"><c:out value="${prestation.mail_airbus}"/></span></p>
                     <p><span class="label-text">Partenaire : </span><span class="value-text"><c:out value="${partenaire}"/></span></p>
                     <p><span class="label-text">Collaborateur : </span><span class="value-text"><c:out value="${collaborateur}"/></span></p>
                     <p><span class="label-text">Responsable activité : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>

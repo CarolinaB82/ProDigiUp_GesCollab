@@ -18,7 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
-        <title>créer partenaire</title>
+        <title>Créer partenaire</title>
     </head>
     <body> 
         <%@include file="/WEB-INF/jspf/header.jsp" %>
@@ -125,16 +125,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <br><br>
-
-                    </div>
-                    <div class="button-container">
-                        <input  type="submit" value="Valider">
-                        <input type="reset" value="Annuler">
-                    </div>                
-                </fieldset>
+                        <div class="button-container">
+                            <input  type="submit" value="Valider">
+                            <input type="reset" value="Annuler">
+                        </div>
+                 </fieldset>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
             </form>
