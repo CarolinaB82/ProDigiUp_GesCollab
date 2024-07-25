@@ -14,7 +14,7 @@
         <c:set var="notHome" value="true" />
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>voir un RA</title>
+        <title>Afficher un responsable</title>
 
     </head>
     <body>

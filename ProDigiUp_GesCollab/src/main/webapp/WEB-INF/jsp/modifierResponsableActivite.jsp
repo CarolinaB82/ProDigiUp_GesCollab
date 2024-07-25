@@ -17,7 +17,7 @@
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
-        <title>Modifier RA</title>
+        <title>Modifier responsable</title>
     </head>
     <body>
         <%@include file="/WEB-INF/jspf/header.jsp" %>

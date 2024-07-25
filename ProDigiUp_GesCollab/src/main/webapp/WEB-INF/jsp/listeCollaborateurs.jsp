@@ -11,7 +11,7 @@
 <html>
     <head>
         <c:set var="notHome" value="true" />
-        <title>Liste collaborateurs</title>
+        <title>Liste des collaborateurs</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">

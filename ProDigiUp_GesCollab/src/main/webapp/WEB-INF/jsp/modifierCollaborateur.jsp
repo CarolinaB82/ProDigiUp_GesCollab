@@ -70,7 +70,7 @@
                 </div>
                 <br>
                 <div>
-                    <label for="mail_1">Mail 1</label>
+                    <label for="mail_1">Mail professionnel</label>
                     <input type="email" id="mail_1" name="mail_1"
                            value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
                            class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
@@ -79,7 +79,7 @@
                     <div class="error-details-message">${requestScope.errors.mail_1}</div>
                 </div>
                 <div>
-                    <label for="mail_2">Mail 2</label>
+                    <label for="mail_2">Mail personnel</label>
                     <input type="email" id="mail_2" name="mail_2"
                            value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_2 : ''}"
                            class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
@@ -113,6 +113,12 @@
                 </div>  
                 <br>
                 <div>
+                    <label for="materiel">Matériel</label>
+                    <input type="text" id="materiel" name="materiel"
+                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.materiel : ''}"
+                           class="${not empty requestScope.errors.matricule ? 'error-input' : ''}"
+                </div>
+                <div>
                     <label for="statut">Statut</label>
                     <select id="statut" name="statut">
                         <option value="CDD" ${requestScope.collaborateur != null && requestScope.collaborateur.statut == 'CDD' ? 'selected' : ''}>CDD</option>
@@ -144,66 +150,62 @@
                 </div>
                 <br>
                 <div>
-
-
-                    <div>
-                        <label for="rqth">RQTH</label>
-                        <select id="rqth" name="rqth" onchange="toggleDateField()" >
-                            <option value="oui" ${isOuiSelected ? 'selected' : ''}>Oui</option>
-                            <option value="non" ${!isOuiSelected ? 'selected' : ''}>Non</option>
-                            <option value="a vie" ${isAVieSelected ? 'selected' : ''}>A vie</option>
-                        </select>
-                        <div class="error-details-message">${requestScope.errors.rqth}</div>
-                    </div>
-
-                    <c:if test="${isOuiSelected}">
-                        <div id="date-renouvellement" style="display:none;">
-                            <label for="date_de_renouvellement">Date de renouvellement</label>
-                            <input type="date" id="date_de_renouvellement" name="date_de_renouvellement" *
-                                   placeholder="jj-mm-aaaa"
-                                   required
-                                   value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}"
-                                   >
-                            <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${!isOuiSelected}">
-                        <div id="date-renouvellement" style="display:none;">
-                            <label for="date_de_renouvellement">Date de renouvellement</label>
-                            <input type="date" id="date_de_renouvellement" name="date_de_renouvellement"
-                                   placeholder="jj-mm-aaaa" 
-                                   value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
-                            <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
-                        </div>
-                    </c:if>
-
-                    <script>
-                        function toggleDateField() {
-                            var rqthSelect = document.getElementById('rqth');
-                            var dateField = document.getElementById('date-renouvellement');
-                            var dateInput = document.getElementById('date_de_renouvellement');
-
-                            if (rqthSelect.value === 'oui') {
-                                dateField.style.display = 'block';
-                                dateInput.disabled = false;
-                            } else if (rqthSelect.value === 'a vie') {
-                                dateField.style.display = 'none';
-                                dateInput.disabled = true;
-                                dateInput.value = '';
-                            } else {
-                                dateField.style.display = 'non';
-                                dateInput.disabled = true;
-                                dateInput.value = ''; // Clear the value to avoid submission
-                            }
-                        }
-
-                        document.addEventListener("DOMContentLoaded", function () {
-                            toggleDateField(); // Ensure the initial state is correct based on the current selection
-                        });
-                    </script>
+                    <label for="rqth">RQTH</label>
+                    <select id="rqth" name="rqth" onchange="toggleFields()">
+                        <option value="oui" ${isOuiSelected ? 'selected' : ''}>Oui</option>
+                        <option value="non" ${!isOuiSelected && !isAVieSelected ? 'selected' : ''}>Non</option>
+                        <option value="a vie" ${isAVieSelected ? 'selected' : ''}>A vie</option>
+                    </select>
+                    <div class="error-details-message">${requestScope.errors.rqth}</div>
                 </div>
-                <br>
+
+                <div id="date-renouvellement" style="display:none;">
+                    <label for="date_de_renouvellement">Date de renouvellement</label>
+                    <input type="date" id="date_de_renouvellement" name="date_de_renouvellement"
+                           placeholder="jj-mm-aaaa"
+                           value="${requestScope.collaborateur != null ? requestScope.collaborateur.date_de_renouvellement : ''}">
+                    <div class="error-details-message">${requestScope.errors.date_de_renouvellement}</div>
+                </div>
+
+                <div id="type-rqth" style="display:none;">
+                    <label for="type_rqth">Type de RQTH</label>
+                    <select id="type_rqth" name="type_rqth">
+                        <option value="">-- Aucun --</option>
+                        <option value="TH" ${requestScope.collaborateur != null && requestScope.collaborateur.type_rqth == 'TH' ? 'selected' : ''}>TH</option>
+                        <option value="THT" ${requestScope.collaborateur != null && requestScope.collaborateur.type_rqth == 'THT' ? 'selected' : ''}>THT</option>
+                        <option value="THEA" ${requestScope.collaborateur != null && requestScope.collaborateur.type_rqth == 'THEA' ? 'selected' : ''}>THEA</option>
+                    </select>
+                    <div class="error-details-message">${requestScope.errors.type_rqth}</div>
+                </div>
+
+                <script>
+                    function toggleFields() {
+                        var rqthSelect = document.getElementById('rqth');
+                        var dateField = document.getElementById('date-renouvellement');
+                        var typeField = document.getElementById('type-rqth');
+                        var dateInput = document.getElementById('date_de_renouvellement');
+
+                        if (rqthSelect.value === 'oui') {
+                            dateField.style.display = 'block';
+                            typeField.style.display = 'block';
+                            dateInput.disabled = false;
+                        } else if (rqthSelect.value === 'a vie') {
+                            dateField.style.display = 'none';
+                            typeField.style.display = 'block';
+                            dateInput.disabled = true;
+                            dateInput.value = '';
+                        } else {
+                            dateField.style.display = 'none';
+                            typeField.style.display = 'none';
+                            dateInput.disabled = true;
+                            dateInput.value = '';
+                        }
+                    }
+
+                    document.addEventListener("DOMContentLoaded", function () {
+                        toggleFields(); // Ensure the initial state is correct based on the current selection
+                    });
+                </script>
 
 
                 <label for="multi-select-responsable_activite">Responsable activité</label>
@@ -239,58 +241,58 @@
     </main>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
 </body>
- <script>
-                            function redirectToList() {
-                                window.location.href = '<c:url value="/liste_collaborateurs"/>';
-                            }
+<script>
+                        function redirectToList() {
+                            window.location.href = '<c:url value="/liste_collaborateurs"/>';
+                        }
 
-                            function validateForm() {
-                                var matricule = document.getElementById('matricule').value;
-                                var responsables = document.getElementById('responsable').options;
-                                for (var i = 0; i < responsables.length; i++) {
-                                    if (responsables[i].selected && responsables[i].value === matricule) {
-                                        alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
-                                        return false;
-                                    }
+                        function validateForm() {
+                            var matricule = document.getElementById('matricule').value;
+                            var responsables = document.getElementById('responsable').options;
+                            for (var i = 0; i < responsables.length; i++) {
+                                if (responsables[i].selected && responsables[i].value === matricule) {
+                                    alert("L'ID du collaborateur ne peut pas être égal à l'ID du responsable d'activité.");
+                                    return false;
                                 }
-                                return true;
                             }
+                            return true;
+                        }
 
-                            document.addEventListener('DOMContentLoaded', function () {
-                                const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-                                dropdownToggles.forEach(toggle => {
-                                    toggle.addEventListener('click', function (event) {
-                                        event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
-                                        this.classList.toggle('active');
-                                        const dropdownMenu = this.nextElementSibling;
-                                        if (dropdownMenu.style.display === 'block') {
-                                            dropdownMenu.style.display = 'none';
-                                        } else {
-                                            dropdownMenu.style.display = 'block';
-                                        }
-                                    });
-                                });
-
-                                // Empêche la fermeture du menu lorsque l'on clique sur une option
-                                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                                dropdownMenus.forEach(menu => {
-                                    menu.addEventListener('click', function (event) {
-                                        event.stopPropagation();
-                                    });
-                                });
-
-                                // Fermer le menu déroulant si on clique en dehors
-                                window.addEventListener('click', function () {
-                                    dropdownToggles.forEach(toggle => {
-                                        toggle.classList.remove('active');
-                                        const dropdownMenu = toggle.nextElementSibling;
+                            dropdownToggles.forEach(toggle => {
+                                toggle.addEventListener('click', function (event) {
+                                    event.stopPropagation(); // Empêche la fermeture du menu quand on clique sur le bouton de sélection
+                                    this.classList.toggle('active');
+                                    const dropdownMenu = this.nextElementSibling;
+                                    if (dropdownMenu.style.display === 'block') {
                                         dropdownMenu.style.display = 'none';
-                                    });
+                                    } else {
+                                        dropdownMenu.style.display = 'block';
+                                    }
                                 });
                             });
 
-        </script>
+                            // Empêche la fermeture du menu lorsque l'on clique sur une option
+                            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                            dropdownMenus.forEach(menu => {
+                                menu.addEventListener('click', function (event) {
+                                    event.stopPropagation();
+                                });
+                            });
+
+                            // Fermer le menu déroulant si on clique en dehors
+                            window.addEventListener('click', function () {
+                                dropdownToggles.forEach(toggle => {
+                                    toggle.classList.remove('active');
+                                    const dropdownMenu = toggle.nextElementSibling;
+                                    dropdownMenu.style.display = 'none';
+                                });
+                            });
+                        });
+
+</script>
 </html>
 
 

@@ -31,16 +31,18 @@
                     <p><span class="label-text">Genre: </span><span class="value-text"><c:out value="${collaborateur.genre}"/></span></p>
                     <p><span class="label-text">Nom: </span><span class="value-text"><c:out value="${collaborateur.nom}"/></span></p>
                     <p><span class="label-text">Prénom: </span><span class="value-text"><c:out value="${collaborateur.prenom}"/></span></p>
-                    <p><span class="label-text">Mail 1: </span><span class="value-text"><c:out value="${collaborateur.mail_1}"/></span></p>
-                    <p><span class="label-text">Mail 2: </span><span class="value-text"><c:out value="${collaborateur.mail_2}"/></span></p>
+                    <p><span class="label-text">Mail Professionnel: </span><span class="value-text"><c:out value="${collaborateur.mail_1}"/></span></p>
+                    <p><span class="label-text">Mail Personnel: </span><span class="value-text"><c:out value="${collaborateur.mail_2}"/></span></p>
                     <p><span class="label-text">Téléphone personnel: </span><span class="value-text"><c:out value="${collaborateur.telephone_personnel}"/></span></p>
+                    <p><span class="label-text">Métier: </span><span class="value-text"><c:out value="${collaborateur.metier}"/></span></p>
+                    <p><span class="label-text">Matériel: </span><span class="value-text"><c:out value="${collaborateur.materiel}"/></span></p>
                     <p><span class="label-text">Statut: </span><span class="value-text"><c:out value="${collaborateur.statut}"/></span></p>
                     <p><span class="label-text">Catégorie: </span><span class="value-text"><c:out value="${collaborateur.categorie}"/></span></p>
                     <p><span class="label-text">RQTH: </span><span class="value-text"><c:out value="${collaborateur.rqth}"/></span></p>
                         <c:if test="${collaborateur.rqth == 'oui'}">
                         <p><span class="label-text">Date de renouvellement: </span><span class="value-text"><c:out value="${formattedDate}"/></span></p>
                         </c:if>
-                    <p><span class="label-text">Métier: </span><span class="value-text"><c:out value="${collaborateur.metier}"/></span></p>
+                    <p><span class="label-text">Type RQTH: </span><span class="value-text"><c:out value="${collaborateur.type_rqth}"/></span></p>
                     <p><span class="label-text">Responsable(s) activité: </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
                     <p><span class="label-text">Responsable(s) activité liés aux prestations: </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
                 </div>

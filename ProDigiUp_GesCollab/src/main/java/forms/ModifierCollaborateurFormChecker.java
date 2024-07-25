@@ -67,8 +67,9 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
         String genre = request.getParameter("genre");
         String rqth = request.getParameter("rqth");
         String dateDeRenouvellement = request.getParameter("date_de_renouvellement");
+        String type_rqth = request.getParameter("type_rqth");
         String metier = request.getParameter("metier");
-
+        String materiel = request.getParameter("materiel");
         // Set id dans l'objet Collaborateur
         obj.setId(id);
 
@@ -109,8 +110,9 @@ public class ModifierCollaborateurFormChecker extends FormChecker<Collaborateur>
         obj.setCategorie(categorie);
         obj.setGenre(genre);
         obj.setRqth(rqth);
+        obj.setType_rqth(type_rqth);
         obj.setMetier(metier);
-
+        obj.setMateriel(materiel);
         // Si aucune erreur, faire la mise à jour dans la base de données
         /*if (errors.isEmpty()) {
             // Appeler votre DAO pour effectuer la mise à jour

@@ -12,7 +12,7 @@ form label {
     font-family: walkaway;
     display: inline-block;
     width: 40%; /* Largeur des labels */
-    font-size: 20px;
+    font-size: 27px;
     vertical-align: top; /* Alignement vertical */
     text-align: left; /* Alignement du texte à droite */
     padding-right: 10px; /* Espacement entre le label et l'input */
@@ -24,7 +24,7 @@ form label + select,
 form label + .dropdown {
     display: inline-block;
     width: 65%; /* Largeur des inputs */
-    font-size: 20px;
+    font-size: 27px;
     vertical-align: top; /* Alignement vertical */
     margin-bottom: 10px;
     font-family: walkaway;
