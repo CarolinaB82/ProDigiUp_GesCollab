@@ -88,10 +88,16 @@
                                        <span class="tooltiptext">Cliquez pour trier</span>
                                    </a>
                                 </th>
-                                <th>🔗Prestation</th>
+                                <th>
+                                    <a href="?sort=prestation&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
+                                   class="tooltip">🔗Prestation <c:if test="${param.sort == 'prestation'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                       <span class="tooltiptext">Cliquez pour trier</span>
+                                   </a>
+                                </th>
+                                
                                 <th>
                                     <a href="?sort=responsable&order=<c:out value="${param.order == 'asc' ? 'desc' : 'asc'}"/>"
-                                   class="tooltip">Responsable d'Activité <c:if test="${param.sort == 'responsable'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
+                                   class="tooltip">🔗Responsable d'Activité <c:if test="${param.sort == 'responsable'}"><c:out value="${param.order == 'asc' ? '↑' : '↓'}"/></c:if>
                                        <span class="tooltiptext">Cliquez pour trier</span>
                                    </a>
                                 </th>
