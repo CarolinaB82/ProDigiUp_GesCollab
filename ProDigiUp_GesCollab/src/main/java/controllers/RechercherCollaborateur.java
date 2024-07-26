@@ -26,47 +26,39 @@ import java.util.List;
  *
  * @author asolanas
  */
+
 @WebServlet("/rechercher")
-@SuppressWarnings("serial")
 public class RechercherCollaborateur extends HttpServlet {
 
     private CollaborateurDao collaborateurDao;
 
     @Override
     public void init() throws ServletException {
-        // Initialisez votre DAO ici (par exemple en utilisant une connexion à la base de données)
         this.collaborateurDao = new CollaborateurDao();
     }
 
-    /**
-     * Traite les requêtes GET pour la recherche de collaborateurs ou les
-     * suggestions AJAX.
-     *
-     * @param req HttpServletRequest représentant la requête HTTP
-     * @param resp HttpServletResponse représentant la réponse HTTP
-     * @throws ServletException Si une erreur de servlet se produit
-     * @throws IOException Si une erreur d'entrée-sortie se produit
-     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
 
-        if (recherche != null && type != null) {
-            // Gérer la requête AJAX pour les suggestions
+        boolean rechercheEffectuee = (recherche != null && !recherche.isEmpty() && type != null);
+
+        if (rechercheEffectuee) {
             try {
                 List<Collaborateur> suggestions;
                 switch (type) {
+                    case "matricule":
+                        suggestions = collaborateurDao.rechercherParMatricule(recherche);
+                        break;
                     case "nom":
                         suggestions = collaborateurDao.rechercherParNom(recherche);
                         break;
                     case "prenom":
                         suggestions = collaborateurDao.rechercherParPrenom(recherche);
-                        break;
-                    case "matricule":
-                        suggestions = collaborateurDao.rechercherParMatricule(recherche);
                         break;
                     default:
                         suggestions = new ArrayList<>();
@@ -80,18 +72,19 @@ public class RechercherCollaborateur extends HttpServlet {
                 out.println("<th>🔗Matricule</th>");
                 out.println("<th>🔗Nom</th>");
                 out.println("<th>Prénom</th>");
-                out.println("<th>Métier</th>");
                 out.println("<th>Statut</th>");
+                out.println("<th>Métier</th>");
                 out.println("</tr>");
                 out.println("</thead>");
                 out.println("<tbody>");
                 for (Collaborateur collaborateur : suggestions) {
+                    String url = req.getContextPath() + "/afficherCollaborateur?id=" + collaborateur.getId();
                     out.println("<tr>");
-                    out.println("<td><a href=\"" + req.getContextPath() + "/collaborateur?id=" + collaborateur.getId() + "\">" + collaborateur.getMatricule() + "</a></td>");
-                    out.println("<td><a href=\"" + req.getContextPath() + "/collaborateur?id=" + collaborateur.getId() + "\">" + collaborateur.getNom() + "</a></td>");
+                    out.println("<td><a href=\"" + url + "\">" + collaborateur.getMatricule() + "</a></td>");
+                    out.println("<td><a href=\"" + url + "\">" + collaborateur.getNom() + "</a></td>");
                     out.println("<td>" + collaborateur.getPrenom() + "</td>");
-                    out.println("<td>" + collaborateur.getMetier() + "</td>");
                     out.println("<td>" + collaborateur.getStatut() + "</td>");
+                    out.println("<td>" + collaborateur.getMetier() + "</td>");
                     out.println("</tr>");
                 }
                 out.println("</tbody>");
@@ -102,16 +95,16 @@ public class RechercherCollaborateur extends HttpServlet {
                 throw new ServletException("Erreur lors de la recherche", e);
             }
         } else {
-            // Gérer la requête de recherche standard et rediriger vers une page JSP avec les résultats
             try {
                 List<Collaborateur> resultats = new ArrayList<>();
                 if (recherche != null && !recherche.isEmpty()) {
+                    resultats.addAll(collaborateurDao.rechercherParMatricule(recherche));
                     resultats.addAll(collaborateurDao.rechercherParNom(recherche));
                     resultats.addAll(collaborateurDao.rechercherParPrenom(recherche));
-                    resultats.addAll(collaborateurDao.rechercherParMatricule(recherche));
                 }
-
                 req.setAttribute("resultats", resultats);
+                req.setAttribute("rechercheEffectuee", rechercheEffectuee);
+                req.setAttribute("recherche", recherche);
                 req.setAttribute("currentPage", "rechercher");
                 req.getRequestDispatcher("/WEB-INF/jsp/collaborateur.jsp").forward(req, resp);
             } catch (SQLException e) {

@@ -283,6 +283,7 @@ h2 {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 5px;
+    font-size: 25px;
 }
 
 .custom-table {
@@ -306,7 +307,7 @@ h2 {
     font-family: walkaway;
     text-decoration: none !important;
     color: #191C37;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .custom-table td {
@@ -317,7 +318,7 @@ h2 {
     font-family: walkaway;
     text-decoration: none !important;
     padding: 11px;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .custom-table .collaborator-end-row {
@@ -429,7 +430,7 @@ fieldset div label{
     color: #17407B;
 }
 
-.fiches p {
+.fiches p span{
     margin-bottom: 10px;
     font-size: 25px;
     color: #17407B;
@@ -439,10 +440,12 @@ fieldset div label{
 .label-text {
     color: #213565; /* Couleur pour le texte (label) */
     font-weight: bold;
+    font-size: 25px;
 }
 
 .value-text {
     color: #546FB2; /* Couleur pour la valeur */
+    font-size: 25px;
 }
 .button-container {
     display: flex;

@@ -35,10 +35,7 @@
                     <button type="submit" class="btn-connexion" onclick="location.href = '<c:url value='/liste_collaborateurs'/>'">Connexion</button>
                 </div>
             </nav>
-
         </main>
-
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
-
 </html>

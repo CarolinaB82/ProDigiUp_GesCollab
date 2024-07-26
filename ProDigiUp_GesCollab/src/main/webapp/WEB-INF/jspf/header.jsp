@@ -32,17 +32,17 @@
                 <li>Ajouter &ensp;
                     <ul class="sous">
                         <li><a href="<c:url value="/creer_ra"/>">Un Responsable d'Activité</a></li>
-                        <li><a href="<c:url value="/creer_collaborateur"/>">Un collaborateur</a></li>
-                        <li><a href="<c:url value="/creer_prestation"/>">Une prestation</a></li>
-                        <li><a href="<c:url value="/creer_partenaire"/>">Un partenaire</a></li>
+                        <li><a href="<c:url value="/creer_collaborateur"/>">Un Collaborateur</a></li>
+                        <li><a href="<c:url value="/creer_prestation"/>">Une Prestation</a></li>
+                        <li><a href="<c:url value="/creer_partenaire"/>">Un Partenaire</a></li>
                     </ul>
                 </li>
 
                 <li >Rechercher &ensp;
                     <ul class="sous">
-                        <li><a href="<c:url value="/rechercher_ra"/>">Un responsable d'activité</a></li>
+                        <li><a href="<c:url value="/rechercher_ra"/>">Un Responsable d'Activité</a></li>
                         <li><a href="<c:url value="/rechercher"/>">Un Collaborateur</a></li>
-                        <li><a href="<c:url value="/rechercher_partenaire"/>">Un partenaire</a></li>
+                        <li><a href="<c:url value="/rechercher_partenaire"/>">Un Partenaire</a></li>
 
                         
                     </ul>

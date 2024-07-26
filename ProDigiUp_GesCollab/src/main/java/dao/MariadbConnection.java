@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * La classe MariadbConnection que vous avez présentée est une implémentation
+ * La classe MariadbConnection est une implémentation
  * d'un Singleton pour gérer une connexion à une base de données MariaDB (MySQL)
  * Attributs statiques Constructeur privé Methode getInstance() Methode
  * closeConnexion()

@@ -35,24 +35,16 @@ public class RechercherResponsableActivite extends HttpServlet {
         this.responsableActiviteDao = new ResponsableActiviteDao();
     }
 
-    /**
-     * Traite les requêtes GET pour la recherche de responsables d'activité ou
-     * les suggestions AJAX.
-     *
-     * @param req HttpServletRequest représentant la requête HTTP
-     * @param resp HttpServletResponse représentant la réponse HTTP
-     * @throws ServletException Si une erreur de servlet se produit
-     * @throws IOException Si une erreur d'entrée-sortie se produit
-     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
 
-        System.out.println("Recherche: " + recherche + ", Type: " + type);
+        boolean rechercheEffectuee = (recherche != null && !recherche.isEmpty() && type != null);
 
-        if (recherche != null && type != null) {
+        if (rechercheEffectuee) {
             try {
                 List<ResponsableActivite> suggestions;
                 switch (type) {
@@ -65,11 +57,9 @@ public class RechercherResponsableActivite extends HttpServlet {
                     case "prenom":
                         suggestions = responsableActiviteDao.rechercherRaParPrenom(recherche);
                         break;
-
                     default:
                         suggestions = new ArrayList<>();
                 }
-                System.out.println("Suggestions: " + suggestions);
                 resp.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.println("<table class='custom-table'>");
@@ -83,7 +73,6 @@ public class RechercherResponsableActivite extends HttpServlet {
                 out.println("<tbody>");
                 for (ResponsableActivite ra : suggestions) {
                     String url = req.getContextPath() + "/afficher_ra?id=" + ra.getId();
-                    System.out.println("URL générée : " + url);
                     out.println("<tr>");
                     out.println("<td><a href=\"" + url + "\">" + ra.getMatricule() + "</a></td>");
                     out.println("<td><a href=\"" + url + "\">" + ra.getNom() + "</a></td>");
@@ -104,15 +93,16 @@ public class RechercherResponsableActivite extends HttpServlet {
                     resultats.addAll(responsableActiviteDao.rechercherRaParMatricule(recherche));
                     resultats.addAll(responsableActiviteDao.rechercherRaParNom(recherche));
                     resultats.addAll(responsableActiviteDao.rechercherRaParPrenom(recherche));
-
                 }
                 req.setAttribute("resultats", resultats);
+                req.setAttribute("rechercheEffectuee", rechercheEffectuee);
+                req.setAttribute("recherche", recherche);
                 req.setAttribute("currentPage", "rechercher_ra");
                 req.getRequestDispatcher("/WEB-INF/jsp/responsableActivite.jsp").forward(req, resp);
             } catch (SQLException e) {
-                System.out.println("Paramètres de recherche manquants ou invalides");
                 throw new ServletException("Erreur lors de la recherche", e);
             }
         }
     }
 }
+

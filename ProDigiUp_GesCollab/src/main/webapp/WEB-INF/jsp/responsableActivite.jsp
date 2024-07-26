@@ -5,21 +5,18 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix= "c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <%-- Définir une variable pour indiquer que ce n'est pas la page d'accueil --%>
-        <c:set var="notHome" value="true" />
+        <c:set var="notHome" value="true"/>
         <link rel="shortcut icon" href="<c:url value="/assets/img/favicon.png"/>" type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<c:url value="/assets/css/form.css"/>">
         <title>Rechercher responsable</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -31,15 +28,10 @@
                             method: "GET",
                             data: {recherche: recherche, type: "matricule"},
                             success: function (data) {
-                                console.log("Réponse AJAX pour recherche par matricule: ", data);
                                 $("#resultats").html(data);
-                            },
-                            error: function (xhr, status, error) {
-                                console.log("Erreur: " + error); // Log pour le débogage
                             }
                         });
                     } else {
-                        console.log("Recherche par matricule vide.");
                         $("#resultats").html("");
                     }
                 });
@@ -51,15 +43,10 @@
                             method: "GET",
                             data: {recherche: recherche, type: "nom"},
                             success: function (data) {
-                                console.log("Réponse AJAX pour recherche par nom: ", data);
                                 $("#resultats").html(data);
-                            },
-                            error: function (xhr, status, error) {
-                                console.log("Erreur: " + error); // Log pour le débogage
                             }
                         });
                     } else {
-                        console.log("Recherche par nom vide.");
                         $("#resultats").html("");
                     }
                 });
@@ -72,20 +59,13 @@
                             method: "GET",
                             data: {recherche: recherche, type: "prenom"},
                             success: function (data) {
-                                console.log("Réponse AJAX pour recherche par prénom: ", data);
                                 $("#resultats").html(data);
-                            },
-                            error: function (xhr, status, error) {
-                                console.log("Erreur: " + error); // Log pour le débogage
                             }
                         });
                     } else {
-                        console.log("Recherche par prénom vide.");
                         $("#resultats").html("");
                     }
                 });
-
-
             });
         </script>
     </head>
@@ -119,46 +99,44 @@
                     </div>
                     <div id="suggestionsMatricule"></div>
                 </form>
-
             </fieldset>
-
 
             <fieldset>
                 <legend>Résultats de recherche</legend>
                 <div id="resultats" class="neutral-links">
                     <c:if test="${not empty erreur}">
-                        <p style="color: red;"><c:out value="${erreur}" /></p>
+                        <p style="color: red;"><c:out value="${erreur}"/></p>
                     </c:if>
-                    <c:if test="${not empty resultats}">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>🔗Matricule</th>
-                                    <th>🔗Nom</th>
-                                    <th>Prénom</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="ra" items="${resultats}">
-                                    <tr>
-                                        <td><a href="${pageContext.request.contextPath}/afficherResponsableActivite?id_ra=${ra.id}">${ra.matricule}</a></td>
-                                        <td><a href="${pageContext.request.contextPath}/afficherResponsableActivite?id_ra=${ra.id}">${ra.nom}</a></td>
-                                        <td>${ra.prenom}</td>
-
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </c:if>
-                    <c:if test="${empty resultats && empty suggestionsMatricule && empty suggestionsNom && empty suggestionsPrenom}">
-                        <p>Aucun responsable trouvé pour la recherche : ${param.recherche}</p>
+                    <c:if test="${rechercheEffectuee}">
+                        <c:choose>
+                            <c:when test="${not empty resultats}">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>🔗Matricule</th>
+                                            <th>🔗Nom</th>
+                                            <th>Prénom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="ra" items="${resultats}">
+                                            <tr>
+                                                <td><a href="${pageContext.request.contextPath}/afficherResponsableActivite?id_ra=${ra.id}">${ra.matricule}</a></td>
+                                                <td><a href="${pageContext.request.contextPath}/afficherResponsableActivite?id_ra=${ra.id}">${ra.nom}</a></td>
+                                                <td>${ra.prenom}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <c:otherwise>
+                                <p>Aucun responsable trouvé pour la recherche : ${recherche}</p>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
                 </div>
-
             </fieldset>
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
-
 </html>
