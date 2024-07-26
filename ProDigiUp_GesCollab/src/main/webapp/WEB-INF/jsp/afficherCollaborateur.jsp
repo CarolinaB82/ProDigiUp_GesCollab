@@ -43,8 +43,8 @@
                         <p><span class="label-text">Date de renouvellement: </span><span class="value-text"><c:out value="${formattedDate}"/></span></p>
                         </c:if>
                     <p><span class="label-text">Type RQTH: </span><span class="value-text"><c:out value="${collaborateur.type_rqth}"/></span></p>
-                    <p><span class="label-text">Responsable(s) activité: </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
-                    <p><span class="label-text">Responsable(s) activité liés aux prestations: </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
+                    <p><span class="label-text">Responsable(s) d'activité: </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
+                    <p><span class="label-text">Responsable(s) d'activité liés aux prestations: </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
                 </div>
 
                 <div class="button-container">

@@ -28,8 +28,8 @@
                     <p><span class="label-text">Adresse : </span><span class="value-text"><c:out value="${partenaire.adresse}"/></span></p>
                     <p><span class="label-text">Code postal : </span><span class="value-text"><c:out value="${partenaire.code_postal}"/></span></p>
                     <p><span class="label-text">Ville : </span><span class="value-text"><c:out value="${partenaire.ville}"/></span></p>
-                    <p><span class="label-text">Responsable(s) activité(s) : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
-                    <p><span class="label-text">Responsable(s) activité liés aux prestations : </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
+                    <p><span class="label-text">Responsable(s) d'activité(s) : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
+                    <p><span class="label-text">Responsable(s) d'activité liés aux prestations : </span><span class="value-text"><c:out value="${responsablesActivitePrestation}"/></span></p>
                 </div>
 
                 <div class="button-container">

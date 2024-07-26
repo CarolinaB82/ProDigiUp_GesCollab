@@ -55,12 +55,12 @@
                     </div>
                     <br>
                     <div>
-                        <label for="ref_fact_airbus">Ref Fact Airbus:</label>
+                        <label for="ref_fact_airbus">Ref Fact Client/Airbus:</label>
                         <input type="text" id="ref_fact_airbus" name="ref_fact_airbus" value="${prestation.ref_fact_airbus}">
                     </div>
                     <br>
                     <div>
-                        <label for="mail_airbus">Mail Airbus:</label>
+                        <label for="mail_airbus">Mail Client/Airbus:</label>
                         <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
                     </div>
                     <br>

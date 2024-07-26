@@ -72,6 +72,7 @@
                 <div>
                     <label for="mail_1">Mail professionnel</label>
                     <input type="email" id="mail_1" name="mail_1"
+                           pattern="(?!^\d+$)^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required
                            value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
                            class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
 

@@ -74,7 +74,7 @@
     <%@include file="/WEB-INF/jspf/header.jsp" %>
     <main>
         <fieldset>
-            <legend>Recherche de Collaborateur</legend>
+            <legend>Rechercher un Collaborateur</legend>
             <form>
                 <div>
                     <label for="rechercherParNom">Par nom :</label>

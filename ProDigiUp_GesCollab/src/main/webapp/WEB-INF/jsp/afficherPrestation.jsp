@@ -33,7 +33,7 @@
                     <p><span class="label-text">Mail Client/Airbus : </span><span class="value-text"><c:out value="${prestation.mail_airbus}"/></span></p>
                     <p><span class="label-text">Partenaire : </span><span class="value-text"><c:out value="${partenaire}"/></span></p>
                     <p><span class="label-text">Collaborateur : </span><span class="value-text"><c:out value="${collaborateur}"/></span></p>
-                    <p><span class="label-text">Responsable activité : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
+                    <p><span class="label-text">Responsable d'activité : </span><span class="value-text"><c:out value="${responsablesActivite}"/></span></p>
                 </div>
 
                 <div class="button-container">

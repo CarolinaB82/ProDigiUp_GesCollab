@@ -23,7 +23,7 @@
             <div class='bienvenue centered-flex'>
                 <h1>Bienvenue</h1>
                 <a href="https://www.linkedin.com/showcase/prodigiup/posts/?feedView=all" target="_blank"><img src="<c:url value="/assets/img/imageaccueil.png" />" height="250" width="500"  alt="prodiup"></a>
-                <h1 class='bienvenue neutral-links'><a href="<c:url value="/connexion"/>" >Entrer dans l'application</a></h1>
+                <h1 class='bienvenue neutral-links'><a href="<c:url value="/connexion"/>" >&#8594; Entrer dans l'application &#8592;</a></h1>
             </div>
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>

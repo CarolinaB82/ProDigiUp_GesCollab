@@ -27,7 +27,7 @@
                 <div>${requestScope.message}</div>
                 <div>${requestScope.errMsg}</div>
                 <fieldset>
-                    <legend>Nouveau responsable d'activité</legend>
+                    <legend>Nouveau Responsable d'activité</legend>
                     <div>
                         <label for="matricule">*Matricule</label>
                         <input type="text" id="matricule" name="matricule" 
