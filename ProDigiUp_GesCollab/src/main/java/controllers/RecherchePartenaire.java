@@ -67,7 +67,7 @@ public class RecherchePartenaire extends HttpServlet {
                 out.println("</thead>");
                 out.println("<tbody>");
                 for (Partenaire part : suggestions) {
-                    String url = req.getContextPath() + "/afficherPartenaire?id=" + part.getId();
+                    String url = req.getContextPath() + "/partenaire?id=" + part.getId();
                     out.println("<tr>");
                     out.println("<td><a href=\"" + url + "\">" + part.getNom() + "</a></td>");
                     out.println("<td><a href=\"" + url + "\">" + part.getVille() + "</a></td>");

@@ -27,7 +27,7 @@
                 <div>${requestScope.message}</div>
                 <div>${requestScope.errMsg}</div>
                 <fieldset>
-                    <legend>Modifier responsable d'activité</legend>
+                    <legend>Modifier Responsable d'activité</legend>
                     <input type="hidden" name="id" value="${ra.id}" />
                     <div>
                         <label for="matricule">Matricule</label>

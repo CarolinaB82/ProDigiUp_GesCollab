@@ -27,7 +27,7 @@
                 <div>${requestScope.message}</div>
                 <div class="error-message">${requestScope.errorMsg}</div>
                 <fieldset>
-                    <legend>Modifier la Prestation</legend>
+                    <legend>Modifier Prestation</legend>
                     <input type="hidden" name="id" value="${prestation.id}">
                     <div>
                         <label for="siglum_presta">Siglum Presta:</label>

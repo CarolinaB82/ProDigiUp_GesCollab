@@ -21,7 +21,7 @@
         <%@include file="/WEB-INF/jspf/header.jsp" %>
         <main>
             <fieldset>
-                <legend><strong>Fiche Responsable d'Activite</legend>
+                <legend><strong>Fiche Responsable d'Activité</legend>
                 <div class='fiches'>
                     <p><span class="label-text">Matricule : </span>
                         <span class="value-text"><c:out value="${ra.matricule}"/></span></p>

@@ -78,7 +78,7 @@ public class RechercherCollaborateur extends HttpServlet {
                 out.println("</thead>");
                 out.println("<tbody>");
                 for (Collaborateur collaborateur : suggestions) {
-                    String url = req.getContextPath() + "/afficherCollaborateur?id=" + collaborateur.getId();
+                    String url = req.getContextPath() + "/collaborateur?id=" + collaborateur.getId();
                     out.println("<tr>");
                     out.println("<td><a href=\"" + url + "\">" + collaborateur.getMatricule() + "</a></td>");
                     out.println("<td><a href=\"" + url + "\">" + collaborateur.getNom() + "</a></td>");

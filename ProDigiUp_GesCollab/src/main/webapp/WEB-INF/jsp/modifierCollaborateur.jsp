@@ -26,7 +26,7 @@
             <div class="error-message">${requestScope.errorMsg}</div>
             <fieldset>
 
-                <legend>Modification Collaborateur</legend>
+                <legend>Modifier Collaborateur</legend>
                 <input type="hidden" name="id" value="${collaborateur.id}" />
                 <div>
                     <label for="matricule">Matricule</label>
