@@ -27,7 +27,7 @@
                 <div>${requestScope.message}</div>
                 <div>${requestScope.errMsg}</div>
                 <fieldset>
-                    <legend>Nouveau Responsable d'activité</legend>
+                    <legend>Nouveau responsable d'activité</legend>
                     <div>
                         <label for="matricule">*Matricule</label>
                         <input type="text" id="matricule" name="matricule" 
@@ -65,6 +65,7 @@
                     <div>
                         <label for="mail">Mail </label>
                         <input type="email" id="mail" name="mail"
+pattern="(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                                value="${requestScope.ra != null ? requestScope.ra.mail : ''}"
                                class="${not empty requestScope.errors.mail ? 'error-input' : ''}"
 
@@ -207,5 +208,22 @@
             });
         });
     </script>
+    <script>
+   document.querySelector('form').addEventListener('submit', function(event) {
+            try {
+                var emailInput = document.getElementById('mail');
+                var emailValue = emailInput.value;
+                var localPart = emailValue.split('@')[0];
+
+                // Validation en JavaScript
+                if (!localPart.match(/(?=.*[a-zA-Z].*[a-zA-Z])/)) {
+                    alert('L\'adresse e-mail doit contenir au moins deux lettres avant le "@".');
+                    // N'annulez pas l'envoi du formulaire ici
+                }
+            } catch (e) {
+                console.error('Erreur de validation:', e);
+                // N'annulez pas l'envoi du formulaire en cas d'erreur de script
+            }
+</script>
 
 </html>

@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import historique.ValidationUtil;
+import static historique.ValidationUtil.sanitizeMatricule;
 
 /**
  * servlet nommée CreerCollaborateur qui gère les requêtes HTTP GET et POST /
@@ -74,6 +76,30 @@ public class CreerCollaborateur extends HttpServlet {
         req.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         CreerCollaborateurFormChecker nv = new CreerCollaborateurFormChecker(req);
         Collaborateur collaborateur = nv.checkForm();
+        
+        // Récupération et nettoyage des paramètres de la requête
+    String matricule = req.getParameter("matricule").trim();
+    String sanitizedMatricule = sanitizeMatricule(matricule);
+ if (!sanitizedMatricule.isEmpty()) {
+        try {
+            // Convertir la chaîne assainie en entier
+            int matriculeInt = Integer.parseInt(sanitizedMatricule);
+            collaborateur.setMatricule(matriculeInt);
+        } catch (NumberFormatException e) {
+            nv.addError("matricule", "Le matricule doit être un nombre entier.");
+        }
+    } else {
+        nv.addError("matricule", "Matricule invalide.");
+    }
+
+    // Validation et nettoyage du nom
+    String nom = req.getParameter("nom").trim();
+    String sanitizedNom = nom.replaceAll("[^a-zA-Z ]", ""); // Nettoyage pour garder uniquement les lettres et espaces
+    if (sanitizedNom.isEmpty()) {
+        nv.addError("nom", "Nom invalide.");
+    } else {
+        collaborateur.setNom(sanitizedNom);
+    }
 
         // Gestion de la sélection RQTH et de la date de renouvellement
         String rqth = req.getParameter("rqth");

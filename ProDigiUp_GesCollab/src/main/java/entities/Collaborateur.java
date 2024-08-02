@@ -23,6 +23,7 @@ import java.util.List;
     "date_de_renouvellement",
     "type_rqth",
     "metier",
+    "materiel",
     "responsablesIds"
 })
 

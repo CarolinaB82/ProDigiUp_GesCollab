@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
  */
 package dao;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,11 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * La classe MariadbConnection est une implémentation
+ * La classe MariadbConnection que vous avez présentée est une implémentation
  * d'un Singleton pour gérer une connexion à une base de données MariaDB (MySQL)
  * Attributs statiques Constructeur privé Methode getInstance() Methode
  * closeConnexion()
- *
  * @author cberge
  */
 public class MariadbConnection {
@@ -31,13 +29,11 @@ public class MariadbConnection {
      */
     private MariadbConnection() {
     }
-
     /**
      * Retourne l'instance unique de la connexion à la base de données MariaDB.
      * Si aucune connexion n'a été établie précédemment, cette méthode établit
      * une nouvelle connexion en utilisant les informations de connexion
      * prédéfinies.
-     *
      * @return l'instance de connexion à la base de données MariaDB
      */
     public static Connection getInstance() {

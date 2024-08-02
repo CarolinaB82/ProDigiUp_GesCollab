@@ -34,15 +34,13 @@ public class RecherchePartenaire extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
 
         String recherche = req.getParameter("recherche");
         String type = req.getParameter("type");
 
-        boolean rechercheEffectuee = (recherche != null && !recherche.isEmpty() && type != null);
+        System.out.println("Recherche: " + recherche + ", Type: " + type);
 
-        if (rechercheEffectuee) {
+        if (recherche != null && type != null) {
             try {
                 List<Partenaire> suggestions;
                 switch (type) {
@@ -52,10 +50,12 @@ public class RecherchePartenaire extends HttpServlet {
                     case "ville":
                         suggestions = partenaireDao.rechercherParVille(recherche);
                         break;
+
                     default:
                         suggestions = new ArrayList<>();
                 }
 
+                System.out.println("Suggestions: " + suggestions);
                 resp.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.println("<table class='custom-table'>");
@@ -68,6 +68,7 @@ public class RecherchePartenaire extends HttpServlet {
                 out.println("<tbody>");
                 for (Partenaire part : suggestions) {
                     String url = req.getContextPath() + "/partenaire?id=" + part.getId();
+                    System.out.println("URL générée : " + url);
                     out.println("<tr>");
                     out.println("<td><a href=\"" + url + "\">" + part.getNom() + "</a></td>");
                     out.println("<td><a href=\"" + url + "\">" + part.getVille() + "</a></td>");
@@ -88,14 +89,12 @@ public class RecherchePartenaire extends HttpServlet {
                     resultats.addAll(partenaireDao.rechercherParVille(recherche));
                 }
                 req.setAttribute("resultats", resultats);
-                req.setAttribute("rechercheEffectuee", rechercheEffectuee);
-                req.setAttribute("recherche", recherche);
                 req.setAttribute("currentPage", "rechercher_partenaire");
                 req.getRequestDispatcher("/WEB-INF/jsp/partenaire.jsp").forward(req, resp);
             } catch (SQLException e) {
+                System.out.println("Paramètres de recherche manquants ou invalides");
                 throw new ServletException("Erreur lors de la recherche", e);
             }
         }
     }
 }
-
