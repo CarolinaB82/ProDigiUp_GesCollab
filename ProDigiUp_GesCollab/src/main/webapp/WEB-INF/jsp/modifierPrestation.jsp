@@ -51,7 +51,10 @@
                     <br>
                     <div>
                         <label for="mail_partenaire">Mail Partenaire:</label>
-                        <input type="email" id="mail_partenaire" name="mail_partenaire" value="${prestation.mail_partenaire}">
+                        <input type="email" id="mail_partenaire" name="mail_partenaire" 
+pattern="(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                               
+                               value="${prestation.mail_partenaire}">
                     </div>
                     <br>
                     <div>
@@ -61,7 +64,9 @@
                     <br>
                     <div>
                         <label for="mail_airbus">Mail Airbus:</label>
-                        <input type="email" id="mail_airbus" name="mail_airbus" value="${prestation.mail_airbus}">
+                        <input type="email" id="mail_airbus" name="mail_airbus" 
+pattern="(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                               value="${prestation.mail_airbus}">
                     </div>
                     <br>
 
@@ -138,6 +143,23 @@
                                     });
                                 });
                             });
+    </script>
+    <script>
+       document.querySelector('form').addEventListener('submit', function(event) {
+            try {
+                var emailInput = document.getElementById('mail');
+                var emailValue = emailInput.value;
+                var localPart = emailValue.split('@')[0];
+
+                // Validation en JavaScript
+                if (!localPart.match(/(?=.*[a-zA-Z].*[a-zA-Z])/)) {
+                    alert('L\'adresse e-mail doit contenir au moins deux lettres avant le "@".');
+                    // N'annulez pas l'envoi du formulaire ici
+                }
+            } catch (e) {
+                console.error('Erreur de validation:', e);
+                // N'annulez pas l'envoi du formulaire en cas d'erreur de script
+            }
     </script>
 </html>
 

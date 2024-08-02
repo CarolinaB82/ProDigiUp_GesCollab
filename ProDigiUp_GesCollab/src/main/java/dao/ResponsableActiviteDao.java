@@ -601,6 +601,6 @@ public class ResponsableActiviteDao extends Dao<ResponsableActivite> {
 //    }
 //    return list;
 //}
-     
+    
 
 }

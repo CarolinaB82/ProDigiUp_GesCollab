@@ -63,8 +63,26 @@
                         $("#resultats").html("");
                     }
                 });
-           });
+            });
         </script>
+         <script>
+        function checkFields() {
+            var rechercherParNom = document.getElementById("rechercherParNom").value;
+            var rechercherParVille = document.getElementById("rechercherParVille").value;
+            var resultFieldset = document.getElementById("resultFieldset");
+
+            if (rechercherParNom.trim() !== "" || rechercherParVille.trim() !== "") {
+                resultFieldset.style.display = "block";
+            } else {
+                resultFieldset.style.display = "none";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize the resultFieldset as hidden
+            checkFields();
+        });
+    </script>
     </head>
 
     <body>
@@ -76,7 +94,7 @@
                 <form>
                     <div>
                         <label for="rechercherParNom">Par nom :</label>
-                        <input type="text" id="rechercherParNom" name="rechercherParNom" autocomplete="off">
+                        <input type="text" id="rechercherParNom" name="rechercherParNom" autocomplete="off"oninput="checkFields()">
                     </div>
                     <div id="suggestionsNom"></div>
                 </form>
@@ -84,50 +102,51 @@
                 <form>
                     <div>
                         <label for="rechercherParVille">Par ville :</label>
-                        <input type="text" id="rechercherParVille" name="rechercherParVille" autocomplete="off">
+                        <input type="text" id="rechercherParVille" name="rechercherParVille" autocomplete="off"oninput="checkFields()">
                     </div>
                     <div id="suggestionsVille"></div>
                 </form>
+
+            </fieldset>
+
+           
                 
-            </fieldset>
-
-
-            <fieldset>
-                <legend>Résultats de recherche</legend>
-                <div id="resultats" class="neutral-links">
-                    <c:if test="${not empty erreur}">
-                        <p style="color: red;"><c:out value="${erreur}" /></p>
-                    </c:if>
-                    <c:if test="${not empty resultats}">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>🔗Nom</th>
-                                    <th>🔗Ville</th>
-                                    
--
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="part" items="${resultats}">
+                    <fieldset id="resultFieldset" style="display:none;">
+                    <legend>Résultats de recherche</legend>
+                    
+                    <div id="resultats" class="neutral-links">
+                        <c:if test="${not empty erreur}">
+                            <p style="color: red;"><c:out value="${erreur}" /></p>
+                        </c:if>
+                        <c:if test="${not empty resultats}">
+                            <table class="custom-table">
+                                <thead>
                                     <tr>
-                                        <td><a href="${pageContext.request.contextPath}/afficherPartenaire?id_partenaire=${partenaire.id}">${partenaire.nom}</a></td>
-                                        <td><a href="${pageContext.request.contextPath}/afficherPartenaire?id_partenaire=${partenaire.id}">${partenaire.ville}</a></td>
-                                        
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </c:if>
-                    <c:if test="${empty resultats && empty suggestionsNom && empty suggestionsVille}">
-                        <p>Aucun responsable trouvé pour la recherche : ${param.recherche}</p>
-                    </c:if>
-                </div>
+                                        <th>🔗Nom</th>
+                                        <th>🔗Ville</th>
 
-            </fieldset>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="part" items="${resultats}">
+                                        <tr>
+                                            <td><a href="${pageContext.request.contextPath}/afficherPartenaire?id_partenaire=${partenaire.id}">${partenaire.nom}</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/afficherPartenaire?id_partenaire=${partenaire.id}">${partenaire.ville}</a></td>
+
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${empty resultats && empty suggestionsNom && empty suggestionsVille}">
+                            <p>Aucun partenaire trouvé pour la recherche : ${param.recherche}</p>
+                        </c:if>
+                    </div>
+
+                </fieldset>
+
         </main>
         <%@include file="/WEB-INF/jspf/footer.jsp" %>
     </body>
 
 </html>
-      

@@ -159,6 +159,21 @@
             </form>
         </main>
     </body>
+    <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var emailInput = document.getElementById('mail_partenaire');
+                var emailInput = document.getElementById('mail_airbus');
+
+        var emailValue = emailInput.value;
+        var localPart = emailValue.split('@')[0];
+
+        // Validation en JavaScript
+        if (!localPart.match(/(?=.*[a-zA-Z].*[a-zA-Z])/)) {
+            alert('L\'adresse e-mail doit contenir au moins deux lettres avant le "@".');
+            event.preventDefault();
+        }
+    });
+</script>
     <%@include file="/WEB-INF/jspf/footer.jsp" %>
 
 </html>

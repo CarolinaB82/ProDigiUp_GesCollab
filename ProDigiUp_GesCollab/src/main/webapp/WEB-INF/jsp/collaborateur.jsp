@@ -71,6 +71,26 @@
                 });
             });
         </script>
+         <script>
+            function checkFields() {
+
+                var rechercherParNom = document.getElementById("rechercherParNom").value;
+                var rechercherParPrenom = document.getElementById("rechercherParPrenom").value;
+                var rechercherParMatricule = document.getElementById("rechercherParMatricule").value;
+                var resultFieldset = document.getElementById("resultFieldset");
+
+                if (rechercherParNom.trim() !== "" || rechercherParPrenom.trim() !== "" || rechercherParMatricule.trim() !== "" || ${not empty erreur}) {
+                    resultFieldset.style.display = "block";
+                } else {
+                    resultFieldset.style.display = "none";
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Initialize the resultFieldset as hidden
+                checkFields();
+            });
+        </script>
 
     </head>
     <body>
@@ -102,11 +122,11 @@
                     <div id="suggestionsMatricule"></div>
                 </form>
             </fieldset>
-            <fieldset>
+           <fieldset id="resultFieldset" style="display:none;">
                 <legend>Resultats de recherche</legend>
                 <%-- Code pour afficher les résultats de recherche --%>
                 <div id="resultats" class="neutral-links">
-                    <c:if test="${not empty resultats}">
+                    <c:if test="${not empty erreur}">
                         <table class="custom-table">
                             <thead>
                                 <tr>

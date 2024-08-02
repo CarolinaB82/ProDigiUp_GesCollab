@@ -79,6 +79,7 @@ public class CollaborateurDao extends Dao<Collaborateur> {
      */
     @Override
     public void create(Collaborateur obj) throws SQLException {
+    
         String sql = "INSERT INTO  collaborateur (matricule, nom, prenom, mail_1, mail_2, telephone_personnel, statut, categorie, genre, rqth, date_de_renouvellement, type_rqth, metier, materiel)"
                 + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -258,7 +259,9 @@ public class CollaborateurDao extends Dao<Collaborateur> {
 //            System.out.println("Erreur lors de l'update : " + ex.getMessage());
 //        }
 //    }
+    @Override
     public void update(Collaborateur collaborateur) throws SQLException {
+         
         String sql = "UPDATE collaborateur SET matricule=?, nom=?, prenom=?, mail_1=?, mail_2=?, telephone_personnel=?, statut=?, categorie=?, genre=?, rqth=?, date_de_renouvellement=?, type_rqth=?, metier=?, materiel=?"
                 + "WHERE id_collaborateur=?";
         String sqlInsertHistorique = "INSERT INTO historique (date_action, action, table_originale, id_element,  ancienne_valeur, nouvelle_valeur) "

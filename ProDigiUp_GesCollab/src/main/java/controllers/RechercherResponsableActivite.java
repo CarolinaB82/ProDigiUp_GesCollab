@@ -4,7 +4,9 @@
  */
 package controllers;
 
+import dao.CollaborateurDao;
 import dao.ResponsableActiviteDao;
+import entities.Collaborateur;
 import entities.ResponsableActivite;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +17,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * servlet nommée RechercherResponsableActivite qui gère les requêtes HTTP GET /
@@ -26,6 +30,7 @@ import java.util.List;
  * @author asolanas
  */
 @WebServlet("/rechercher_ra")
+@SuppressWarnings("serial")
 public class RechercherResponsableActivite extends HttpServlet {
 
     private ResponsableActiviteDao responsableActiviteDao;
@@ -106,7 +111,11 @@ public class RechercherResponsableActivite extends HttpServlet {
                     resultats.addAll(responsableActiviteDao.rechercherRaParPrenom(recherche));
 
                 }
+//                 // Détecter s'il n'y a pas de résultats et si une recherche a été effectuée
+//                boolean noResults = resultats.isEmpty() && (recherche != null && !recherche.isEmpty());
+
                 req.setAttribute("resultats", resultats);
+//                req.setAttribute("noResults", noResults);
                 req.setAttribute("currentPage", "rechercher_ra");
                 req.getRequestDispatcher("/WEB-INF/jsp/responsableActivite.jsp").forward(req, resp);
             } catch (SQLException e) {
@@ -116,3 +125,4 @@ public class RechercherResponsableActivite extends HttpServlet {
         }
     }
 }
+ 

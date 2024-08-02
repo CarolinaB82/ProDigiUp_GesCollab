@@ -72,6 +72,8 @@
                 <div>
                     <label for="mail_1">Mail professionnel</label>
                     <input type="email" id="mail_1" name="mail_1"
+                           pattern="(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
                            value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_1 : ''}"
                            class="${not empty requestScope.errors.mail_1 ? 'error-input' : ''}"
 
@@ -81,6 +83,9 @@
                 <div>
                     <label for="mail_2">Mail personnel</label>
                     <input type="email" id="mail_2" name="mail_2"
+pattern="(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
+
                            value="${requestScope.collaborateur != null ? requestScope.collaborateur.mail_2 : ''}"
                            class="${not empty requestScope.errors.mail_2 ? 'error-input' : ''}"
 
@@ -206,6 +211,23 @@
                         toggleFields(); // Ensure the initial state is correct based on the current selection
                     });
                 </script>
+                 <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+            try {
+                var emailInput = document.getElementById('mail');
+                var emailValue = emailInput.value;
+                var localPart = emailValue.split('@')[0];
+
+                // Validation en JavaScript
+                if (!localPart.match(/(?=.*[a-zA-Z].*[a-zA-Z])/)) {
+                    alert('L\'adresse e-mail doit contenir au moins deux lettres avant le "@".');
+                    // N'annulez pas l'envoi du formulaire ici
+                }
+            } catch (e) {
+                console.error('Erreur de validation:', e);
+                // N'annulez pas l'envoi du formulaire en cas d'erreur de script
+            }
+</script>
 
 
                 <label for="multi-select-responsable_activite">Responsable activité</label>

@@ -61,8 +61,8 @@ public class RecherchePartenaire extends HttpServlet {
                 out.println("<table class='custom-table'>");
                 out.println("<thead>");
                 out.println("<tr>");
-                out.println("<th>Nom</th>");
-                out.println("<th>Ville</th>");
+                out.println("<th>🔗Nom</th>");
+                out.println("<th>🔗Ville</th>");
                 out.println("</tr>");
                 out.println("</thead>");
                 out.println("<tbody>");

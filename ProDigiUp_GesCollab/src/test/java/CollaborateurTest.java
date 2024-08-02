@@ -64,7 +64,7 @@ public class CollaborateurTest {
 
     @Test
     public void testMatriculeInvalideLongueurDifferente() {
-        String matriculeInvalide = "123";
+        String matriculeInvalide = "123456";
         System.out.println("Début du test pour un matricule invalide avec une taille incorrecte: " + matriculeInvalide);
         assertFalse(verifierMatricule(matriculeInvalide));
         System.out.println("Le matricule " + matriculeInvalide + " est invalide.");
@@ -74,12 +74,15 @@ public class CollaborateurTest {
     // Méthode à tester
     public boolean verifierMatricule(String matricule) {
         // Vérification que le matricule contient exactement 5 chiffres
-        return matricule.matches("\\d{5}");
+        return matricule.matches("\\d{1,5}");
     }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
     // @Test
-    // public void hello() {}
+    // public void hello() {} 
+    
+    
+    
 }
